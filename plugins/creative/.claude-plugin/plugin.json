@@ -1,8 +1,0 @@
-{
-  "name": "creative",
-  "description": "Edit and render videos with FFmpeg and Remotion, from stitching and transitions to captions and teasers. Design presentations in Excalidraw and generate AI-powered infographics.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BenAI"
-  }
-}

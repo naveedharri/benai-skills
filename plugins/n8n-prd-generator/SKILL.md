@@ -1,14 +1,7 @@
 ---
 name: n8n-prd-generator
-description: |
-  Convert discovery call transcripts into concise n8n Automation Blueprints with interactive question flow.
-
-  USE THIS SKILL WHEN:
-  - User says "create a blueprint", "generate automation spec", "convert transcript to blueprint"
-  - User provides discovery call transcripts or client documentation
-  - User needs an n8n automation blueprint for workflow implementation
-  - User mentions scoping calls, client requirements, or workflow documentation
-  - User asks to document automation requirements or create implementation specs
+description: Convert discovery call transcripts into concise n8n Automation Blueprints with interactive question flow.
+  USE THIS SKILL WHEN - User says "create a blueprint", "generate automation spec", "convert transcript to blueprint" - User provides discovery call transcripts or client documentation - User needs an n8n automation blueprint for workflow implementation - User mentions scoping calls, client requirements, or workflow documentation - User asks to document automation requirements or create implementation specs
 ---
 
 # n8n Automation Blueprint Generator

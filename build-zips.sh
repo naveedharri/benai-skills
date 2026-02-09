@@ -36,37 +36,71 @@ fi
 rm -rf "$DIST"
 mkdir -p "$DIST/extension" "$DIST/claude"
 
-# Read all plugins from marketplace.json
-PLUGINS_JSON=$(python3 -c "
-import json, sys
+# Read plugin names from marketplace.json
+PLUGIN_NAMES=$(python3 -c "
+import json
 with open('$MARKETPLACE') as f:
     data = json.load(f)
 for p in data['plugins']:
-    print(p['name'] + '|' + p['source'])
+    print(p['name'])
 ")
 
 echo "Found department plugins:"
-echo "$PLUGINS_JSON" | while IFS='|' read -r name source; do
-  echo "  - $name ($source)"
+echo "$PLUGIN_NAMES" | while read -r name; do
+  echo "  - $name"
 done
 echo ""
 
 # =============================================================
 # EXTENSION ZIPS (Claude Code / Cursor / VS Code)
-# Structure: .claude-plugin/marketplace.json + plugins/<department>/
+# Structure: .claude-plugin/marketplace.json + skills/ + commands/
+# With strict:false, source is "./" so we include the referenced
+# skills and commands for each department.
 # =============================================================
 echo "--- Building extension zips ---"
 
-echo "$PLUGINS_JSON" | while IFS='|' read -r name source; do
+echo "$PLUGIN_NAMES" | while read -r name; do
   staging="$TMP/ext-$name"
   rm -rf "$staging"
-  mkdir -p "$staging/.claude-plugin"
-  mkdir -p "$staging/$(dirname "$source")"
+  mkdir -p "$staging/.claude-plugin" "$staging/plugins" "$staging/commands"
 
-  # Copy the department plugin directory
-  cp -R "$ROOT/$source" "$staging/$source"
+  # Get skill and command paths for this plugin
+  SKILL_PATHS=$(python3 -c "
+import json
+with open('$MARKETPLACE') as f:
+    data = json.load(f)
+plugin = next(p for p in data['plugins'] if p['name'] == '$name')
+for s in plugin.get('skills', []):
+    print(s)
+")
 
-  # Generate a marketplace.json with this department
+  CMD_PATHS=$(python3 -c "
+import json
+with open('$MARKETPLACE') as f:
+    data = json.load(f)
+plugin = next(p for p in data['plugins'] if p['name'] == '$name')
+for c in plugin.get('commands', []):
+    print(c)
+")
+
+  # Copy referenced skills
+  SKILL_COUNT=0
+  echo "$SKILL_PATHS" | while read -r skill_path; do
+    [ -z "$skill_path" ] && continue
+    if [ -d "$ROOT/$skill_path" ]; then
+      cp -R "$ROOT/$skill_path" "$staging/$skill_path"
+    fi
+  done
+
+  # Copy referenced commands
+  echo "$CMD_PATHS" | while read -r cmd_path; do
+    [ -z "$cmd_path" ] && continue
+    if [ -f "$ROOT/$cmd_path" ]; then
+      cp "$ROOT/$cmd_path" "$staging/$cmd_path"
+    fi
+  done
+
+  # Generate a marketplace.json with this department only
   python3 -c "
 import json
 with open('$MARKETPLACE') as f:
@@ -87,14 +121,14 @@ with open('$staging/.claude-plugin/marketplace.json', 'w') as f:
   # Create zip
   (cd "$staging" && zip -r "$DIST/extension/$name.zip" . > /dev/null 2>&1)
   SIZE=$(du -h "$DIST/extension/$name.zip" | cut -f1 | xargs)
-  SKILL_COUNT=$(find "$staging/$source/skills" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l | xargs)
+  SKILL_COUNT=$(find "$staging/plugins" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l | xargs)
   echo "  Created extension/$name.zip ($SIZE) — $SKILL_COUNT skills"
 
   rm -rf "$staging"
 done
 
 # Full marketplace zip
-(cd "$ROOT" && zip -r "$DIST/extension/benai-skills-marketplace.zip" .claude-plugin/marketplace.json plugins/ -x "*/\.*" > /dev/null 2>&1)
+(cd "$ROOT" && zip -r "$DIST/extension/benai-skills-marketplace.zip" .claude-plugin/marketplace.json plugins/ commands/ -x "*/\.*" > /dev/null 2>&1)
 SIZE=$(du -h "$DIST/extension/benai-skills-marketplace.zip" | cut -f1 | xargs)
 echo "  Created extension/benai-skills-marketplace.zip ($SIZE)"
 
@@ -105,21 +139,26 @@ echo "  Created extension/benai-skills-marketplace.zip ($SIZE)"
 echo ""
 echo "--- Building Claude Console zips ---"
 
-echo "$PLUGINS_JSON" | while IFS='|' read -r name source; do
+echo "$PLUGIN_NAMES" | while read -r name; do
   staging="$TMP/claude-$name"
   rm -rf "$staging"
   mkdir -p "$staging"
 
-  SKILLS_DIR="$ROOT/$source/skills"
-
-  if [ ! -d "$SKILLS_DIR" ]; then
-    echo "  Skipping $name (no skills/ directory)"
-    continue
-  fi
+  # Get skill paths for this plugin
+  SKILL_PATHS=$(python3 -c "
+import json
+with open('$MARKETPLACE') as f:
+    data = json.load(f)
+plugin = next(p for p in data['plugins'] if p['name'] == '$name')
+for s in plugin.get('skills', []):
+    print(s)
+")
 
   # Copy each skill as a top-level folder
-  for skill_dir in "$SKILLS_DIR"/*/; do
-    skill_name=$(basename "$skill_dir")
+  echo "$SKILL_PATHS" | while read -r skill_path; do
+    [ -z "$skill_path" ] && continue
+    skill_dir="$ROOT/$skill_path"
+    skill_name=$(basename "$skill_path")
     if [ -f "$skill_dir/SKILL.md" ]; then
       mkdir -p "$staging/$skill_name"
       cp -R "$skill_dir"/* "$staging/$skill_name/" 2>/dev/null || true

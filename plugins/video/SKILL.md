@@ -1,19 +1,7 @@
 ---
 name: video
-description: |
-  Edit, process, and render videos using FFmpeg and Remotion. Handles stitching, transitions, captions, teasers, and transcription.
-
-  USE THIS SKILL WHEN:
-  - User mentions video, clip, footage, mp4, mov, avi, mkv, or any video format
-  - User wants to combine, stitch, merge, or join video files
-  - User asks about transitions, fades, crossfades, or effects between clips
-  - User needs captions, subtitles, or TikTok-style word highlighting
-  - User wants a teaser, trailer, or highlight reel from longer video
-  - User mentions FFmpeg, ffprobe, Remotion, or related errors
-  - User asks about video transcription or whisper speech-to-text
-  - User asks about video duration, resolution, fps, or trimming
-  - User has .mp4, .mov, .captions.json files or video folders
-  - User asks about thumbnails, overlays, title cards, or graphics for video
+description: Edit, process, and render videos using FFmpeg and Remotion. Handles stitching, transitions, captions, teasers, and transcription.
+  USE THIS SKILL WHEN - User mentions video, clip, footage, mp4, mov, avi, mkv, or any video format - User wants to combine, stitch, merge, or join video files - User asks about transitions, fades, crossfades, or effects between clips - User needs captions, subtitles, or TikTok-style word highlighting - User wants a teaser, trailer, or highlight reel from longer video - User mentions FFmpeg, ffprobe, Remotion, or related errors - User asks about video transcription or whisper speech-to-text - User asks about video duration, resolution, fps, or trimming - User has .mp4, .mov, .captions.json files or video folders - User asks about thumbnails, overlays, title cards, or graphics for video
 ---
 
 # Video Editing Skill

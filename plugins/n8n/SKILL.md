@@ -1,16 +1,7 @@
 ---
 name: n8n
-description: |
-  Build, test, and deploy n8n workflows via REST API with incremental testing. Expert automation for n8n.
-
-  USE THIS SKILL WHEN:
-  - User says "create workflow", "build automation", "deploy to n8n", "activate workflow"
-  - User needs to list, update, delete, or test workflows
-  - User mentions webhook execution, checking executions, debugging workflow runs
-  - User asks about n8n nodes, expressions, credentials, or Code nodes
-  - User needs JavaScript or Python code for n8n Code nodes
-  - User mentions {{ }} expressions, $json, $input, or $node references
-  - User asks about AI Agent, OpenAI, Anthropic, Google Sheets, Airtable, Slack, or other n8n nodes
+description: Build, test, and deploy n8n workflows via REST API with incremental testing. Expert automation for n8n.
+  USE THIS SKILL WHEN - User says "create workflow", "build automation", "deploy to n8n", "activate workflow" - User needs to list, update, delete, or test workflows - User mentions webhook execution, checking executions, debugging workflow runs - User asks about n8n nodes, expressions, credentials, or Code nodes - User needs JavaScript or Python code for n8n Code nodes - User mentions {{ }} expressions, $json, $input, or $node references - User asks about AI Agent, OpenAI, Anthropic, Google Sheets, Airtable, Slack, or other n8n nodes
 ---
 
 # n8n Automation Skill

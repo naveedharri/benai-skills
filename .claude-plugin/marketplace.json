@@ -10,7 +10,8 @@
   "plugins": [
     {
       "name": "marketing",
-      "source": "./plugins/marketing",
+      "source": "./",
+      "strict": false,
       "description": "Rank higher and grow organic traffic with programmatic SEO, technical audits, and Search Console optimization. Create email sequences that convert, build compelling case studies, and generate professional infographics.",
       "version": "1.0.0",
       "author": {
@@ -23,11 +24,23 @@
         "content",
         "case-study",
         "infographic"
+      ],
+      "commands": [
+        "./commands/benai-start-marketing.md"
+      ],
+      "skills": [
+        "./plugins/programmatic-seo",
+        "./plugins/seo-optimizing",
+        "./plugins/seo-audit",
+        "./plugins/email-sequence",
+        "./plugins/case-study",
+        "./plugins/infographic"
       ]
     },
     {
       "name": "sales",
-      "source": "./plugins/sales",
+      "source": "./",
+      "strict": false,
       "description": "Research and score B2B leads, craft personalized outreach sequences, and build client success stories. Turn discovery call transcripts into actionable automation blueprints.",
       "version": "1.0.0",
       "author": {
@@ -39,11 +52,21 @@
         "sales",
         "outreach",
         "prospecting"
+      ],
+      "commands": [
+        "./commands/benai-start-sales.md"
+      ],
+      "skills": [
+        "./plugins/lead-research-assistant",
+        "./plugins/email-sequence",
+        "./plugins/case-study",
+        "./plugins/n8n-prd-generator"
       ]
     },
     {
       "name": "operations",
-      "source": "./plugins/operations",
+      "source": "./",
+      "strict": false,
       "description": "Build, test, and deploy n8n workflows through incremental REST API automation. Convert discovery call transcripts into implementation-ready automation blueprints.",
       "version": "1.0.0",
       "author": {
@@ -54,11 +77,19 @@
         "workflow",
         "automation",
         "operations"
+      ],
+      "commands": [
+        "./commands/benai-start-operations.md"
+      ],
+      "skills": [
+        "./plugins/n8n",
+        "./plugins/n8n-prd-generator"
       ]
     },
     {
       "name": "creative",
-      "source": "./plugins/creative",
+      "source": "./",
+      "strict": false,
       "description": "Edit and render videos with FFmpeg and Remotion, from stitching and transitions to captions and teasers. Design presentations in Excalidraw and generate AI-powered infographics.",
       "version": "1.0.0",
       "author": {
@@ -70,11 +101,20 @@
         "infographic",
         "creative",
         "design"
+      ],
+      "commands": [
+        "./commands/benai-start-creative.md"
+      ],
+      "skills": [
+        "./plugins/video",
+        "./plugins/excalidraw",
+        "./plugins/infographic"
       ]
     },
     {
       "name": "product",
-      "source": "./plugins/product",
+      "source": "./",
+      "strict": false,
       "description": "Design presentations, pitch decks, and process diagrams collaboratively in Excalidraw. Turn discovery call transcripts into structured automation blueprints your team can implement.",
       "version": "1.0.0",
       "author": {
@@ -85,6 +125,13 @@
         "product",
         "blueprint",
         "automation"
+      ],
+      "commands": [
+        "./commands/benai-start-product.md"
+      ],
+      "skills": [
+        "./plugins/excalidraw",
+        "./plugins/n8n-prd-generator"
       ]
     }
   ]

@@ -1,19 +1,7 @@
 ---
 name: infographic
-description: |
-  Generate professional LinkedIn-style infographics using Gemini AI image generation.
-  Uses a guided, conversational flow with section-by-section validation, style discovery,
-  multi-turn image editing, and learned preferences that improve over sessions.
-
-  USE THIS SKILL WHEN:
-  - User says "create infographic", "make a visual", "design an infographic", "generate infographic"
-  - User wants to visualize a concept, framework, or data for social media
-  - User mentions "LinkedIn post", "visual content", "carousel", "infographic series"
-  - User asks to explain a concept visually or create a diagram-style image
-  - User mentions "visual metaphor", "iceberg diagram", "pyramid", "funnel visualization"
-  - User wants to generate images with Gemini/Nano Banana for informational content
-  - User says "brand visuals", "social media graphics", "thought leadership visual"
-  - User mentions "nano banana", "gemini image generation", "professional infographics"
+description: Generate professional LinkedIn-style infographics using Gemini AI image generation. Uses a guided, conversational flow with section-by-section validation, style discovery, multi-turn image editing, and learned preferences that improve over sessions.
+  USE THIS SKILL WHEN - User says "create infographic", "make a visual", "design an infographic", "generate infographic" - User wants to visualize a concept, framework, or data for social media - User mentions "LinkedIn post", "visual content", "carousel", "infographic series" - User asks to explain a concept visually or create a diagram-style image - User mentions "visual metaphor", "iceberg diagram", "pyramid", "funnel visualization" - User wants to generate images with Gemini/Nano Banana for informational content - User says "brand visuals", "social media graphics", "thought leadership visual" - User mentions "nano banana", "gemini image generation", "professional infographics"
 ---
 
 # Infographic Generation Skill

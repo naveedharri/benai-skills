@@ -1,8 +1,0 @@
-{
-  "name": "operations",
-  "description": "Build, test, and deploy n8n workflows through incremental REST API automation. Convert discovery call transcripts into implementation-ready automation blueprints.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BenAI"
-  }
-}
