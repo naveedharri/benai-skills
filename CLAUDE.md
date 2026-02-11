@@ -6,7 +6,7 @@ A marketplace of expert automation plugins for Claude Code, organized by departm
 
 ## Available Departments
 
-### Marketing (11 skills)
+### Marketing (13 skills)
 | Skill | Command | Purpose |
 |-------|---------|---------|
 | programmatic-seo | `/programmatic-seo` | SEO-optimized pages at scale |
@@ -20,6 +20,8 @@ A marketplace of expert automation plugins for Claude Code, organized by departm
 | title-generation | `/title-generation` | Optimized YouTube video titles |
 | gif-creator | `/gif-creator` | GIFs from video clips |
 | excalidraw | `/excalidraw` | Presentations & diagrams |
+| animate-posts | `/animate-posts` | Animate static infographics into videos |
+| website-launch-kit | `/website-launch-kit` | Build & launch marketing websites |
 
 **Commands:** `/marketing` (skill overview), `/repurpose` (content repurposing workflow)
 

@@ -1,0 +1,43 @@
+{
+  "name": "animate-posts",
+  "version": "1.0.0",
+  "description": "Automated infographic animation tool that converts static images into 10-second GIF animations using Remotion",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node src/index.js",
+    "test": "node --test tests/*.test.js",
+    "render": "remotion render",
+    "preview": "remotion preview"
+  },
+  "keywords": [
+    "animation",
+    "gif",
+    "remotion",
+    "infographic",
+    "social-media",
+    "marketing",
+    "automation"
+  ],
+  "author": "BenAI",
+  "license": "MIT",
+  "dependencies": {
+    "remotion": "^4.0.0",
+    "@remotion/cli": "^4.0.0",
+    "@remotion/gif": "^4.0.0",
+    "@remotion/lambda": "^4.0.0",
+    "sharp": "^0.33.0",
+    "tesseract.js": "^5.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "prettier": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "systemRequirements": {
+    "ffmpeg": "required",
+    "chromium": "required"
+  }
+}
