@@ -469,7 +469,7 @@ STEP 6: Move to next section
 - **DO NOT round values** — if the extraction says `padding: 96px`, use `py-24` or `py-[96px]`, not `py-20`.
 - **DO NOT apply quality-rules.md defaults** that contradict extracted values. The inspiration's actual values win. Quality rules are a fallback only when extraction is ambiguous.
 - **DO match hover states and animations** observed during extraction.
-- **DO NOT use placeholder images, CSS gradients, geometric shapes, or SVG patterns as image substitutes.** You MUST call `generate_image` (Nano Banana MCP) for every image. See Part 5.
+- **DO NOT use placeholder images, CSS gradients, geometric shapes, or SVG patterns as image substitutes.** You MUST generate real images for every visual. See Part 5 for the priority chain (MCP → built-in script → comment fallback).
 
 ---
 
@@ -483,9 +483,17 @@ During extraction, catalog every image:
 agent-browser eval "JSON.stringify(Array.from(document.querySelectorAll('img, [style*=background-image], video, svg.hero-illustration')).map((el, i) => ({ index: i, tag: el.tagName, src: el.src || el.style?.backgroundImage?.slice(4, -1), alt: el.alt, width: el.naturalWidth || el.offsetWidth, height: el.naturalHeight || el.offsetHeight, class: el.className?.slice?.(0, 50) || '', parentSection: el.closest('section')?.className?.slice?.(0, 40) || 'unknown' })))"
 ```
 
-### 5.2 Generate with Nano Banana MCP
+### 5.2 Image Generation — Priority Chain
 
-**MANDATORY: You MUST call `generate_image` for every image identified in 5.1.** Do NOT skip this step. Do NOT assume Nano Banana MCP is unavailable without trying. Call the tool — if it works, use the generated images. Only if the tool call returns an error (tool not found, connection refused, etc.) should you fall back.
+**MANDATORY: You MUST generate a real image for every image identified in 5.1.** Never skip. Never use CSS placeholders.
+
+Use this priority chain — try each in order, fall back only if it fails:
+
+---
+
+#### Priority 1: Nano Banana MCP (`generate_image`)
+
+Try this first. If the MCP is installed, it provides the best workflow with editing support.
 
 **MCP Server:** `@zhibinyang/nano-banana-mcp` (Gemini AI image generation)
 
@@ -521,22 +529,59 @@ Output as a [W:H] aspect ratio image at approximately [width] pixels wide",
 - First edit: `edit_image(filePath: "./generated_imgs/generated-[timestamp]-[id].png", prompt: "...")`
 - All subsequent edits: `continue_editing(prompt: "...")` — the server tracks the last image automatically
 
-**File flow:**
+**File flow (MCP):**
 1. MCP saves to `./generated_imgs/generated-[timestamp]-[id].png`
 2. Copy to `public/images/[descriptive-name].png`
 3. Read the file to verify it generated correctly
 4. Reference: `<Image src="/images/hero-bg.png" alt="..." width={} height={} />`
 
-**Rules:**
+---
+
+#### Priority 2: Built-in Script (no MCP needed)
+
+If `generate_image` fails (tool not found, connection refused, MCP not installed), fall back to the built-in script. This calls the Gemini Imagen API directly using `GEMINI_API_KEY` from `.env`. No MCP installation needed.
+
+```bash
+node <skill-dir>/scripts/generate-image.mjs \
+  --prompt "[Same prompt format as above]" \
+  --output public/images/[descriptive-name].png \
+  --aspect "[W:H]"
+```
+
+Where `<skill-dir>` is the path to this skill's directory (find it via the skill file location).
+
+**Features:**
+- Auto-detects the best available Imagen model (imagen-4.0-fast preferred)
+- Reads `GEMINI_API_KEY` from `.env` in cwd or up to 3 parent directories
+- Supports `GEMINI_IMAGE_MODEL` override in `.env`
+- Outputs the saved file path on success
+- Exits non-zero with error message on failure
+
+**File flow (script):**
+1. Script saves directly to the `--output` path
+2. Read the file to verify it generated correctly
+3. Reference: `<Image src="/images/hero-bg.png" alt="..." width={} height={} />`
+
+**Note:** The script does NOT support `edit_image` or `continue_editing`. For revisions, re-generate with an updated prompt.
+
+---
+
+#### Priority 3: Comment Fallback (no API key)
+
+Only if BOTH methods above fail (no API key configured at all):
+
+Leave `<!-- IMAGE NEEDED: [description] -->` comments in the code. Tell the user which images need generation and redirect to Phase 5 (API Key Setup).
+
+---
+
+**Rules (apply to all methods):**
 1. **Never generate human faces** — use abstract/geometric visuals, product mockups, or illustrations
 2. **Match the inspiration's image style** — gradient meshes → gradient meshes, isometric → isometric
 3. **Use extracted brand colors** in the prompt
-4. **Match aspect ratio** to the placeholder dimensions from extraction — double-specify in prompt text AND aspectRatio param
+4. **Match aspect ratio** to the placeholder dimensions from extraction
 5. **Generate one image at a time** — verify each before moving to the next
 
-**If `generate_image` fails:** Log the error and tell the user. Do NOT substitute with CSS gradients, geometric shapes, or SVG patterns. Leave a visible `<!-- IMAGE NEEDED: [description] -->` comment in the code so the user knows which images still need generation. If the API key is missing, redirect to Phase 5 (API Key Setup) in SKILL.md.
-
-**If API key was skipped in Phase 0 (Path 3):** Leave `<!-- IMAGE NEEDED: [description] -->` comments for all images. Do not attempt `generate_image` calls.
+**If API key was skipped in Phase 0 (Path 3):** Leave `<!-- IMAGE NEEDED: [description] -->` comments for all images. Do not attempt generation.
 
 ---
 

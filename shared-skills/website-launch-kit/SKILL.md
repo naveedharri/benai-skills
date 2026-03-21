@@ -15,7 +15,7 @@ You are a landing page expert. Your job is to clone an inspiration website, then
 
 **Core philosophy: Clone first, customize later.** The user sees their inspiration site reproduced and deployed before any deep questioning.
 
-**Connectors:** Nano Banana MCP (Gemini AI image generation)
+**Image generation:** Built-in `scripts/generate-image.mjs` — calls Gemini Imagen 4 API directly using `GEMINI_API_KEY` from `.env`. No MCP needed.
 
 ---
 
@@ -35,7 +35,14 @@ You are a landing page expert. Your job is to clone an inspiration website, then
 4. **Use `agent-browser` for extraction** — take screenshots, extract computed styles, get actual CSS values. Never guess design values from text descriptions.
 5. **Build & compare section-by-section** — build one section → screenshot → compare to inspiration screenshot → fix → next. Never build all sections then compare.
 6. **In Phase 3, present ONE consolidated discovery form** — list all sections and what info you need in a single `AskUserQuestion`, never ask one question per section
-7. **ALWAYS use `generate_image` (Nano Banana MCP) for every image** — never use placeholder images, CSS gradients, geometric shapes, or SVG patterns as substitutes. You MUST call the `generate_image` tool for every image needed. Do NOT skip this step. Do NOT assume the MCP is unavailable. Use `edit_image` for first revision, `continue_editing` for subsequent revisions.
+7. **ALWAYS generate real images for every image slot** — never use placeholder images, CSS gradients, geometric shapes, or SVG patterns as substitutes. Use this priority:
+   1. **Try `generate_image` (Nano Banana MCP)** first — if available, use it. Use `edit_image` for first revision, `continue_editing` for subsequent revisions.
+   2. **Fallback: built-in script** — if MCP is unavailable or the tool call fails, run the built-in script via Bash:
+      ```bash
+      node <skill-dir>/scripts/generate-image.mjs --prompt "your prompt" --output public/images/filename.png --aspect 16:9
+      ```
+      The script auto-detects the best Imagen model available and reads `GEMINI_API_KEY` from `.env`. No MCP installation needed.
+   3. **Only if both fail** (no API key at all): leave `<!-- IMAGE NEEDED: [description] -->` comments and tell the user.
 8. **Deploy to Vercel + open Claude Desktop preview** — always give BOTH the Vercel URL (shareable) and the local preview panel. The preview panel supports element selection for precise iteration.
 
 ---
@@ -63,6 +70,7 @@ PHASE 5: API KEY SETUP   → Only if Phase 0 finds no key
 Run silently. Do NOT ask questions yet.
 
 ```bash
+# 1. Check for GEMINI_API_KEY
 if [ -n "$GEMINI_API_KEY" ]; then
   echo "API key found in environment"
 elif [ -f .env ] && grep -q "^GEMINI_API_KEY=.\+" .env; then
@@ -70,11 +78,24 @@ elif [ -f .env ] && grep -q "^GEMINI_API_KEY=.\+" .env; then
 else
   echo "API key not configured"
 fi
+
+# 2. Check if nano-banana MCP is registered
+claude mcp list 2>&1 | grep -q "nano-banana" && echo "MCP registered" || echo "MCP not registered"
 ```
 
 **Decision:**
-- Found (env var OR .env): proceed silently to Phase 1
-- NOT found: jump IMMEDIATELY to Phase 5 (API Key Setup)
+- API key NOT found → jump IMMEDIATELY to Phase 5 (API Key Setup)
+- API key found + MCP registered → proceed silently to Phase 1
+- API key found + MCP NOT registered → auto-register MCP silently, then tell user to open a new session:
+
+```bash
+claude mcp add nano-banana -s stdio --scope global -- npx -y @zhibinyang/nano-banana-mcp
+```
+
+Then say:
+```
+To activate image generation, please open a new Claude Code session and run /website-launch-kit again.
+```
 
 ---
 
@@ -123,7 +144,7 @@ Let's start.
 5. **Map extracted values** to CSS variables and Tailwind config — use ACTUAL px values from extraction
 6. **Build section-by-section with visual compare loop:**
    - For each section: identify layout pattern → build with extracted values → screenshot → compare to inspiration screenshot → fix discrepancies → next section
-7. **Generate images** — MUST call `generate_image` (Nano Banana MCP) for every image. Do not skip. Do not assume unavailable. Only fall back to CSS if the tool call fails.
+7. **Generate images** — MUST generate a real image for every visual slot (see Rule 7 for priority: MCP → built-in script → comment fallback). Never skip. Never use CSS placeholders.
 8. Keep the inspiration's copy temporarily (replaced in Phase 4)
 9. Apply user's brand colors/logo if provided in Q10
 10. **Full-page screenshot comparison** before showing user
@@ -237,11 +258,23 @@ sed -i '' "s|^GEMINI_API_KEY=.*|GEMINI_API_KEY=[user-provided-key]|" .env
 grep -qxF '.env' .gitignore 2>/dev/null || echo ".env" >> .gitignore
 ```
 
-**CRITICAL after saving:** Tell the user they must restart Claude Code (which restarts the MCP server so it loads the new key), then EXIT THE SKILL. The user will re-invoke the skill after restarting.
+**After saving the key:**
 
-- Do NOT call `configure_gemini_token` (creates unwanted config files)
-- Do NOT call `get_configuration_status` (known false positives)
-- Do NOT proceed to Phase 1 after saving the key
+1. Auto-register the MCP (runs silently):
+```bash
+claude mcp add nano-banana -s stdio --scope global -- npx -y @zhibinyang/nano-banana-mcp
+```
+
+2. Tell the user:
+```
+Your API key is saved. To activate image generation, please open a new Claude Code session and run /website-launch-kit again — you'll go straight to building your landing page.
+```
+
+Then EXIT THE SKILL. Do not proceed to Phase 1 in this session.
+
+**Do NOT call:**
+- `configure_gemini_token` (creates unwanted config files)
+- `get_configuration_status` (known false positives)
 
 ---
 
