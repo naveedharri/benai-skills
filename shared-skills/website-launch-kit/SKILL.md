@@ -108,15 +108,21 @@ To activate image generation, please open a new Claude Code session and run /web
 ### Starting Message
 
 ```
-I'll help you create a landing page that actually converts.
+Welcome to Website Launch Kit by BenAI
+
+Ship your next landing page — fast, beautiful, and conversion-ready.
 
 Here's how it works:
-1. I'll ask 10 quick questions about your business
-2. You'll share an inspiration site you love
-3. I'll clone it and deploy a preview for you
-4. Then we'll customize every section with YOUR content
 
-Let's start.
+  INTAKE        10 quick questions about your business + pick an inspiration site
+      |
+  CLONE         I rebuild that site pixel-for-pixel and deploy a live preview
+      |
+  DISCOVER      One form to gather all your real content at once
+      |
+  CUSTOMIZE     I rewrite every section with YOUR copy, generate real images, and ship it
+
+Ready? Let's build your site.
 ```
 
 ### Flow
