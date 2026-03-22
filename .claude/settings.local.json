@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(git *)",
+      "Bash(curl *)",
+      "Bash(mkdir *)",
+      "Bash(cp *)",
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Bash(node *)",
+      "Bash(netstat *)",
+      "Bash(findstr *)",
+      "Bash(taskkill *)",
+      "Bash(cmd *)",
+      "Bash(find *)",
+      "Bash(bash *)",
+      "Bash(chmod *)",
+      "Bash(printf *)",
+      "Bash(yes *)",
+      "Bash(agent-browser *)",
+      "Bash(xargs *)",
+      "Bash(python *)",
+      "Bash(where *)",
+      "Bash(claude *)",
+      "mcp__Claude_Preview__*",
+      "mcp__nano-banana__*",
+      "mcp__mcp-registry__*"
+    ]
+  }
+}

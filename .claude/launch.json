@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "benai-landing",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["benai-landing/node_modules/next/dist/bin/next", "dev", "--port", "3000", "benai-landing"],
+      "port": 3000
+    }
+  ]
+}
