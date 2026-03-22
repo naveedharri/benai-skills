@@ -379,6 +379,41 @@
         }
       }
     },
+    "design": {
+      "commands": [
+        "design"
+      ],
+      "skills": {
+        "taste": {
+          "displayName": "Design Taste",
+          "summary": "Premium frontend design system — configurable dials for variance/motion/density, anti-slop rules, React/Next.js/Tailwind/Framer Motion"
+        },
+        "redesign": {
+          "displayName": "Redesign",
+          "summary": "Audit and upgrade existing projects to premium design quality without rewriting from scratch"
+        },
+        "soft-ui": {
+          "displayName": "Soft UI",
+          "summary": "Luxurious, soft aesthetic with premium fonts, whitespace, depth, and smooth animations"
+        },
+        "minimalist-ui": {
+          "displayName": "Minimalist UI",
+          "summary": "Clean editorial-style interfaces — warm monochrome palette, typographic contrast, flat bento grids"
+        },
+        "brutalist-ui": {
+          "displayName": "Brutalist UI",
+          "summary": "Raw mechanical interfaces — Swiss typography, extreme scale contrast, CRT terminal aesthetics (BETA)"
+        },
+        "stitch": {
+          "displayName": "Stitch Design",
+          "summary": "Google Stitch semantic design generation with premium anti-generic UI standards"
+        },
+        "output-enforcement": {
+          "displayName": "Output Enforcement",
+          "summary": "Force complete full-fidelity code outputs — anti-truncation, banned placeholder patterns"
+        }
+      }
+    },
     "BenAI-Obsidian-Plugin": {
       "hooks": {
         "Stop": [

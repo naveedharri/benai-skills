@@ -1,0 +1,8 @@
+{
+  "name": "design",
+  "description": "Premium frontend design skills that override default AI design biases. Includes a configurable design system with anti-slop rules for React/Next.js/Tailwind, aesthetic variants (soft, minimalist, brutalist), project redesign auditing, Google Stitch integration, and full-output enforcement.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BenAI"
+  }
+}

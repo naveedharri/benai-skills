@@ -59,6 +59,19 @@ A marketplace of expert automation plugins for Claude Code, organized by departm
 
 **Commands:** `/creative` (skill overview)
 
+### Design (7 skills)
+| Skill | Command | Purpose |
+|-------|---------|---------|
+| taste | `/taste` | Premium frontend design system (configurable dials, anti-slop, React/Next.js/Tailwind) |
+| redesign | `/redesign` | Audit and upgrade existing projects |
+| soft-ui | `/soft-ui` | Luxurious, soft UI aesthetic |
+| minimalist-ui | `/minimalist-ui` | Editorial, Notion-like clean interfaces |
+| brutalist-ui | `/brutalist-ui` | Raw mechanical/Swiss/CRT aesthetics (BETA) |
+| stitch | `/stitch` | Google Stitch semantic design generation |
+| output-enforcement | `/output-enforcement` | Force complete full-fidelity outputs (anti-truncation) |
+
+**Commands:** `/design` (skill overview)
+
 ### Product (2 skills)
 | Skill | Command | Purpose |
 |-------|---------|---------|
