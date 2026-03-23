@@ -22,14 +22,14 @@ You are a landing page expert. Your job is to clone an inspiration website, then
 ## When This Skill Loads
 
 1. Execute Phase 0 (silent config check)
-2. If API key is NOT configured → jump to Phase 5 (API Key Setup). Do NOT ask intake questions.
+2. If API key is NOT configured → jump to Phase 6 (API Key Setup). Do NOT ask intake questions.
 3. If API key IS configured → proceed to Phase 1.
 
 ---
 
 ## RULES
 
-1. **ONE question per message** — use `AskUserQuestion` for every question, never plain text
+1. **ONE question per message** — use `AskUserQuestion` ONLY for questions with clear finite choices (pick A/B/C). For questions where the user needs to type something (a name, description, URL), use plain text and wait. NEVER re-ask a question — if the user indicates they'll type something, just wait silently for their input. See `01-intake.md` for which questions use which method.
 2. **Read the reference file BEFORE starting each phase** — each phase has specific instructions
 3. **Clone the inspiration site EXACTLY before any customization**
 4. **Use `agent-browser` for extraction** — take screenshots, extract computed styles, get actual CSS values. Never guess design values from text descriptions.
@@ -44,6 +44,7 @@ You are a landing page expert. Your job is to clone an inspiration website, then
       The script auto-detects the best Imagen model available and reads `GEMINI_API_KEY` from `.env`. No MCP installation needed.
    3. **Only if both fail** (no API key at all): leave `<!-- IMAGE NEEDED: [description] -->` comments and tell the user.
 8. **Deploy to Vercel + open Claude Desktop preview** — always give BOTH the Vercel URL (shareable) and the local preview panel. The preview panel supports element selection for precise iteration.
+9. **Auto-generate all SEO** — every site must ship with meta tags (title, description, OG, Twitter cards), JSON-LD schema markup, sitemap.xml, robots.txt, semantic HTML (one H1, proper heading hierarchy), and descriptive image alt text. Never leave SEO as a post-launch task. Reference `references/06-seo.md`.
 
 ---
 
@@ -55,12 +56,14 @@ PHASE 0: CONFIG CHECK    → Silent API key check (auto)
 PHASE 1: INTAKE          → 10 questions: who, what, for whom, CTA, inspiration URL
     ▼
 PHASE 2: CLONE & DEPLOY  → Reproduce inspiration site exactly, deploy to Vercel
-    ▼
+    ▼                       (includes SEO scaffolding: robots.txt, sitemap, metadata, semantic HTML)
 PHASE 3: DEEP DISCOVERY  → ONE consolidated form covering all sections (not per-section questions)
     ▼
-PHASE 4: CUSTOMIZE & SHIP → Rewrite sections with real copy, deploy final version
+PHASE 4: CUSTOMIZE & SHIP → Rewrite sections with real copy, complete SEO (meta tags,
+    ▼                        schema markup, OG image, alt text), deploy final version
+PHASE 5: POST-LAUNCH     → Custom domain, Google Analytics/Search Console, forms, legal pages
 
-PHASE 5: API KEY SETUP   → Only if Phase 0 finds no key
+PHASE 6: API KEY SETUP   → Only if Phase 0 finds no key
 ```
 
 ---
@@ -84,7 +87,7 @@ claude mcp list 2>&1 | grep -q "nano-banana" && echo "MCP registered" || echo "M
 ```
 
 **Decision:**
-- API key NOT found → jump IMMEDIATELY to Phase 5 (API Key Setup)
+- API key NOT found → jump IMMEDIATELY to Phase 6 (API Key Setup)
 - API key found + MCP registered → proceed silently to Phase 1
 - API key found + MCP NOT registered → auto-register MCP silently, then tell user to open a new session:
 
@@ -140,6 +143,7 @@ Ready? Let's build your site.
 
 **Reference:** Read `references/02-clone.md` for the full clone workflow.
 **Quality:** Read `references/05-quality-rules.md` for design guardrails.
+**SEO:** Read `references/06-seo.md` — set up SEO scaffolding (robots.txt, sitemap, metadata placeholders, semantic HTML) during project setup.
 
 ### Steps
 
@@ -183,10 +187,11 @@ Ready? Let's build your site.
 
 ## PHASE 4: CUSTOMIZE & SHIP
 
-**Goal:** Rewrite every section with real copy, get approval, ship.
+**Goal:** Rewrite every section with real copy, complete all SEO, get approval, ship.
 
 **Reference:** Read `references/04-customize.md` for copy formulas and the rewriting process.
 **Quality:** Read `references/05-quality-rules.md` for design guardrails.
+**SEO:** Read `references/06-seo.md` — fill in real meta tags, generate OG image, add schema markup, write alt text, run final SEO checklist.
 
 ### Steps
 
@@ -208,7 +213,50 @@ Ready? Let's build your site.
 
 ---
 
-## PHASE 5: API KEY SETUP
+## PHASE 5: POST-LAUNCH
+
+**Goal:** Interactive menu-driven post-launch setup. User picks what they want, Claude does it.
+
+**Reference:** Read `references/07-post-launch.md` for step-by-step details.
+
+### How It Works
+
+Phase 4 handover presents a "What's your next move?" menu via `AskUserQuestion`. The user clicks an option. This is a **loop** — after completing each step, the menu reappears.
+
+### Available Options
+
+| Option | What Claude Does | What User Does |
+|--------|-----------------|----------------|
+| **Connect custom domain** | Guide DNS setup | Buy domain, add DNS records |
+| **Install Google Analytics** | Add GA4 script to site, redeploy | Create GA4 account, paste measurement ID |
+| **Set up Google Search Console** | Add verification tag, redeploy, submit sitemap | Create GSC account, verify ownership |
+| **Connect forms / lead capture** | Wire form to endpoint, redeploy | Create Formspree/Beehiiv/Mailchimp account |
+| **Add legal pages** | Create `/privacy-policy` and `/terms` pages, add footer links, add cookie banner, redeploy | Generate policy text from Termly or similar |
+| **Continue editing** | Stay in conversation for more changes | Describe changes or click elements in preview |
+| **I'm done for now** | Wrap up session | — |
+
+### Per-Step Flow
+
+1. Read the matching section from `references/07-post-launch.md`
+2. Show step-by-step guide (include YouTube video links where available)
+3. If user input is needed (API key, measurement ID, etc.), ask for it as plain text
+4. Make code changes and redeploy: `npx vercel --prod`
+5. Confirm completion
+6. Show the "What's your next move?" menu again
+
+### Loop Exit
+
+The menu keeps appearing until the user picks "I'm done for now" or "Continue editing". If done, end with:
+
+```
+You're all set! Your site is live at [production URL].
+
+Come back anytime — run /website-launch-kit and I'll pick up where we left off.
+```
+
+---
+
+## PHASE 6: API KEY SETUP
 
 Only reached if Phase 0 found no API key.
 
@@ -291,8 +339,10 @@ Then EXIT THE SKILL. Do not proceed to Phase 1 in this session.
 | `01-intake.md` | Phase 1 | 10 prefixed intake questions |
 | `02-clone.md` | Phase 2 | Clone workflow: analysis, extraction, build, deploy |
 | `03-discovery.md` | Phase 3 | Consolidated discovery form (one message, all sections) |
-| `04-customize.md` | Phase 4 | Copy formulas, section rewriting, deployment |
+| `04-customize.md` | Phase 4 | Copy formulas, section rewriting, SEO completion, deployment |
 | `05-quality-rules.md` | Phase 2+4 | Design guardrails for build quality |
+| `06-seo.md` | Phase 2+4 | SEO reference: meta tags, OG, schema markup, sitemap, robots.txt |
+| `07-post-launch.md` | Phase 5 | Post-launch guide: domain, analytics, forms, legal pages |
 | `components/section-registry.json` | Phase 4 | Used when adding NEW sections only |
 
 ## UI/UX PRO MAX (Design Intelligence)

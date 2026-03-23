@@ -222,6 +222,69 @@ src/
     └── utils.ts         # cn() utility
 ```
 
+### 2.4 SEO Scaffolding
+
+Set up the SEO foundation during project setup. Real values get filled in during Phase 4.
+
+**Reference:** Read `references/06-seo.md` for all SEO details.
+
+**a) Create `public/robots.txt`:**
+
+```
+User-agent: *
+Allow: /
+
+Sitemap: https://example.com/sitemap.xml
+```
+
+**b) Create `app/sitemap.ts`:**
+
+```typescript
+import type { MetadataRoute } from 'next'
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  return [
+    {
+      url: 'https://example.com',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 1,
+    },
+  ]
+}
+```
+
+**c) Set up metadata in `app/layout.tsx`** (placeholder values — replaced in Phase 4):
+
+```typescript
+export const metadata: Metadata = {
+  title: 'Site Title',
+  description: 'Site description',
+  openGraph: {
+    type: 'website',
+    url: 'https://example.com',
+    title: 'Site Title',
+    description: 'Site description',
+    siteName: 'Brand Name',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Site Title',
+    description: 'Site description',
+    images: ['/og-image.png'],
+  },
+  robots: { index: true, follow: true },
+}
+```
+
+**d) Enforce semantic HTML throughout the build:**
+
+- Only one `<h1>` per page (the hero headline)
+- Heading hierarchy: H1 → H2 → H3 (never skip levels)
+- Use `<nav>`, `<main>`, `<section>`, `<footer>` semantic elements
+- Every `<img>` / `<Image>` must have an `alt` attribute (placeholder okay during clone)
+
 ---
 
 ## Part 3: Design System from Extracted Values
