@@ -29,7 +29,5 @@
       "mcp__mcp-registry__*"
     ]
   },
-  "enabledPlugins": {
-    "obsidian@benai-skills": true
-  }
+  "enabledPlugins": {}
 }

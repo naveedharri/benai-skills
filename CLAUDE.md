@@ -147,6 +147,16 @@ A marketplace of expert automation plugins for Claude Code, organized by departm
 
 **Agents:** `audit-google`, `audit-meta`, `audit-budget`, `audit-creative`, `audit-compliance`, `audit-tracking`
 
+### Higgsfield (4 skills)
+| Skill | Command | Purpose |
+|-------|---------|---------|
+| higgsfield-generate | `/higgsfield:generate` | Generate images and videos via Higgsfield AI across 35+ models (GPT Image 2, Seedance 2.0, Nano Banana 2/Pro, Soul V2/Cinema/Cast/Location, Kling 3.0). Marketing Studio for branded ads, Virality Predictor for engagement scoring. |
+| higgsfield-soul-id | `/higgsfield:soul-id` | Train custom face identities (Soul Characters) that stay consistent across generations and are reusable inside other Higgsfield skills. |
+| higgsfield-product-photoshoot | `/higgsfield:product-photoshoot` | Professional product photography with 10 preset modes (studio, lifestyle, Pinterest, hero banner, ad packs, virtual try-on). |
+| higgsfield-marketplace-cards | `/higgsfield:marketplace-cards` | Generate marketplace-compliant product card images and A+ content modules for Amazon, Etsy, Shopify. |
+
+**Source:** Bundled from `higgsfield-ai/skills` v0.3.0 (MIT). Auth required, run the Higgsfield CLI setup before first use.
+
 ### Obsidian (5 skills)
 | Skill | Command | Purpose |
 |-------|---------|---------|
