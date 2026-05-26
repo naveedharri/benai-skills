@@ -1,0 +1,11 @@
+node_modules
+.next
+.git
+*.log
+.DS_Store
+.env*.local
+.mcp.json
+.runs
+scripts/refresh-comms.mjs
+scripts/probe-*.mjs
+scripts/test-*.mjs
