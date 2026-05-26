@@ -157,10 +157,11 @@ A marketplace of expert automation plugins for Claude Code, organized by departm
 
 **Source:** Bundled from `higgsfield-ai/skills` v0.3.0 (MIT). Auth required, run the Higgsfield CLI setup before first use.
 
-### Obsidian (5 skills)
+### Obsidian (6 skills)
 | Skill | Command | Purpose |
 |-------|---------|---------|
 | os-setup | `/os-setup` | Bootstrap vault structure + mode selection + onboarding |
+| os-dashboard-setup | `/os-dashboard-setup` | Install a full command-center dashboard with bundled plugins (Dataview, CustomJS, Shell-commands, Terminal, Homepage). Home + per-profile + Vault Overview pages, KPI cards, sparklines, button bar wired to user Claude prompts. No manual plugin install. |
 | os-optimizer | `/os-optimizer` | Multi-pass second brain audit and optimizer (22 passes, 4 groups) |
 | os-operator | `/os-operator` | Schedule recurring routines that operate the second brain (stub — full scheduling lands later) |
 | os-mcp | `/os-mcp` | Deploy a self-hosted Relay MCP server to Railway |

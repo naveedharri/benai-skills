@@ -1,7 +1,7 @@
 {
   "name": "obsidian",
-  "description": "Turn any folder into an AI-powered second brain with persistent memory, task management, meeting intelligence, daily routines, and output styles. Includes /os-setup, /os-optimizer (22-pass audit), /os-operator, /os-mcp, and /team-os. Solo or Business/Teams modes.",
-  "version": "3.8.0",
+  "description": "Turn any folder into an AI-powered second brain. Includes /os-setup, /os-dashboard-setup (full command-center dashboard with auto-installed plugins), /os-optimizer (22-pass audit), /os-operator, /os-mcp, and /team-os. Solo or Business/Teams modes.",
+  "version": "3.9.0",
   "author": {
     "name": "BenAI"
   }
