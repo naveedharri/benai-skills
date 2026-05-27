@@ -6,7 +6,7 @@ allowed-tools: Bash, Read, Write, Edit, AskUserQuestion
 
 # Agentic OS — Standalone web dashboard
 
-Packages a Next.js 14 dashboard wired to the Claude Agent SDK + up to 7 platform integrations, plus an optional Railway deployment path. The template lives in `references/standalone/template/` and ships with no secrets. Substitutions and live credential probes are the skill's job.
+Packages a Next.js 14 dashboard wired to the Claude Agent SDK + up to 7 platform integrations, plus an optional Railway deployment path. The template ships as `references/standalone/template.tar.gz` (packed because the Next.js dynamic-route folders use `[name]`/`[id]` paths that some plugin installers reject — extract it before use, see Step 3) and contains no secrets. Substitutions and live credential probes are the skill's job.
 
 The dashboard's conceptual model: a per-profile dashboard, a button-bar of actions, and snapshot-style data refreshes — backed by JSON snapshots and deployable as a real web app.
 
@@ -97,7 +97,13 @@ If a probe fails 2x, offer to skip that platform and continue. Don't loop foreve
 
 ## Step 3 — Generate the project
 
-1. Recursively copy `references/standalone/template/` to the target directory. Skip `.DS_Store`, `node_modules`, `.next`, `.runs`.
+1. Extract the bundled template, then copy it to the target directory. The template is packed as `references/standalone/template.tar.gz`:
+   ```bash
+   mkdir -p "<target-dir>"
+   tar -xzf "$SKILL_DIR/references/standalone/template.tar.gz" -C "$SKILL_DIR/references/standalone"  # creates references/standalone/template/ if not already extracted
+   cp -R "$SKILL_DIR/references/standalone/template/." "<target-dir>/"
+   ```
+   Skip `.DS_Store`, `node_modules`, `.next`, `.runs` when copying.
 2. Substitute three placeholders in the copy:
    - `{{ORG_NAME}}` → display name
    - `{{PROJECT_SLUG}}` → kebab-case slug (for `package.json`)
