@@ -1,0 +1,9 @@
+{
+  "name": "agentic-os",
+  "description": "Set up an agentic OS \u2014 inside an Obsidian vault (command-center dashboard + bundled plugins) or as a standalone Next.js web dashboard with live MCP integrations and optional Railway deploy. Includes /os-mcp to self-host the Relay MCP server.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BenAI"
+  },
+  "displayName": "Agentic OS"
+}

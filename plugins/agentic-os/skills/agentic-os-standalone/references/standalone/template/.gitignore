@@ -1,0 +1,13 @@
+node_modules
+.next
+out
+.env*.local
+*.tsbuildinfo
+.DS_Store
+
+# Phase 2: agent runtime
+.runs/*
+!.runs/.gitkeep
+.claude/skills/*
+!.claude/skills/.gitkeep
+.mcp.json

@@ -442,6 +442,26 @@
         }
       }
     },
+    "agentic-os": {
+      "skills": {
+        "agentic-os-obsidian": {
+          "displayName": "Agentic OS Obsidian",
+          "summary": "Set up an agentic OS inside an Obsidian vault — command-center dashboard + 5 auto-installed plugins, Home/per-profile/Vault Overview pages, button bar wired to Claude prompts"
+        },
+        "agentic-os-standalone": {
+          "displayName": "Agentic OS Standalone",
+          "summary": "Set up an agentic OS as a standalone Next.js web dashboard with live MCP integrations (Circle, Fireflies, YouTube/VidIQ, Unipile, Apify, Reddit) and optional Railway deploy"
+        },
+        "os-mcp": {
+          "displayName": "OS MCP",
+          "summary": "Deploy the Relay MCP server to your own Railway account — bundled source, guided token setup, one command to deploy"
+        },
+        "web-artifacts-builder": {
+          "displayName": "Web Artifacts Builder",
+          "summary": "Build elaborate multi-component claude.ai HTML artifacts with React, Tailwind, and shadcn/ui, then bundle to a single self-contained HTML file"
+        }
+      }
+    },
     "meta": {
       "skills": {
         "agent-browser": {

@@ -1,0 +1,1395 @@
+/* =====================================================================
+   Command Center — full-page OS-style dashboard
+   Single dataviewjs block renders the entire shell.
+   Brand: light yellow canvas, never black bg, 2px borders,
+          8px solid shadows, Space Grotesk + Montserrat
+   ===================================================================== */
+
+/* ---------- Hide Obsidian chrome inside the dashboard ------------- */
+.command-center .markdown-properties-container,
+.command-center .metadata-container,
+.command-center .frontmatter-container,
+.command-center .inline-title,
+.command-center .markdown-preview-section > div:has(> hr:only-child),
+.command-center .embedded-backlinks,
+.command-center .mod-header { display: none !important; }
+
+/* Hide the pane's view header (tab title bar) when showing dashboard */
+.workspace-leaf-content[data-type="markdown"]:has(.command-center) .view-header { display: none !important; }
+.workspace-leaf-content[data-type="markdown"]:has(.command-center) .view-content { padding: 0 !important; }
+.workspace-leaf-content[data-type="markdown"]:has(.command-center) { padding: 0 !important; }
+.workspace-leaf:has(.command-center) .view-content > * { padding: 0 !important; }
+
+/* ---------- Full-bleed canvas: defeat readable-line-width -------- */
+body.is-readable-line-width .command-center .markdown-preview-sizer,
+body.is-readable-line-width .command-center .cm-sizer,
+body.is-readable-line-width .command-center .cm-contentContainer,
+body.is-readable-line-width .command-center .cm-content,
+body .command-center .markdown-preview-sizer,
+body .command-center .markdown-preview-view,
+body .command-center .markdown-reading-view,
+body .command-center.markdown-source-view,
+body .command-center .cm-sizer,
+body .command-center .cm-contentContainer,
+body .command-center .cm-content {
+  background: #FAF3E3 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  min-height: 100vh !important;
+}
+body .command-center .markdown-preview-section,
+body .command-center .markdown-preview-section > div {
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+body .command-center .markdown-preview-section { min-height: 100vh !important; }
+
+/* Kill PLN/theme readable-line-width helpers ---------------------- */
+body .command-center .markdown-preview-view.is-readable-line-width .markdown-preview-sizer,
+body.is-readable-line-width .command-center .markdown-preview-sizer {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* The dataviewjs wrapper div ------------------------------------- */
+.command-center .cc-root,
+.command-center .block-language-dataviewjs {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  width: 100% !important;
+  max-width: none !important;
+}
+
+/* ---------- LOADER (bulletproof, pre-JS) ------------------------- */
+
+/* Hide ALL code blocks inside the dashboard. */
+.command-center pre,
+.command-center .HyperMD-codeblock,
+.command-center .cm-fenced-code,
+.command-center .block-language-dataviewjs > pre,
+.command-center .block-language-dataviewjs > code,
+.command-center .markdown-rendered > pre,
+.command-center .markdown-rendered > .block-language-dataviewjs > pre,
+.command-center .markdown-rendered > .block-language-dataviewjs > code {
+  display: none !important;
+}
+/* Re-enable pre/code that lives inside an active dashboard run card. */
+.command-center .cc-run-card pre,
+.command-center .cc-run-card code,
+.command-center .cc-run-output {
+  display: block !important;
+}
+
+/* Fullscreen canvas overlay until .cc-root exists */
+.command-center .markdown-preview-view:not(:has(.cc-root))::before,
+.command-center .markdown-reading-view:not(:has(.cc-root))::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: #FAF3E3;
+  z-index: 50;
+  pointer-events: none;
+}
+/* Centered card with spinner + brand text */
+.command-center .markdown-preview-view:not(:has(.cc-root))::after,
+.command-center .markdown-reading-view:not(:has(.cc-root))::after {
+  content: "Loading your agentic OS…";
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 51;
+  pointer-events: none;
+  padding: 88px 36px 28px;
+  background: transparent;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #020309;
+  opacity: 0.7;
+  background-image:
+    radial-gradient(circle, #020309 2px, transparent 2.5px),
+    conic-gradient(from 0deg, transparent 0deg, rgba(2,3,9,0.85) 270deg, transparent 360deg);
+  background-size: 0 0, 56px 56px;
+  background-repeat: no-repeat;
+  background-position: 50% 30px, 50% 30px;
+  /* Custom: render the spinner via a CSS mask hack — fallback to clean ring */
+}
+
+/* The fancy bg-image conic spinner isn't perfectly cross-browser; layer a real spinner via box-shadow trick.
+   Use an extra masked element via the `text` content: keep the text, draw a spinning ring above it. */
+.command-center .markdown-preview-view:not(:has(.cc-root))::after,
+.command-center .markdown-reading-view:not(:has(.cc-root))::after {
+  background: none;
+}
+/* Real spinner element (drawn with a CSS-only solution using outline + animation) */
+.command-center .markdown-preview-view:not(:has(.cc-root))::after {
+  box-shadow: none;
+}
+
+/* Fallback fallback: separate spinner element rendered by JS .cc-loader. CSS just handles pre-JS canvas + text. */
+
+/* Fallback: also cover the dataviewjs block itself */
+.command-center .block-language-dataviewjs {
+  position: relative;
+  min-height: 200px;
+  background: #FAF3E3 !important;
+}
+.command-center .block-language-dataviewjs:not(:has(.cc-root)) {
+  min-height: 100vh;
+}
+
+@keyframes cc-spin { to { transform: rotate(360deg); } }
+
+/* ---------- JS-rendered loader (cc-loading state) ---------------- */
+.cc-root.cc-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #FAF3E3;
+}
+.cc-loader-shell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+.cc-loader-spinner {
+  width: 56px; height: 56px;
+  border: 4px solid rgba(2,3,9,0.12);
+  border-top-color: #020309;
+  border-radius: 50%;
+  animation: cc-spin 0.7s linear infinite;
+}
+.cc-loader-text {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #020309;
+  opacity: 0.7;
+}
+
+/* Smooth fade-in when the actual dashboard mounts */
+.command-center .cc-root:not(.cc-loading) .cc-app {
+  animation: cc-fade-in 240ms ease-out;
+}
+@keyframes cc-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------- FRAPPE CHARTS — brand overrides --------------------- */
+.command-center .cc-chart-mount {
+  width: 100%;
+  min-height: 200px;
+  background: #FFFFFF;
+}
+.command-center .cc-chart-mount .chart-container,
+.command-center .cc-chart-mount > svg {
+  width: 100% !important;
+  background: transparent !important;
+}
+/* Hide Frappe's title; we use our own cc-card-head */
+.command-center .cc-chart-mount .title { display: none !important; }
+/* Axis lines + ticks */
+.command-center .cc-chart-mount .y.axis line,
+.command-center .cc-chart-mount .x.axis line {
+  stroke: rgba(2,3,9,0.18) !important;
+}
+.command-center .cc-chart-mount .y.axis text,
+.command-center .cc-chart-mount .x.axis text,
+.command-center .cc-chart-mount .y-value-text,
+.command-center .cc-chart-mount .data-point-value,
+.command-center .cc-chart-mount text {
+  fill: #020309 !important;
+  font-family: "Space Grotesk", system-ui, sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 11px !important;
+}
+/* Bar / line strokes */
+.command-center .cc-chart-mount .bar {
+  stroke: #020309 !important;
+  stroke-width: 1.5 !important;
+}
+.command-center .cc-chart-mount .line-graph-path { stroke-width: 2.5 !important; }
+.command-center .cc-chart-mount .dot { stroke: #020309 !important; stroke-width: 2 !important; }
+/* Tooltip */
+.command-center .graph-svg-tip {
+  background: #020309 !important;
+  color: #FAF3E3 !important;
+  border-radius: 8px !important;
+  border: 2px solid #020309 !important;
+  padding: 8px 12px !important;
+  font-family: "Space Grotesk", system-ui, sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 12px !important;
+}
+.command-center .graph-svg-tip .title,
+.command-center .graph-svg-tip ul,
+.command-center .graph-svg-tip li,
+.command-center .graph-svg-tip strong { color: #FAF3E3 !important; }
+.command-center .graph-svg-tip .arrow {
+  border-top-color: #020309 !important;
+}
+/* Heatmap tiles — keep brand palette + tight square cells */
+.command-center .cc-chart-mount[data-chart="heatmap"] { min-height: 140px; }
+.command-center .cc-chart-heatmap .domain-name { display: none !important; }
+.command-center .cc-chart-heatmap rect { rx: 2; }
+
+/* Sparkline mount — strip Frappe chrome, tiny inline chart */
+.command-center .cc-spark-mount {
+  min-height: 70px !important;
+  margin: 0 -8px;
+}
+.command-center .cc-spark-mount .chart-title,
+.command-center .cc-spark-mount .graph-stats-container,
+.command-center .cc-spark-mount .chart-legend,
+.command-center .cc-spark-mount .y.axis,
+.command-center .cc-spark-mount .x.axis,
+.command-center .cc-spark-mount .chart-stats { display: none !important; }
+.command-center .cc-spark-mount .frappe-chart .chart-container { padding: 0 !important; }
+.command-center .cc-spark-mount svg { overflow: visible; }
+
+/* Donut/pie mount — tighter padding */
+.command-center .cc-ring-mount,
+.command-center .cc-pie-mount {
+  min-height: 200px;
+}
+.command-center .cc-ring-mount .chart-legend,
+.command-center .cc-pie-mount .chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  justify-content: center;
+  font-family: "Space Grotesk", system-ui, sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Percentage chart — taller bar, brand strokes */
+.command-center .cc-pct-mount .percentage-graph rect { stroke: #020309; stroke-width: 1.5; }
+.command-center .cc-pct-mount .chart-legend {
+  font-family: "Space Grotesk", system-ui, sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Channel legend rows under percentage chart */
+.cc-channel-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 14px;
+}
+.cc-channel-row {
+  display: grid;
+  grid-template-columns: 14px 1fr 50px;
+  align-items: center;
+  gap: 10px;
+}
+.cc-channel-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  border: 1.5px solid #020309;
+}
+.cc-channel-label {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.cc-channel-val {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  text-align: right;
+}
+
+/* ---------- NAV LOADER (between dashboard pages) ---------------- */
+.cc-nav-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: #FAF3E3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: cc-fade-in 120ms ease-out;
+}
+.cc-nav-loader.cc-fading {
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+.cc-nav-loader .cc-loader-shell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+.cc-nav-loader .cc-loader-spinner {
+  width: 56px; height: 56px;
+  border: 4px solid rgba(2,3,9,0.12);
+  border-top-color: #020309;
+  border-radius: 50%;
+  animation: cc-spin 0.7s linear infinite;
+}
+.cc-nav-loader .cc-loader-text {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #020309;
+  opacity: 0.7;
+}
+
+/* ---------- ACTION LOADER (button-triggered) --------------------- */
+.cc-action-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(2,3,9,0.45);
+  backdrop-filter: blur(2px);
+  animation: cc-fade-in 160ms ease-out;
+}
+.cc-action-loader .cc-loader-card {
+  background: #FAF3E3;
+  border: 2px solid #020309;
+  border-radius: 14px;
+  box-shadow: 8px 8px 0 #020309;
+  padding: 36px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 420px;
+  text-align: center;
+}
+.cc-action-loader .cc-loader-spinner {
+  width: 56px; height: 56px;
+  border: 4px solid rgba(2,3,9,0.12);
+  border-top-color: #020309;
+  border-radius: 50%;
+  animation: cc-spin 0.7s linear infinite;
+}
+.cc-action-loader .cc-loader-title {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 17px;
+  color: #020309;
+  letter-spacing: -0.01em;
+}
+.cc-action-loader .cc-loader-sub {
+  font-family: "Montserrat", system-ui, sans-serif;
+  font-size: 13px;
+  color: #020309;
+  opacity: 0.65;
+  line-height: 1.4;
+}
+.cc-action-loader .cc-loader-close {
+  margin-top: 8px;
+  background: #FFFFFF !important;
+  color: #020309 !important;
+  border: 2px solid #020309 !important;
+  border-radius: 10px !important;
+  box-shadow: 4px 4px 0 #020309 !important;
+  font-family: "Space Grotesk", system-ui, sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  padding: 10px 22px !important;
+  cursor: pointer;
+  transition: transform 80ms ease, box-shadow 80ms ease, background 80ms ease, color 80ms ease;
+}
+.cc-action-loader .cc-loader-close:hover {
+  background: #020309 !important;
+  color: #FAF3E3 !important;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #020309 !important;
+}
+
+/* ---------- Design tokens ---------------------------------------- */
+.cc-root {
+  --dark: #020309;
+  --canvas: #FAF3E3;
+  --surface: #FFFFFF;
+  --neutral: #E5F5F9;
+  --primary: #D2ECD0;
+  --accent:  #FDEEC4;
+  --alert:   #F3C1C0;
+  --muted: rgba(2,3,9,0.06);
+  --line:  rgba(2,3,9,0.10);
+  --shadow:   8px 8px 0 var(--dark);
+  --shadow-sm: 4px 4px 0 var(--dark);
+  --shadow-hover: 6px 6px 0 var(--dark);
+  --r: 14px;
+  --r-sm: 10px;
+  --bd: 2px solid var(--dark);
+  --heading: "Space Grotesk", "Plus Jakarta Sans", system-ui, sans-serif;
+  --body: "Montserrat", system-ui, sans-serif;
+
+  color: var(--dark);
+  font-family: var(--body);
+}
+
+.cc-root *, .cc-root *::before, .cc-root *::after { box-sizing: border-box; }
+
+/* ---------- App shell (sidebar + main) --------------------------- */
+.cc-app {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  background: var(--canvas);
+  overflow: hidden;
+}
+
+/* ---------- SIDEBAR (fixed, scroll-independent) ------------------ */
+.cc-sidebar {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 240px;
+  padding: 24px 16px 20px;
+  gap: 4px;
+  background: var(--surface);
+  border-right: var(--bd);
+  height: 100vh;
+  overflow-y: auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* Brand header: left-aligned, with name */
+.cc-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 6px;
+  margin: 0 0 22px;
+  color: var(--dark) !important;
+}
+.cc-brand-mark {
+  width: 38px; height: 38px;
+  flex: 0 0 38px;
+  display: grid; place-items: center;
+  background: var(--primary);
+  border: var(--bd);
+  border-radius: var(--r-sm);
+  box-shadow: var(--shadow-sm);
+  font-family: var(--heading);
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--dark);
+  overflow: hidden;
+}
+.cc-brand-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.cc-brand-text {
+  font-family: var(--heading);
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  color: var(--dark) !important;
+}
+.cc-brand-sub {
+  display: block;
+  font-family: var(--body);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.55;
+  margin-top: 2px;
+}
+
+/* Section label */
+.cc-nav-section {
+  font-family: var(--heading);
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--dark) !important;
+  opacity: 0.5;
+  padding: 0 10px;
+  margin: 12px 0 4px;
+}
+
+.cc-nav { display: flex; flex-direction: column; gap: 3px; width: 100%; }
+
+.command-center .cc-nav-btn,
+.cc-root .cc-nav-btn {
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-start !important;
+  gap: 12px;
+  width: 100%;
+  height: 42px;
+  padding: 0 12px !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 2px solid transparent !important;
+  border-radius: var(--r-sm) !important;
+  box-shadow: none !important;
+  cursor: pointer;
+  color: var(--dark) !important;
+  font-family: var(--heading) !important;
+  font-weight: 600 !important;
+  font-size: 13.5px !important;
+  text-align: left !important;
+  letter-spacing: -0.005em;
+  text-shadow: none !important;
+  transition: background 100ms ease, border-color 100ms ease, transform 80ms ease, box-shadow 80ms ease, color 100ms ease;
+}
+.cc-nav-btn .cc-icon {
+  width: 18px; height: 18px;
+  flex: 0 0 18px;
+  color: var(--dark) !important;
+  stroke: currentColor;
+  transition: color 100ms ease;
+}
+.cc-nav-label {
+  line-height: 1;
+  color: var(--dark) !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Hover: subtle bg shift, NEVER kill the text */
+.cc-nav-btn:hover {
+  background: var(--canvas) !important;
+  border-color: rgba(2,3,9,0.18);
+  transform: none !important;
+}
+.cc-nav-btn:hover .cc-icon,
+.cc-nav-btn:hover .cc-nav-label { color: var(--dark) !important; }
+
+.cc-nav-btn:active {
+  transform: translate(1px, 1px) !important;
+  background: var(--accent) !important;
+}
+
+/* Active state: filled primary, prominent */
+.cc-nav-btn.active {
+  background: var(--primary) !important;
+  border-color: var(--dark) !important;
+  box-shadow: var(--shadow-sm) !important;
+  font-weight: 800 !important;
+}
+.cc-nav-btn.active .cc-icon,
+.cc-nav-btn.active .cc-nav-label { color: var(--dark) !important; }
+.cc-nav-btn.active:hover {
+  background: var(--primary) !important;
+  filter: brightness(0.96);
+}
+
+/* Back button (profile pages) */
+.cc-nav-back {
+  margin: 0 0 14px;
+  background: var(--canvas) !important;
+  border-color: var(--dark) !important;
+  box-shadow: var(--shadow-sm) !important;
+  font-weight: 700 !important;
+}
+
+/* Divider */
+.cc-nav-divider {
+  height: 1px;
+  background: rgba(2,3,9,0.12);
+  margin: 12px 6px;
+}
+
+.cc-nav-spacer { flex: 1; min-height: 16px; }
+
+/* Sidebar footer (system buttons) — same style as main nav */
+.cc-nav-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin: 0 0 48px;
+}
+/* Footer buttons inherit the standard .cc-nav-btn styling (transparent,
+   no border). Hover state matches main nav. No special background here. */
+
+/* ---------- SHELL (right side, scrollable) ----------------------- */
+.cc-shell {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.cc-shell::-webkit-scrollbar { width: 10px; }
+.cc-shell::-webkit-scrollbar-track { background: var(--canvas); }
+.cc-shell::-webkit-scrollbar-thumb {
+  background: rgba(2,3,9,0.2);
+  border-radius: 5px;
+  border: 2px solid var(--canvas);
+}
+.cc-shell::-webkit-scrollbar-thumb:hover { background: rgba(2,3,9,0.4); }
+
+/* ---------- TOPBAR ----------------------------------------------- */
+.cc-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px 36px;
+  background: var(--canvas);
+  border-bottom: var(--bd);
+  flex-wrap: wrap;
+}
+.cc-title-group { display: flex; flex-direction: column; gap: 2px; }
+.cc-eyebrow {
+  font-family: var(--heading);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  opacity: 0.55;
+}
+.cc-title {
+  font-family: var(--heading);
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+  line-height: 1;
+}
+.cc-top-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* ---------- BUTTONS (forced over dark theme) --------------------- */
+.command-center .cc-btn,
+.cc-root .cc-btn {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface) !important;
+  color: var(--dark) !important;
+  border: var(--bd) !important;
+  border-radius: var(--r-sm) !important;
+  box-shadow: var(--shadow-sm) !important;
+  font-family: var(--heading) !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  padding: 12px 18px !important;
+  cursor: pointer;
+  transition: transform 80ms ease, box-shadow 80ms ease, background 80ms ease, color 80ms ease;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  text-shadow: none !important;
+}
+.command-center .cc-btn .cc-btn-ico,
+.command-center .cc-btn span { color: var(--dark) !important; }
+.cc-btn-ico { font-size: 16px; }
+
+/* Hover: invert (dark fill, light text) */
+.command-center .cc-btn:hover,
+.cc-root .cc-btn:hover {
+  background: var(--dark) !important;
+  color: var(--canvas) !important;
+  filter: none;
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-hover) !important;
+}
+.command-center .cc-btn:hover .cc-btn-ico,
+.command-center .cc-btn:hover span { color: var(--canvas) !important; }
+.command-center .cc-btn:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--dark) !important; }
+
+/* Variants — explicit color too so theme can't bleed through */
+.command-center .cc-btn-primary { background: var(--primary) !important; color: var(--dark) !important; }
+.command-center .cc-btn-accent  { background: var(--accent)  !important; color: var(--dark) !important; }
+.command-center .cc-btn-blue    { background: var(--neutral) !important; color: var(--dark) !important; }
+/* Legacy alias: cc-btn-dark used to mean dark fill — now renders as light blue (visible) */
+.command-center .cc-btn-dark    { background: var(--neutral) !important; color: var(--dark) !important; }
+.command-center .cc-btn-dark span,
+.command-center .cc-btn-dark .cc-btn-ico { color: var(--dark) !important; }
+
+.command-center .cc-btn-block {
+  display: flex !important;
+  width: 100% !important;
+  justify-content: flex-start !important;
+  padding: 22px 22px !important;
+  font-size: 15px !important;
+  gap: 14px !important;
+}
+.command-center .cc-btn-block .cc-btn-ico { font-size: 20px; }
+.command-center .cc-action-list { gap: 14px !important; }
+
+/* ---------- MAIN ------------------------------------------------- */
+.cc-main { padding: 28px 36px 80px; flex: 1; }
+
+/* ---------- STATS ROW -------------------------------------------- */
+.cc-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 24px;
+}
+.cc-stat {
+  background: var(--neutral);
+  border: var(--bd);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-sm);
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 140px;
+}
+.cc-stat-primary { background: var(--primary); }
+.cc-stat-alert   { background: var(--alert); }
+.cc-stat-label {
+  font-family: var(--heading);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.cc-stat-value {
+  font-family: var(--heading);
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.cc-stat-text { font-size: 22px; line-height: 1.15; }
+.cc-stat-unit { font-size: 18px; font-weight: 600; opacity: 0.5; margin-left: 4px; }
+.cc-stat-foot {
+  font-family: var(--body);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.55;
+  margin-top: auto;
+}
+.cc-stat-bar {
+  background: rgba(2,3,9,0.12);
+  border-radius: 4px;
+  height: 6px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+.cc-stat-bar-fill {
+  background: var(--dark);
+  height: 100%;
+  border-radius: 4px;
+}
+
+@media (max-width: 1100px) { .cc-stats { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px)  { .cc-stats { grid-template-columns: 1fr; } }
+
+/* ---------- CARD GRID -------------------------------------------- */
+.cc-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 22px;
+  margin-bottom: 28px;
+}
+.cc-grid:last-child { margin-bottom: 0; }
+.cc-view > .cc-card { margin-bottom: 28px; }
+.cc-view > .cc-card:last-child { margin-bottom: 0; }
+.cc-card {
+  background: var(--surface);
+  border: var(--bd);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.cc-card-wide { grid-column: 1 / -1; }
+.cc-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: var(--bd);
+  background: var(--canvas);
+}
+.cc-card-head h3 {
+  font-family: var(--heading);
+  font-size: 14px;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.cc-card-body { padding: 18px 20px; }
+.cc-tag {
+  font-family: var(--heading);
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--neutral);
+  border: 2px solid var(--dark);
+  border-radius: 999px;
+  padding: 2px 10px;
+  letter-spacing: 0.04em;
+}
+.cc-tag-accent { background: var(--accent); }
+
+@media (max-width: 1100px) { .cc-grid { grid-template-columns: 1fr; } }
+
+/* ---------- POINT A → POINT B ------------------------------------ */
+.cc-pap { display: flex; flex-direction: column; gap: 12px; }
+.cc-pap-row {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+.cc-pap-row p { margin: 0; font-size: 16px; line-height: 1.4; }
+.cc-pap-tag {
+  font-family: var(--heading);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  background: var(--neutral);
+  border: var(--bd);
+  border-radius: 6px;
+  padding: 5px 8px;
+  text-align: center;
+}
+.cc-pap-tag-next { background: var(--primary); }
+.cc-pap-arrow {
+  font-size: 24px;
+  font-weight: 800;
+  margin-left: 22px;
+  opacity: 0.4;
+  line-height: 1;
+}
+
+/* ---------- QUOTE ------------------------------------------------ */
+.cc-quote {
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+  border: none;
+  color: var(--dark);
+}
+
+/* ---------- TABLES ----------------------------------------------- */
+.cc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.cc-table th {
+  font-family: var(--heading);
+  font-weight: 800;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-align: left;
+  padding: 10px 14px;
+  background: var(--canvas);
+  border-bottom: var(--bd);
+  color: var(--dark);
+}
+.cc-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--body);
+  color: var(--dark);
+}
+.cc-table tr:last-child td { border-bottom: none; }
+.cc-table tr:hover td { background: var(--canvas); }
+.cc-table a.cc-link {
+  color: var(--dark);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.cc-table a.cc-link:hover { background: var(--accent); }
+
+/* ---------- EMPTY STATE ------------------------------------------ */
+.cc-empty {
+  padding: 24px;
+  text-align: center;
+  color: var(--dark);
+  opacity: 0.55;
+  font-size: 13px;
+  font-family: var(--body);
+  background: var(--canvas);
+  border-radius: var(--r-sm);
+}
+.cc-empty-mini {
+  padding: 12px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.4;
+}
+
+/* ---------- ACTIONS view (list of block buttons) ----------------- */
+.cc-action-list { display: flex; flex-direction: column; gap: 10px; }
+
+/* =====================================================================
+   METRICS, CHARTS, GRAPHS — added below
+   ===================================================================== */
+
+/* ---------- KPI cards (hero row) --------------------------------- */
+.cc-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 22px;
+}
+.cc-kpi {
+  background: var(--surface);
+  border: var(--bd);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-sm);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 170px;
+  position: relative;
+}
+.cc-kpi-primary { background: var(--primary); }
+.cc-kpi-alert   { background: var(--alert); }
+.cc-kpi-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.cc-kpi-label {
+  font-family: var(--heading);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+.cc-kpi-value {
+  font-family: var(--heading);
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin: 4px 0 0;
+}
+.cc-kpi-unit {
+  font-size: 18px;
+  font-weight: 600;
+  opacity: 0.5;
+  margin-left: 4px;
+}
+.cc-kpi-spark { margin: 4px 0; }
+.cc-kpi-spark .cc-spark { width: 100%; height: 36px; display: block; }
+.cc-kpi-meter {
+  background: rgba(2,3,9,0.12);
+  border-radius: 4px;
+  height: 8px;
+  overflow: hidden;
+}
+.cc-kpi-meter-fill { background: var(--dark); height: 100%; border-radius: 4px; }
+.cc-kpi-foot {
+  font-family: var(--body);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.55;
+  margin-top: auto;
+}
+.cc-kpi-dots { display: flex; gap: 5px; margin: 4px 0; }
+.cc-dot {
+  width: 14px; height: 14px;
+  border: var(--bd);
+  border-radius: 4px;
+  background: var(--canvas);
+}
+.cc-dot-on { background: var(--dark); }
+
+/* ---------- DELTA PILL ------------------------------------------- */
+.cc-delta {
+  font-family: var(--heading);
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1.5px solid var(--dark);
+  letter-spacing: 0.04em;
+  background: var(--surface);
+  white-space: nowrap;
+}
+.cc-delta-pos { background: var(--primary); }
+.cc-delta-neg { background: var(--alert); }
+
+/* ---------- CHART CARDS / GRID ----------------------------------- */
+.cc-grid-3 { grid-template-columns: 1.2fr 1fr 1fr; }
+.cc-grid-3-1 { grid-template-columns: 2fr 1fr; }
+.cc-card-chart .cc-card-body {
+  padding: 18px 20px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+.cc-chart, .cc-heatmap, .cc-spark, .cc-ring {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+.cc-chart { height: 160px; }
+
+/* ---------- HEATMAP ---------------------------------------------- */
+.cc-heat-body { gap: 14px; }
+.cc-heat-body .cc-heatmap { max-height: 130px; }
+.cc-heat-legend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--heading);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.6;
+  margin-top: 6px;
+}
+.cc-heat-key {
+  display: inline-block;
+  width: 14px; height: 14px;
+  border: 1.5px solid var(--dark);
+  border-radius: 3px;
+}
+
+/* ---------- RINGS (goal progress) -------------------------------- */
+.cc-rings {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  padding: 16px 18px !important;
+}
+.cc-ring-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px;
+  background: var(--canvas);
+  border: var(--bd);
+  border-radius: var(--r-sm);
+}
+.cc-ring-item .cc-ring { width: 70px; height: 70px; }
+.cc-ring-label {
+  font-family: var(--heading);
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: -0.01em;
+}
+
+/* ---------- TOP FOLDERS bars ------------------------------------ */
+.cc-folders { display: flex; flex-direction: column; gap: 10px; }
+.cc-folder-row {
+  display: grid;
+  grid-template-columns: 120px 1fr 36px;
+  align-items: center;
+  gap: 12px;
+}
+.cc-folder-name {
+  font-family: var(--heading);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.cc-folder-bar {
+  height: 14px;
+  background: var(--canvas);
+  border: var(--bd);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.cc-folder-bar-fill {
+  height: 100%;
+  background: var(--primary);
+  border-right: 1.5px solid var(--dark);
+}
+.cc-folder-count {
+  font-family: var(--heading);
+  font-weight: 800;
+  font-size: 13px;
+  text-align: right;
+}
+
+/* ---------- CURRENT FOCUS card ----------------------------------- */
+.cc-card-focus .cc-card-body {
+  display: flex; flex-direction: column; justify-content: center;
+  gap: 8px;
+  background: var(--accent);
+  min-height: 120px;
+}
+.cc-focus-text {
+  font-family: var(--heading);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.cc-focus-meta {
+  font-family: var(--body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.65;
+}
+
+/* ---------- TEAM PERSON CARDS (Home → Team view) ----------------- */
+.cc-team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+  padding: 18px 20px !important;
+}
+.cc-person-card {
+  background: var(--canvas);
+  border: var(--bd);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-sm);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  cursor: pointer;
+  text-decoration: none !important;
+  color: var(--dark) !important;
+  transition: transform 80ms ease, box-shadow 80ms ease, background 80ms ease;
+}
+.cc-person-card:hover {
+  background: var(--surface);
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-hover);
+  text-decoration: none !important;
+}
+.cc-person-head { display: flex; align-items: center; gap: 12px; }
+.cc-person-avatar {
+  width: 48px; height: 48px;
+  flex: 0 0 48px;
+  display: grid; place-items: center;
+  background: var(--primary);
+  border: var(--bd);
+  border-radius: 50%;
+  font-family: var(--heading);
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--dark);
+  overflow: hidden;
+}
+.cc-person-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.cc-person-id { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.cc-person-name {
+  font-family: var(--heading);
+  font-weight: 800;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+}
+.cc-person-meta {
+  font-family: var(--body);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.55;
+}
+.cc-person-focus {
+  font-family: var(--body);
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--dark);
+  min-height: 40px;
+}
+.cc-muted { opacity: 0.45; font-style: italic; }
+.cc-person-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* ---------- CHIPS ------------------------------------------------- */
+.cc-chip {
+  display: inline-block;
+  font-family: var(--heading);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border: 2px solid var(--dark);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--dark) !important;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.cc-chip-primary { background: var(--primary); }
+.cc-chip-accent  { background: var(--accent); }
+.cc-chip-alert   { background: var(--alert); }
+
+/* Due-date pill: subtle neutral, monospace, fixed-width, never wraps */
+.cc-chip-date {
+  display: inline-block;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border: 1px solid rgba(2, 3, 9, 0.18);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--dark) !important;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- MARKDOWN BULLET LIST --------------------------------- */
+.cc-md-list {
+  margin: 0;
+  padding-left: 22px;
+  list-style: disc;
+}
+.cc-md-list li {
+  margin: 8px 0;
+  font-family: var(--body);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--dark) !important;
+}
+.cc-md-list li strong { font-family: var(--heading); font-weight: 800; }
+.cc-md-list li em     { font-style: italic; }
+.cc-md-list li code,
+.cc-table td code,
+.cc-code {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 12px;
+  background: var(--accent);
+  border: 1.5px solid var(--dark);
+  border-radius: 4px;
+  padding: 1px 6px;
+  color: var(--dark) !important;
+}
+.cc-md-list li .cc-link { font-weight: 700; }
+
+/* Override default link color (was light blue under dark theme) ---- */
+.cc-link {
+  color: var(--dark) !important;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.cc-link:hover { background: var(--accent); }
+
+/* ---------- AGG ROWS (analytics) --------------------------------- */
+.cc-agg-list { display: flex; flex-direction: column; gap: 8px; }
+.cc-agg-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--canvas);
+  border: var(--bd);
+  border-radius: var(--r-sm);
+}
+.cc-agg-label {
+  font-family: var(--heading);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.cc-agg-val {
+  font-family: var(--heading);
+  font-size: 22px;
+  font-weight: 800;
+}
+
+/* ---------- PULSE ROWS ------------------------------------------- */
+.cc-pulse-row {
+  display: grid;
+  grid-template-columns: 60px 1fr 40px;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 0;
+}
+.cc-pulse-label {
+  font-family: var(--heading);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.7;
+}
+.cc-pulse-total {
+  font-family: var(--heading);
+  font-size: 16px;
+  font-weight: 800;
+  text-align: right;
+}
+
+/* ---------- GRID variant ----------------------------------------- */
+.cc-grid-2 { grid-template-columns: 1fr 1fr; }
+
+/* ---------- TASK TABLE (with owner column) ----------------------- */
+.cc-table-tasks td:first-child { width: 110px; vertical-align: top; white-space: nowrap; }
+.cc-table-tasks td:nth-child(2) { white-space: nowrap; vertical-align: top; }
+
+/* ---------- Responsive ------------------------------------------- */
+@media (max-width: 1200px) {
+  .cc-kpis { grid-template-columns: repeat(2, 1fr); }
+  .cc-grid-3 { grid-template-columns: 1fr 1fr; }
+  .cc-grid-3-1 { grid-template-columns: 1fr; }
+  .cc-grid-2 { grid-template-columns: 1fr; }
+}
+@media (max-width: 900px) {
+  .cc-app { grid-template-columns: 64px 1fr; }
+  .cc-sidebar { padding: 18px 8px; }
+  .cc-nav-btn { justify-content: center; padding: 0; }
+  .cc-nav-label, .cc-brand + .cc-nav-back .cc-nav-label { display: none; }
+}
+@media (max-width: 720px) {
+  .cc-kpis { grid-template-columns: 1fr; }
+  .cc-grid-3 { grid-template-columns: 1fr; }
+}
+
+/* ---------- Hide block edit indicator on the dataviewjs ---------- */
+.command-center .edit-block-button { opacity: 0; pointer-events: none; }
+.command-center .edit-block-button:hover { opacity: 0.4; }
+

@@ -202,6 +202,27 @@
       ]
     },
     {
+      "name": "agentic-os",
+      "displayName": "Agentic OS",
+      "source": "./plugins/agentic-os",
+      "description": "Set up an agentic OS — inside an Obsidian vault (command-center dashboard + bundled plugins) or as a standalone Next.js web dashboard with live MCP integrations and optional Railway deploy. Includes /os-mcp to self-host the Relay MCP server.",
+      "version": "1.0.0",
+      "author": {
+        "name": "BenAI"
+      },
+      "keywords": [
+        "agentic-os",
+        "dashboard",
+        "command-center",
+        "obsidian",
+        "nextjs",
+        "mcp",
+        "railway",
+        "second-brain",
+        "relay"
+      ]
+    },
+    {
       "name": "obsidian",
       "source": "./plugins/obsidian",
       "description": "Turn any folder into an AI-powered second brain. Includes /os-setup, /agentic-os-setup (command-center dashboard inside Obsidian OR standalone Next.js web app), /os-optimizer (22-pass audit), /os-operator, /os-mcp, and /team-os.",
