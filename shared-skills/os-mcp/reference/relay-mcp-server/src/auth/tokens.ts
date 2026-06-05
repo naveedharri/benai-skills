@@ -1,6 +1,8 @@
 import crypto from "node:crypto";
+import path from "node:path";
 import { SignJWT, jwtVerify } from "jose";
-import { JWT_SECRET, PUBLIC_URL } from "../config.js";
+import { JWT_SECRET, PUBLIC_URL, DATA_DIR } from "../config.js";
+import { loadJson, saveJson } from "./jsonfile.js";
 
 export const ACCESS_TOKEN_TTL_SEC = 60 * 60;
 export const REFRESH_TOKEN_TTL_SEC = 30 * 24 * 60 * 60;
@@ -49,28 +51,72 @@ export async function verifyAccessJwt(token: string): Promise<VerifiedAccessToke
   return { sid, email, clientId, expSec };
 }
 
-const refreshTokens = new Map<string, { sid: string; clientId: string; expiresAt: number }>();
+// Refresh tokens persist to DATA_DIR/refresh.json (mirrors clients.ts) so a
+// Railway redeploy does not orphan every connected client's refresh token.
+// Sessions already persist to DATA_DIR/sessions.enc; this closes the last
+// in-memory auth store.
+
+interface RefreshEntry { sid: string; clientId: string; expiresAt: number }
+
+const REFRESH_FILE = path.join(DATA_DIR, "refresh.json");
+
+type RefreshStore = Record<string, RefreshEntry>;
+
+let refreshCache: RefreshStore | null = null;
+
+function loadRefresh(): RefreshStore {
+  if (refreshCache) return refreshCache;
+  refreshCache = loadJson<RefreshStore>(REFRESH_FILE, {});
+  return refreshCache;
+}
+
+function persistRefresh(): void {
+  if (!refreshCache) return;
+  saveJson(REFRESH_FILE, refreshCache);
+}
+
+function sweepRefresh(): boolean {
+  const store = loadRefresh();
+  const now = Date.now();
+  let dirty = false;
+  for (const [token, entry] of Object.entries(store)) {
+    if (entry.expiresAt < now) {
+      delete store[token];
+      dirty = true;
+    }
+  }
+  return dirty;
+}
 
 export function issueRefreshToken(sid: string, clientId: string): string {
+  if (sweepRefresh()) persistRefresh();
+  const store = loadRefresh();
   const token = crypto.randomBytes(32).toString("hex");
-  refreshTokens.set(token, {
+  store[token] = {
     sid,
     clientId,
     expiresAt: Date.now() + REFRESH_TOKEN_TTL_SEC * 1000,
-  });
+  };
+  persistRefresh();
   return token;
 }
 
 export function redeemRefreshToken(token: string): { sid: string; clientId: string } | undefined {
-  const entry = refreshTokens.get(token);
+  const store = loadRefresh();
+  const entry = store[token];
   if (!entry) return undefined;
   if (entry.expiresAt < Date.now()) {
-    refreshTokens.delete(token);
+    delete store[token];
+    persistRefresh();
     return undefined;
   }
   return { sid: entry.sid, clientId: entry.clientId };
 }
 
 export function revokeRefreshToken(token: string): void {
-  refreshTokens.delete(token);
+  const store = loadRefresh();
+  if (store[token]) {
+    delete store[token];
+    persistRefresh();
+  }
 }
