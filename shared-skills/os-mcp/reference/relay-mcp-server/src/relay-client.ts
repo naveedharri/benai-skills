@@ -234,6 +234,31 @@ function readSyncStore(doc: Y.Doc): Map<string, string> {
   return result;
 }
 
+// --- Path normalization ---
+//
+// The Relay sync store keys file paths with a leading slash ("/todo.md"),
+// but the tool schema documents paths without one ("todo.md"). Accept both
+// on every lookup, and normalize to the store's leading-slash convention
+// when creating new entries, so documented calls and store-listed paths
+// both resolve.
+
+function pathVariants(filePath: string): string[] {
+  const stripped = filePath.replace(/^\/+/, "");
+  const variants = [filePath, `/${stripped}`, stripped];
+  return [...new Set(variants)];
+}
+
+function resolveStoredPath(syncStore: Map<string, string>, filePath: string): string | undefined {
+  for (const v of pathVariants(filePath)) {
+    if (syncStore.has(v)) return v;
+  }
+  return undefined;
+}
+
+function toStoreKey(filePath: string): string {
+  return `/${filePath.replace(/^\/+/, "")}`;
+}
+
 export async function listFiles(authToken: string, folderName: string): Promise<Array<{ path: string; docId: string }>> {
   const relayId = await resolveRelayId(authToken);
   const folderGuid = await resolveFolderGuid(authToken, relayId, folderName);
@@ -263,7 +288,8 @@ export async function readFile(authToken: string, folderName: string, filePath: 
   let fileDocId: string;
   try {
     const syncStore = readSyncStore(folderDoc);
-    const docId = syncStore.get(filePath);
+    const storedPath = resolveStoredPath(syncStore, filePath);
+    const docId = storedPath ? syncStore.get(storedPath) : undefined;
     if (!docId) {
       const available = Array.from(syncStore.keys()).slice(0, 20).join(", ");
       throw new Error(`File "${filePath}" not found in folder "${folderName}". Some files: ${available}`);
@@ -296,19 +322,21 @@ export async function writeFile(authToken: string, folderName: string, filePath:
   let fileDocId: string;
   try {
     const syncStore = readSyncStore(folderDoc);
-    const existingDocId = syncStore.get(filePath);
+    const storedPath = resolveStoredPath(syncStore, filePath);
+    const existingDocId = storedPath ? syncStore.get(storedPath) : undefined;
 
     if (existingDocId) {
       fileDocId = existingDocId;
     } else {
       fileDocId = crypto.randomUUID();
+      const storeKey = toStoreKey(filePath);
 
       folderDoc.transact(() => {
         const docsMap = folderDoc.getMap("docs");
-        docsMap.set(filePath, fileDocId);
+        docsMap.set(storeKey, fileDocId);
 
         const filemetaMap = folderDoc.getMap("filemeta_v0");
-        filemetaMap.set(filePath, { id: fileDocId, type: "markdown", version: 0 });
+        filemetaMap.set(storeKey, { id: fileDocId, type: "markdown", version: 0 });
       });
 
       await new Promise(resolve => setTimeout(resolve, 1500));
@@ -358,7 +386,8 @@ export async function updateFile(
   let fileDocId: string;
   try {
     const syncStore = readSyncStore(folderDoc);
-    const docId = syncStore.get(filePath);
+    const storedPath = resolveStoredPath(syncStore, filePath);
+    const docId = storedPath ? syncStore.get(storedPath) : undefined;
     if (!docId) {
       throw new Error(`File "${filePath}" not found in folder "${folderName}". Use vault_write to create it first.`);
     }
@@ -424,20 +453,22 @@ export async function appendFile(
   let created = false;
   try {
     const syncStore = readSyncStore(folderDoc);
-    const existingDocId = syncStore.get(filePath);
+    const storedPath = resolveStoredPath(syncStore, filePath);
+    const existingDocId = storedPath ? syncStore.get(storedPath) : undefined;
 
     if (existingDocId) {
       fileDocId = existingDocId;
     } else {
       fileDocId = crypto.randomUUID();
       created = true;
+      const storeKey = toStoreKey(filePath);
 
       folderDoc.transact(() => {
         const docsMap = folderDoc.getMap("docs");
-        docsMap.set(filePath, fileDocId);
+        docsMap.set(storeKey, fileDocId);
 
         const filemetaMap = folderDoc.getMap("filemeta_v0");
-        filemetaMap.set(filePath, { id: fileDocId, type: "markdown", version: 0 });
+        filemetaMap.set(storeKey, { id: fileDocId, type: "markdown", version: 0 });
       });
 
       await new Promise(resolve => setTimeout(resolve, 1500));
@@ -474,16 +505,17 @@ export async function deleteFile(authToken: string, folderName: string, filePath
 
   try {
     const syncStore = readSyncStore(folderDoc);
-    if (!syncStore.has(filePath)) {
+    const storedPath = resolveStoredPath(syncStore, filePath);
+    if (!storedPath) {
       throw new Error(`File "${filePath}" not found in folder "${folderName}".`);
     }
 
     folderDoc.transact(() => {
       const docsMap = folderDoc.getMap("docs");
-      docsMap.delete(filePath);
+      docsMap.delete(storedPath);
 
       const filemetaMap = folderDoc.getMap("filemeta_v0");
-      filemetaMap.delete(filePath);
+      filemetaMap.delete(storedPath);
     });
 
     await new Promise(resolve => setTimeout(resolve, 1500));
@@ -506,21 +538,30 @@ export async function moveFile(
     const docsMap = folderDoc.getMap("docs");
     const filemetaMap = folderDoc.getMap("filemeta_v0");
 
-    const docId = docsMap.get(oldPath) as string | undefined;
-    const meta = filemetaMap.get(oldPath);
+    let resolvedOldPath: string | undefined;
+    for (const v of pathVariants(oldPath)) {
+      if (docsMap.get(v) !== undefined || filemetaMap.get(v) !== undefined) {
+        resolvedOldPath = v;
+        break;
+      }
+    }
 
-    if (!docId && !meta) {
+    if (!resolvedOldPath) {
       throw new Error(`File "${oldPath}" not found in folder "${folderName}".`);
     }
 
+    const docId = docsMap.get(resolvedOldPath) as string | undefined;
+    const meta = filemetaMap.get(resolvedOldPath);
+    const newKey = toStoreKey(newPath);
+
     folderDoc.transact(() => {
       if (docId) {
-        docsMap.delete(oldPath);
-        docsMap.set(newPath, docId);
+        docsMap.delete(resolvedOldPath!);
+        docsMap.set(newKey, docId);
       }
       if (meta) {
-        filemetaMap.delete(oldPath);
-        filemetaMap.set(newPath, meta);
+        filemetaMap.delete(resolvedOldPath!);
+        filemetaMap.set(newKey, meta);
       }
     });
 
