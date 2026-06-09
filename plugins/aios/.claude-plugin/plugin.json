@@ -1,0 +1,9 @@
+{
+  "name": "aios",
+  "description": "Set up an AI OS at the tier that fits \u2014 Skill OS (your entire second brain inside one Claude skill, zero infra) or Cloud OS (synced via Google Drive, OneDrive, iCloud, or Dropbox). Shares one folder structure with the Local OS (Obsidian) tier so you can graduate between them.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BenAI"
+  },
+  "displayName": "AIOS"
+}

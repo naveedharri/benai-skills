@@ -1,0 +1,25 @@
+---
+name: {{os_name}}
+description: {{owner}}'s personal OS. Load when they ask about their projects,
+  notes, people, routines, or "what's the status of X". Trigger phrases:
+  "my projects", "my notes", "who is", "how do I usually", "{{os_name}}".
+---
+
+# {{owner}}'s OS
+
+You are operating {{owner}}'s second brain. Route, read, act.
+
+## How to act
+- Read only the context file(s) you need for the request.
+- When {{owner}} shares something new, append it to the right context file.
+- Keep context files skimmable; suggest splitting one when it gets long.
+- {{voice_note}}
+
+## Routing table
+| If the message is about…        | Read                    |
+|---------------------------------|-------------------------|
+| who they are / preferences      | context/about-me.md     |
+| active projects / status        | context/projects.md     |
+| notes, research, meetings       | context/intelligence.md |
+| a person or contact             | context/people.md       |
+| how they work / routines / SOPs | context/systems.md      |

@@ -47,6 +47,25 @@
       ]
     },
     {
+      "name": "managed-agents",
+      "source": "./plugins/managed-agents",
+      "description": "Create and run Anthropic Managed Agents from Claude Code. Walks through the lifecycle via the REST API: agent, environment, vault, MCP OAuth credentials, session, first message. Generic builder, no preset template.",
+      "version": "1.0.0",
+      "author": {
+        "name": "BenAI"
+      },
+      "keywords": [
+        "managed-agents",
+        "anthropic",
+        "agents-api",
+        "mcp",
+        "autonomous-agent",
+        "session",
+        "vault",
+        "environment"
+      ]
+    },
+    {
       "name": "operations",
       "source": "./plugins/operations",
       "description": "Build, test, and deploy n8n workflows through incremental REST API automation. Convert discovery call transcripts into implementation-ready automation blueprints.",
@@ -264,6 +283,28 @@
         "self-improving",
         "overnight",
         "assertions"
+      ]
+    },
+    {
+      "name": "aios",
+      "displayName": "AIOS",
+      "source": "./plugins/aios",
+      "description": "Set up an AI OS at the tier that fits — Skill OS (your entire second brain inside one Claude skill, zero infra) or Cloud OS (synced via Google Drive, OneDrive, iCloud, or Dropbox). Shares one folder structure with the Local OS (Obsidian) tier so you can graduate between them.",
+      "version": "1.0.0",
+      "author": {
+        "name": "BenAI"
+      },
+      "keywords": [
+        "ai-os",
+        "aios",
+        "skill-os",
+        "cloud-os",
+        "second-brain",
+        "google-drive",
+        "onedrive",
+        "icloud",
+        "dropbox",
+        "sync"
       ]
     },
     {

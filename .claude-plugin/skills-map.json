@@ -103,6 +103,14 @@
         }
       }
     },
+    "managed-agents": {
+      "skills": {
+        "agent-builder": {
+          "displayName": "Agent Builder",
+          "summary": "Build Anthropic Managed Agents via the REST API. Walks through agent, environment, vault, credentials, session, and first message."
+        }
+      }
+    },
     "operations": {
       "skills": {
         "n8n": {
@@ -459,6 +467,22 @@
         "web-artifacts-builder": {
           "displayName": "Web Artifacts Builder",
           "summary": "Build elaborate multi-component claude.ai HTML artifacts with React, Tailwind, and shadcn/ui, then bundle to a single self-contained HTML file"
+        }
+      }
+    },
+    "aios": {
+      "skills": {
+        "skill-os-builder": {
+          "displayName": "Skill OS Builder",
+          "summary": "Stand up a self-contained second brain that lives entirely inside one Claude skill — short SKILL.md router + context files, no vault, cloud, or MCP server. The easiest of the three OS tiers."
+        },
+        "cloud-os-builder": {
+          "displayName": "Cloud OS Builder",
+          "summary": "Set up a cloud-synced second brain in Google Drive, OneDrive, iCloud, or Dropbox — asks where, surfaces provider gotchas, then creates and syncs the folder. Same structure as the Skill and Local OS tiers."
+        },
+        "local-os-builder": {
+          "displayName": "Local OS Builder",
+          "summary": "Set up a Local OS — bootstrap a local Obsidian vault as a second brain with full directory structure, system files, memory, hooks, and personalized onboarding. Two modes (Solopreneur/Professional, Business/Team). The Local OS tier of the AIOS family."
         }
       }
     },
