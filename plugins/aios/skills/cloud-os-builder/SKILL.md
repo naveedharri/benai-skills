@@ -1,6 +1,6 @@
 ---
 name: cloud-os-builder
-description: Set up a Cloud OS — the same second-brain structure as the Local OS, hosted in a synced cloud folder (Google Drive, OneDrive, iCloud, or Dropbox). Asks where to host it, builds the full structure (root CLAUDE.md + Context layer + Projects/Intelligence/Daily/Resources/Skills, Obsidian-free), runs personalized onboarding, then gives the exact provider-specific step-by-step sync setup. Two modes — Solopreneurs/Professionals (default), Business/Teams. The Cloud OS tier of the AIOS family. Use when the user says "set up a cloud OS", "host my second brain on Google Drive/Dropbox/iCloud/OneDrive", or runs /cloud-os-builder.
+description: Set up a Cloud OS — your second brain hosted either in a synced cloud folder (Google Drive, OneDrive, iCloud, Dropbox) or as a Notion workspace. Asks where to host it, then takes the matching route: for a folder it builds the Local OS structure (root CLAUDE.md + Context + Projects/Intelligence/Daily/Resources/Skills, Obsidian-free) and gives provider-specific sync steps; for Notion it builds pages + databases via the connector. Runs the same personalized onboarding either way. Two modes — Solopreneurs/Professionals (default), Business/Teams. The Cloud OS tier of the AIOS family. Use when the user says "set up a cloud OS", "host my second brain on Google Drive/Dropbox/iCloud/OneDrive/Notion", or runs /cloud-os-builder.
 ---
 
 # Cloud OS — Host Selection + Setup + Onboarding
@@ -20,7 +20,19 @@ This is a multi-step process:
 
 ## Phase H: Host Selection (do this first)
 
-Use AskUserQuestion to ask where to host the Cloud OS. Pass both `label` and `description` for each option:
+Two questions, via AskUserQuestion (the second only if needed). This keeps each question within the 4-option limit.
+
+### H.1 — Route
+Ask: "Where do you want to host your OS?" Pass both `label` and `description`:
+- **Notion** — "Build it as a Notion workspace (pages + databases with relations + a home dashboard). You operate from inside Notion; Claude reads/writes via the Notion connector. Realtime + multiplayer, but cloud-only (no local file copy)."
+- **Synced cloud folder** — "A plain folder synced via Google Drive, iCloud, Dropbox, or OneDrive. Real files on disk; Claude operates it directly. Single-user, with a sync delay."
+
+**Branch:**
+- If they pick **Notion** → jump to `## Notion Route` near the bottom. **Skip Pre-flight, Phase A, and Phase C** (those are the file route). The Notion Route reuses Phase 0 and the Phase B interview.
+- If they pick **Synced cloud folder** → continue with **H.2**, then Pre-flight → Phase 0 → A → B → C.
+
+### H.2 — Provider (file route only)
+Ask: "Which cloud?" Pass both `label` and `description`:
 - **Google Drive** — "Most free storage (15 GB); simple desktop sync."
 - **iCloud** — "Best if you're all-Apple; near-realtime across Mac/iPhone/iPad."
 - **Dropbox** — "Most reliable sync; best mobile path (via Remotely Save)."
@@ -73,9 +85,10 @@ Store the selected mode. It will be written to `CLAUDE.md` frontmatter as `os-mo
 
 ---
 
-## Phase A: Bootstrap
+## Phase A: Bootstrap (file route only)
 
 Create the directory structure and write all system files for the selected mode.
+(For the **Notion** route, skip this entirely — see `## Notion Route` near the bottom.)
 
 ### Resolving reference file paths
 
@@ -756,7 +769,7 @@ Then proceed to **Phase C** to set up cloud sync.
 
 ---
 
-## Phase C: Cloud Sync Setup
+## Phase C: Cloud Sync Setup (file route only)
 
 The structure now exists inside the cloud folder. Walk the user through making it actually sync — **one step at a time**, using the guide for the provider they chose in Phase H.
 
@@ -770,6 +783,102 @@ The structure now exists inside the cloud folder. Walk the user through making i
    - Test sync: edit a file, confirm it appears on another device.
    - Point Claude Code at the synced folder so the root `CLAUDE.md` loads as the OS.
 3. **Set expectations**: consumer cloud is single-user, multi-device — there's a sync delay, it's not realtime, and simultaneous edits create "conflicted copy" files. For true team + realtime, recommend the Local OS + Obsidian Sync/Relay.
+
+---
+
+## Notion Route
+
+Use this **instead of Pre-flight, Phase A, and Phase C** when the user picked **Notion** in
+H.1. The OS lives in a Notion workspace: documents become **pages**, collections become
+**databases** with relations and views. Claude operates it through the Notion connector
+(MCP). Notion holds the data; a **`CLAUDE.md`** page holds the master index + operating
+conventions (Notion can't auto-load it — the operator fetches it first each session).
+
+**Follow `references/notion-template-spec.md` exactly** — it is the source of truth for the
+structure, the build order, and the connector gotchas. Read it before building. The result
+must match the polished out-of-the-box spec (Context is a database with a flat lead view, a
+`CLAUDE.md` master index, dashboard views in a fixed order, **plus a generated "Notion OS
+Assistant" skill** handed to the user so they can use the OS immediately). Do not ship a
+barebones version.
+
+### N.1 — Connect Notion
+Make sure the Notion connector is available. If its tools aren't loaded, run the Notion
+`authenticate` flow and wait for the user to finish. Confirm you can search/list their
+workspace before building. Ask which page should be the **parent** for the new OS (or
+create it at the workspace root).
+
+### N.2 — Mode
+Run **Phase 0: Mode Selection** above (Solopreneurs/Professionals vs Business/Teams). Mode
+decides which databases/pages to create — Business adds Departments, Team, Onboarding, and
+Processes.
+
+### N.3 — Build the structure (via MCP)
+Build exactly per `references/notion-template-spec.md`, in its build order:
+1. **Home page** (`🏠 <Name> — Operating System`).
+2. **`CLAUDE.md`** page (the master index) + **Skills**/**Onboarding** pages.
+3. **Context as a database** (NOT a page of sub-pages) + the 7/8 databases. Record each
+   `data_source_id`.
+4. Add non-relation **properties**, then **relations** in a second pass (both sides exist).
+5. **Per-database views** (Projects board-by-status, Intelligence by-type, Daily calendar,
+   Context by-category board, etc.).
+6. **Home dashboard linked views** — create them via `create-view` **in this exact order**
+   so they land in order (linked views only append): **Context (flat, no grouping) →
+   Projects (Active) → Intelligence (recent) → Daily → People → Departments**. Context must
+   be the lead view.
+7. Fill the **`CLAUDE.md`** master index with the real database map (each DB's Open link +
+   `data_source_id`) once IDs exist.
+
+Critical connector gotchas (all in the spec): URL property writes use the `userDefined:URL`
+key; linked views can only be created with `create-view` (the markdown `<database
+data-source-url=…>` insert is rejected) and they **append**, so build them in order; never
+create files or `.obsidian` artifacts.
+
+### N.4 — Onboard
+Run the **Phase B** onboarding *interview* above (the 3 forms / 12 categories / brain-dump,
+plus the Phase B+ context drop). Collect everything into the same corpus. **Skip Phase B's
+file-writing "Build Steps"** — you'll write to Notion in N.5 instead.
+
+### N.5 — Personalize (write to Notion)
+Using the corpus, write real content into Notion via MCP, following the same
+"real personalization, not placeholders" rules from Phase B:
+- **Context** → one **row per topic** in the Context database (Operator, Organization,
+  Market, Services, Pain Points, ICP, Brand, Team, Strategy, Infrastructure, Stakeholders —
+  or the solo set), each with a Category + a real page body. Only create rows with content.
+- **Projects** → rows in the Projects database (Status, Owner, Deadline…), with the
+  Overview / Status / Next Steps body in each project page.
+- **People / Team** → rows in the People database, with **Reports to** + relations to Projects.
+- **Departments** → rows with a **Lead** relation to People (business mode).
+- **Intelligence / decisions** → rows in the Intelligence database, linked to Project + People.
+- **First Daily entry** → one row in the Daily database for today.
+Omit anything with no data — never leave bracket placeholders. Keep the home title clean
+(`🏠 <Name> — Operating System`, no "test"/builder wording).
+
+### N.6 — Generate the Notion OS Assistant skill
+So the user can start using their OS immediately, generate a small **auto-triggered skill**
+called **Notion OS Assistant** (`name: notion-os-assistant`) that routes Notion requests.
+Use `references/notion-os-skill-template.md`:
+- **Give the user the `SKILL.md`** — present the full, filled-in file in a code block so they
+  can copy it. Most users **upload it into Cowork** or drop it into their skills folder
+  themselves, so handing them the file is the default. You may *also* offer to save it to
+  `~/.claude/skills/notion-os-assistant/SKILL.md` if they have a local filesystem.
+- Fill every `{{PLACEHOLDER}}` with the real values from this build: OS name, home page URL,
+  `CLAUDE.md` page URL, and each database's `data_source_id`.
+- **Solo mode:** delete the routing rows for databases that weren't created (Departments,
+  Processes).
+- Keep the `description` broad so it auto-triggers on second-brain / OS / projects / notes /
+  meetings / people requests. The skill operates entirely through the **Notion connector**.
+
+### N.7 — Verify + finish
+- Confirm the home page, the **`CLAUDE.md`** index, the Context database, and all databases
+  exist and are populated; confirm the dashboard views are in order (Context first).
+- Hand over the **Notion OS Assistant** skill (`notion-os-assistant`) `SKILL.md` — for upload
+  to Cowork or saving under `~/.claude/skills/`; once active they can ask about their OS in
+  natural language and it auto-triggers.
+- Give the user the link to the home page.
+- Tell them: they now operate from **inside Notion**; Claude reads/writes via the connector,
+  and should **fetch `CLAUDE.md` first** each session before touching data.
+- Set expectations: Notion is **realtime + multiplayer** (unlike the file route), but it is
+  **cloud-only** — there is no local copy on disk.
 
 ---
 
