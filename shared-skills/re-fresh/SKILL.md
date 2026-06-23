@@ -1,5 +1,5 @@
 ---
-version: 0.3.0
+version: 0.4.0
 name: re-fresh
 description: |
   Start a clean Claude session with only the context the next task needs, instead of /compact.
@@ -35,19 +35,24 @@ Long sessions rot: the window fills with stale back-and-forth and outputs get wo
 
 1. **Get the goal.** Ask "What's the goal of your next session?" then **end your turn and wait**. Do not run any step below until the user answers. Skip this step only if the goal was already stated in the trigger.
 2. **Scan (full / ultra).** Once you have the goal, work over the conversation already in context and the files it referenced. Lite skips this.
-3. **Check the data has a home (critical).** For every piece of work the next session needs, ask: is it saved in a file/path that session can open?
-   - **Saved in a file** → reference the path. This is the normal case.
-   - **Lives only in this chat** (built here, never written to disk) → it has no retrievable home, and the fresh session cannot see this conversation. Do one of these before continuing:
-     - **Persist it.** Write the finalized work to a file (e.g. `<goal-slug>.md`), then point to that path.
-     - **Or embed it.** If you have no filesystem (e.g. claude.ai web), put the finalized data **inline** in the handoff under the "Carried-over data" section below. Here the "path only, never copy content" rule yields, because there is nowhere else to get it.
-   - **Tell the user which you did** ("the meals weren't saved anywhere, so I wrote them to `meals.md`" / "...so I embedded them in the prompt").
-   - Never let the next session fall back to searching past conversations. That retrieval is fuzzy and returns fragments, which is exactly what this skill exists to prevent.
+3. **Check the data has a home, a *persistent* one (critical).** For every piece of work the next session needs, ask: is it saved somewhere that session can open AND that survives into a fresh environment?
+   - **A "home" must be persistent.** Three tiers:
+     - **Persistent disk** (the user's real/mounted project folder, e.g. `/Users/.../Projects/...`) → survives. Reference the path.
+     - **Remote server** (e.g. a Higgsfield `media_id`, a URL) → survives. Reference the id/URL instead of copying.
+     - **Ephemeral** (a sandbox scratchpad like `outputs/`, a `/tmp` path, or data that lives only in this chat) → does **not** survive. A pointer here is worthless next session.
+   - **In a sandbox (e.g. Claude Cowork), the scratchpad is wiped every session.** Only the mounted real-disk folder and remote servers persist. So:
+     - If a needed asset lives only in the scratchpad or only in this chat → **copy it to the persistent project folder first** (or, for remote-regenerable assets, reference the remote id), then point to the new persistent path.
+     - If there is no filesystem at all (e.g. claude.ai web) → **embed** the finalized data inline under "Carried-over data" below.
+   - **Tell the user which you did** ("the anchor only existed in the sandbox, so I copied it to `Resources/.../reference-anchor.png`" / "...so I embedded the data in the prompt").
+   - Never reference a scratchpad/`/tmp` path, and never let the next session fall back to searching past conversations. That retrieval is fuzzy and returns fragments, which is exactly what this skill exists to prevent.
 4. **Dedupe hard.**
    - Drop anything the fresh session loads on its own at startup (a root `CLAUDE.md` / `AGENTS.md`, or any always-loaded context). The new session gets these for free, so listing them just wastes context.
    - For data that does live in files: path only, never copy content.
    - If the next session works in the same folder, point to the folder. Don't enumerate its files.
 5. **Anchor the location.** Name the working directory (and the project, if relevant) up front, so the fresh session knows where it is operating without asking.
-6. **Write + print.** Save the prompt to the current working directory as `re-fresh-<goal-slug>.md`, then print it in full so the user can copy it.
+6. **Write + print, to a persistent location.** Save the handoff to the user's **persistent project folder**, never to a sandbox scratchpad or `/tmp`. If you can't tell which path is the real, persistent one, ask the user once. Then print the handoff in full so they can copy it. Decide the shape:
+   - **Single file** (default): `re-fresh-<goal-slug>.md` in the project root. Use this when the handoff is just pointers plus inline text and every asset it references already persists (real-disk paths or remote ids). Nothing to carry → one file.
+   - **A folder** `re-fresh-<goal-slug>/` (the `.md` plus the assets inside it): use this only when you had to physically carry sandbox-only or chat-only assets (recreated references, data dumps, extra notes). Put them next to the handoff on the persistent disk and reference them by their new in-folder paths. More than one file to persist → a folder.
 
 ## Output shape
 
