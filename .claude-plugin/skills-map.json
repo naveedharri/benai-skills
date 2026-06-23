@@ -488,6 +488,10 @@
     },
     "meta": {
       "skills": {
+        "re-fresh": {
+          "displayName": "Re-fresh",
+          "summary": "Start a clean Claude session with only the context the next task needs — captures the goal, points to the right files, and outputs a self-contained prompt to paste into a fresh chat"
+        },
         "agent-browser": {
           "displayName": "Agent Browser",
           "summary": "Browser automation CLI for AI agents \u2014 navigate, fill forms, click, screenshot, scrape"
