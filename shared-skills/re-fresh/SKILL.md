@@ -1,5 +1,5 @@
 ---
-version: 0.4.0
+version: 0.4.1
 name: re-fresh
 description: |
   Start a clean Claude session with only the context the next task needs, instead of /compact.
@@ -50,9 +50,10 @@ Long sessions rot: the window fills with stale back-and-forth and outputs get wo
    - For data that does live in files: path only, never copy content.
    - If the next session works in the same folder, point to the folder. Don't enumerate its files.
 5. **Anchor the location.** Name the working directory (and the project, if relevant) up front, so the fresh session knows where it is operating without asking.
-6. **Write + print, to a persistent location.** Save the handoff to the user's **persistent project folder**, never to a sandbox scratchpad or `/tmp`. If you can't tell which path is the real, persistent one, ask the user once. Then print the handoff in full so they can copy it. Decide the shape:
+6. **Write + print, to a persistent location.** Save the handoff to the user's **persistent project folder**, never to a sandbox scratchpad or `/tmp`. If you can't tell which path is the real, persistent one, ask the user once. Decide the shape:
    - **Single file** (default): `re-fresh-<goal-slug>.md` in the project root. Use this when the handoff is just pointers plus inline text and every asset it references already persists (real-disk paths or remote ids). Nothing to carry → one file.
    - **A folder** `re-fresh-<goal-slug>/` (the `.md` plus the assets inside it): use this only when you had to physically carry sandbox-only or chat-only assets (recreated references, data dumps, extra notes). Put them next to the handoff on the persistent disk and reference them by their new in-folder paths. More than one file to persist → a folder.
+   - **Either way, always print the full prompt in chat, that is the thing the user pastes.** The output is the same single prompt in both cases. In the folder case, the printed prompt simply references the folder by its persistent local path (and names the key files inside it), so the user pastes the prompt and never needs to open the folder themselves. Mention in one line that a folder was created and where, but the folder is for the next session to read, not for the user to dig through.
 
 ## Output shape
 
