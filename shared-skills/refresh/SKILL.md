@@ -1,11 +1,11 @@
 ---
 version: 0.5.0
-name: re-fresh
+name: refresh
 description: |
   Start a clean Claude session with only the context the next task needs, instead of /compact.
   Captures the goal of your next session, points to the right files (never copies them),
   and outputs a self-contained prompt to paste into a fresh chat.
-  Use when: "re-fresh", "refresh context", "fresh start", "my chat got sloppy",
+  Use when: "refresh", "refresh context", "fresh start", "my chat got sloppy",
   "start a new chat with context", "hand off this session", outputs degrading, drifting off task.
   Three levels: lite (quick reset), full (default handoff), ultra (full briefing).
   NOT for: summarizing in place (that's /compact), or saving permanent notes.
@@ -13,9 +13,9 @@ argument-hint: "lite | full | ultra"
 allowed-tools: Read, Glob, Grep, Write
 ---
 
-# Re-fresh
+# Refresh
 
-Long sessions rot: the window fills with stale back-and-forth and outputs get worse. `/compact` summarizes the mess in place and keeps going in the *same* polluted window. Re-fresh does the opposite. It captures the goal of your next session, points to the right files, and hands you a clean prompt to paste into a fresh chat. Rebuild, not summarize.
+Long sessions rot: the window fills with stale back-and-forth and outputs get worse. `/compact` summarizes the mess in place and keeps going in the *same* polluted window. Refresh does the opposite. It captures the goal of your next session, points to the right files, and hands you a clean prompt to paste into a fresh chat. Rebuild, not summarize.
 
 ## UX Rules
 
@@ -60,8 +60,8 @@ Long sessions rot: the window fills with stale back-and-forth and outputs get wo
    - If the next session works in the same folder, point to the folder. Don't enumerate its files.
 6. **Anchor the location.** Name the working directory (and the project, if relevant) up front, so the fresh session knows where it is operating without asking. In travels mode, skip your absolute local path, name the project/shared source instead.
 7. **Write + print.** Save the handoff to a **persistent** location (the user's real project folder), never a sandbox scratchpad or `/tmp`. If you can't tell which path is persistent, ask once. Decide the shape:
-   - **Single file** (default): `re-fresh-<goal-slug>.md` in the project root. Use when the handoff is just pointers plus inline text and every asset it references is already reachable by the reader. Nothing to carry → one file.
-   - **A folder** `re-fresh-<goal-slug>/` (the `.md` plus the assets inside it): use when you had to physically carry assets, sandbox-only, chat-only, or (in travels mode) local-only files the reader doesn't have. Reference them by their relative in-folder paths. More than one file to carry → a folder; in travels mode this folder is what the user sends/zips to the reader.
+   - **Single file** (default): `refresh-<goal-slug>.md` in the project root. Use when the handoff is just pointers plus inline text and every asset it references is already reachable by the reader. Nothing to carry → one file.
+   - **A folder** `refresh-<goal-slug>/` (the `.md` plus the assets inside it): use when you had to physically carry assets, sandbox-only, chat-only, or (in travels mode) local-only files the reader doesn't have. Reference them by their relative in-folder paths. More than one file to carry → a folder; in travels mode this folder is what the user sends/zips to the reader.
    - **Either way, always print the full prompt in chat, that is the thing the user pastes/sends.** The output is the same single prompt in both cases. In the folder case the printed prompt references the folder (by local path for "stays here", by relative path for "travels") and names the key files inside it, so the user never needs to open the folder themselves. Mention in one line that a folder was created and where.
    - **In travels mode, tell the user exactly what to hand over:** just the prompt (if everything is embedded or in a shared source), or the prompt **plus** the folder/zip (if files were bundled).
 

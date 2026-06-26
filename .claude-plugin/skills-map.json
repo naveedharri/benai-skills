@@ -488,8 +488,8 @@
     },
     "meta": {
       "skills": {
-        "re-fresh": {
-          "displayName": "Re-fresh",
+        "refresh": {
+          "displayName": "Refresh",
           "summary": "Start a clean Claude session with only the context the next task needs — captures the goal, points to the right files, and outputs a self-contained prompt to paste into a fresh chat"
         },
         "agent-browser": {
