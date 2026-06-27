@@ -5,9 +5,34 @@
     "email": "naveedharri@gmail.com"
   },
   "metadata": {
-    "description": "Expert automation plugins that turn Claude into a specialist for your team. Install by department to get skills for marketing, sales, operations, creative, and product workflows."
+    "description": "Expert automation plugins that turn Claude into a specialist for your team. Install by department to get skills for marketing, sales, operations, creative, and product workflows.",
+    "version": "1.1.0"
   },
   "plugins": [
+    {
+      "name": "all-skills",
+      "displayName": "All Skills",
+      "source": "./plugins/all-skills",
+      "description": "Every BenAI skill in one install. All 97 skills across marketing, sales, SEO, ads, design, YouTube, creative, operations, second-brain OS, and general productivity. Add this one plugin to get the complete library.",
+      "version": "1.0.0",
+      "author": {
+        "name": "BenAI"
+      },
+      "keywords": [
+        "all",
+        "everything",
+        "complete",
+        "bundle",
+        "marketing",
+        "sales",
+        "seo",
+        "ads",
+        "design",
+        "youtube",
+        "productivity",
+        "second-brain"
+      ]
+    },
     {
       "name": "marketing",
       "source": "./plugins/marketing",
@@ -269,7 +294,7 @@
     {
       "name": "autoresearch",
       "source": "./plugins/autoresearch",
-      "description": "Autonomous optimization loop \u2014 iterates on prompts, skills, templates, or code overnight. Two evaluation modes: deterministic (eval.py with proxy heuristics) for mechanical checks, or AI judge (LLM rubric scoring) for creative/subjective quality. Uses 4-way agent separation for unbiased evaluation.",
+      "description": "Autonomous optimization loop — iterates on prompts, skills, templates, or code overnight. Two evaluation modes: deterministic (eval.py with proxy heuristics) for mechanical checks, or AI judge (LLM rubric scoring) for creative/subjective quality. Uses 4-way agent separation for unbiased evaluation.",
       "version": "1.0.0",
       "author": {
         "name": "BenAI"
@@ -310,8 +335,8 @@
     {
       "name": "meta",
       "source": "./plugins/meta",
-      "description": "General-purpose AI productivity toolkit \u2014 browser automation, audio transcription, deep research, decision frameworks, fact-checking, file organization, HTML presentations, prompt engineering, AI-text humanizing, MCP server building, and more. 13 community skills in one install.",
-      "version": "1.0.0",
+      "description": "General-purpose AI productivity toolkit — browser automation, audio transcription, deep research, decision frameworks, fact-checking, file organization, HTML presentations, prompt engineering, AI-text humanizing, MCP server building, and more. 13 community skills in one install.",
+      "version": "1.1.0",
       "author": {
         "name": "Community"
       },

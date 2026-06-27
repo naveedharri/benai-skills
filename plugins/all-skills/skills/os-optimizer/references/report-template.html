@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Vault Optimizer Report — {{DATE}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --dark: #020309;
+    --bg: #FAF3E3;
+    --light-blue: #E5F5F9;
+    --green: #D2ECD0;
+    --red: #F3C1C0;
+    --orange: #FCD9B6;
+    --dark-yellow: #FDEEC4;
+    --paper: #FFFFFF;
+    --shadow: 8px 8px 0 var(--dark);
+    --shadow-sm: 4px 4px 0 var(--dark);
+    --border: 2px solid var(--dark);
+    --border-thin: 1.5px solid var(--dark);
+    --radius: 8px;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--dark);
+    font-family: 'Montserrat', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  body { padding: 32px 24px 64px; }
+  .wrap { max-width: 1080px; margin: 0 auto; }
+  h1, h2, h3, h4 { font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 700; letter-spacing: -0.01em; margin: 0; }
+  h1 { font-size: 38px; line-height: 1.1; }
+  h2 { font-size: 22px; margin: 0 0 12px; }
+  h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 8px; opacity: 0.65; }
+  h4 { font-size: 17px; margin: 0 0 8px; }
+  .muted { opacity: 0.65; font-size: 13px; }
+  code {
+    background: var(--light-blue);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: 'SF Mono', Menlo, monospace;
+    border: 1px solid rgba(2,3,9,0.12);
+  }
+
+  /* Header */
+  .header {
+    background: var(--paper);
+    border: var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px 28px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .header .title-block .eyebrow { font-family: 'Space Grotesk', sans-serif; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.65; margin-bottom: 6px; }
+  .score-badge {
+    background: var(--green);
+    border: var(--border);
+    border-radius: var(--radius);
+    padding: 12px 18px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    text-align: center;
+    min-width: 200px;
+    box-shadow: var(--shadow-sm);
+  }
+  .score-badge .label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; display: block; }
+  .score-badge .value { font-size: 28px; line-height: 1; margin-top: 4px; }
+  .score-badge .delta { font-size: 13px; opacity: 0.75; margin-top: 4px; }
+
+  /* Stat cards */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 28px; }
+  .stat {
+    background: var(--paper);
+    border: var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 18px 20px;
+  }
+  .stat .num { font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 700; line-height: 1; letter-spacing: -0.02em; }
+  .stat.saved .num { color: #1f6f1a; }
+  .stat.fail .num { color: #a83232; }
+  .stat .sub { margin-top: 8px; font-size: 12px; opacity: 0.7; }
+
+  /* Table */
+  .card {
+    background: var(--paper);
+    border: var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 22px 24px;
+    margin-bottom: 28px;
+    overflow-x: auto;
+  }
+  table.summary { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; }
+  table.summary thead th {
+    text-align: left;
+    padding: 10px 12px;
+    background: var(--light-blue);
+    border-bottom: var(--border);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  table.summary thead th.num { text-align: right; }
+  table.summary tbody td { padding: 14px 12px; border-bottom: 1px solid rgba(2, 3, 9, 0.08); vertical-align: top; }
+  table.summary tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  table.summary tbody tr:last-child td { border-bottom: none; }
+  table.summary tbody tr.total td { font-weight: 700; background: var(--dark-yellow); }
+  table.summary tbody tr.total td:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+  table.summary tbody tr.total td:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
+  .framework-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; }
+  .framework-tag { font-size: 11px; opacity: 0.65; font-family: 'SF Mono', Menlo, monospace; margin-left: 6px; }
+
+  /* Severity pills */
+  .pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    border: var(--border-thin);
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.04em;
+  }
+  .pill.fail { background: var(--red); }
+  .pill.warn { background: var(--orange); }
+  .pill.info { background: var(--light-blue); }
+  .pill.fixed { background: var(--green); }
+  .pill.fixable { background: var(--dark-yellow); }
+  .pill.flag { background: #E8E8E8; }
+  .pill-row { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  /* Per-framework detail sections */
+  .framework-section {
+    background: var(--paper);
+    border: var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px 26px;
+    margin-bottom: 22px;
+  }
+  .framework-section .head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+  .framework-section .head .id {
+    font-family: 'SF Mono', Menlo, monospace;
+    font-size: 13px;
+    background: var(--light-blue);
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(2,3,9,0.15);
+  }
+  .framework-section .why {
+    font-size: 13px;
+    opacity: 0.75;
+    margin: 6px 0 16px;
+    border-left: 3px solid var(--dark);
+    padding: 4px 0 4px 14px;
+  }
+  .framework-section .meta {
+    display: flex;
+    gap: 12px;
+    font-size: 12px;
+    opacity: 0.7;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .framework-section .meta span { white-space: nowrap; }
+
+  /* Findings list */
+  .findings { display: flex; flex-direction: column; gap: 10px; }
+  .finding {
+    border: var(--border-thin);
+    border-radius: 6px;
+    padding: 12px 14px;
+    background: #FBFAF7;
+  }
+  .finding .top {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .finding .check-id {
+    font-family: 'SF Mono', Menlo, monospace;
+    font-size: 12px;
+    opacity: 0.7;
+  }
+  .finding .path {
+    font-family: 'SF Mono', Menlo, monospace;
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+  .finding .excerpt {
+    font-size: 13px;
+    opacity: 0.85;
+    margin: 6px 0;
+    border-left: 2px solid rgba(2,3,9,0.2);
+    padding-left: 10px;
+    font-family: 'SF Mono', Menlo, monospace;
+  }
+  .finding .reasoning {
+    font-size: 13px;
+    margin: 8px 0 6px;
+    background: var(--dark-yellow);
+    padding: 8px 10px;
+    border-radius: 4px;
+    border: 1px solid rgba(2,3,9,0.12);
+  }
+  .finding .action {
+    font-size: 13px;
+    margin-top: 6px;
+  }
+  .finding .citation {
+    font-size: 11px;
+    opacity: 0.6;
+    margin-top: 6px;
+    font-style: italic;
+  }
+  .finding.fail { border-left: 5px solid #a83232; }
+  .finding.warn { border-left: 5px solid #c97c2a; }
+  .finding.info { border-left: 5px solid #3a7ea6; }
+  .more {
+    font-size: 13px;
+    opacity: 0.65;
+    margin-top: 10px;
+    font-style: italic;
+  }
+
+  /* Empty / clean state */
+  .clean {
+    padding: 14px 16px;
+    background: var(--green);
+    border: var(--border-thin);
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  /* Per-session impact */
+  .impact {
+    background: var(--paper);
+    border: var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 22px 24px;
+    margin-bottom: 28px;
+  }
+  .impact .row-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .impact-card {
+    background: var(--light-blue);
+    border: var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+  }
+  .impact-card.annual { background: var(--dark-yellow); }
+  .impact-card .num { font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; line-height: 1.05; }
+  .impact-card .sub { font-size: 12px; opacity: 0.7; margin-top: 6px; }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    margin-top: 36px;
+    font-size: 12px;
+    opacity: 0.5;
+  }
+
+  @media (max-width: 720px) {
+    .stats { grid-template-columns: 1fr 1fr; }
+    .impact .row-grid { grid-template-columns: 1fr; }
+    h1 { font-size: 28px; }
+    .stat .num { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header class="header">
+      <div class="title-block">
+        <div class="eyebrow">{{ORG_NAME}} · OS Optimizer</div>
+        <h1>Vault Optimizer Report</h1>
+        <div class="muted" style="margin-top:6px;">{{DATE}} · {{FILES_SCANNED}} files across {{FOLDERS_COVERED}} folders · 7 frameworks · {{TOTAL_CHECKS}} checks</div>
+      </div>
+      <div class="score-badge">
+        <span class="label">Health Score</span>
+        <div class="value">{{SCORE_BEFORE}} → {{SCORE_AFTER}}</div>
+        <div class="delta">{{SCORE_DELTA_SIGN}}{{SCORE_DELTA}} this run</div>
+      </div>
+    </header>
+
+    <section class="stats">
+      <div class="stat">
+        <h3>Findings</h3>
+        <div class="num">{{TOTAL_FINDINGS}}</div>
+        <div class="sub">{{TOTAL_FAIL}} fail · {{TOTAL_WARN}} warn</div>
+      </div>
+      <div class="stat fail">
+        <h3>Critical</h3>
+        <div class="num">{{TOTAL_FAIL}}</div>
+        <div class="sub">need manual review</div>
+      </div>
+      <div class="stat saved">
+        <h3>Fixes Applied</h3>
+        <div class="num">{{TOTAL_FIXED}} <span style="font-size:18px;opacity:0.5;">/ {{TOTAL_FIXABLE}}</span></div>
+        <div class="sub">{{TOTAL_SAVED}} tokens saved · {{TOTAL_FIXABLE_NOT_FIXED}} skipped</div>
+      </div>
+      <div class="stat">
+        <h3>Annual Savings</h3>
+        <div class="num">{{ANNUAL_SAVINGS}}</div>
+        <div class="sub">at {{SESSIONS_PER_WEEK}} sessions/week</div>
+      </div>
+    </section>
+
+    <div class="card">
+      <h2>Per-Framework Summary</h2>
+      <p class="muted" style="margin: 0 0 14px;">Every framework runs every audit. Findings cite the framework rule. Detail sections below show top items per framework.</p>
+      <table class="summary">
+        <thead>
+          <tr>
+            <th>Framework</th>
+            <th class="num">Files</th>
+            <th class="num">Checks</th>
+            <th class="num">Findings</th>
+            <th class="num">Fail</th>
+            <th class="num">Warn</th>
+            <th class="num">Fixable</th>
+            <th class="num">Fixed</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{ROWS}}
+          <tr class="total">
+            <td class="framework-name">TOTAL</td>
+            <td class="num">{{FILES_SCANNED}}</td>
+            <td class="num">{{TOTAL_CHECKS}}</td>
+            <td class="num">{{TOTAL_FINDINGS}}</td>
+            <td class="num">{{TOTAL_FAIL}}</td>
+            <td class="num">{{TOTAL_WARN}}</td>
+            <td class="num">{{TOTAL_FIXABLE}}</td>
+            <td class="num">{{TOTAL_FIXED}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="muted" style="margin: 14px 0 0; font-size: 12px;">
+        <strong>Fixable</strong> = findings whose check supports an auto-fix.
+        <strong>Fixed</strong> = how many of those were actually applied this run.
+        Gap = items the user skipped or denied (re-run the audit to revisit).
+      </p>
+    </div>
+
+    <section class="impact">
+      <h2>Per-Session Impact</h2>
+      <p class="muted" style="margin: 0 0 14px;">What every Claude session in this vault now loads.</p>
+      <div class="row-grid">
+        <div class="impact-card">
+          <h3>Auto-Load Context</h3>
+          <div class="num">{{SESSION_BEFORE}} → {{SESSION_AFTER}}</div>
+          <div class="sub">tokens loaded on every session start ({{SESSION_PCT}}% lighter)</div>
+        </div>
+        <div class="impact-card annual">
+          <h3>Compounding Effect</h3>
+          <div class="num">~{{ANNUAL_SAVINGS}} tokens / year</div>
+          <div class="sub">{{SESSIONS_PER_WEEK}} sessions × {{WEEKS_PER_YEAR}} weeks</div>
+        </div>
+      </div>
+    </section>
+
+    <h2 style="margin: 36px 0 16px;">Findings by Framework</h2>
+
+    {{DETAILS}}
+
+    <footer>
+      Generated by {{ORG_NAME}} OS Optimizer · {{TIMESTAMP}}<br/>
+      Frameworks: F1 Anthropic CLAUDE.md · F2 Karpathy LLM Wiki · F3 Caveman Compression · F4 Chroma Context Rot · F5 Anthropic Memory · F6 Progressive Disclosure · G7 Hygiene
+    </footer>
+
+  </div>
+</body>
+</html>

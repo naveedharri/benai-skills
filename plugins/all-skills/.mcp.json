@@ -1,0 +1,18 @@
+{
+  "apify": {
+    "type": "http",
+    "url": "https://mcp.apify.com"
+  },
+  "nano-banana": {
+    "command": "npx",
+    "args": [
+      "-y",
+      "@zhibinyang/nano-banana-mcp"
+    ],
+    "env": {}
+  },
+  "webflow": {
+    "type": "http",
+    "url": "https://mcp.webflow.com/mcp"
+  }
+}

@@ -1,0 +1,174 @@
+{
+  "$schema": "Section Registry — maps business type to recommended component variants",
+  "instructions": "Read this file to select the right component variant for each section. Read the selected component file, then customize: replace placeholder copy with real copy from intake, apply design system colors via CSS variables, adjust content to match the business.",
+  "variants": {
+    "hero": {
+      "hero-centered": {
+        "file": "hero/hero-centered.tsx",
+        "best_for": ["SaaS", "Digital Product", "Membership"],
+        "description": "Centered headline + subtitle + CTA with gradient background accent. Clean, modern, conversion-focused."
+      },
+      "hero-split": {
+        "file": "hero/hero-split.tsx",
+        "best_for": ["Service", "Agency", "Consulting"],
+        "description": "Left text + right image/visual split. Professional, trust-building."
+      },
+      "hero-gradient": {
+        "file": "hero/hero-gradient.tsx",
+        "best_for": ["Startup", "Product Launch", "Creative"],
+        "description": "Bold gradient mesh background with centered content. Eye-catching, modern."
+      }
+    },
+    "features": {
+      "features-grid": {
+        "file": "features/features-grid.tsx",
+        "best_for": ["SaaS", "Digital Product", "Membership"],
+        "description": "3-column icon + title + description card grid. Clean and scannable."
+      },
+      "features-alternating": {
+        "file": "features/features-alternating.tsx",
+        "best_for": ["Service", "Agency", "Consulting"],
+        "description": "Alternating left-right layout with image + text blocks. Storytelling format."
+      },
+      "features-icons": {
+        "file": "features/features-icons.tsx",
+        "best_for": ["Startup", "Product Launch", "SaaS"],
+        "description": "Large icon blocks with detailed descriptions. Feature-rich products."
+      }
+    },
+    "testimonials": {
+      "testimonials-cards": {
+        "file": "testimonials/testimonials-cards.tsx",
+        "best_for": ["Service", "Agency", "SaaS"],
+        "description": "3-column testimonial cards with avatar, name, role, and quote."
+      },
+      "testimonials-featured": {
+        "file": "testimonials/testimonials-featured.tsx",
+        "best_for": ["Consulting", "Coaching", "Premium Service"],
+        "description": "Single large featured testimonial with photo and detailed quote. High-trust."
+      },
+      "testimonials-marquee": {
+        "file": "testimonials/testimonials-marquee.tsx",
+        "best_for": ["SaaS", "Product Launch", "Digital Product"],
+        "description": "Auto-scrolling horizontal marquee of testimonial cards. Social proof at scale."
+      }
+    },
+    "pricing": {
+      "pricing-two-tier": {
+        "file": "pricing/pricing-two-tier.tsx",
+        "best_for": ["SaaS", "Membership", "Digital Product"],
+        "description": "Two pricing cards side by side with feature comparison. Simple choice."
+      },
+      "pricing-three-tier": {
+        "file": "pricing/pricing-three-tier.tsx",
+        "best_for": ["SaaS", "Agency", "Service"],
+        "description": "Three-tier pricing with highlighted recommended plan. Standard SaaS pattern."
+      },
+      "pricing-simple": {
+        "file": "pricing/pricing-simple.tsx",
+        "best_for": ["Consulting", "Coaching", "Freelance"],
+        "description": "Single price with included features list. No comparison needed."
+      }
+    },
+    "faq": {
+      "faq-accordion": {
+        "file": "faq/faq-accordion.tsx",
+        "best_for": ["SaaS", "Service", "Agency", "Product Launch"],
+        "description": "Expandable accordion with smooth animations. shadcn Accordion component."
+      },
+      "faq-two-column": {
+        "file": "faq/faq-two-column.tsx",
+        "best_for": ["Consulting", "Premium Service"],
+        "description": "Two-column grid of Q&A pairs. All visible, no interaction needed."
+      }
+    },
+    "cta": {
+      "cta-centered": {
+        "file": "cta/cta-centered.tsx",
+        "best_for": ["SaaS", "Service", "Agency"],
+        "description": "Centered headline + subtitle + button on dark/accent background. High contrast."
+      },
+      "cta-with-form": {
+        "file": "cta/cta-with-form.tsx",
+        "best_for": ["Consulting", "Coaching", "Lead Gen"],
+        "description": "Split layout with copy on left, form on right. Direct conversion."
+      },
+      "cta-banner": {
+        "file": "cta/cta-banner.tsx",
+        "best_for": ["Product Launch", "Startup", "Digital Product"],
+        "description": "Full-width gradient banner with email capture. Urgency-driven."
+      }
+    },
+    "process": {
+      "process-numbered": {
+        "file": "process/process-numbered.tsx",
+        "best_for": ["Service", "Consulting", "Agency"],
+        "description": "Numbered steps (1-2-3-4) with connecting line. Clear process visualization."
+      },
+      "process-cards": {
+        "file": "process/process-cards.tsx",
+        "best_for": ["SaaS", "Digital Product", "Coaching"],
+        "description": "Step cards in a horizontal row. Each with icon, title, description."
+      }
+    },
+    "footer": {
+      "footer-simple": {
+        "file": "footer/footer-simple.tsx",
+        "best_for": ["Personal Brand", "Freelance", "Coaching"],
+        "description": "Minimal footer with logo, social links, and copyright."
+      },
+      "footer-multi-column": {
+        "file": "footer/footer-multi-column.tsx",
+        "best_for": ["SaaS", "Agency", "Service"],
+        "description": "Multi-column footer with link groups, newsletter signup, and social."
+      }
+    },
+    "navbar": {
+      "navbar-simple": {
+        "file": "navbar/navbar-simple.tsx",
+        "best_for": ["All"],
+        "description": "Sticky navbar with logo, nav links, and CTA button. Mobile hamburger menu."
+      }
+    },
+    "logos": {
+      "logos-bar": {
+        "file": "logos/logos-bar.tsx",
+        "best_for": ["SaaS", "Agency", "Service"],
+        "description": "'Trusted by' logo bar. Grayscale logos in a row with hover color reveal."
+      }
+    },
+    "problem": {
+      "problem-agitation": {
+        "file": "problem/problem-agitation.tsx",
+        "best_for": ["Service", "Consulting", "SaaS"],
+        "description": "PAS (Problem-Agitate-Solution) section with pain points and transition to solution."
+      }
+    }
+  },
+  "business_type_defaults": {
+    "SaaS": {
+      "sections": ["navbar-simple", "hero-centered", "logos-bar", "features-grid", "process-cards", "testimonials-cards", "pricing-three-tier", "faq-accordion", "cta-centered", "footer-multi-column"]
+    },
+    "Agency": {
+      "sections": ["navbar-simple", "hero-split", "logos-bar", "problem-agitation", "features-alternating", "process-numbered", "testimonials-cards", "faq-accordion", "cta-with-form", "footer-multi-column"]
+    },
+    "Consulting": {
+      "sections": ["navbar-simple", "hero-split", "problem-agitation", "features-alternating", "process-numbered", "testimonials-featured", "faq-two-column", "cta-with-form", "footer-simple"]
+    },
+    "Coaching": {
+      "sections": ["navbar-simple", "hero-centered", "problem-agitation", "features-icons", "process-cards", "testimonials-featured", "pricing-simple", "faq-accordion", "cta-centered", "footer-simple"]
+    },
+    "Digital Product": {
+      "sections": ["navbar-simple", "hero-gradient", "features-grid", "process-cards", "testimonials-marquee", "pricing-two-tier", "faq-accordion", "cta-banner", "footer-simple"]
+    },
+    "Product Launch": {
+      "sections": ["navbar-simple", "hero-gradient", "problem-agitation", "features-icons", "testimonials-marquee", "cta-banner", "footer-simple"]
+    },
+    "Freelance": {
+      "sections": ["navbar-simple", "hero-split", "features-alternating", "process-numbered", "testimonials-cards", "pricing-simple", "cta-with-form", "footer-simple"]
+    },
+    "Membership": {
+      "sections": ["navbar-simple", "hero-centered", "features-grid", "testimonials-cards", "pricing-two-tier", "faq-accordion", "cta-centered", "footer-multi-column"]
+    }
+  }
+}

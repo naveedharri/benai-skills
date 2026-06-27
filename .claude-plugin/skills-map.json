@@ -1,5 +1,453 @@
 {
   "departments": {
+    "all-skills": {
+      "connectors": [
+        "apify",
+        "nano-banana",
+        "webflow"
+      ],
+      "agents": [
+        "audit-budget",
+        "audit-compliance",
+        "audit-creative",
+        "audit-google",
+        "audit-meta",
+        "audit-tracking",
+        "autoresearch-eval-agent",
+        "autoresearch-judge",
+        "autoresearch-test-runner",
+        "icebreaker-writer",
+        "lead-qualifier",
+        "lead-researcher",
+        "linkedin-scraper"
+      ],
+      "skills": {
+        "ads": {
+          "displayName": "Ads Suite",
+          "summary": "Comprehensive paid advertising audit and optimization — routes to the right ads sub-skill"
+        },
+        "ads-audit": {
+          "displayName": "Ads Audit",
+          "summary": "Full multi-platform audit with 6 parallel subagents and aggregate health score"
+        },
+        "ads-budget": {
+          "displayName": "Ads Budget",
+          "summary": "Budget allocation and bidding strategy — 70/20/10 rule, 3x Kill Rule, scaling assessment"
+        },
+        "ads-competitor": {
+          "displayName": "Ads Competitor",
+          "summary": "Competitive ad intelligence — Ad Libraries, keyword gaps, spend estimation, messaging analysis"
+        },
+        "ads-creative": {
+          "displayName": "Ads Creative",
+          "summary": "Cross-platform creative audit — brand context setup, fatigue detection, format diversity, ad creative generation via infographic-v2"
+        },
+        "ads-google": {
+          "displayName": "Ads Google",
+          "summary": "Google Ads deep analysis — 74 checks across Search, PMax, Display, YouTube, Demand Gen"
+        },
+        "ads-landing": {
+          "displayName": "Ads Landing",
+          "summary": "Landing page optimization for ad campaigns — message match, speed, mobile, forms, trust signals",
+          "scripts": [
+            "analyze_landing.py",
+            "capture_screenshot.py",
+            "fetch_page.py",
+            "requirements.txt"
+          ]
+        },
+        "ads-linkedin": {
+          "displayName": "Ads LinkedIn",
+          "summary": "LinkedIn Ads for B2B — 25 checks including Thought Leader Ads, ABM, lead gen forms, predictive audiences"
+        },
+        "ads-meta": {
+          "displayName": "Ads Meta",
+          "summary": "Meta/Facebook/Instagram Ads — 46 checks covering Pixel/CAPI, creative, structure, audience, Advantage+"
+        },
+        "ads-microsoft": {
+          "displayName": "Ads Microsoft",
+          "summary": "Microsoft/Bing Ads — 20 checks with Google import validation, Copilot integration"
+        },
+        "ads-plan": {
+          "displayName": "Ads Plan",
+          "summary": "Strategic ad planning with 15 industry templates and phased implementation roadmap"
+        },
+        "ads-tiktok": {
+          "displayName": "Ads TikTok",
+          "summary": "TikTok Ads — 25 checks with creative-first strategy, safe zones, Smart+, TikTok Shop"
+        },
+        "ads-youtube": {
+          "displayName": "Ads YouTube",
+          "summary": "YouTube Ads — skippable, non-skippable, bumper, Shorts, Demand Gen analysis"
+        },
+        "agent-browser": {
+          "displayName": "Agent Browser",
+          "summary": "Browser automation CLI for AI agents — navigate, fill forms, click, screenshot, scrape"
+        },
+        "agent-builder": {
+          "displayName": "Agent Builder",
+          "summary": "Build Anthropic Managed Agents via the REST API. Walks through agent, environment, vault, credentials, session, and first message."
+        },
+        "agentic-os-obsidian": {
+          "displayName": "Agentic OS Obsidian",
+          "summary": "Set up an agentic OS inside an Obsidian vault — command-center dashboard + 5 auto-installed plugins, Home/per-profile/Vault Overview pages, button bar wired to Claude prompts"
+        },
+        "agentic-os-setup": {
+          "displayName": "Agentic OS Setup",
+          "summary": "Set up an agentic OS — either inside an Obsidian vault (bundled command-center dashboard + 5 auto-installed plugins) OR as a standalone Next.js web dashboard with live MCP integrations and optional Railway deploy. Asks one routing question first."
+        },
+        "agentic-os-standalone": {
+          "displayName": "Agentic OS Standalone",
+          "summary": "Set up an agentic OS as a standalone Next.js web dashboard with live MCP integrations (Circle, Fireflies, YouTube/VidIQ, Unipile, Apify, Reddit) and optional Railway deploy"
+        },
+        "audio-transcriber": {
+          "displayName": "Audio Transcriber",
+          "summary": "Audio/video to Markdown transcription with meeting minutes and speaker identification"
+        },
+        "autoresearch": {
+          "displayName": "AutoResearch",
+          "summary": "Autonomous optimization loop with 4-way separation. Two modes: deterministic (eval.py scores) or AI judge (LLM rubric scores). Iterates on prompts, skills, templates, or code overnight."
+        },
+        "brutalist-ui": {
+          "displayName": "Brutalist UI",
+          "summary": "Raw mechanical interfaces — Swiss typography, extreme scale contrast, CRT terminal aesthetics (BETA)"
+        },
+        "case-study": {
+          "displayName": "Case Study",
+          "summary": "Build data-driven case studies from interviews and raw data"
+        },
+        "cloud-os-builder": {
+          "displayName": "Cloud OS Builder",
+          "summary": "Set up a cloud-synced second brain in Google Drive, OneDrive, iCloud, or Dropbox — asks where, surfaces provider gotchas, then creates and syncs the folder. Same structure as the Skill and Local OS tiers."
+        },
+        "course-creator": {
+          "displayName": "Course Creator",
+          "summary": "Interactive 7-phase course creation — from idea or YouTube video to launch-ready package with curriculum, scripts, sales page, emails, and launch plan"
+        },
+        "crm-prospect-mining": {
+          "displayName": "CRM Prospect Mining",
+          "summary": "Mine prospects from CRM lost/stalled deal stages for re-engagement"
+        },
+        "decision-toolkit": {
+          "displayName": "Decision Toolkit",
+          "summary": "Structured decision-making guides, bias checkers, scenario explorers, and interactive dashboards"
+        },
+        "deep-research": {
+          "displayName": "Deep Research",
+          "summary": "Comprehensive internet-enabled research using OpenAI Deep Research API"
+        },
+        "email-personalization": {
+          "displayName": "Email Personalization",
+          "summary": "Generate hyper-personalized email icebreakers using lead intelligence"
+        },
+        "email-sequence": {
+          "displayName": "Email Sequence",
+          "summary": "Create email sequences, drip campaigns, and lifecycle email programs"
+        },
+        "excalidraw": {
+          "displayName": "Excalidraw",
+          "summary": "Create visual presentations, slide decks, and diagrams"
+        },
+        "fact-checker": {
+          "displayName": "Fact Checker",
+          "summary": "Systematic fact verification and misinformation identification"
+        },
+        "file-organizer": {
+          "displayName": "File Organizer",
+          "summary": "Intelligently organize files and folders — duplicates, cleanup, structure suggestions"
+        },
+        "find-skills": {
+          "displayName": "Find Skills",
+          "summary": "Discover and install agent skills from the open skills ecosystem"
+        },
+        "frontend-slides": {
+          "displayName": "Frontend Slides",
+          "summary": "Animation-rich HTML presentations from scratch or PowerPoint conversion"
+        },
+        "generate-visual": {
+          "displayName": "Generate Visual",
+          "summary": "Generate on-screen video visuals (slides) for Ben's YouTube videos via Higgsfield. Same brand system as the thumbnails. Two modes: single (one slide from one prompt) and progressive-disclosure (N sequential frames where each builds on the previous via image-to-image, locking background/composition across the sequence)."
+        },
+        "gif-creator": {
+          "displayName": "GIF Creator",
+          "summary": "Create GIFs from video clips for social media"
+        },
+        "humanizer": {
+          "displayName": "Humanizer",
+          "summary": "Remove AI writing patterns to make text sound natural and human-written"
+        },
+        "infographic": {
+          "displayName": "Infographic",
+          "summary": "Generate professional infographics using Gemini AI"
+        },
+        "infographic-old": {
+          "displayName": "Infographic (Legacy)",
+          "summary": "[COMPARISON] Original infographic skill without enhanced design principles"
+        },
+        "infographic-v2": {
+          "displayName": "Infographic v2",
+          "summary": "Updated infographic generation skill with prompt engineering patterns"
+        },
+        "lead-intelligence": {
+          "displayName": "Lead Intelligence",
+          "summary": "Deep-research leads with web scraping and LinkedIn analysis"
+        },
+        "lead-qualification": {
+          "displayName": "Lead Qualification",
+          "summary": "Qualify and score leads against an Ideal Customer Profile"
+        },
+        "lead-research-assistant": {
+          "displayName": "Lead Research Assistant",
+          "summary": "B2B lead generation and research assistant. Use when asked to find leads, build a prospect list, research companies, find LinkedIn contacts, do lead generation,"
+        },
+        "linkedin-post-engagers": {
+          "displayName": "LinkedIn Post Engagers",
+          "summary": "Scrape LinkedIn post commenters and reactors for targeted outreach"
+        },
+        "linkedin-writer": {
+          "displayName": "LinkedIn Writer",
+          "summary": "Create LinkedIn posts and carousels from existing content"
+        },
+        "linkedin-writer-vault": {
+          "displayName": "LinkedIn Writer Vault",
+          "summary": "Vault-aware LinkedIn writer. Same step-by-step LinkedIn post process as linkedin-writer, but ICP, voice, and offer context come from the vault's Context/ folder"
+        },
+        "local-os-builder": {
+          "displayName": "Local OS Builder",
+          "summary": "Set up a Local OS — bootstrap a local Obsidian vault as a second brain with full directory structure, system files, memory, hooks, and personalized onboarding. Two modes (Solopreneur/Professional, Business/Team). The Local OS tier of the AIOS family."
+        },
+        "mcp-builder": {
+          "displayName": "MCP Builder",
+          "summary": "Guide for building high-quality MCP servers in Python or Node/TypeScript"
+        },
+        "minimalist-ui": {
+          "displayName": "Minimalist UI",
+          "summary": "Clean editorial-style interfaces — warm monochrome palette, typographic contrast, flat bento grids"
+        },
+        "n8n": {
+          "displayName": "n8n Automation",
+          "summary": "Build, test, and deploy n8n workflows via REST API"
+        },
+        "n8n-prd-generator": {
+          "displayName": "n8n Blueprint Generator",
+          "summary": "Convert discovery call transcripts into automation blueprints"
+        },
+        "newsletter-writer": {
+          "displayName": "Newsletter Writer",
+          "summary": "Transform content into engaging newsletter editions"
+        },
+        "openrouter": {
+          "displayName": "OpenRouter",
+          "summary": "Unified access to 400+ AI models through one API with intelligent routing"
+        },
+        "os-mcp": {
+          "displayName": "OS MCP",
+          "summary": "Deploy the Relay MCP server to your own Railway account — bundled source, guided token setup, one command to deploy"
+        },
+        "os-operator": {
+          "displayName": "OS Operator",
+          "summary": "Set up scheduled tasks that operate your second brain on a recurring cadence (stub — full scheduling lands later)"
+        },
+        "os-optimizer": {
+          "displayName": "OS Optimizer",
+          "summary": "Multi-pass second brain audit and optimizer — 22 passes across size/tokens, wiki lint, skills, and hygiene"
+        },
+        "os-setup": {
+          "displayName": "OS Setup",
+          "summary": "Bootstrap vault structure with mode selection and personalized onboarding"
+        },
+        "output-enforcement": {
+          "displayName": "Output Enforcement",
+          "summary": "Force complete full-fidelity code outputs — anti-truncation, banned placeholder patterns"
+        },
+        "pipeline-review": {
+          "displayName": "Pipeline Review",
+          "summary": "Review active deals with risk flags and recommended action items"
+        },
+        "process-interviewer": {
+          "displayName": "Process Interviewer",
+          "summary": "Relentless interviewer that extracts a complete plan from your head before building"
+        },
+        "programmatic-seo": {
+          "displayName": "Programmatic SEO",
+          "summary": "Generate SEO-optimized pages at scale using templates and data sources"
+        },
+        "prompt-master": {
+          "displayName": "Prompt Master",
+          "summary": "Generate optimized prompts for any AI tool — LLMs, image AI, video AI, coding agents"
+        },
+        "redesign": {
+          "displayName": "Redesign",
+          "summary": "Audit and upgrade existing projects to premium design quality without rewriting from scratch"
+        },
+        "refresh": {
+          "displayName": "Refresh",
+          "summary": "Start a clean Claude session with only the context the next task needs — captures the goal, points to the right files, and outputs a self-contained prompt to paste into a fresh chat"
+        },
+        "sales-rep-analyzer": {
+          "displayName": "Sales Rep Analyzer",
+          "summary": "Grade and analyze sales call performance with scoring frameworks"
+        },
+        "seo": {
+          "displayName": "SEO Suite",
+          "summary": "Comprehensive SEO: audits, technical, E-E-A-T, schema, images, sitemaps, GEO, programmatic, competitors, hreflang, GSC optimization"
+        },
+        "seo-audit": {
+          "displayName": "SEO Audit",
+          "summary": "Run comprehensive technical SEO audits (16 categories, 148 rules)"
+        },
+        "seo-competitor-pages": {
+          "displayName": "SEO Competitor Pages",
+          "summary": "Generate X vs Y comparison and alternatives pages with schema markup"
+        },
+        "seo-content": {
+          "displayName": "SEO Content",
+          "summary": "E-E-A-T content quality and AI citation readiness analysis",
+          "scripts": [
+            "fetch_page.py",
+            "parse_html.py",
+            "requirements.txt"
+          ]
+        },
+        "seo-geo": {
+          "displayName": "SEO GEO",
+          "summary": "AI Overviews / Generative Engine Optimization for AI search visibility",
+          "scripts": [
+            "fetch_page.py",
+            "parse_html.py",
+            "requirements.txt"
+          ]
+        },
+        "seo-hreflang": {
+          "displayName": "SEO Hreflang",
+          "summary": "Hreflang and international SEO audit, validation, and generation"
+        },
+        "seo-images": {
+          "displayName": "SEO Images",
+          "summary": "Image optimization analysis — alt text, file size, formats, lazy loading, CLS",
+          "scripts": [
+            "fetch_page.py",
+            "parse_html.py",
+            "requirements.txt"
+          ]
+        },
+        "seo-optimize": {
+          "displayName": "SEO Optimize",
+          "summary": "GSC data-driven optimization — striking distance, low-CTR, cannibalization, content gaps"
+        },
+        "seo-optimizing": {
+          "displayName": "SEO Optimizing",
+          "summary": "Data-driven SEO optimization using Google Search Console"
+        },
+        "seo-page": {
+          "displayName": "SEO Page Analysis",
+          "summary": "Deep single-page SEO analysis covering on-page elements, content quality, schema, and images",
+          "scripts": [
+            "fetch_page.py",
+            "parse_html.py",
+            "requirements.txt"
+          ]
+        },
+        "seo-plan": {
+          "displayName": "SEO Plan",
+          "summary": "Strategic SEO planning with industry templates (SaaS, e-commerce, local, publisher, agency)"
+        },
+        "seo-programmatic": {
+          "displayName": "SEO Programmatic",
+          "summary": "Programmatic SEO at scale with thin content safeguards and quality gates"
+        },
+        "seo-schema": {
+          "displayName": "SEO Schema",
+          "summary": "Detect, validate, and generate Schema.org structured data in JSON-LD",
+          "scripts": [
+            "fetch_page.py",
+            "parse_html.py",
+            "requirements.txt"
+          ]
+        },
+        "seo-sitemap": {
+          "displayName": "SEO Sitemap",
+          "summary": "Analyze existing XML sitemaps or generate new ones with quality gates"
+        },
+        "seo-technical": {
+          "displayName": "SEO Technical",
+          "summary": "Technical SEO audit across 8 categories including crawlability, indexability, CWV, and JS rendering",
+          "scripts": [
+            "fetch_page.py",
+            "parse_html.py",
+            "requirements.txt"
+          ]
+        },
+        "skill-os-builder": {
+          "displayName": "Skill OS Builder",
+          "summary": "Stand up a self-contained second brain that lives entirely inside one Claude skill — short SKILL.md router + context files, no vault, cloud, or MCP server. The easiest of the three OS tiers."
+        },
+        "soft-ui": {
+          "displayName": "Soft UI",
+          "summary": "Luxurious, soft aesthetic with premium fonts, whitespace, depth, and smooth animations"
+        },
+        "stitch": {
+          "displayName": "Stitch Design",
+          "summary": "Google Stitch semantic design generation with premium anti-generic UI standards"
+        },
+        "taste": {
+          "displayName": "Design Taste",
+          "summary": "Premium frontend design system — configurable dials for variance/motion/density, anti-slop rules, React/Next.js/Tailwind/Framer Motion"
+        },
+        "team-os": {
+          "displayName": "Team OS",
+          "summary": "Install the BenAI Relay fork in an Obsidian vault as the foundation for a shared Team OS — RBAC + access controls, bundled production build"
+        },
+        "title-generation": {
+          "displayName": "Title Generation",
+          "summary": "Generate optimized YouTube video titles"
+        },
+        "video": {
+          "displayName": "Video Editing",
+          "summary": "Video editing with FFmpeg and Remotion — stitching, transitions, captions"
+        },
+        "web-artifacts-builder": {
+          "displayName": "Web Artifacts Builder",
+          "summary": "Build elaborate multi-component claude.ai HTML artifacts with React, Tailwind, and shadcn/ui, then bundle to a single self-contained HTML file"
+        },
+        "website-launch-kit": {
+          "displayName": "Website Launch Kit",
+          "summary": "Create custom, distinctive landing pages through deep conversation and iterative design"
+        },
+        "win-loss-analysis": {
+          "displayName": "Win/Loss Analysis",
+          "summary": "Analyze won vs lost deal patterns across CRM data"
+        },
+        "youtube-brief": {
+          "displayName": "YouTube Brief",
+          "summary": "Create detailed video briefs through a structured, collaborative process"
+        },
+        "youtube-excalidraw": {
+          "displayName": "YouTube Excalidraw",
+          "summary": "Create excalidraw visuals designed for YouTube video content"
+        },
+        "youtube-ideation": {
+          "displayName": "YouTube Ideation",
+          "summary": "Generate and evaluate YouTube video ideas based on strategy and audience"
+        },
+        "youtube-outline": {
+          "displayName": "YouTube Outline",
+          "summary": "Structure video content with demos, examples, and visual planning"
+        },
+        "youtube-packaging": {
+          "displayName": "YouTube Packaging",
+          "summary": "Optimize titles and thumbnail concepts for maximum click-through rate"
+        },
+        "youtube-scripting": {
+          "displayName": "YouTube Scripting",
+          "summary": "Create video scripts or bullet points for filming"
+        },
+        "youtube-thumbnail-generate": {
+          "displayName": "YouTube Thumbnail Generate",
+          "summary": "Generate on-brand YouTube thumbnails for Ben van Sprundel via Higgsfield using reference images. Four modes: variation, new-with-ben (uses ben_reference_*.jpg from refs/), ben-plus-other, no-face. Distinct creative angles per variant; reference photo locks face across all variants."
+        }
+      }
+    },
     "marketing": {
       "connectors": [
         "webflow",
@@ -57,7 +505,7 @@
         },
         "course-creator": {
           "displayName": "Course Creator",
-          "summary": "Interactive 7-phase course creation \u2014 from idea or YouTube video to launch-ready package with curriculum, scripts, sales page, emails, and launch plan"
+          "summary": "Interactive 7-phase course creation — from idea or YouTube video to launch-ready package with curriculum, scripts, sales page, emails, and launch plan"
         }
       }
     },
@@ -143,7 +591,7 @@
       "skills": {
         "video": {
           "displayName": "Video Editing",
-          "summary": "Video editing with FFmpeg and Remotion \u2014 stitching, transitions, captions"
+          "summary": "Video editing with FFmpeg and Remotion — stitching, transitions, captions"
         },
         "excalidraw": {
           "displayName": "Excalidraw",
@@ -254,7 +702,7 @@
         },
         "seo-images": {
           "displayName": "SEO Images",
-          "summary": "Image optimization analysis \u2014 alt text, file size, formats, lazy loading, CLS",
+          "summary": "Image optimization analysis — alt text, file size, formats, lazy loading, CLS",
           "scripts": [
             "fetch_page.py",
             "parse_html.py",
@@ -292,7 +740,7 @@
         },
         "seo-optimize": {
           "displayName": "SEO Optimize",
-          "summary": "GSC data-driven optimization \u2014 striking distance, low-CTR, cannibalization, content gaps"
+          "summary": "GSC data-driven optimization — striking distance, low-CTR, cannibalization, content gaps"
         },
         "seo-audit": {
           "displayName": "SEO Audit",
@@ -316,31 +764,31 @@
       "skills": {
         "ads": {
           "displayName": "Ads Suite",
-          "summary": "Comprehensive paid advertising audit and optimization \u2014 routes to the right ads sub-skill"
+          "summary": "Comprehensive paid advertising audit and optimization — routes to the right ads sub-skill"
         },
         "ads-google": {
           "displayName": "Ads Google",
-          "summary": "Google Ads deep analysis \u2014 74 checks across Search, PMax, Display, YouTube, Demand Gen"
+          "summary": "Google Ads deep analysis — 74 checks across Search, PMax, Display, YouTube, Demand Gen"
         },
         "ads-meta": {
           "displayName": "Ads Meta",
-          "summary": "Meta/Facebook/Instagram Ads \u2014 46 checks covering Pixel/CAPI, creative, structure, audience, Advantage+"
+          "summary": "Meta/Facebook/Instagram Ads — 46 checks covering Pixel/CAPI, creative, structure, audience, Advantage+"
         },
         "ads-linkedin": {
           "displayName": "Ads LinkedIn",
-          "summary": "LinkedIn Ads for B2B \u2014 25 checks including Thought Leader Ads, ABM, lead gen forms, predictive audiences"
+          "summary": "LinkedIn Ads for B2B — 25 checks including Thought Leader Ads, ABM, lead gen forms, predictive audiences"
         },
         "ads-tiktok": {
           "displayName": "Ads TikTok",
-          "summary": "TikTok Ads \u2014 25 checks with creative-first strategy, safe zones, Smart+, TikTok Shop"
+          "summary": "TikTok Ads — 25 checks with creative-first strategy, safe zones, Smart+, TikTok Shop"
         },
         "ads-youtube": {
           "displayName": "Ads YouTube",
-          "summary": "YouTube Ads \u2014 skippable, non-skippable, bumper, Shorts, Demand Gen analysis"
+          "summary": "YouTube Ads — skippable, non-skippable, bumper, Shorts, Demand Gen analysis"
         },
         "ads-microsoft": {
           "displayName": "Ads Microsoft",
-          "summary": "Microsoft/Bing Ads \u2014 20 checks with Google import validation, Copilot integration"
+          "summary": "Microsoft/Bing Ads — 20 checks with Google import validation, Copilot integration"
         },
         "ads-audit": {
           "displayName": "Ads Audit",
@@ -348,15 +796,15 @@
         },
         "ads-budget": {
           "displayName": "Ads Budget",
-          "summary": "Budget allocation and bidding strategy \u2014 70/20/10 rule, 3x Kill Rule, scaling assessment"
+          "summary": "Budget allocation and bidding strategy — 70/20/10 rule, 3x Kill Rule, scaling assessment"
         },
         "ads-creative": {
           "displayName": "Ads Creative",
-          "summary": "Cross-platform creative audit \u2014 brand context setup, fatigue detection, format diversity, ad creative generation via infographic-v2"
+          "summary": "Cross-platform creative audit — brand context setup, fatigue detection, format diversity, ad creative generation via infographic-v2"
         },
         "ads-landing": {
           "displayName": "Ads Landing",
-          "summary": "Landing page optimization for ad campaigns \u2014 message match, speed, mobile, forms, trust signals",
+          "summary": "Landing page optimization for ad campaigns — message match, speed, mobile, forms, trust signals",
           "scripts": [
             "analyze_landing.py",
             "capture_screenshot.py",
@@ -370,7 +818,7 @@
         },
         "ads-competitor": {
           "displayName": "Ads Competitor",
-          "summary": "Competitive ad intelligence \u2014 Ad Libraries, keyword gaps, spend estimation, messaging analysis"
+          "summary": "Competitive ad intelligence — Ad Libraries, keyword gaps, spend estimation, messaging analysis"
         },
         "infographic-v2": {
           "displayName": "Infographic v2",
@@ -382,7 +830,7 @@
       "skills": {
         "taste": {
           "displayName": "Design Taste",
-          "summary": "Premium frontend design system \u2014 configurable dials for variance/motion/density, anti-slop rules, React/Next.js/Tailwind/Framer Motion"
+          "summary": "Premium frontend design system — configurable dials for variance/motion/density, anti-slop rules, React/Next.js/Tailwind/Framer Motion"
         },
         "redesign": {
           "displayName": "Redesign",
@@ -394,11 +842,11 @@
         },
         "minimalist-ui": {
           "displayName": "Minimalist UI",
-          "summary": "Clean editorial-style interfaces \u2014 warm monochrome palette, typographic contrast, flat bento grids"
+          "summary": "Clean editorial-style interfaces — warm monochrome palette, typographic contrast, flat bento grids"
         },
         "brutalist-ui": {
           "displayName": "Brutalist UI",
-          "summary": "Raw mechanical interfaces \u2014 Swiss typography, extreme scale contrast, CRT terminal aesthetics (BETA)"
+          "summary": "Raw mechanical interfaces — Swiss typography, extreme scale contrast, CRT terminal aesthetics (BETA)"
         },
         "stitch": {
           "displayName": "Stitch Design",
@@ -406,7 +854,7 @@
         },
         "output-enforcement": {
           "displayName": "Output Enforcement",
-          "summary": "Force complete full-fidelity code outputs \u2014 anti-truncation, banned placeholder patterns"
+          "summary": "Force complete full-fidelity code outputs — anti-truncation, banned placeholder patterns"
         }
       }
     },
@@ -430,23 +878,23 @@
         },
         "agentic-os-setup": {
           "displayName": "Agentic OS Setup",
-          "summary": "Set up an agentic OS \u2014 either inside an Obsidian vault (bundled command-center dashboard + 5 auto-installed plugins) OR as a standalone Next.js web dashboard with live MCP integrations and optional Railway deploy. Asks one routing question first."
+          "summary": "Set up an agentic OS — either inside an Obsidian vault (bundled command-center dashboard + 5 auto-installed plugins) OR as a standalone Next.js web dashboard with live MCP integrations and optional Railway deploy. Asks one routing question first."
         },
         "os-optimizer": {
           "displayName": "OS Optimizer",
-          "summary": "Multi-pass second brain audit and optimizer \u2014 22 passes across size/tokens, wiki lint, skills, and hygiene"
+          "summary": "Multi-pass second brain audit and optimizer — 22 passes across size/tokens, wiki lint, skills, and hygiene"
         },
         "os-operator": {
           "displayName": "OS Operator",
-          "summary": "Set up scheduled tasks that operate your second brain on a recurring cadence (stub \u2014 full scheduling lands later)"
+          "summary": "Set up scheduled tasks that operate your second brain on a recurring cadence (stub — full scheduling lands later)"
         },
         "os-mcp": {
           "displayName": "OS MCP",
-          "summary": "Deploy the Relay MCP server to your own Railway account \u2014 bundled source, guided token setup, one command to deploy"
+          "summary": "Deploy the Relay MCP server to your own Railway account — bundled source, guided token setup, one command to deploy"
         },
         "team-os": {
           "displayName": "Team OS",
-          "summary": "Install the BenAI Relay fork in an Obsidian vault as the foundation for a shared Team OS \u2014 RBAC + access controls, bundled production build"
+          "summary": "Install the BenAI Relay fork in an Obsidian vault as the foundation for a shared Team OS — RBAC + access controls, bundled production build"
         }
       }
     },
@@ -494,7 +942,7 @@
         },
         "agent-browser": {
           "displayName": "Agent Browser",
-          "summary": "Browser automation CLI for AI agents \u2014 navigate, fill forms, click, screenshot, scrape"
+          "summary": "Browser automation CLI for AI agents — navigate, fill forms, click, screenshot, scrape"
         },
         "audio-transcriber": {
           "displayName": "Audio Transcriber",
@@ -514,7 +962,7 @@
         },
         "file-organizer": {
           "displayName": "File Organizer",
-          "summary": "Intelligently organize files and folders \u2014 duplicates, cleanup, structure suggestions"
+          "summary": "Intelligently organize files and folders — duplicates, cleanup, structure suggestions"
         },
         "find-skills": {
           "displayName": "Find Skills",
@@ -542,7 +990,7 @@
         },
         "prompt-master": {
           "displayName": "Prompt Master",
-          "summary": "Generate optimized prompts for any AI tool \u2014 LLMs, image AI, video AI, coding agents"
+          "summary": "Generate optimized prompts for any AI tool — LLMs, image AI, video AI, coding agents"
         }
       }
     }
