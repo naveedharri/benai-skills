@@ -19,9 +19,21 @@ Skills/         the manifest of installed routines and skills
 
 Create only what the rep's capabilities need. If they took no outbound (pillar 4), `Lead-Gen/` can stay minimal. If they took no one-pager, the one-pager master is skipped.
 
-## The conventions (write these into the CLAUDE.md files)
+## Write a CLAUDE.md into every folder
 
-Use the bundled templates in `assets/claude-md-templates/` for the root `CLAUDE.md` and each subfolder `CLAUDE.md`, adapted to the rep's tools and paths. The conventions to embed:
+Every file is named `CLAUDE.md` on disk, at the root and inside each folder alike. They differ by role, not by name: the root one is the main brain file; each folder's is an index of that folder. Every root-level folder gets one. Do not skip any. Two templates drive this, both in `assets/claude-md-templates/`:
+
+- **The main one (root):** write the root `CLAUDE.md` from `main.md`, adapted to the rep's tools and paths.
+- **The index ones (each folder):** generate the folder's `CLAUDE.md` at runtime from the single generic template `index.md`. There is one template, not one per folder, on purpose. For each of `Context/`, `Lead-Gen/`, `Deals/`, `Calls/`, `Templates/`, `Intelligence/`, `Daily/`, and `Skills/`, fill it in for that specific folder:
+  1. **What the folder is for** the one-line job, taken from the routing table in the root `CLAUDE.md`.
+  2. **What's in here** an index of the folder's real contents at build time (the files and subfolders, one line each), so the OS stays navigable. If a folder is empty for now, say what will land there. This index is the point of the per-folder file: it indexes the folder.
+  3. **Conventions** the rules scoped to that folder, drawn from the convention list below.
+
+Generate these from the live folder contents, not from a fixed list, so each `CLAUDE.md` describes what is actually there. When a routine or skill later adds or removes files in a folder, it refreshes that folder's "What's in here" index in the same change.
+
+## The conventions (scope these into each folder's CLAUDE.md)
+
+The conventions to embed, each into the folder it governs:
 
 - **Brain-update versus action.** Brain-update routines change what the OS knows and log every file they touch to `Daily/logs/YYYY-MM-DD.md`. Action automations create a deliverable and do not log. This is the line the whole system runs on.
 - **Routing.** Every piece of information has one home (the table above). No catch-all, no notes in the root.
@@ -34,4 +46,4 @@ Use the bundled templates in `assets/claude-md-templates/` for the root `CLAUDE.
 
 ## Done when
 
-The folders exist, the root and subfolder `CLAUDE.md` files carry the conventions adapted to the rep, and the rep understands the brain-update versus action rule and the deal-file structure. Write the first `MAP.md` from `assets/map-templates/` now that the structure exists; you finalize it and add `MEMORY.md` in Pillar 6. Then move to pillar 3.
+The folders exist, every root-level folder has its own index `CLAUDE.md` generated from `index.md` (purpose, an index of what's in it, and the conventions that govern it), the main root `CLAUDE.md` from `main.md` carries the conventions adapted to the rep, and the rep understands the brain-update versus action rule and the deal-file structure. Write the first `MAP.md` from `assets/map-templates/` now that the structure exists; you finalize it and add `MEMORY.md` in Pillar 6. Then move to pillar 3.

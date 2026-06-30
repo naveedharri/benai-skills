@@ -43,7 +43,7 @@ The ground truth every capability reads. First gauge whether the material alread
 
 ## Pillar 2: Folder structure and conventions
 
-Build the structure: `Context/`, `Lead-Gen/`, `Deals/`, `Calls/`, `Templates/`, `Intelligence/`, `Daily/` (tasks plus logs), `Skills/`. Then write the conventions into the root `CLAUDE.md` and every subfolder `CLAUDE.md` from the bundled templates in `assets/claude-md-templates/`. The conventions are not decoration, they are what makes the brain self-maintaining, so they ship verbatim, adapted only where the rep's reality differs. This is also where you write the first `MAP.md`, the one-page self-model of the OS, since the structure now exists. See `references/2-folder-structure.md` and `references/6-map-and-memory.md`.
+Build the structure: `Context/`, `Lead-Gen/`, `Deals/`, `Calls/`, `Templates/`, `Intelligence/`, `Daily/` (tasks plus logs), `Skills/`. Then write a `CLAUDE.md` into the root and into every folder. They are all named `CLAUDE.md`; the root one is the main brain file (from `assets/claude-md-templates/main.md`), and each folder's is an index of that folder generated at runtime from the single template `assets/claude-md-templates/index.md` (what the folder is for, an index of what's actually in it, and the conventions that govern it). Do not skip any folder. The conventions are not decoration, they are what makes the brain self-maintaining, so they ship verbatim, adapted only where the rep's reality differs. This is also where you write the first `MAP.md`, the one-page self-model of the OS, since the structure now exists. See `references/2-folder-structure.md` and `references/6-map-and-memory.md`.
 
 ## Pillar 3: Connectors
 
