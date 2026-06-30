@@ -51,11 +51,11 @@ Ask about their stack, understand their goals, and recommend connecting every re
 
 ## Pillar 4: Capabilities (routines and skills)
 
-Install the capability suite. Two layers: a CORE set that makes the brain self-maintaining and is installed for everyone, and an OPTIONAL set you gauge and offer because the rep may not need it or may already have a process. Every routine is installed as a LOCAL scheduled task by default. Routines that call a skill by name are installed together with that skill. See `references/4-capabilities.md` for the full menu, the core-versus-optional structure, the dependency map, and the install steps. The generalized routine prompts are bundled in `assets/routine-templates/`; you fill each from the rep's Context and config, then register it.
+Install the capability suite. Two layers: a CORE set that makes the brain self-maintaining and is installed for everyone, and an OPTIONAL set you gauge and offer because the rep may not need it or may already have a process. Routines that call a skill by name are installed together with that skill. See `references/4-capabilities.md` for the full menu, the core-versus-optional structure, the dependency map, and the install steps. The generalized routine prompts are bundled in `assets/routine-templates/`; you fill each from the rep's Context and config, then register it. Before registering, ASK the rep how they want routines to run, do not assume: local scheduled tasks or cloud Claude routines on an MCP vault. Explain the trade-off and provision whichever they pick. See the execution-model section in `references/4-capabilities.md`.
 
 ## Pillar 5: Dashboard
 
-The last step: the vault overlay where the rep sees what matters. Tabs: Today, Context, Capabilities, Stack. No Map tab. Built in the rep's design system; if they have none, use `ui-ux-pro-max` to present options and pick one. Per rep for v1. See `references/5-dashboard.md`.
+The last step: the vault overlay where the rep sees what matters. Build it from the reference shell in `assets/dashboard-templates/control-center.example.html` (keep its structure and chart contract, swap the design tokens and content). Five tabs: Today, Pipeline, Context, Capabilities, Stack. No Map tab. The skill fixes the structure; the content adapts entirely to the rep, their tools, capabilities, context, metrics, and brand. ALWAYS build in the rep's existing brand guidelines if they have any (a brand or visual-identity doc, design tokens, their website); if they have none, do NOT default silently, confirm a look with the rep first (present `ui-ux-pro-max` options or ask their preference). Every Stack tool shows a real downloaded logo. Then REGISTER the daily regeneration routine that keeps it current (fill `assets/routine-templates/dashboard.md`, register on the rep's chosen execution model after morning and hygiene, pre-run once). Per rep for v1. See `references/5-dashboard.md`.
 
 ## Pillar 6: Map and memory (the self-model)
 
@@ -65,7 +65,7 @@ With the OS built and visible, the last step makes it self-describing and self-r
 
 - One pillar at a time. Confirm before advancing. Idempotent: safe to re-run, never clobber what the rep already corrected.
 - Gauge before you build. Prefer what the rep already has over the defaults.
-- Local scheduled tasks by default. An advanced rep can later turn their vault into an MCP and run cloud routines, but you provision local tasks only.
+- Ask the rep how routines should run, do not assume. Two models: LOCAL scheduled tasks (simple, but they only run while the rep's machine is on and awake) or CLOUD Claude routines (run unattended in the cloud, but need the vault exposed as an MCP via the `os-mcp` skill, then scheduled via `os-operator`, a heavier setup). Explain both caveats, let the rep choose, and if they already have the MCP vault set up, use cloud routines. Provision whichever they pick.
 - Embed every convention into the CLAUDE.md files so the OS stays consistent after you leave.
 - Keep the self-model live: when you add or rename a folder, file, rule, or capability, update `MAP.md` in the same step; when a decision or durable fact lands, append a dated line to `MEMORY.md`.
 - No em dashes anywhere. Wikilink entities inside the vault. Augment the CRM, never replace it.
@@ -73,7 +73,7 @@ With the OS built and visible, the last step makes it self-describing and self-r
 
 ## What gets installed (summary)
 
-- **Core (everyone):** the morning routine, pipeline hygiene, call scoring, the monthly and quarterly reports, and the reporting skills they call (`sales-rep-analyzer`, `win-loss-analysis`).
+- **Core (everyone):** the morning routine, pipeline hygiene, call scoring, the monthly and quarterly reports, the daily dashboard regeneration routine (registered in Pillar 5), and the reporting skills they call (`sales-rep-analyzer`, `win-loss-analysis`).
 - **The self-model (everyone):** `MAP.md` and `MEMORY.md` at the OS root, kept current by the self-maintenance rule baked into every `CLAUDE.md`.
 - **Optional (gauged and offered):** post-discovery follow-up (recap plus proposal), the client one-pager, and the acquisition pair lead-gen and outreach.
 - **Skipped by default:** campaign metrics (too context-dependent to be worth it for most reps).

@@ -13,6 +13,9 @@ Install the suite that makes the OS act, not just store. Two layers: a CORE set 
 | Call scoring | brain-update | twice weekly | score first calls against the rep's process |
 | Monthly report | brain-update | monthly | build the intelligence report |
 | Quarterly report | brain-update | quarterly | the quarterly roll-up |
+| Dashboard regeneration | action | daily, after hygiene | rebuild the Today and Pipeline tabs and refresh the dashboard overlay; the rep's daily window into the OS |
+
+The first five register here in Pillar 4. The **dashboard regeneration** routine is core too, but it edits a shell that must exist first, so you register it in **Pillar 5** right after building the dashboard (see `references/5-dashboard.md`). It is listed here so it is counted as part of the core spine and shows on the heartbeat.
 
 **Optional (gauge, then offer).** The rep may not run this motion, or may already have a process they like. Ask a short gauge question and install only if it fits. Never push an optional capability on a rep whose process does not include it.
 
@@ -46,23 +49,27 @@ Routines call skills by name. Install the routine and the skills it calls as a u
 | Monthly report | `sales-rep-analyzer`, `win-loss-analysis` |
 | Quarterly report | `sales-rep-analyzer`, `win-loss-analysis` |
 
-So installing the core set also installs `call-prep`, `sales-rep-analyzer`, and `win-loss-analysis`. The post-discovery follow-up bundles its own proposal generator.
+So installing the core set also installs `call-prep`, `sales-rep-analyzer`, and `win-loss-analysis`. The post-discovery follow-up bundles its own proposal generator. The dashboard regeneration routine calls no skills; it reads the rep's folders and the scheduled-task list directly, and registers in Pillar 5 once the shell exists.
 
 ## Generalized, not copied
 
 The bundled routine prompts in `assets/routine-templates/` and the action skills are generalized versions of what BenAI runs, grounded in the same architecture (the brain-update versus action rule, logging every changed file to `Daily/logs/`, the morning then hygiene then scoring then reports cadence, the deal-file and calls conventions) but parameterized to the rep. Do not copy BenAI's tools or paths in. Fill each template from the rep's `Context/` and config: their CRM, their proposal platform, their notetaker, their email, their vault paths, their schedule times. Same skeleton, their specifics.
 
-## Installing a routine as a local scheduled task
+## Installing a routine: pick the execution model
 
-For each routine the rep is keeping:
+ASK the rep how they want their routines to run, do not assume. Two models. Explain both and the caveat plainly, then let the rep choose:
+- **Local scheduled tasks** (simple). Each routine runs as a scheduled task on the rep's own machine. Caveat: it only runs while that machine is on and awake. If the laptop is closed, the routine does not fire.
+- **Cloud Claude routines** (advanced, runs unattended). The routines run in the cloud on a schedule, so the machine need not be on. This requires the rep's vault to be reachable as an MCP server: stand it up with the `os-mcp` skill (a self-hosted Relay MCP), then schedule the routines with `os-operator`. Heavier to set up. If the rep already has the MCP vault, prefer this.
+
+The choice is the rep's. The same routine prompts work either way. For each routine the rep is keeping:
 
 1. Open its template in `assets/routine-templates/<name>.md`.
 2. Fill every `{{CONFIG:...}}` and `{{PLACEHOLDER}}` from the rep's `Context/` and config (CRM, proposal platform, notetaker, email, paths, schedule times, identity).
-3. Register it as a LOCAL scheduled task at the cadence in the template, pointed at the rep's vault.
+3. Register it on the rep's chosen execution model at the cadence in the template, pointed at the rep's vault: a local scheduled task, or a cloud Claude routine via `os-operator` on the MCP vault.
 4. Confirm the brain-update routines log to `Daily/logs/` and the cadence ordering holds (morning before hygiene).
 5. Pre-run it once so the first unattended run does not pause on permission prompts.
 
-**Local by default.** Provision every routine as a local scheduled task. An advanced rep can later turn their vault into an MCP and run cloud routines instead, but that is their move to make; the onboarder stands up local tasks only and says so.
+**Whichever the rep chose, never a silent default.** If they picked local, provision local scheduled tasks and remind them these only run while their machine is on and awake. If they picked cloud, stand up the MCP vault with `os-mcp` (or use their existing one) and register the routines through `os-operator` so they run unattended. The rep decides; you explain the trade-off and provision their pick.
 
 ## After install
 
