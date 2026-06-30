@@ -1,0 +1,48 @@
+<!--
+Per-framework detail section. The skill renders 7 of these (F1..G7) and
+concatenates into {{DETAILS}} of report-template.html.
+
+Substitute:
+
+  {{FRAMEWORK_TAG}}        F1 | F2 | F3 | F4 | F5 | F6 | G7
+  {{FRAMEWORK_NAME}}       Anthropic CLAUDE.md | Karpathy Wiki | …
+  {{FRAMEWORK_WHY}}        one short paragraph describing what the framework
+                           checks and why it matters (taken from the
+                           framework reference's "Core thesis" section).
+  {{FILES}}                14
+  {{CHECKS}}               12
+  {{FINDINGS}}             47
+  {{FAIL}}                 8
+  {{WARN}}                 39
+  {{FIXED}}                12
+  {{REFERENCE_FILE}}       references/anthropic-claude-md.md
+  {{FINDINGS_HTML}}        rendered finding cards (see report-finding-template.html);
+                           empty string if zero findings (the {{CLEAN_STATE}}
+                           will show instead).
+  {{CLEAN_STATE}}          rendered only when FINDINGS=0; otherwise empty.
+                           Suggested content:
+                             <div class="clean">✅ All checks passed. No findings for this framework.</div>
+  {{MORE_NOTE}}            rendered only when total findings > 25; otherwise empty.
+                           Suggested content:
+                             <p class="more">…and {{N}} more findings logged in the JSON sidecar
+                             ({{YYYY-MM-DD}}-vault-audit-findings.json).</p>
+-->
+<section class="framework-section" id="{{FRAMEWORK_TAG}}">
+  <div class="head">
+    <h2>{{FRAMEWORK_NAME}}</h2>
+    <span class="id">{{FRAMEWORK_TAG}}</span>
+  </div>
+  <p class="why">{{FRAMEWORK_WHY}}</p>
+  <div class="meta">
+    <span><strong>{{FILES}}</strong> files audited</span>
+    <span><strong>{{CHECKS}}</strong> checks run</span>
+    <span><strong>{{FINDINGS}}</strong> findings ({{FAIL}} fail · {{WARN}} warn)</span>
+    <span><strong>{{FIXED}}</strong> fixes applied</span>
+    <span>Reference: <code>{{REFERENCE_FILE}}</code></span>
+  </div>
+  <div class="findings">
+    {{FINDINGS_HTML}}
+    {{CLEAN_STATE}}
+  </div>
+  {{MORE_NOTE}}
+</section>

@@ -445,6 +445,34 @@
         "youtube-thumbnail-generate": {
           "displayName": "YouTube Thumbnail Generate",
           "summary": "Generate on-brand YouTube thumbnails for Ben van Sprundel via Higgsfield using reference images. Four modes: variation, new-with-ben (uses ben_reference_*.jpg from refs/), ben-plus-other, no-face. Distinct creative angles per variant; reference photo locks face across all variants."
+        },
+        "setup": {
+          "displayName": "Sales OS Setup",
+          "summary": "Stand up a complete Sales OS from scratch — Context second brain, folder structure with conventions baked in, connected stack, capability suite (routines + skills), and a dashboard. Interview-driven and idempotent, one pillar at a time."
+        },
+        "lead-generation": {
+          "displayName": "Lead Generation",
+          "summary": "Source, qualify, enrich, and research a B2B lead list from an ICP end to end — picks the right data source, sources at volume, qualifies with parallel subagents, verifies email + phone, and delivers a clean CSV or Google Sheet. Feeds the outreach skill."
+        },
+        "outreach": {
+          "displayName": "Outreach",
+          "summary": "Turn a qualified, enriched lead list into a ready-to-run multichannel outreach campaign — strategy, cadence, copy, and per-lead personalization across email, LinkedIn, cold call, and WhatsApp. Runs downstream of lead-generation."
+        },
+        "onepager": {
+          "displayName": "One-Pager",
+          "summary": "Generate a personalized seller x client sales one-pager (HTML) for a discovery, sales, or onboarding call — config-driven and offer-agnostic, deployed to a shareable Vercel link when available. Handles both pre-call and post-call (transcript-grounded) scenarios."
+        },
+        "post-disco-followup": {
+          "displayName": "Post-Discovery Follow-up",
+          "summary": "Produce the post-discovery follow-up package — a personalized email recap plus an optional proposal (PandaDoc, Google Docs, or your own template). Nothing is sent; reads your offer, pricing, and process from config/."
+        },
+        "setup-post-disco": {
+          "displayName": "Setup Post-Discovery",
+          "summary": "Interactive onboarding wizard that configures the post-disco-followup skill for any business — gauges existing templates and stack, writes config/, and runs a dry-run draft to prove it works."
+        },
+        "google-workspace-cli-installer-guide": {
+          "displayName": "Google Workspace CLI Installer",
+          "summary": "Interactive step-by-step installer for the Google Workspace CLI (gws) from a clean machine — installs gcloud + gws, sets up the GCP project + OAuth consent, verifies with a real Gmail call, and runs a tailored first-use proof-of-concept."
         }
       }
     },
@@ -548,6 +576,50 @@
         "win-loss-analysis": {
           "displayName": "Win/Loss Analysis",
           "summary": "Analyze won vs lost deal patterns across CRM data"
+        }
+      }
+    },
+    "sales-os": {
+      "skills": {
+        "setup": {
+          "displayName": "Sales OS Setup",
+          "summary": "Stand up a complete Sales OS from scratch — Context second brain, folder structure with conventions baked in, connected stack, capability suite (routines + skills), and a dashboard. Interview-driven and idempotent, one pillar at a time."
+        },
+        "lead-generation": {
+          "displayName": "Lead Generation",
+          "summary": "Source, qualify, enrich, and research a B2B lead list from an ICP end to end — picks the right data source, sources at volume, qualifies with parallel subagents, verifies email + phone, and delivers a clean CSV or Google Sheet. Feeds the outreach skill."
+        },
+        "outreach": {
+          "displayName": "Outreach",
+          "summary": "Turn a qualified, enriched lead list into a ready-to-run multichannel outreach campaign — strategy, cadence, copy, and per-lead personalization across email, LinkedIn, cold call, and WhatsApp. Runs downstream of lead-generation."
+        },
+        "onepager": {
+          "displayName": "One-Pager",
+          "summary": "Generate a personalized seller x client sales one-pager (HTML) for a discovery, sales, or onboarding call — config-driven and offer-agnostic, deployed to a shareable Vercel link when available. Handles both pre-call and post-call (transcript-grounded) scenarios."
+        },
+        "post-disco-followup": {
+          "displayName": "Post-Discovery Follow-up",
+          "summary": "Produce the post-discovery follow-up package — a personalized email recap plus an optional proposal (PandaDoc, Google Docs, or your own template). Nothing is sent; reads your offer, pricing, and process from config/."
+        },
+        "setup-post-disco": {
+          "displayName": "Setup Post-Discovery",
+          "summary": "Interactive onboarding wizard that configures the post-disco-followup skill for any business — gauges existing templates and stack, writes config/, and runs a dry-run draft to prove it works."
+        },
+        "google-workspace-cli-installer-guide": {
+          "displayName": "Google Workspace CLI Installer",
+          "summary": "Interactive step-by-step installer for the Google Workspace CLI (gws) from a clean machine — installs gcloud + gws, sets up the GCP project + OAuth consent, verifies with a real Gmail call, and runs a tailored first-use proof-of-concept."
+        },
+        "os-optimizer": {
+          "displayName": "OS Optimizer",
+          "summary": "Multi-pass second brain audit and optimizer — 22 passes across size/tokens, wiki lint, skills, and hygiene"
+        },
+        "os-operator": {
+          "displayName": "OS Operator",
+          "summary": "Set up scheduled tasks that operate your second brain on a recurring cadence (stub — full scheduling lands later)"
+        },
+        "os-mcp": {
+          "displayName": "OS MCP",
+          "summary": "Deploy the Relay MCP server to your own Railway account — bundled source, guided token setup, one command to deploy"
         }
       }
     },

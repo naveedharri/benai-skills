@@ -1,0 +1,35 @@
+<!--
+Per-framework summary row. The skill renders 7 of these (F1..G7) and
+concatenates them into {{ROWS}} of report-template.html.
+
+Substitute:
+
+  {{FRAMEWORK_TAG}}        F1 | F2 | F3 | F4 | F5 | F6 | G7
+  {{FRAMEWORK_NAME}}       Anthropic CLAUDE.md | Karpathy Wiki | Caveman | …
+  {{FILES}}                14
+  {{CHECKS}}               12
+  {{FINDINGS}}             47
+  {{FAIL}}                 8
+  {{WARN}}                 39
+  {{FIXABLE}}              3   (count of findings with fixable:true)
+  {{FIXED}}                2   (count of findings with fixed:true; always ≤ FIXABLE)
+
+If the framework had no findings: still emit the row with FINDINGS=0,
+FAIL=0, WARN=0, FIXABLE=0, FIXED=0. The detail section will render the clean state.
+
+If FIXABLE > 0 and FIXED < FIXABLE: that gap is "fixable items the user
+skipped or denied this run" — visible at a glance.
+-->
+<tr>
+  <td>
+    <span class="framework-name">{{FRAMEWORK_NAME}}</span>
+    <span class="framework-tag">{{FRAMEWORK_TAG}}</span>
+  </td>
+  <td class="num">{{FILES}}</td>
+  <td class="num">{{CHECKS}}</td>
+  <td class="num">{{FINDINGS}}</td>
+  <td class="num">{{FAIL}}</td>
+  <td class="num">{{WARN}}</td>
+  <td class="num">{{FIXABLE}}</td>
+  <td class="num">{{FIXED}}</td>
+</tr>

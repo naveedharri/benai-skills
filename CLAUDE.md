@@ -40,6 +40,22 @@ A marketplace of expert automation plugins for Claude Code, organized by departm
 
 **Agents:** `lead-qualifier`, `lead-researcher`, `icebreaker-writer`, `linkedin-scraper`
 
+### Sales OS (10 skills)
+| Skill | Command | Purpose |
+|-------|---------|---------|
+| setup | `/setup` | Stand up a complete Sales OS from scratch (Context, folder structure, stack, capabilities, dashboard) |
+| lead-generation | `/lead-generation` | Source, qualify, enrich & research a B2B lead list end to end |
+| outreach | `/outreach` | Multichannel outreach campaign — strategy, cadence, copy, per-lead personalization |
+| onepager | `/onepager` | Personalized seller×client sales one-pager (HTML), deployed to a shareable link |
+| post-disco-followup | `/post-disco-followup` | Post-discovery follow-up package — email recap + optional proposal |
+| setup-post-disco | `/setup-post-disco` | Onboarding wizard that configures post-disco-followup for any business |
+| google-workspace-cli-installer-guide | `/google-workspace-cli-installer-guide` | Step-by-step installer for the Google Workspace CLI (gws) |
+| os-optimizer | `/os-optimizer` | Multi-pass second brain audit and optimizer (22 passes) |
+| os-operator | `/os-operator` | Schedule recurring routines that operate the second brain |
+| os-mcp | `/os-mcp` | Deploy a self-hosted Relay MCP server to Railway |
+
+A complete Sales OS giveaway package: `/setup` is the keystone (the former sales-os-onboarder) and builds the rest with you, one pillar at a time.
+
 ### Operations (2 skills)
 | Skill | Command | Purpose |
 |-------|---------|---------|

@@ -1,0 +1,27 @@
+{
+  "name": "relay-mcp-server-v2",
+  "version": "2.0.0-dev",
+  "description": "OAuth-enabled MCP server bridging Claude to the Obsidian vault via System 3 Relay",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "express": "^4.21.0",
+    "jose": "^5.9.6",
+    "yjs": "^13.6.20",
+    "y-websocket": "^2.1.0",
+    "ws": "^8.18.0",
+    "pocketbase": "^0.25.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.0.0",
+    "@types/ws": "^8.5.12",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

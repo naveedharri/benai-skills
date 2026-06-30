@@ -6,15 +6,15 @@
   },
   "metadata": {
     "description": "Expert automation plugins that turn Claude into a specialist for your team. Install by department to get skills for marketing, sales, operations, creative, and product workflows.",
-    "version": "1.1.0"
+    "version": "1.2.0"
   },
   "plugins": [
     {
       "name": "all-skills",
       "displayName": "All Skills",
       "source": "./plugins/all-skills",
-      "description": "Every BenAI skill in one install. All 97 skills across marketing, sales, SEO, ads, design, YouTube, creative, operations, second-brain OS, and general productivity. Add this one plugin to get the complete library.",
-      "version": "1.0.0",
+      "description": "Every BenAI skill in one install. All 104 skills across marketing, sales, SEO, ads, design, YouTube, creative, operations, second-brain OS, and general productivity. Add this one plugin to get the complete library.",
+      "version": "1.1.0",
       "author": {
         "name": "BenAI"
       },
@@ -69,6 +69,28 @@
         "sales",
         "outreach",
         "prospecting"
+      ]
+    },
+    {
+      "name": "sales-os",
+      "displayName": "Sales OS",
+      "source": "./plugins/sales-os",
+      "description": "Stand up a complete Sales OS — a markdown second brain for your sales world plus the routines, skills, and dashboard that keep it current: onboarder, lead-gen, outreach, one-pager, post-discovery follow-up, and OS optimizer/operator/MCP.",
+      "version": "1.0.0",
+      "author": {
+        "name": "BenAI"
+      },
+      "keywords": [
+        "sales-os",
+        "sales",
+        "second-brain",
+        "onboarder",
+        "lead-generation",
+        "outreach",
+        "onepager",
+        "proposal",
+        "discovery",
+        "dashboard"
       ]
     },
     {
