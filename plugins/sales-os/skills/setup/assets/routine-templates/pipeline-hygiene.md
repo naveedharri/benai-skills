@@ -67,6 +67,8 @@ Subject: `Sales OS Daily Brief - <date>` (a real hyphen, never an em dash). Thre
 - **Pipeline overnight:** what YOU did this run, one concise line each: the statuses you reconciled, the fields you cleaned, the deals you froze, and the cold flags you raised.
 - **Needs you:** the escalations below. If there are none, write one line that the pipeline is clean.
 
+Close the email with a footer line linking to the Control Center dashboard: if the rep has hosting, a real HTML anchor to their dashboard URL (`{{CONFIG:dashboard_url}}`); otherwise name the local `Intelligence/control-center.html` path so they can open it. It carries today's calls each with the call-prep brief and per-prospect links, plus the Pipeline tab. Include this link even on a signal-gated one-liner day.
+
 SIGNAL-GATED: on a quiet day (no calls, nothing changed, nothing to escalate) send a one-liner instead of the full template, so the brief stays worth reading. If the morning routine did not run (no `## Brief: your day` block in the log), send what you have and note the gap.
 
 ESCALATIONS (the Needs you items): as you work, collect anything that needs the rep's decision or confirmation, for example a status you could not reconcile confidently (CRM, proposal platform, and email disagree), a deal with an open file that has dropped off the {{CONFIG:crm_name}} list, a proposal newly declined or voided, a high-value deal gone cold, a deal-size or contact-data discrepancy you need confirmed, an off-ICP prospect that still booked, or anything you had to assume rather than resolve. For each, give the specific item and the exact ask, for example "<Company> proposal voided, mark it lost?" or "<Company> shows $25k total, confirm?".

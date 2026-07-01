@@ -34,6 +34,8 @@ For EACH prospect with a call today, invoke the `call-prep` skill by name, NON-I
 
 Lean on call-prep's research: the {{CONFIG:crm_name}} history, the email thread ({{CONFIG:email_tool}}), the LinkedIn link in the event description, the company website, and a quick web search. Then create or update Deals/<First-Last-Company>.md with a short brief plus a hard-qualify note.
 
+Capture call-prep's useful links as deal FRONTMATTER so the dashboard can surface them per call: `linkedin:`, `website:`, `meeting_url:` (the video-call link from the calendar event), plus the existing `email:` and `phone:`. Write each as a plain URL value, and leave a key out entirely if you have no value rather than inventing one. These are the links the Control Center renders on each call's card and its per-prospect sub-page, so this is where the call-prep research finally becomes visible. Keep the prose Snapshot too, it feeds the sub-page body.
+
 Hard-qualify against the ICP ({{CONFIG:icp}}). Flag clearly if a prospect is off-ICP, too technical (can build it themselves is a red flag), enterprise, wrong geography, or a partner or community contact. State the verdict plainly.
 
 ### 3. Yesterday's calls: capture what happened
