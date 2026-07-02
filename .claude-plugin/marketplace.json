@@ -13,8 +13,8 @@
       "name": "all-skills",
       "displayName": "All Skills",
       "source": "./plugins/all-skills",
-      "description": "Every BenAI skill in one install. All 104 skills across marketing, sales, SEO, ads, design, YouTube, creative, operations, second-brain OS, and general productivity. Add this one plugin to get the complete library.",
-      "version": "1.1.1",
+      "description": "Every BenAI skill in one install. All 105 skills across marketing, sales, SEO, ads, design, YouTube, creative, operations, second-brain OS, and general productivity. Add this one plugin to get the complete library.",
+      "version": "1.2.0",
       "author": {
         "name": "BenAI"
       },
@@ -358,7 +358,7 @@
       "name": "meta",
       "source": "./plugins/meta",
       "description": "General-purpose AI productivity toolkit — browser automation, audio transcription, deep research, decision frameworks, fact-checking, file organization, HTML presentations, prompt engineering, AI-text humanizing, MCP server building, and more. 13 community skills in one install.",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "author": {
         "name": "Community"
       },

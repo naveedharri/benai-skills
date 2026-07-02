@@ -1,7 +1,7 @@
 {
   "name": "meta",
   "description": "General-purpose AI productivity toolkit \u2014 browser automation, audio transcription, deep research, decision frameworks, fact-checking, file organization, HTML presentations, prompt engineering, AI-text humanizing, MCP server building, and more. 13 community skills in one install.",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": {
     "name": "Community"
   }
