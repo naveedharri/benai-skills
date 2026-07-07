@@ -2,5 +2,15 @@
   "apify": {
     "type": "http",
     "url": "https://mcp.apify.com"
+  },
+  "youtube": {
+    "command": "npx",
+    "args": [
+      "-y",
+      "@kirbah/mcp-youtube"
+    ],
+    "env": {
+      "YOUTUBE_API_KEY": ""
+    }
   }
 }

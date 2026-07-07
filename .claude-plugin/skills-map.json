@@ -28,7 +28,8 @@
       "connectors": [
         "apify",
         "nano-banana",
-        "webflow"
+        "webflow",
+        "youtube"
       ],
       "agents": [
         "audit-budget",
@@ -505,6 +506,10 @@
         "google-workspace-cli-installer-guide": {
           "displayName": "Google Workspace CLI Installer",
           "summary": "Interactive step-by-step installer for the Google Workspace CLI (gws) from a clean machine — installs gcloud + gws, sets up the GCP project + OAuth consent, verifies with a real Gmail call, and runs a tailored first-use proof-of-concept."
+        },
+        "title-ideation": {
+          "displayName": "Title Ideation",
+          "summary": "Two-lens YouTube title shortlist (topic + pattern) from the last 20-25 uploads of a locked comp set, pulled via parallel subagents"
         }
       }
     },
@@ -729,7 +734,8 @@
     },
     "youtube": {
       "connectors": [
-        "apify"
+        "apify",
+        "youtube"
       ],
       "skills": {
         "youtube-brief": {
@@ -759,6 +765,10 @@
         "title-generation": {
           "displayName": "Title Generation",
           "summary": "Generate optimized YouTube video titles"
+        },
+        "title-ideation": {
+          "displayName": "Title Ideation",
+          "summary": "Two-lens YouTube title shortlist (topic + pattern) from the last 20-25 uploads of a locked comp set, pulled via parallel subagents"
         }
       }
     },

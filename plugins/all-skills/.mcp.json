@@ -14,5 +14,15 @@
   "webflow": {
     "type": "http",
     "url": "https://mcp.webflow.com/mcp"
+  },
+  "youtube": {
+    "command": "npx",
+    "args": [
+      "-y",
+      "@kirbah/mcp-youtube"
+    ],
+    "env": {
+      "YOUTUBE_API_KEY": ""
+    }
   }
 }

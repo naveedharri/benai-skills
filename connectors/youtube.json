@@ -1,0 +1,7 @@
+{
+  "command": "npx",
+  "args": ["-y", "@kirbah/mcp-youtube"],
+  "env": {
+    "YOUTUBE_API_KEY": ""
+  }
+}
