@@ -40,9 +40,11 @@ If Ben shared transcript IDs or reference URLs, do NOT pull them inline. Spawn a
 
 ### Phase 3, Fan out the data pull
 
-Read `references/channel-list.md` now. Spawn **8 subagents in parallel, one per channel, in a single message**, each given its table row and these instructions:
+**HARD GUARD, check before any pull:** connector calls in the main context are a failure of this skill, not a fallback. If you cannot spawn subagents in this environment (no Task/Agent capability), STOP, tell Ben "I can't spawn subagents here, the pull would run inline and flood the context. Proceed anyway?" and wait for his answer. Never pull inline silently.
 
-1. `searchVideos` with `channelId`, `order: "date"`, `type: ["video"]`, `videoDuration: "long"`, `maxResults: 25`. Fallback if thin: `vidiq_channel_videos` with `popular: false`.
+Read `references/channel-list.md` now. Spawn **8 subagents in parallel, one per channel, in a single message**, one per table row, never skipping a channel, each given its row and these instructions:
+
+1. `searchVideos` with `channelId`, `order: "date"`, `type: ["video"]`, `videoDuration: "long"`, `maxResults: 25`. Fallback if thin or the YouTube connector is unavailable: `vidiq_channel_videos` with `popular: false` (still inside the subagent; tell Ben the YouTube connector was missing so enrichment may be thinner).
 2. Batch `getVideoDetails` (or `vidiq_get_videos_by_ids`) for view counts.
 3. `getChannelStatistics` for subscriber count and channel-average views.
 4. Apply the recency rule.
@@ -80,7 +82,7 @@ This is a decision point: present all 6 to 8 candidates at once and wait for Ben
 ## Core rules
 
 1. Recent only. Never all-time-popular, never `vidiq_outliers`.
-2. Fan out the data pull. The main context never holds raw API responses.
+2. Fan out the data pull. The main context never holds raw API responses. If subagents are unavailable, stop and ask before pulling inline; inline-by-default is a skill failure.
 3. Two lenses, two option sets, always separate.
 4. Subject before structure. A proven on-subject category outranks a generic unrelated structure.
 5. Ben's channel is the top-weighted prior.

@@ -1,6 +1,6 @@
 # Locked Comp Set (read at Phase 3 only)
 
-Channel IDs are hardcoded so resolution never fails. Always include Ben's channel. Pass each subagent its own row.
+Channel IDs are hardcoded so resolution never fails. Always include Ben's channel. Pass each subagent its own row. Every row gets a subagent, all 8 channels run, never skip one.
 
 | Channel | Handle | Channel ID | Notes |
 |---|---|---|---|
@@ -10,8 +10,8 @@ Channel IDs are hardcoded so resolution never fails. Always include Ben's channe
 | Nate Herk | `@nateherk` | `UC2ojq-nuP8ceeHqiroeKhBA` | n8n + AI automation, high cadence |
 | Chase AI | `@Chase-H-AI` | `UCoy6cTJ7Tg0dqS-DI-_REsA` | Claude + n8n, direct competitor |
 | Liam Ottley | `@LiamOttley` | `UCui4jxDaMb53Gdh-AZUTPAg` | AI agency. "Make money / build & sell" off-limits for our ICP |
-| Itssssss_Jack | `@Itssssss_Jack` | resolve once and cache | Dev-niche, lower signal for our non-coder audience |
-| Matt Pocock | `@mattpocockuk` | resolve once and cache | Dev tools, lower signal for our audience |
+| Jack Roberts | `@Itssssss_Jack` | `UCxVxcTULO9cFU6SB9qVaisQ` | Dev-niche, lower signal for our non-coder audience |
+| Matt Pocock | `@mattpocockuk` | `UCswG6FSbgZjbWtdf_hMLaow` | Dev tools, lower signal for our audience. Main dev channel, NOT the vocal coach or "Matt Pocock AI" |
 
 To resolve an unknown ID once: `searchVideos` with `type: "channel"`, take the `channelId`, write it into this table.
 
