@@ -1,0 +1,41 @@
+---
+name: [lowercase-with-hyphens, one job, max 64 chars]
+description: [One line. Third person. Under 1024 chars. What it does + exactly when to use it + the trigger phrases a user would type. Be a little pushy so it fires at the right time. No vague wording, no time-sensitive phrasing.]
+# Human-triggered only? Add the line below. Keep the description above as a display fallback.
+# disable-model-invocation: true
+---
+
+# [Skill Name]
+
+[One or two sentences: what this does and the one job it owns. Keep it small-scoped.]
+
+## Steps
+
+Track progress:
+
+```
+Task Progress:
+- [ ] 1. [step]
+- [ ] 2. [step]
+- [ ] 3. [step]
+```
+
+### 1. [Step name]
+[What happens here, and how you know the output is good enough to move on. Route to a reference file if this step needs detail: read `references/[file].md`.]
+
+### 2. [Step name]
+[...]
+
+### 3. [Step name]
+[...]
+
+## Human checkpoints
+[Where the skill stops and asks the user to review, approve, or choose. Required for anything consequential: sending, publishing, spending, deleting. At each decision point, present 5 to 10 options and wait for the user to pick, rather than advancing on a single suggestion.]
+
+## Self-improvement
+[Paste the adapted self-improvement rule here so the skill keeps getting better as it is used.]
+
+## Routing
+| Step | Reference |
+|------|-----------|
+| [step] | `references/[file].md` |

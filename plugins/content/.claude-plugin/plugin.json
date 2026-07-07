@@ -1,0 +1,9 @@
+{
+  "name": "content",
+  "description": "A modular content engine, one skill per job: /research a topic, turn it into a /linkedin post and a /newsletter in Ben's voice, then generate on-brand /visual graphics to match.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BenAI"
+  },
+  "displayName": "Content"
+}

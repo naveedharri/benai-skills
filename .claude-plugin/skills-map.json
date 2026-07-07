@@ -1,5 +1,29 @@
 {
   "departments": {
+    "content": {
+      "connectors": [
+        "nano-banana",
+        "apify"
+      ],
+      "skills": {
+        "research": {
+          "displayName": "Research",
+          "summary": "Deep, internet-enabled research on any topic — gathers the raw material that feeds the LinkedIn and newsletter skills"
+        },
+        "linkedin": {
+          "displayName": "LinkedIn",
+          "summary": "Turn research or any source into a high-performing LinkedIn post in Ben's voice, step by step"
+        },
+        "newsletter": {
+          "displayName": "Newsletter",
+          "summary": "Turn research or any source into a newsletter edition in Ben's voice, step by step"
+        },
+        "visual": {
+          "displayName": "Visual",
+          "summary": "Generate on-brand visuals and infographics to go with the LinkedIn post and newsletter"
+        }
+      }
+    },
     "all-skills": {
       "connectors": [
         "apify",
@@ -264,12 +288,16 @@
           "displayName": "Pipeline Review",
           "summary": "Review active deals with risk flags and recommended action items"
         },
+        "pipeline-review-v2": {
+          "displayName": "Pipeline Review V2",
+          "summary": "Manual-only duplicate of pipeline-review (no auto-invoke) — run explicitly via /pipeline-review-v2"
+        },
         "process-interviewer": {
           "displayName": "Process Interviewer",
           "summary": "Relentless interviewer that extracts a complete plan from your head before building"
         },
-        "skill-from-task": {
-          "displayName": "Skill From Task",
+        "benai-skill-creator-skill": {
+          "displayName": "BenAI Skill Creator",
           "summary": "Turn a task you just finished (or an existing skill) into a small, single-purpose, well-structured skill"
         },
         "programmatic-seo": {
@@ -1064,8 +1092,8 @@
           "displayName": "Process Interviewer",
           "summary": "Relentless interviewer that extracts a complete plan from your head before building"
         },
-        "skill-from-task": {
-          "displayName": "Skill From Task",
+        "benai-skill-creator-skill": {
+          "displayName": "BenAI Skill Creator",
           "summary": "Turn a task you just finished (or an existing skill) into a small, single-purpose, well-structured skill"
         },
         "prompt-master": {
