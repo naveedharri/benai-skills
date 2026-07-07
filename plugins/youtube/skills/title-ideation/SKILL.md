@@ -96,7 +96,7 @@ This is a decision point: present all 6 to 8 candidates at once and wait for Ben
 
 ## Self-improvement rule
 
-Any time Ben corrects an output during the process, or explicitly likes one, ask whether that should become a permanent update to this skill. If yes, update the relevant SKILL.md step or reference file with the correction, new rule, or saved example (winning titles go into `references/title-pattern-library.md` or the relevant reference as examples). Always ask first, never update the skill silently.
+Any time Ben corrects an output during the process, or explicitly likes one, ask whether that should become a permanent update to this skill. If yes, ALWAYS use the skill-creator skill to make the edit, updating the relevant SKILL.md step or reference file with the correction, new rule, or saved example (winning titles go into `references/title-pattern-library.md` or the relevant reference as examples). Never edit the skill files directly without the skill-creator, direct edits are not able to update the installed skill. Always ask first, never update the skill silently.
 
 ## References (progressive disclosure: read each ONLY at its named phase)
 
