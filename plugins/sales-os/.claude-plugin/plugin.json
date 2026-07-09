@@ -1,9 +1,0 @@
-{
-  "name": "sales-os",
-  "description": "Stand up a complete Sales OS \u2014 a markdown second brain for your sales world plus the routines, skills, and dashboard that keep it current: onboarder, lead-gen, outreach, one-pager, post-discovery follow-up, and OS optimizer/operator/MCP.",
-  "version": "1.0.1",
-  "author": {
-    "name": "BenAI"
-  },
-  "displayName": "Sales OS"
-}
