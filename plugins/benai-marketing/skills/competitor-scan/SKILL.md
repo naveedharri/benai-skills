@@ -44,7 +44,7 @@ Give them: the live URL, the repo, the routine id and its next run time, and a o
 
 ## Reference implementation
 
-The working, deployed example is `insinexzy/benai-competitor-radar` (live at `https://benai-competitor-radar.vercel.app`), refreshed by routine `Competitor Radar Weekly Refresh (Mon 9:00 IST)`. Clone its `skill/` folder as the starting point rather than rebuilding from scratch.
+The `competitor-radar` skill is the working, deployed example, refreshed by a weekly routine. Clone its `skill/` folder as the starting point rather than rebuilding from scratch.
 
 ## Self-improvement
 

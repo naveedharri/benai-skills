@@ -3,7 +3,6 @@
 ## Basic Information
 
 Name: Ben Van Sprundel
-Email: admin@benai.co
 Location: Brazil (originally from Europe)
 
 ## How I Want to Be Perceived

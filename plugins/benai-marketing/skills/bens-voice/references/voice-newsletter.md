@@ -1,6 +1,6 @@
 # Ben's daily newsletter voice - empirical fingerprint
 
-Source: 6 verbatim issues, July 2-9 2026, from ben@benai.co via Kit. Jul 7-8 sends came from Oskar and are excluded.
+Source: 6 verbatim issues, July 2-9 2026, from Ben's address via Kit. Jul 7-8 sends came from a teammate and are excluded.
 
 **Sample caveat, read first.** This is ONE week, and an atypical one: an Accelerator price rise (Jul 8 deadline) dominated it. Jul 2 and Jul 6 are near-pure promo letters; Jul 4 is promo-adjacent. The purest everyday teaching voice lives in **Jul 3, Jul 5, and Jul 9** - weight those hardest when drafting a normal issue. Claims below marked (thin) rest on 1-2 examples and should be treated as hypotheses, not rules.
 

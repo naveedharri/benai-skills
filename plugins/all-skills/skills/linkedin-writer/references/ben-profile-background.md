@@ -1,7 +1,6 @@
 Ben Van Sprundel - Profile & Background
 Basic Information
 Name: Ben Van Sprundel
-Email: admin@benai.co
 Location: Brazil (originally from Europe)
 How I Want to Be Perceived
 A trusted, no-fluff expert who helps professionals and founders apply AI and SEO in ways that generate real business results. Someone who shares openly, builds in public, and leads with clarity - not hype.

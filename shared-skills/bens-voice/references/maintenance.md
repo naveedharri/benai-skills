@@ -6,7 +6,7 @@ Read this only when refreshing the corpus or updating the skill from new source 
 
 ## Data provenance and refresh
 
-Corpus collected 2026-07-10: YouTube (10 latest videos, auto-captions), Circle comments (list_comments sweep filtered to ben@benai.co, member 26977456), Slack (from:@Ben search, 7 days), LinkedIn (Apify harvestapi/linkedin-profile-posts, 2 months), newsletters (Gmail, Kit sends from ben@benai.co, NOTE: some daily sends come from Oskar; filter by sender). The newsletter file is built on ONE atypical promo week; re-run its analyst against a normal month when convenient. The LinkedIn file covers only video-companion posts.
+Corpus collected 2026-07-10: YouTube (10 latest videos, auto-captions), Circle comments (list_comments sweep filtered to Ben's account), Slack (from:@Ben search, 7 days), LinkedIn (Apify harvestapi/linkedin-profile-posts, 2 months), newsletters (Gmail, Kit sends from Ben's address, NOTE: some daily sends come from a teammate; filter by sender). The newsletter file is built on ONE atypical promo week; re-run its analyst against a normal month when convenient. The LinkedIn file covers only video-companion posts.
 
 To refresh any register: re-collect with the same method, then re-run the distillation prompt for that register (measured distributions, verbatim gold examples, never-does verification), and update the reference file. Live data always wins over older claims.
 

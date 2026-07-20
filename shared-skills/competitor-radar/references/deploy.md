@@ -2,7 +2,7 @@
 
 ## Deploy: git push, NOT the Vercel CLI
 
-The Vercel project is git-connected to `insinexzy/benai-competitor-radar` (branch `main`).
+The Vercel project is git-connected to `<your-github-user>/<your-repo>` (branch `main`).
 A push to `main` auto-builds production at the stable URL
 `https://benai-competitor-radar.vercel.app`. The URL never changes.
 
@@ -12,8 +12,8 @@ egress resolves to the wrong Vercel account by design. The git push IS the deplo
 
 ```bash
 cd <repo checkout>
-git config user.name "insinexzy"
-git config user.email "200930792+insinexzy@users.noreply.github.com"   # unknown authors are blocked by Vercel
+git config user.name "<your-git-name>"
+git config user.email "<your-git-email>"   # use an email Vercel recognizes as a valid author; unknown authors are blocked
 # overwrite index.html with the freshly built file, then:
 git add index.html radar_data.js
 git commit -m "Competitor radar refresh <YYYY-MM-DD>"

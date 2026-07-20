@@ -3,9 +3,9 @@
     "title": "Competitor Radar",
     "brand": "Ben AI",
     "live_url": "https://benai-competitor-radar.vercel.app",
-    "deploy_repo": "insinexzy/benai-competitor-radar",
-    "slack_channel_name": "#team-chat (private)",
-    "slack_channel_id": "C0ABCVDSTGQ",
+    "deploy_repo": "<your-github-user>/<your-repo>",
+    "slack_channel_name": "<your-slack-channel>",
+    "slack_channel_id": "<your-slack-channel-id>",
     "refresh": "weekly (Mon 09:00 IST)"
   },
   "platforms": ["youtube", "instagram", "linkedin", "tiktok", "community", "seo"],
