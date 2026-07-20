@@ -157,7 +157,7 @@ The `vidiq` connector exposes vidIQ's proprietary YouTube intelligence layer —
 
 If a connector fails or is unavailable, try the fallback first. Only tell the user if both primary and fallback fail. Never silently skip a connector.
 
-**IMPORTANT: All MCP tool calls must be made by the main agent directly.** Do not delegate MCP calls (YouTube, Apify, WebFetch) to subagents. Plugin subagents cannot access MCP tools. Make all MCP calls yourself, firing as many as possible in parallel per turn.
+**IMPORTANT: Prefer spawning sub-agents to run MCP calls in parallel.** Delegating MCP calls (YouTube, vidIQ, Apify, WebFetch) to sub-agents is encouraged — the sub-agents can access the MCP tools too. Fan the data collection out across sub-agents so many connectors are hit at once, then synthesize their results. You may still make MCP calls directly when a single quick call is all that's needed.
 
 ## Transcript Expansion (Agent-Driven)
 
@@ -176,7 +176,7 @@ Use `getTranscripts` with `key_segments` format first (intro hook + outro CTA). 
 
 **Compulsory checklist: every item below MUST run. Never skip, defer, or partially execute any of these. If a connector fails, report the failure explicitly and continue with the rest.**
 
-**All MCP calls must be made by the main agent directly.** Do not delegate MCP tool calls to subagents — plugin subagents cannot access MCP tools. Fire as many MCP calls in parallel as possible in each turn to maximize speed.
+**Prefer spawning sub-agents to run MCP calls in parallel.** Delegating MCP tool calls to sub-agents is encouraged — the sub-agents can access the MCP tools too. Fan the collection work out across sub-agents to hit as many connectors at once as possible, then synthesize their results. Direct MCP calls are still fine for quick one-offs.
 
 **File saving:** Only save intelligence data files if the user's prompt contains an explicit line like `Vault: /some/path`. If the prompt does not contain that line, do NOT save data files anywhere. Do NOT search the filesystem for a vault. Do NOT look for `.obsidian` directories. Just run the scan and present results in chat. (The dashboard HTML is always written — see "Dashboard Output".)
 
