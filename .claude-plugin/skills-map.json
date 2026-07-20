@@ -482,6 +482,10 @@
         "title-ideation": {
           "displayName": "Title Ideation",
           "summary": "Two-lens YouTube title shortlist (topic + pattern) from the last 20-25 uploads of a locked comp set, pulled via parallel subagents"
+        },
+        "market-intelligence-report": {
+          "displayName": "Market Intelligence Report",
+          "summary": "YouTube + Twitter/X + official-source competitive intelligence, rendered as a polished soft-UI HTML dashboard"
         }
       }
     },
@@ -697,6 +701,10 @@
         "title-ideation": {
           "displayName": "Title Ideation",
           "summary": "Two-lens YouTube title shortlist (topic + pattern) from the last 20-25 uploads of a locked comp set, pulled via parallel subagents"
+        },
+        "market-intelligence-report": {
+          "displayName": "Market Intelligence Report",
+          "summary": "YouTube + Twitter/X + official-source competitive intelligence, rendered as a polished soft-UI HTML dashboard"
         }
       }
     },
