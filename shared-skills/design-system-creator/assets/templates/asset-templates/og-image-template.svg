@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- Paper background -->
+  <rect width="1200" height="630" fill="{{PAPER_HEX}}"/>
+
+  <!-- Logo lockup (top-left). Replace {{MOTIF_PATHS}} with the chosen motif. -->
+  <g transform="translate(64, 56)">
+    <g transform="scale(0.75)">
+      {{MOTIF_PATHS}}
+    </g>
+    <text x="64" y="34"
+          font-family="{{FONT_FAMILY}}, ui-sans-serif, system-ui, sans-serif"
+          font-weight="700"
+          font-size="32"
+          letter-spacing="-0.02em"
+          fill="{{INK_HEX}}">{{BRAND_NAME}}</text>
+  </g>
+
+  <!-- Main headline. Two lines (dy=80 between). -->
+  <text x="64" y="330"
+        font-family="{{FONT_FAMILY}}, ui-sans-serif, system-ui, sans-serif"
+        font-weight="600"
+        font-size="72"
+        letter-spacing="-0.02em"
+        fill="{{INK_HEX}}">
+    <tspan x="64" dy="0">{{HEADLINE_LINE_1}}</tspan>
+    <tspan x="64" dy="80">{{HEADLINE_LINE_2}}</tspan>
+  </text>
+
+  <!-- Subhead -->
+  <text x="64" y="500"
+        font-family="{{FONT_FAMILY}}, ui-sans-serif, system-ui, sans-serif"
+        font-weight="400"
+        font-size="24"
+        fill="{{INK_600_HEX}}">
+    <tspan x="64" dy="0">{{SUBHEAD_ONE_LINE}}</tspan>
+  </text>
+
+  <!-- URL bottom-right -->
+  <text x="1136" y="586"
+        text-anchor="end"
+        font-family="{{FONT_FAMILY}}, ui-sans-serif, system-ui, sans-serif"
+        font-weight="500"
+        font-size="18"
+        fill="{{INK_500_HEX}}">{{BRAND_DOMAIN}}</text>
+</svg>

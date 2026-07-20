@@ -6,11 +6,11 @@ Use this document as the definitive guide for crafting LinkedIn post hooks. Each
 
 ## How to Use This Document
 
-1. **Identify the post type** — Is it educational, a personal story, something funny, a success share, or a visual post?
+1. **Identify the post type**: Is it educational, a personal story, something funny, a success share, or a visual post?
 2. **Pick a matching category** below (Carousel, Story, Viral, Creative, Image, Funny, or Success).
 3. **Choose a template** from that category that fits the topic and tone.
 4. **Apply the psychological trigger** described alongside the template to maximize engagement.
-5. **Adapt the template** — fill in the bracketed placeholders with specifics relevant to the post topic.
+5. **Adapt the template**: fill in the bracketed placeholders with specifics relevant to the post topic.
 
 ---
 
@@ -58,7 +58,7 @@ How to use [unconventional tool/strategy] in your [professional context]
 
 ### 1.5 One Thing's For Sure
 
-**Why it works:** Uses strong language as a pattern interrupt — a departure from the mainly polite LinkedIn feed. Taps into the reader's innate desire for future certainty.
+**Why it works:** Uses strong language as a pattern interrupt, a departure from the mainly polite LinkedIn feed. Taps into the reader's innate desire for future certainty.
 
 **Template:**
 ```
@@ -137,7 +137,7 @@ in [low time frame] per [day/week/month]
 
 ### 1.13 New vs Old
 
-**Why it works:** Leverages the contrast principle — highlighting differences and comparisons draws attention. "Old" evokes a sense of nostalgia for long-time users.
+**Why it works:** Leverages the contrast principle: highlighting differences and comparisons draws attention. "Old" evokes a sense of nostalgia for long-time users.
 
 **Template:**
 ```

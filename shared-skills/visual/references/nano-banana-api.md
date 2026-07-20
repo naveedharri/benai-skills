@@ -1,7 +1,17 @@
 # Nano Banana MCP Server - API Reference
 
-> Loaded during Phase 5 (API Key Setup) and Phase 6 (Generation).
+> Loaded during API Key Setup and Generation phases.
 > This file covers image generation tools, API key configuration, file handling, and error recovery.
+
+## Contents
+1. Overview
+2. Available MCP Tools
+3. API Key Setup
+4. File Handling
+5. Embedding Specs in Prompts
+6. Edit vs. Regenerate Decision
+7. Error Handling
+8. Security Notes
 
 ## 1. Overview
 

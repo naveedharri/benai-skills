@@ -24,6 +24,66 @@
         }
       }
     },
+    "benai-marketing": {
+      "skills": {
+        "content-research": {
+          "displayName": "Content Research",
+          "summary": "Research any topic end-to-end into a fact-checked, branded HTML report plus a markdown brief; fans out parallel source agents and verifies every hard claim"
+        },
+        "market-intelligence-report": {
+          "displayName": "Market Intelligence Report",
+          "summary": "Produce a Market Intelligence Report — YouTube competitive research, channel analysis, content-gap discovery, idea generation, and AI trend scouting — rendered as a polished soft-UI HTML dashboard"
+        },
+        "competitor-radar": {
+          "displayName": "Competitor Radar",
+          "summary": "Build and weekly-refresh a branded HTML Competitor Radar dashboard tracking rivals across YouTube, IG, LinkedIn, TikTok, and SEO; deploys to Vercel and posts to Slack"
+        },
+        "competitor-scan": {
+          "displayName": "Competitor Scan",
+          "summary": "Giveaway companion to competitor-radar: interactively sets someone up from scratch with their own weekly Competitor Radar dashboard and scheduled refresh"
+        },
+        "voice-builder": {
+          "displayName": "Voice Builder",
+          "summary": "Build a personal tone-of-voice skill ({name}-voice) for anyone from their real writing/speaking corpus — references, deterministic linter, and rubric judge"
+        },
+        "bens-voice": {
+          "displayName": "Ben's Voice",
+          "summary": "Draft or judge content in Ben van Sprundel's voice; deterministic red-flag linter plus LLM rubric judge that every draft must pass before it ships"
+        },
+        "bens-linkedin-post-writer": {
+          "displayName": "Ben's LinkedIn Post Writer",
+          "summary": "Repurpose YouTube videos, articles, or raw insights into LinkedIn posts in Ben's voice, step by step"
+        },
+        "newsletter-writer": {
+          "displayName": "Newsletter Writer",
+          "summary": "Iterative, step-by-step newsletter writing for Ben's audience from an insight, idea, or YouTube transcript"
+        },
+        "design-system-creator": {
+          "displayName": "Design System Creator",
+          "summary": "Produce a complete Claude-Design-compatible design system folder for any brand — build from scratch or extract from an existing business's shipped assets"
+        },
+        "frontend-slides": {
+          "displayName": "Frontend Slides",
+          "summary": "Create animation-rich HTML presentations from scratch or by converting PowerPoint files"
+        },
+        "carousel-generator": {
+          "displayName": "Carousel Generator",
+          "summary": "Build a Ben AI image-first carousel from any source content and export it as a PDF; renders slides with Higgsfield and composites the brand footer in code"
+        },
+        "thumbnail-generator": {
+          "displayName": "Thumbnail Generator",
+          "summary": "Generate on-brand YouTube thumbnails for Ben in one shot via Higgsfield, anchored on reference images and the most recent shipped thumbnails"
+        },
+        "video-editor": {
+          "displayName": "Video Editor",
+          "summary": "Turn long-form video into platform-ready clips with word-level captions using FFmpeg and Remotion"
+        },
+        "analytics-dashboard": {
+          "displayName": "Analytics Dashboard",
+          "summary": "Build and refresh the single-page Marketing Pulse dashboard (attention, conversion, revenue, retention) with SETUP and scheduled REFRESH modes"
+        }
+      }
+    },
     "all-skills": {
       "connectors": [
         "apify",

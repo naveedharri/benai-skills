@@ -1,0 +1,146 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "meta": {
+    "name": "{{BRAND_NAME}} Design System",
+    "version": "1.0.0",
+    "description": "{{BRAND_SHORT_DESCRIPTION}}",
+    "primaryColor": "{{PRIMARY_HEX}}",
+    "typeface": "{{FONT_FAMILY}}",
+    "baseUnit": 4
+  },
+  "color": {
+    "brand": {
+      "50":  { "value": "{{BRAND_50}}",  "type": "color" },
+      "100": { "value": "{{BRAND_100}}", "type": "color" },
+      "200": { "value": "{{BRAND_200}}", "type": "color" },
+      "300": { "value": "{{BRAND_300}}", "type": "color" },
+      "400": { "value": "{{BRAND_400}}", "type": "color" },
+      "500": { "value": "{{BRAND_500}}", "type": "color" },
+      "600": { "value": "{{PRIMARY_HEX}}", "type": "color", "description": "Primary brand color — CTAs, mark, emphasis" },
+      "700": { "value": "{{BRAND_700}}", "type": "color", "description": "Primary hover/pressed" },
+      "800": { "value": "{{BRAND_800}}", "type": "color" },
+      "900": { "value": "{{BRAND_900}}", "type": "color" }
+    },
+    "ink": {
+      "100": { "value": "{{INK_100}}", "type": "color" },
+      "200": { "value": "{{INK_200}}", "type": "color" },
+      "300": { "value": "{{INK_300}}", "type": "color" },
+      "400": { "value": "{{INK_400}}", "type": "color" },
+      "500": { "value": "{{INK_500}}", "type": "color" },
+      "600": { "value": "{{INK_600}}", "type": "color" },
+      "700": { "value": "{{INK_700}}", "type": "color" },
+      "900": { "value": "{{INK_HEX}}",  "type": "color", "description": "Primary text color" }
+    },
+    "paper":    { "value": "{{PAPER_HEX}}",    "type": "color", "description": "Page background" },
+    "surface":  { "value": "{{SURFACE_HEX}}",  "type": "color", "description": "Cards, modals, product UI canvas" },
+    "line":     { "value": "{{LINE_HEX}}",     "type": "color", "description": "Dividers on paper" },
+    "line-soft":{ "value": "{{LINE_SOFT_HEX}}", "type": "color" },
+    "success": {
+      "100": { "value": "#E2F5EC", "type": "color" },
+      "600": { "value": "#1F9D6B", "type": "color" }
+    },
+    "warn": {
+      "100": { "value": "#FBF2DC", "type": "color" },
+      "600": { "value": "#C08415", "type": "color" }
+    },
+    "danger": {
+      "100": { "value": "#FAE4E2", "type": "color" },
+      "600": { "value": "#C8382F", "type": "color" }
+    },
+    "info": {
+      "100": { "value": "{{BRAND_100}}", "type": "color" },
+      "600": { "value": "{{PRIMARY_HEX}}", "type": "color" }
+    }
+  },
+  "font": {
+    "family": {
+      "sans":  { "value": "{{FONT_FAMILY}}, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif", "type": "fontFamily" },
+      "mono":  { "value": "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace", "type": "fontFamily" },
+      "serif": { "value": "ui-serif, Georgia, 'Times New Roman', serif", "type": "fontFamily", "description": "Reserved for long-form legal/contract PDFs only" }
+    },
+    "weight": {
+      "regular":  { "value": 400, "type": "fontWeight" },
+      "medium":   { "value": 500, "type": "fontWeight" },
+      "semibold": { "value": 600, "type": "fontWeight" },
+      "bold":     { "value": 700, "type": "fontWeight" }
+    }
+  },
+  "size": {
+    "display-xl": { "value": "72px", "type": "dimension", "lineHeight": "80px", "weight": 600, "tracking": "-0.02em" },
+    "display-lg": { "value": "56px", "type": "dimension", "lineHeight": "64px", "weight": 600, "tracking": "-0.02em" },
+    "h1":         { "value": "40px", "type": "dimension", "lineHeight": "48px", "weight": 600, "tracking": "-0.015em" },
+    "h2":         { "value": "32px", "type": "dimension", "lineHeight": "40px", "weight": 600, "tracking": "-0.015em" },
+    "h3":         { "value": "24px", "type": "dimension", "lineHeight": "32px", "weight": 600, "tracking": "-0.015em" },
+    "h4":         { "value": "20px", "type": "dimension", "lineHeight": "28px", "weight": 600, "tracking": "-0.015em" },
+    "body-lg":    { "value": "18px", "type": "dimension", "lineHeight": "28px", "weight": 400 },
+    "body-md":    { "value": "16px", "type": "dimension", "lineHeight": "24px", "weight": 400 },
+    "body-sm":    { "value": "14px", "type": "dimension", "lineHeight": "20px", "weight": 400 },
+    "caption":    { "value": "12px", "type": "dimension", "lineHeight": "16px", "weight": 500 },
+    "overline":   { "value": "11px", "type": "dimension", "lineHeight": "16px", "weight": 600, "tracking": "+0.06em", "transform": "uppercase" },
+    "code":       { "value": "14px", "type": "dimension", "lineHeight": "20px", "weight": 400 }
+  },
+  "space": {
+    "0":   { "value": "0px",   "type": "dimension" },
+    "0_5": { "value": "2px",   "type": "dimension" },
+    "1":   { "value": "4px",   "type": "dimension" },
+    "1_5": { "value": "6px",   "type": "dimension" },
+    "2":   { "value": "8px",   "type": "dimension" },
+    "3":   { "value": "12px",  "type": "dimension" },
+    "4":   { "value": "16px",  "type": "dimension" },
+    "5":   { "value": "20px",  "type": "dimension" },
+    "6":   { "value": "24px",  "type": "dimension" },
+    "8":   { "value": "32px",  "type": "dimension" },
+    "10":  { "value": "40px",  "type": "dimension" },
+    "12":  { "value": "48px",  "type": "dimension" },
+    "16":  { "value": "64px",  "type": "dimension" },
+    "20":  { "value": "80px",  "type": "dimension" },
+    "24":  { "value": "96px",  "type": "dimension" },
+    "32":  { "value": "128px", "type": "dimension" },
+    "40":  { "value": "160px", "type": "dimension" }
+  },
+  "radius": {
+    "none": { "value": "0px",    "type": "dimension" },
+    "xs":   { "value": "4px",    "type": "dimension" },
+    "sm":   { "value": "6px",    "type": "dimension" },
+    "md":   { "value": "10px",   "type": "dimension" },
+    "lg":   { "value": "16px",   "type": "dimension" },
+    "xl":   { "value": "24px",   "type": "dimension" },
+    "full": { "value": "9999px", "type": "dimension" }
+  },
+  "shadow": {
+    "none": { "value": "none", "type": "shadow" },
+    "xs":   { "value": "0 1px 2px rgba({{INK_RGB}}, 0.04)", "type": "shadow" },
+    "sm":   { "value": "0 1px 3px rgba({{INK_RGB}}, 0.06), 0 1px 2px rgba({{INK_RGB}}, 0.04)", "type": "shadow" },
+    "md":   { "value": "0 4px 12px rgba({{INK_RGB}}, 0.06), 0 2px 4px rgba({{INK_RGB}}, 0.04)", "type": "shadow" },
+    "lg":   { "value": "0 12px 32px rgba({{INK_RGB}}, 0.08), 0 4px 8px rgba({{INK_RGB}}, 0.04)", "type": "shadow" },
+    "xl":   { "value": "0 24px 48px rgba({{INK_RGB}}, 0.10), 0 8px 16px rgba({{INK_RGB}}, 0.06)", "type": "shadow" }
+  },
+  "motion": {
+    "duration": {
+      "xs": { "value": "80ms",  "type": "duration" },
+      "sm": { "value": "160ms", "type": "duration" },
+      "md": { "value": "240ms", "type": "duration" },
+      "lg": { "value": "480ms", "type": "duration" },
+      "xl": { "value": "720ms", "type": "duration" }
+    },
+    "ease": {
+      "out":       { "value": "cubic-bezier(0.22, 1, 0.36, 1)", "type": "cubicBezier" },
+      "in-out":    { "value": "cubic-bezier(0.4, 0, 0.2, 1)",   "type": "cubicBezier" },
+      "standard":  { "value": "cubic-bezier(0.4, 0, 0.2, 1)",   "type": "cubicBezier" },
+      "linear":    { "value": "linear",                         "type": "cubicBezier" }
+    }
+  },
+  "breakpoint": {
+    "sm": { "value": "640px",  "type": "dimension" },
+    "md": { "value": "768px",  "type": "dimension" },
+    "lg": { "value": "1024px", "type": "dimension" },
+    "xl": { "value": "1280px", "type": "dimension" },
+    "2xl":{ "value": "1536px", "type": "dimension" }
+  },
+  "container": {
+    "max":            { "value": "1200px", "type": "dimension" },
+    "reading":        { "value": "680px",  "type": "dimension" },
+    "gutter-mobile":  { "value": "16px",   "type": "dimension" },
+    "gutter-desktop": { "value": "24px",   "type": "dimension" }
+  }
+}

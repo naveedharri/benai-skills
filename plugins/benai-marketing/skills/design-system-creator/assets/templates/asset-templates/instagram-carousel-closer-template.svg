@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1350" width="1080" height="1350">
+  <!-- Dark brand-900 background -->
+  <rect width="1080" height="1350" fill="{{BRAND_900_HEX}}"/>
+
+  <!-- Overline -->
+  <text x="72" y="180"
+        font-family="{{FONT_FAMILY}}, ui-sans-serif, system-ui, sans-serif"
+        font-weight="600"
+        font-size="22"
+        letter-spacing="0.08em"
+        fill="{{BRAND_400_HEX}}">{{CLOSER_OVERLINE_UPPERCASE}}</text>
+
+  <!-- Main CTA headline -->
+  <text x="72" y="360"
+        font-family="{{FONT_FAMILY}}, ui-sans-serif, system-ui, sans-serif"
+        font-weight="600"
+        font-size="96"
+        letter-spacing="-0.02em"
+        fill="{{PAPER_HEX}}">
+    <tspan x="72" dy="0">{{CLOSER_HEADLINE_LINE_1}}</tspan>
+    <tspan x="72" dy="110">{{CLOSER_HEADLINE_LINE_2}}</tspan>
+  </text>
+
+  <!-- Secondary lines -->
+  <text x="72" y="800"
+        font-family="{{FONT_FAMILY}}, ui-sans-serif, system-ui, sans-serif"
+        font-weight="400"
+        font-size="32"
+        fill="{{BRAND_200_HEX}}">
+    <tspan x="72" dy="0">{{CLOSER_BODY_LINE_1}}</tspan>
+    <tspan x="72" dy="48">{{CLOSER_BODY_LINE_2}}</tspan>
+    <tspan x="72" dy="48">{{CLOSER_BODY_LINE_3}}</tspan>
+  </text>
+
+  <!-- Inverse mark bottom-right — swap PRIMARY for PAPER, PAPER for BRAND_900 in motif -->
+  <g transform="translate(920, 1140) scale(1.4)">
+    {{INVERSE_MOTIF_PATHS}}
+  </g>
+
+  <!-- Wordmark bottom-left -->
+  <text x="72" y="1260"
+        font-family="{{FONT_FAMILY}}, ui-sans-serif, system-ui, sans-serif"
+        font-weight="700"
+        font-size="32"
+        letter-spacing="-0.02em"
+        fill="{{PAPER_HEX}}">{{BRAND_NAME}}</text>
+  <text x="72" y="1300"
+        font-family="{{FONT_FAMILY}}, ui-sans-serif, system-ui, sans-serif"
+        font-weight="400"
+        font-size="20"
+        fill="{{BRAND_300_HEX}}">{{BRAND_DOMAIN}}</text>
+</svg>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Competitor Radar · Ben AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAF3E3; --bg-alt:#E5F5F9; --ink:#020309;
+    --green:#D2ECD0; --red:#F3C1C0; --yellow:#FDEEC4; --blue:#E5F5F9;
+    --text:#020309; --muted:#5b5b52;
+    --shadow:8px 8px 0 #020309; --shadow-sm:4px 4px 0 #020309;
+    --border:2px solid #020309; --radius:10px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Montserrat',Georgia,sans-serif;background:var(--bg);color:var(--text);
+    line-height:1.45;padding:28px 20px 80px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1240px;margin:0 auto}
+  h1,h2,h3,.grotesk{font-family:'Space Grotesk',sans-serif}
+
+  header{border:var(--border);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow);
+    padding:22px 26px;margin-bottom:24px;position:relative;overflow:hidden}
+  header::after{content:"";position:absolute;top:-40px;right:-40px;width:160px;height:160px;
+    background:var(--green);border:var(--border);border-radius:50%;z-index:0;opacity:.55}
+  .brand-badge{font-family:'Space Grotesk';font-weight:700;font-size:13px;letter-spacing:.5px;
+    background:var(--ink);color:var(--yellow);padding:5px 12px;border-radius:6px;display:inline-block;position:relative;z-index:1}
+  h1{font-size:38px;font-weight:700;letter-spacing:-1px;margin:12px 0 4px;line-height:1.02;position:relative;z-index:1}
+  .sub{color:var(--muted);font-size:14.5px;max-width:640px;position:relative;z-index:1}
+  .meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;position:relative;z-index:1}
+  .chip{font-size:12.5px;font-weight:600;border:var(--border);border-radius:999px;padding:5px 13px;background:#fff}
+  .chip.live{background:var(--green)} .chip.loading{background:var(--yellow)}
+  .chip .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#1f9d55;margin-right:6px;vertical-align:middle}
+
+  .tabs{display:flex;gap:12px;margin-bottom:22px}
+  .tab{font-family:'Space Grotesk';font-weight:600;font-size:15px;cursor:pointer;
+    border:var(--border);border-radius:var(--radius);padding:12px 22px;background:#fff;
+    box-shadow:var(--shadow-sm);transition:transform .08s,box-shadow .08s;user-select:none}
+  .tab:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 #020309}
+  .tab.active{background:var(--ink);color:var(--yellow);box-shadow:var(--shadow-sm)}
+  .tab .t-sub{display:block;font-size:11px;font-weight:500;opacity:.7;margin-top:1px}
+
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:26px}
+  .kpi{border:var(--border);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow-sm);padding:16px 18px;transition:filter .25s}
+  .kpi .lab{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted)}
+  .kpi .val{font-family:'Space Grotesk';font-size:30px;font-weight:700;margin:6px 0 2px;letter-spacing:-.5px}
+  .kpi .note{font-size:12px;color:var(--muted)}
+  .kpi.accent{background:var(--green)} .kpi.accent2{background:var(--blue)} .kpi.accent3{background:var(--yellow)}
+
+  .sec-row{display:flex;justify-content:space-between;align-items:center;margin:6px 4px 12px;gap:12px;flex-wrap:wrap}
+  .sec-lab{font-family:'Space Grotesk';font-weight:700;font-size:13px;letter-spacing:.8px;
+    text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px}
+  .sec-lab::before{content:"";width:22px;height:3px;background:var(--ink);display:inline-block}
+  .blur-btn{font-family:'Space Grotesk';font-weight:600;font-size:13px;cursor:pointer;border:var(--border);
+    border-radius:8px;padding:8px 15px;background:#fff;box-shadow:var(--shadow-sm);transition:transform .08s,box-shadow .08s;display:none;align-items:center;gap:7px}
+  .blur-btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 #020309}
+  .blur-btn.on{background:var(--ink);color:var(--yellow)}
+
+  .col-head{display:grid;grid-template-columns:34px 2.1fr repeat(5,1fr) .9fr;gap:8px;
+    padding:0 16px 8px;font-family:'Space Grotesk';font-size:11px;font-weight:700;
+    text-transform:uppercase;letter-spacing:.4px;color:var(--muted)}
+  .col-head .r{text-align:center}
+
+  .row{display:grid;grid-template-columns:34px 2.1fr repeat(5,1fr) .9fr;gap:8px;align-items:center;
+    border:var(--border);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow-sm);
+    padding:14px 16px;margin-bottom:12px;cursor:pointer;transition:transform .08s,box-shadow .08s,filter .3s,opacity .3s}
+  .row:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 #020309}
+  .row.you{background:var(--yellow);border-width:3px}
+  .focus #rows .row:not(.you){filter:blur(8px);opacity:.45;pointer-events:none;user-select:none}
+  .focus .kpi.comp{filter:blur(8px)}
+  .rank{font-family:'Space Grotesk';font-weight:700;font-size:16px;text-align:center;
+    width:30px;height:30px;line-height:26px;border:var(--border);border-radius:8px;background:var(--bg)}
+  .who{display:flex;align-items:center;gap:11px;min-width:0}
+  .ava{width:40px;height:40px;flex:0 0 40px;border:var(--border);border-radius:9px;object-fit:cover;background:var(--green);display:block}
+  .who .nm{font-family:'Space Grotesk';font-weight:600;font-size:15px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .who .hd{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .youtag{font-size:10.5px;background:var(--ink);color:var(--yellow);padding:1px 7px;border-radius:5px;vertical-align:middle;font-family:'Space Grotesk';font-weight:700}
+  .cell{text-align:center}
+  .cell .big{font-family:'Space Grotesk';font-weight:700;font-size:15.5px;line-height:1}
+  .cell .sm{font-size:11px;font-weight:600;margin-top:3px;color:var(--muted)}
+  .cell .sm.up{color:#178a3f}
+  .cell.na .big{color:#c9c3b4;font-weight:600;font-size:13px}
+
+  /* Expand */
+  .detail{display:none;grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:2px solid var(--ink)}
+  .row.open .detail{display:block;animation:fade .2s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+  .d-title{font-family:'Space Grotesk';font-weight:700;font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin:2px 0 12px}
+  .hero{border:var(--border);border-radius:var(--radius);background:var(--green);box-shadow:var(--shadow-sm);
+    padding:16px 18px;margin-bottom:16px;display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}
+  .hero .h-l{min-width:0}
+  .hero .h-k{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+  .hero .h-t{font-family:'Space Grotesk';font-weight:700;font-size:19px;line-height:1.15;margin:5px 0 2px}
+  .hero .h-m{font-size:12.5px;font-style:italic;color:#3a3a30}
+  .hero .h-v{font-family:'Space Grotesk';font-weight:700;font-size:32px;letter-spacing:-1px;white-space:nowrap}
+  .hero .h-v small{display:block;font-size:11px;font-weight:600;letter-spacing:.3px;color:var(--muted);text-transform:uppercase}
+
+  .plat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .plat{border:var(--border);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow-sm);overflow:hidden}
+  .plat.off{opacity:.5}
+  .plat .p-head{display:flex;align-items:center;gap:8px;padding:9px 13px;border-bottom:var(--border);font-family:'Space Grotesk';font-weight:700;font-size:13.5px}
+  .plat .p-head svg{width:16px;height:16px;flex:0 0 16px}
+  .plat.yt .p-head{background:var(--red)} .plat.ig .p-head{background:var(--yellow)}
+  .plat.li .p-head{background:var(--blue)} .plat.tk .p-head{background:var(--green)}
+  .plat.cm .p-head{background:var(--yellow)} .plat.se .p-head{background:var(--blue)}
+  .plat .p-body{padding:11px 13px;display:flex;flex-direction:column;gap:7px}
+  .stat{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .stat .k{font-size:11.5px;color:var(--muted);font-weight:500}
+  .stat .v{font-family:'Space Grotesk';font-weight:700;font-size:14px}
+  .stat .v.na{color:#c2bcac;font-weight:600;font-size:12.5px}
+  .p-empty{padding:14px 13px;font-size:12.5px;color:#b0aa9a;font-style:italic}
+
+  .hint{font-size:11.5px;color:var(--muted);margin:0 4px 18px}
+  footer{margin-top:36px;border-top:var(--border);padding-top:16px;font-size:12.5px;color:var(--muted);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  @media(max-width:900px){
+    .kpis{grid-template-columns:repeat(2,1fr)}
+    .col-head{display:none}
+    .plat-grid{grid-template-columns:1fr}
+    .hero .h-v{font-size:26px}
+    .row{grid-template-columns:34px 1fr;grid-auto-flow:row}
+    .row .cell{display:flex;justify-content:space-between;align-items:baseline;grid-column:1/-1;border-top:1px dotted #d8cfb8;padding-top:7px}
+    .row .cell::before{content:attr(data-lab);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--muted)}
+    .who{grid-column:2}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="brand-badge">BEN AI · COMPETITOR RADAR</span>
+    <h1>Competitor Radar</h1>
+    <p class="sub">Every competitor, every platform, one weekly view. Followers, posting cadence, and median engagement across YouTube, Instagram, LinkedIn, TikTok, community, and search, tracked automatically and benchmarked against us.</p>
+    <div class="meta">
+      <span class="chip live"><span class="dot"></span>YouTube: live data</span>
+      <span class="chip loading" id="socialChip">Socials + SEO: sample</span>
+      <span class="chip" id="weekChip">Week ending —</span>
+      <span class="chip">Refreshes every Monday, 7:00 AM</span>
+    </div>
+  </header>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="demo" onclick="setTab('demo')">Demo
+      <span class="t-sub">Personal finance niche</span></div>
+    <div class="tab" data-tab="actual" onclick="setTab('actual')">Actual
+      <span class="t-sub">Our direct competitors</span></div>
+  </div>
+
+  <div id="kpis" class="kpis"></div>
+  <div class="sec-row">
+    <div class="sec-lab" id="secLab">Leaderboard</div>
+    <button class="blur-btn" id="blurBtn" onclick="toggleFocus()"><span id="lock">🔓</span> <span id="blurLabel">Focus mode: show only us</span></button>
+  </div>
+  <p class="hint">Click any row to expand its standout video and full per-platform weekly activity. Secondary line under YouTube shows week-over-week subscriber growth.</p>
+  <div class="col-head">
+    <div>#</div><div>Creator</div>
+    <div class="r">YouTube</div><div class="r">Instagram</div><div class="r">LinkedIn</div>
+    <div class="r">TikTok</div><div class="r">Community</div><div class="r">Web/SEO</div>
+  </div>
+  <div id="rows"></div>
+
+  <footer>
+    <span>Ben AI · Competitor Radar · auto-generated weekly</span>
+    <span>Sources: YouTube Data API (live), Apify, Firecrawl, SimilarWeb (est.)</span>
+  </footer>
+</div>
+
+<script>
+/*__RADAR_DATA__*/
+const ICON={
+ yt:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.8-.5-5.6a2.9 2.9 0 0 0-2-2C18.7 4 12 4 12 4s-6.7 0-8.5.4a2.9 2.9 0 0 0-2 2C1 8.2 1 12 1 12s0 3.8.5 5.6a2.9 2.9 0 0 0 2 2C5.3 20 12 20 12 20s6.7 0 8.5-.4a2.9 2.9 0 0 0 2-2C23 15.8 23 12 23 12zM10 15.5v-7l6 3.5-6 3.5z"/></svg>',
+ ig:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor" stroke="none"/></svg>',
+ li:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1-.02-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2 3.77-2 4 0 4.75 2.65 4.75 6.1V21H17.6v-5.4c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V21H9z"/></svg>',
+ tk:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 3c.3 2.1 1.6 3.8 3.5 4.2v3c-1.3.1-2.6-.3-3.7-1v6.4a5.9 5.9 0 1 1-5.9-5.9c.3 0 .6 0 .9.1v3.1a2.9 2.9 0 1 0 2 2.7V3z"/></svg>',
+ cm:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.3"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5M15.5 20c0-2 .8-3.6 2.5-4.2"/></svg>',
+ se:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-6-3.8-9s1.3-6.4 3.8-9z"/></svg>'
+};
+
+
+
+const fmt=n=>n==null?null:(n>=1e6?(n/1e6).toFixed(n>=1e7?0:1)+"M":n>=1e3?(n/1e3).toFixed(n>=1e5?0:1)+"K":""+n);
+
+function cell(lab,big,sub,cls){
+  if(big==null) return `<div class="cell na" data-lab="${lab}"><div class="big">n/a</div></div>`;
+  return `<div class="cell" data-lab="${lab}"><div class="big">${big}</div>${sub?`<div class="sm ${cls||''}">${sub}</div>`:""}</div>`;
+}
+
+function platBlock(cls,icon,name,p,kind){
+  if(!p||(p.followers==null&&p.members==null&&p.visits==null))
+    return `<div class="plat ${cls} off"><div class="p-head">${icon}${name}</div><div class="p-empty">Not active on ${name}</div></div>`;
+  let rows="";
+  if(kind==="social"){
+    rows=`<div class="stat"><span class="k">Followers</span><span class="v">${fmt(p.followers)}</span></div>
+      <div class="stat"><span class="k">Posts this week</span><span class="v">${p.posts??0}</span></div>
+      <div class="stat"><span class="k">Avg engagement</span><span class="v">${p.eng!=null?p.eng+"%":'<span class=na>n/a</span>'}</span></div>`;
+  }else if(kind==="community"){
+    rows=`<div class="stat"><span class="k">Platform</span><span class="v" style="font-size:12.5px">${p.platform}</span></div>
+      <div class="stat"><span class="k">Members</span><span class="v">${fmt(p.members)}</span></div>`;
+  }else if(kind==="seo"){
+    rows=`<div class="stat"><span class="k">Visits / mo</span><span class="v">${fmt(p.visits)}</span></div>
+      <div class="stat"><span class="k">Global rank</span><span class="v">#${p.rank}</span></div>`;
+  }
+  return `<div class="plat ${cls}"><div class="p-head">${icon}${name}</div><div class="p-body">${rows}</div></div>`;
+}
+
+function renderRow(c,i){
+  const yt=c.youtube,ig=c.instagram,li=c.linkedin,tk=c.tiktok,cm=c.community,se=c.seo;
+  const wow = yt.prev!=null ? "▲ "+fmt(yt.subs-yt.prev)+" this wk" : yt.posts+" uploads/wk";
+  const wowCls = yt.prev!=null ? "up" : "";
+  const ytTop = yt.top
+    ? `<div class="hero"><div class="h-l"><div class="h-k">Standout video · last 7 days</div><div class="h-t">${yt.top.title}</div><div class="h-m">${yt.eng}% median engagement · ${fmt(yt.medViews)} median views this week</div></div><div class="h-v">${fmt(yt.top.views)}<small>views</small></div></div>`
+    : `<div class="hero" style="background:var(--bg)"><div class="h-l"><div class="h-k">YouTube · last 7 days</div><div class="h-t">No upload this week</div><div class="h-m">${fmt(yt.medViews)} median views · ${yt.eng}% median engagement</div></div></div>`;
+  const ytBlock=`<div class="plat yt"><div class="p-head">${ICON.yt}YouTube</div><div class="p-body">
+     <div class="stat"><span class="k">Subscribers</span><span class="v">${fmt(yt.subs)}</span></div>
+     <div class="stat"><span class="k">Uploads this week</span><span class="v">${yt.posts}</span></div>
+     <div class="stat"><span class="k">Median engagement</span><span class="v">${yt.eng}%</span></div>
+     ${yt.prev!=null?`<div class="stat"><span class="k">Subs gained (wk)</span><span class="v" style="color:#178a3f">+${fmt(yt.subs-yt.prev)}</span></div>`:''}
+     </div></div>`;
+  const detail=`<div class="detail">
+     <div class="d-title">This week's activity · ${c.name}</div>
+     ${ytTop}
+     <div class="plat-grid">
+       ${ytBlock}
+       ${platBlock('ig',ICON.ig,'Instagram',ig,'social')}
+       ${platBlock('li',ICON.li,'LinkedIn',li,'social')}
+       ${platBlock('tk',ICON.tk,'TikTok',tk,'social')}
+       ${platBlock('cm',ICON.cm,'Community',cm,'community')}
+       ${platBlock('se',ICON.se,'Web / SEO',se,'seo')}
+     </div></div>`;
+  const av=AV[c.name]||"";
+  return `<div class="row ${c.you?'you':''}" onclick="this.classList.toggle('open')">
+    <div class="rank">${c.you?'★':i+1}</div>
+    <div class="who"><img class="ava" src="${av}" alt="${c.name}" loading="lazy">
+      <div style="min-width:0"><div class="nm">${c.name}${c.you?' <span class="youtag">YOU</span>':''}</div><div class="hd">${c.handle}</div></div></div>
+    ${cell('YouTube',fmt(yt.subs),wow,wowCls)}
+    ${cell('Instagram',ig?fmt(ig.followers):null,ig?ig.posts+"/wk":"")}
+    ${cell('LinkedIn',li?fmt(li.followers):null,li?li.posts+"/wk":"")}
+    ${cell('TikTok',tk?fmt(tk.followers):null,tk?tk.posts+"/wk":"")}
+    ${cell('Community',cm?fmt(cm.members):null,cm?cm.platform.split(' ')[0]:"")}
+    ${cell('Web/SEO',se?fmt(se.visits):null,se?"visits/mo":"")}
+    ${detail}
+  </div>`;
+}
+
+function renderKPIs(list,tab){
+  const you=list.find(x=>x.you);
+  const others=list.filter(x=>!x.you);
+  const avgSubs=Math.round(list.reduce((a,c)=>a+(c.youtube.subs||0),0)/list.length);
+  const leader=others.slice().sort((a,b)=>b.youtube.subs-a.youtube.subs)[0];
+  let cards;
+  if(tab==='actual'&&you){
+    cards=[
+     {lab:"Your YouTube subs",val:fmt(you.youtube.subs),note:"vs "+fmt(avgSubs)+" field avg",cls:"accent3"},
+     {lab:"Field leader",val:leader.name,note:fmt(leader.youtube.subs)+" subs",cls:"accent comp"},
+     {lab:"Your uploads this week",val:you.youtube.posts,note:you.youtube.eng+"% median engagement",cls:"accent2"},
+     {lab:"Competitors tracked",val:others.length,note:"updated weekly",cls:"comp"},
+    ];
+  }else{
+    const gained=list.reduce((a,c)=>a+((c.youtube.prev!=null)?(c.youtube.subs-c.youtube.prev):0),0);
+    cards=[
+     {lab:"Creators tracked",val:list.length,note:"incl. Ben AI (you)",cls:"accent3"},
+     {lab:"Subs gained this week",val:"+"+fmt(gained),note:"across the niche, WoW",cls:"accent"},
+     {lab:"Uploads this week",val:list.reduce((a,c)=>a+(c.youtube.posts||0),0),note:"YouTube, all creators",cls:"accent2"},
+     {lab:"Avg YouTube subs",val:fmt(avgSubs),note:"across the niche",cls:""},
+    ];
+  }
+  return cards.map(k=>`<div class="kpi ${k.cls}"><div class="lab">${k.lab}</div><div class="val">${k.val}</div><div class="note">${k.note}</div></div>`).join('');
+}
+
+let TAB='demo',FOCUS=false;
+function setTab(t){
+  TAB=t;FOCUS=false;document.querySelector('.wrap').classList.remove('focus');syncBtn();
+  document.querySelectorAll('.tab').forEach(el=>el.classList.toggle('active',el.dataset.tab===t));
+  document.getElementById('blurBtn').style.display = t==='actual' ? 'inline-flex':'none';
+  const list=DATA[t];
+  const sorted=t==='actual'
+    ? list.slice().sort((a,b)=>(b.you?1:0)-(a.you?1:0)||b.youtube.subs-a.youtube.subs)
+    : list.slice().sort((a,b)=>b.youtube.subs-a.youtube.subs);
+  document.getElementById('kpis').innerHTML=renderKPIs(list,t);
+  document.getElementById('rows').innerHTML=sorted.map((c,i)=>renderRow(c,i)).join('');
+  document.getElementById('secLab').textContent=t==='demo'?'Personal finance leaderboard':'Our niche · benchmarked against Ben AI';
+}
+function toggleFocus(){FOCUS=!FOCUS;document.querySelector('.wrap').classList.toggle('focus',FOCUS);syncBtn();}
+function syncBtn(){
+  const b=document.getElementById('blurBtn');b.classList.toggle('on',FOCUS);
+  document.getElementById('lock').textContent=FOCUS?'🔒':'🔓';
+  document.getElementById('blurLabel').textContent=FOCUS?'Competitors hidden · showing only us':'Focus mode: show only us';
+}
+document.getElementById('weekChip').textContent="Week ending "+WEEK_ENDING;
+setTab('demo');
+</script>
+</body>
+</html>

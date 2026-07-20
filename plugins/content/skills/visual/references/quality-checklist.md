@@ -1,6 +1,15 @@
 # Quality Checklist
 
-Reference for Phase 4 (Validation Gate) and Phase 7 (Review and Iterate). Covers pre-design validation, post-generation checks, diagnostic questions, and common mistakes.
+Reference for the validation gate and review/iterate phases. Covers pre-design validation, post-generation checks, diagnostic questions, and common mistakes.
+
+## Contents
+1. The 2-Second Test: Pre-Design Gate
+2. The 2-Second Test: Post-Generation Validation
+3. The Squint Test
+4. The So-What Test
+5. The Brand Gut Check (Information Graphics Only)
+6. Diagnostic Questions for Iteration
+7. Common Mistakes
 
 ---
 

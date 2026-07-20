@@ -2,6 +2,13 @@
 
 Loaded during Phase 3 (Visualization Design). This file defines output modes, style anchors, and layout patterns. Every design decision flows from the distinctions below.
 
+## Contents
+1. Output Mode Taxonomy
+2. Style Anchor System
+3. Layout Archetypes for Information Graphics
+4. How to Propose Visualizations
+5. Content Mapping
+
 ---
 
 ## 1. Output Mode Taxonomy

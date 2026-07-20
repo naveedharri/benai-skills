@@ -1,0 +1,43 @@
+{
+  "dashboard": {
+    "title": "Competitor Radar",
+    "brand": "Ben AI",
+    "live_url": "https://benai-competitor-radar.vercel.app",
+    "deploy_repo": "insinexzy/benai-competitor-radar",
+    "slack_channel_name": "#team-chat (private)",
+    "slack_channel_id": "C0ABCVDSTGQ",
+    "refresh": "weekly (Mon 09:00 IST)"
+  },
+  "platforms": ["youtube", "instagram", "linkedin", "tiktok", "community", "seo"],
+  "apify_actors": {
+    "youtube": "streamers/youtube-scraper",
+    "instagram": "apify/instagram-scraper",
+    "tiktok": "clockworks/tiktok-scraper",
+    "linkedin": "harvestapi/linkedin-profile-scraper",
+    "twitter": "apidojo/tweet-scraper"
+  },
+  "apify_notes": {
+    "call": "POST https://api.apify.com/v2/acts/<actor-with-~>/run-sync-get-dataset-items?token=$APIFY_TOKEN",
+    "linkedin_input": "{\"queries\":[\"<linkedin_url>\"],\"profileScraperMode\":\"Profile details no email ($4 per 1k)\"} ; follower count field is followerCount. This actor works on the FREE plan (dev_fusion does not).",
+    "handles_rule": "Use the exact handles below. They were human-verified against each creator's own site/links to avoid squatters. Where a field is null the creator has no official/verified account on that platform; skip it, do not substitute a guess."
+  },
+  "roster": {
+    "demo": [
+      {"name": "Mark Tilbury", "youtube": "@MarkTilbury", "instagram": "marktilbury", "tiktok": "marktilbury", "linkedin": "realmarktilbury", "community": null, "web": "marktilbury.com"},
+      {"name": "Graham Stephan", "youtube": "@GrahamStephan", "instagram": "gpstephan", "tiktok": "grahamstephan", "linkedin": "grahamstephan", "community": "The Creator Academy", "web": "grahamstephan.com"},
+      {"name": "Andrei Jikh", "youtube": "@AndreiJikh", "instagram": "andreijikh", "tiktok": null, "linkedin": "andreijikh", "community": null, "web": "andreijikh.com"},
+      {"name": "Humphrey Yang", "youtube": "@humphrey", "instagram": "humphreytalks", "tiktok": "humphreytalks", "linkedin": "humphreyyang", "community": null, "web": "humphreytalks.com"},
+      {"name": "Nate O'Brien", "youtube": "@NateOBrien", "instagram": "nateobrienn", "tiktok": "nate.obrien", "linkedin": "nateobrien", "community": null, "web": "nateobrien.com"},
+      {"name": "Ben AI", "youtube": "@benai92", "instagram": null, "tiktok": null, "linkedin": "benvansprundel", "community": "Ben AI (Circle)", "web": "benai.co", "you": true}
+    ],
+    "actual": [
+      {"name": "Nate Herk", "youtube": "@NateHerk", "instagram": "nateherk", "tiktok": "nateherk", "linkedin": "nateherkelman", "community": "AI Automation Society", "web": "nateherk.com"},
+      {"name": "Liam Ottley", "youtube": "@LiamOttley", "instagram": "liamottley", "tiktok": null, "linkedin": "liamottley", "community": "AAA Accelerator (Skool)", "web": "morningside.ai"},
+      {"name": "Nick Saraev", "youtube": "@NickSaraev", "instagram": "nick_saraev", "tiktok": null, "linkedin": "nick-saraev", "community": "Maker School (Skool)", "web": "leftclick.ai"},
+      {"name": "Riley Brown", "youtube": "@RileyBrownAI", "instagram": "realrileybrown", "tiktok": "rileybrown.ai", "linkedin": "riley-brown-7441b1101", "community": null, "web": "vibecode.com"},
+      {"name": "Jack Roberts", "youtube": "@Itssssss_Jack", "instagram": "jackroberts___", "tiktok": "aiautomationsbyjack", "linkedin": "jack-roberts-ai-automations", "community": null, "web": "jackroberts.ai"},
+      {"name": "AI Jason", "youtube": "@AIJasonZ", "instagram": null, "tiktok": null, "linkedin": "jasonzhoudesign", "community": null, "web": "ai-jason.com"},
+      {"name": "Ben AI", "youtube": "@benai92", "instagram": null, "tiktok": null, "linkedin": "benvansprundel", "community": "Ben AI (Circle)", "web": "benai.co", "you": true}
+    ]
+  }
+}

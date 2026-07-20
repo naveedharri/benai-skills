@@ -1,7 +1,17 @@
 # BenAI Brand Guidelines
 
-> Reference file for infographic generation. Loaded during Phase 6 (Prompt Construction)
+> Reference file for infographic generation. Loaded during the Prompt Construction phase
 > for Information Graphics and Hybrid mode visuals.
+
+## Contents
+1. Brand Philosophy
+2. Color System
+3. Typography
+4. Hard Shadow Signature
+5. Shape and Accent Styling
+6. Density and Restraint
+7. Footer
+8. Platform Context
 
 ---
 

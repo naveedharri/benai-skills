@@ -4,6 +4,14 @@ Reference for Phase 2 of infographic generation. This document teaches you how t
 deeply analyze content BEFORE designing anything. Skip this step and you will produce
 decoration. Do this step well and you will produce communication.
 
+## Contents
+1. The Four Layers of Content
+2. Which Layer to Visualize
+3. Identifying Layers in Real Content (Auto-Intent Detection, Hybrid Sub-Modes, Type Selection Override)
+4. Concept Extraction: Claims
+5. Concept Extraction: Information Structures
+6. Quick Reference
+
 ---
 
 ## 1. The Four Layers of Content
@@ -173,6 +181,25 @@ The auto-decision is a recommendation, not a lock.
 If neither layer is strong, go back to the content and look harder. There is
 almost always a Layer 3 claim hiding inside a Layer 1 narrative - you just have
 to dig for it.
+
+### Type Selection Override (Phase 2.3)
+
+After the auto-decision, the user is always asked to pick a visual type (Phase 2.3
+AskUserQuestion). Their selection OVERRIDES the auto-detected mode:
+
+| User Selects | Output Mode Becomes |
+|---|---|
+| Infographic | Information Graphic (or Data-led Hybrid if both layers were strong). Lock BenAI brand system as the style. |
+| Editorial illustration | Editorial Illustration (or Editorial-led Hybrid if both layers were strong). Use European editorial / Adult Swim / Moebius style anchors. |
+| Risograph / analog print | Editorial Illustration. Use risograph style anchors. |
+| Minimalist conceptual | Editorial Illustration. Use minimalist conceptual style anchors. |
+| Other (free text) | If it describes a data visual, route to Information Graphic. If it describes an artistic style, route to Editorial Illustration. Use their description as the style anchor. |
+
+State the locked mode after selection, e.g. "Got it, clean infographic using the
+BenAI brand system." or "Got it, editorial illustration in the risograph style."
+
+If the user picks a concept in Phase 3 from a different layer than the locked mode,
+silently switch the mode to match and state the switch.
 
 ---
 

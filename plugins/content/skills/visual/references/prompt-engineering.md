@@ -5,7 +5,17 @@ how Gemini interprets prompts, tested techniques that produce reliable results, 
 prompt architectures (editorial illustration and information graphic), the prompt vector
 system, and the optimal assembly order.
 
-Load this during Phase 6 (Prompt Construction). Everything here is self-contained.
+Load this during the Prompt Construction phase. Everything here is self-contained.
+
+## Contents
+1. How Gemini Interprets Prompts
+2. Tested Prompt Techniques
+3. Prompt Architecture: Editorial Illustration (9 parts)
+4. Prompt Architecture: Information Graphic (8 parts)
+5. Prompt Vector System
+6. The Optimal Prompt Assembly Order
+7. What Makes Prompts Fail
+8. Iteration Prompt Patterns
 
 ---
 

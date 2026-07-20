@@ -1,0 +1,26 @@
+{
+  "skill_name": "design-system-creator",
+  "evals": [
+    {
+      "id": 1,
+      "name": "branch-a-fresh-brand-newsletter",
+      "prompt": "I want to start a new newsletter called Brackish — it's about the cultural overlap between sea-adjacent fishing communities and tech workers moving to coastal towns (gentrification, fishing-rights politics, weird local cuisine). I'm thinking dusty-navy as a color, the audience is smart, skeptical, mildly-online readers age 25-45. Help me build the whole design system from scratch. I want tokens plus documents plus a logo I can use on my Substack header.",
+      "expected_output": "A design-system/ folder with brand.md, voice, tokens, a logo lockup (SVG + rendered JPG/PNG), component starters, application guides for web + email + social, plus the Claude Design form text block at the end. The voice should be literary and specific, not hype-driven. Colors should reflect the dusty-navy brief.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "branch-b-extract-existing-business",
+      "prompt": "I run a small firm called Harborline Legal (harborlinelegal.com — pretend this is real). We've been operating for three years, we have a website, a logo I'll paste, and a handful of Instagram posts we've made. I want you to extract our design system from all that so I can upload it to Claude Design and have Claude generate consistent content for us going forward. Here's our logo SVG: <svg viewBox='0 0 64 64'><circle cx='32' cy='32' r='20' fill='#1E3A5F'/><path d='M 20 32 L 44 32' stroke='#FBFAF7' stroke-width='3'/></svg>",
+      "expected_output": "A design-system/ folder derived from the extracted values. The skill should have run Firecrawl + extract-design-system against the site (or noted that the site is fictional and proceeded with the logo + the user's stated context as the ground truth). Voice should reflect actual legal-firm register (trust, plain-language, specific). Colors should match the provided logo hex. Claude Design form text at the end.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "ambiguous-intent-needs-clarification",
+      "prompt": "Hey — I want to build a design system. I have a logo and I've used Instagram a little but not much else.",
+      "expected_output": "The skill should ask exactly one intention-clarifying question to decide between Branch A and Branch B before doing anything else. Because the user has a logo and some shipped assets, the skill should lean toward Branch B but confirm with the user before proceeding. It should NOT skip the clarifying question and dive into one branch.",
+      "files": []
+    }
+  ]
+}

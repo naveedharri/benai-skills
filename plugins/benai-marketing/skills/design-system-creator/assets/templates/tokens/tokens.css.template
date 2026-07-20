@@ -1,0 +1,141 @@
+/*
+ * {{BRAND_NAME}} Design System — CSS custom properties
+ *
+ * Drop this at the top of your global stylesheet. Consume via var(--{{BRAND_SLUG}}-*).
+ * Source of truth: design-system/tokens/tokens.json
+ */
+
+:root {
+  /* ── Brand ─────────────────────────────────────────── */
+  --{{BRAND_SLUG}}-brand-50:  {{BRAND_50}};
+  --{{BRAND_SLUG}}-brand-100: {{BRAND_100}};
+  --{{BRAND_SLUG}}-brand-200: {{BRAND_200}};
+  --{{BRAND_SLUG}}-brand-300: {{BRAND_300}};
+  --{{BRAND_SLUG}}-brand-400: {{BRAND_400}};
+  --{{BRAND_SLUG}}-brand-500: {{BRAND_500}};
+  --{{BRAND_SLUG}}-brand-600: {{PRIMARY_HEX}};  /* primary */
+  --{{BRAND_SLUG}}-brand-700: {{BRAND_700}};
+  --{{BRAND_SLUG}}-brand-800: {{BRAND_800}};
+  --{{BRAND_SLUG}}-brand-900: {{BRAND_900}};
+
+  /* ── Ink (text) ────────────────────────────────────── */
+  --{{BRAND_SLUG}}-ink-100: {{INK_100}};
+  --{{BRAND_SLUG}}-ink-200: {{INK_200}};
+  --{{BRAND_SLUG}}-ink-300: {{INK_300}};
+  --{{BRAND_SLUG}}-ink-400: {{INK_400}};
+  --{{BRAND_SLUG}}-ink-500: {{INK_500}};
+  --{{BRAND_SLUG}}-ink-600: {{INK_600}};
+  --{{BRAND_SLUG}}-ink-700: {{INK_700}};
+  --{{BRAND_SLUG}}-ink-900: {{INK_HEX}};
+
+  /* ── Surfaces ──────────────────────────────────────── */
+  --{{BRAND_SLUG}}-paper:     {{PAPER_HEX}};
+  --{{BRAND_SLUG}}-surface:   {{SURFACE_HEX}};
+  --{{BRAND_SLUG}}-line:      {{LINE_HEX}};
+  --{{BRAND_SLUG}}-line-soft: {{LINE_SOFT_HEX}};
+
+  /* ── Semantic ──────────────────────────────────────── */
+  --{{BRAND_SLUG}}-success-100: #E2F5EC;
+  --{{BRAND_SLUG}}-success-600: #1F9D6B;
+  --{{BRAND_SLUG}}-warn-100:    #FBF2DC;
+  --{{BRAND_SLUG}}-warn-600:    #C08415;
+  --{{BRAND_SLUG}}-danger-100:  #FAE4E2;
+  --{{BRAND_SLUG}}-danger-600:  #C8382F;
+
+  /* ── Type ──────────────────────────────────────────── */
+  --{{BRAND_SLUG}}-font-sans:  '{{FONT_FAMILY}}', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --{{BRAND_SLUG}}-font-mono:  'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --{{BRAND_SLUG}}-weight-regular:  400;
+  --{{BRAND_SLUG}}-weight-medium:   500;
+  --{{BRAND_SLUG}}-weight-semibold: 600;
+  --{{BRAND_SLUG}}-weight-bold:     700;
+
+  /* ── Spacing (4px base) ────────────────────────────── */
+  --{{BRAND_SLUG}}-space-0:   0px;
+  --{{BRAND_SLUG}}-space-0_5: 2px;
+  --{{BRAND_SLUG}}-space-1:   4px;
+  --{{BRAND_SLUG}}-space-1_5: 6px;
+  --{{BRAND_SLUG}}-space-2:   8px;
+  --{{BRAND_SLUG}}-space-3:   12px;
+  --{{BRAND_SLUG}}-space-4:   16px;
+  --{{BRAND_SLUG}}-space-5:   20px;
+  --{{BRAND_SLUG}}-space-6:   24px;
+  --{{BRAND_SLUG}}-space-8:   32px;
+  --{{BRAND_SLUG}}-space-10:  40px;
+  --{{BRAND_SLUG}}-space-12:  48px;
+  --{{BRAND_SLUG}}-space-16:  64px;
+  --{{BRAND_SLUG}}-space-20:  80px;
+  --{{BRAND_SLUG}}-space-24:  96px;
+  --{{BRAND_SLUG}}-space-32:  128px;
+  --{{BRAND_SLUG}}-space-40:  160px;
+
+  /* ── Radius ────────────────────────────────────────── */
+  --{{BRAND_SLUG}}-radius-none: 0px;
+  --{{BRAND_SLUG}}-radius-xs:   4px;
+  --{{BRAND_SLUG}}-radius-sm:   6px;
+  --{{BRAND_SLUG}}-radius-md:   10px;
+  --{{BRAND_SLUG}}-radius-lg:   16px;
+  --{{BRAND_SLUG}}-radius-xl:   24px;
+  --{{BRAND_SLUG}}-radius-full: 9999px;
+
+  /* ── Shadow ────────────────────────────────────────── */
+  --{{BRAND_SLUG}}-shadow-none: none;
+  --{{BRAND_SLUG}}-shadow-xs:   0 1px 2px rgba({{INK_RGB}}, 0.04);
+  --{{BRAND_SLUG}}-shadow-sm:   0 1px 3px rgba({{INK_RGB}}, 0.06), 0 1px 2px rgba({{INK_RGB}}, 0.04);
+  --{{BRAND_SLUG}}-shadow-md:   0 4px 12px rgba({{INK_RGB}}, 0.06), 0 2px 4px rgba({{INK_RGB}}, 0.04);
+  --{{BRAND_SLUG}}-shadow-lg:   0 12px 32px rgba({{INK_RGB}}, 0.08), 0 4px 8px rgba({{INK_RGB}}, 0.04);
+  --{{BRAND_SLUG}}-shadow-xl:   0 24px 48px rgba({{INK_RGB}}, 0.10), 0 8px 16px rgba({{INK_RGB}}, 0.06);
+
+  /* ── Motion ────────────────────────────────────────── */
+  --{{BRAND_SLUG}}-dur-xs: 80ms;
+  --{{BRAND_SLUG}}-dur-sm: 160ms;
+  --{{BRAND_SLUG}}-dur-md: 240ms;
+  --{{BRAND_SLUG}}-dur-lg: 480ms;
+  --{{BRAND_SLUG}}-dur-xl: 720ms;
+
+  --{{BRAND_SLUG}}-ease-out:      cubic-bezier(0.22, 1, 0.36, 1);
+  --{{BRAND_SLUG}}-ease-in-out:   cubic-bezier(0.4, 0, 0.2, 1);
+  --{{BRAND_SLUG}}-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── Container ─────────────────────────────────────── */
+  --{{BRAND_SLUG}}-container-max:     1200px;
+  --{{BRAND_SLUG}}-container-reading: 680px;
+  --{{BRAND_SLUG}}-gutter-mobile:     16px;
+  --{{BRAND_SLUG}}-gutter-desktop:    24px;
+}
+
+/* ── Base ─────────────────────────────────────────────── */
+html, body {
+  font-family: var(--{{BRAND_SLUG}}-font-sans);
+  color: var(--{{BRAND_SLUG}}-ink-900);
+  background: var(--{{BRAND_SLUG}}-paper);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ── Type utility classes ─────────────────────────────── */
+.display-xl { font-size: 72px; line-height: 80px; font-weight: 600; letter-spacing: -0.02em; }
+.display-lg { font-size: 56px; line-height: 64px; font-weight: 600; letter-spacing: -0.02em; }
+.h1         { font-size: 40px; line-height: 48px; font-weight: 600; letter-spacing: -0.015em; }
+.h2         { font-size: 32px; line-height: 40px; font-weight: 600; letter-spacing: -0.015em; }
+.h3         { font-size: 24px; line-height: 32px; font-weight: 600; letter-spacing: -0.015em; }
+.h4         { font-size: 20px; line-height: 28px; font-weight: 600; letter-spacing: -0.015em; }
+.body-lg    { font-size: 18px; line-height: 28px; font-weight: 400; }
+.body-md    { font-size: 16px; line-height: 24px; font-weight: 400; }
+.body-sm    { font-size: 14px; line-height: 20px; font-weight: 400; }
+.caption    { font-size: 12px; line-height: 16px; font-weight: 500; }
+.overline   { font-size: 11px; line-height: 16px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+.code       { font-family: var(--{{BRAND_SLUG}}-font-mono); font-size: 14px; line-height: 20px; font-weight: 400; }
+
+/* ── Reduced motion ───────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketing Pulse · Ben AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F6F5F1;
+    --surface: #FFFFFF;
+    --ink: #14161A;
+    --muted: #6E7178;
+    --faint: #9A9DA3;
+    --line: #E5E3DC;
+    --line-soft: #EFEDE7;
+    --pos: #1E7A3C;
+    --neg: #B23A2F;
+    --chart: #2B2E33;
+    --chart-soft: #C9CBCE;
+    --accent: #C75B48;
+    --radius: 6px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 15px; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    padding: 40px 32px 64px;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+
+  h1, h2, .num { font-family: 'Space Grotesk', 'Inter', sans-serif; }
+  .num, td.n, .kpi-value, .delta { font-variant-numeric: tabular-nums; }
+
+  /* ---------- header ---------- */
+  header { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-bottom: 20px; border-bottom: 1px solid var(--ink); }
+  .brand { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  h1 { font-size: 30px; font-weight: 700; letter-spacing: -0.015em; }
+  .header-meta { text-align: right; font-size: 13px; color: var(--muted); line-height: 1.7; }
+  .header-meta strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- sections ---------- */
+  section { margin-top: 44px; }
+  .sec-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; gap: 12px; flex-wrap: wrap; }
+  .sec-title { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
+  .sec-note { font-size: 12.5px; color: var(--muted); }
+
+  /* ---------- daily brief ---------- */
+  .brief { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--ink); border-radius: var(--radius); padding: 22px 26px; margin-top: 28px; }
+  .brief-label { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .brief p { font-size: 15px; line-height: 1.65; color: #2A2D33; margin-bottom: 8px; }
+  .brief p:first-of-type { font-weight: 600; color: var(--ink); }
+  .brief p:last-child { margin-bottom: 0; }
+
+  /* ---------- KPI grid ---------- */
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .kpi { background: var(--surface); padding: 18px 20px 14px; display: flex; flex-direction: column; }
+  .kpi-label { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .kpi-value { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; line-height: 1; }
+  .kpi-deltas { margin-top: 8px; font-size: 12.5px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .delta { font-weight: 600; }
+  .delta .win { color: var(--faint); font-weight: 400; margin-left: 3px; }
+  .delta.pos { color: var(--pos); } .delta.neg { color: var(--neg); } .delta.flat { color: var(--muted); }
+  .kpi-note { margin-top: 8px; font-size: 11.5px; color: var(--faint); line-height: 1.45; }
+  .kpi svg { display: block; margin-top: auto; padding-top: 12px; width: 100%; height: 46px; }
+
+  /* ---------- cards / tables ---------- */
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .card + .card { margin-top: 16px; }
+  .card-head { padding: 14px 20px; border-bottom: 1px solid var(--line-soft); display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .card-title { font-size: 14px; font-weight: 600; }
+  .card-sub { font-size: 12px; color: var(--muted); }
+  .card-body { padding: 18px 20px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th { text-align: left; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 10px 20px 8px; border-bottom: 1px solid var(--line-soft); }
+  td { padding: 9px 20px; border-bottom: 1px solid var(--line-soft); vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  th.n, td.n { text-align: right; white-space: nowrap; }
+  .rowbar { display: inline-block; height: 6px; border-radius: 2px; background: var(--chart); vertical-align: middle; margin-right: 8px; }
+  .rowbar.accent { background: var(--accent); }
+  .barcell { min-width: 110px; }
+
+  /* ---------- funnel ---------- */
+  .funnel-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 16px; align-items: start; }
+  @media (max-width: 900px) { .funnel-grid { grid-template-columns: 1fr; } }
+  .fstage { padding: 13px 20px; border-bottom: 1px solid var(--line-soft); }
+  .fstage:last-child { border-bottom: none; }
+  .fstage-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; gap: 10px; }
+  .fstage-name { font-size: 13.5px; font-weight: 600; }
+  .fstage-name .sub { font-weight: 400; font-size: 11.5px; color: var(--faint); margin-left: 8px; }
+  .fstage-val { font-size: 15px; font-weight: 700; white-space: nowrap; }
+  .fstage-val .delta { font-size: 12px; margin-left: 8px; }
+  .fbar-track { height: 10px; background: var(--line-soft); border-radius: 2px; overflow: hidden; }
+  .fbar { height: 100%; background: var(--chart); border-radius: 2px; }
+  .fconv { font-size: 11.5px; color: var(--muted); margin-top: 5px; }
+  .fstage.na .fbar-track { background: repeating-linear-gradient(45deg, var(--line-soft), var(--line-soft) 5px, #fff 5px, #fff 10px); }
+  .fstage.na .fstage-val { color: var(--faint); font-size: 12px; font-weight: 500; white-space: normal; text-align: right; max-width: 300px; }
+
+  .legend { display: flex; gap: 18px; font-size: 12px; color: var(--muted); }
+  .legend span::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 6px; }
+  .legend .l-pos::before { background: var(--pos); }
+  .legend .l-neg::before { background: var(--neg); }
+
+  .two-col { display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; align-items: start; }
+  @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ---------- community ---------- */
+  .mini-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1px; background: var(--line-soft); border-bottom: 1px solid var(--line-soft); }
+  .mini-kpi { background: var(--surface); padding: 14px 20px; }
+  .mini-kpi .kpi-value { font-size: 21px; }
+  .split { display: grid; grid-template-columns: 1.4fr 1fr; }
+  @media (max-width: 900px) { .split { grid-template-columns: 1fr; } }
+  .split > div:first-child { border-right: 1px solid var(--line-soft); }
+  @media (max-width: 900px) { .split > div:first-child { border-right: none; border-bottom: 1px solid var(--line-soft); } }
+  .inner-head { padding: 12px 20px; border-bottom: 1px solid var(--line-soft); display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .await { list-style: none; }
+  .await li { padding: 9px 0; border-bottom: 1px solid var(--line-soft); font-size: 13px; display: flex; justify-content: space-between; gap: 12px; }
+  .await li:last-child { border-bottom: none; }
+  .await .who { font-weight: 600; }
+  .await .meta { color: var(--muted); font-size: 12px; white-space: nowrap; }
+
+  .pending { padding: 16px 20px; font-size: 13px; color: var(--muted); background: var(--surface); border: 1px dashed var(--line); border-radius: var(--radius); }
+
+  footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 12px; color: var(--faint); line-height: 1.7; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <div class="brand">Ben AI</div>
+      <h1>Marketing Pulse</h1>
+    </div>
+    <div class="header-meta" id="header-meta"></div>
+  </header>
+
+  <div class="brief" id="brief">
+    <div class="brief-label">Daily brief</div>
+  </div>
+
+  <section>
+    <div class="sec-head">
+      <div class="sec-title">Pulse</div>
+      <div class="sec-note">Stripe · YouTube · Circle</div>
+    </div>
+    <div class="kpis" id="kpis"></div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="sec-title">Funnel</div>
+      <div class="sec-note">our content only · joins attributed via utm_campaign</div>
+    </div>
+    <div class="funnel-grid">
+      <div class="card">
+        <div class="card-head"><span class="card-title">YouTube views → member</span><span class="card-sub" id="funnel-window"></span></div>
+        <div id="funnel-stages"></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><span class="card-title">Top converting videos</span><span class="card-sub" id="attr-window"></span></div>
+        <table id="topvideos">
+          <thead><tr><th>Video</th><th class="n">Visitors</th><th class="n">Joins</th><th class="n barcell">Visitor → join</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="sec-title">Subscribers</div>
+      <div class="sec-note">Stripe Billing · daily member movement</div>
+    </div>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-head">
+          <span class="card-title">Daily movement, last 30 days</span>
+          <span class="legend"><span class="l-pos">gained + reactivated</span><span class="l-neg">churned</span></span>
+        </div>
+        <div class="card-body"><svg id="movement-chart" width="100%" height="180"></svg></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><span class="card-title">Movement summary</span><span class="card-sub">complete days</span></div>
+        <table id="movement-summary">
+          <thead><tr><th></th><th class="n">24h</th><th class="n">7d</th><th class="n">30d</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="sec-title">Content engines</div>
+      <div class="sec-note">YouTube · LinkedIn · Newsletter</div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><span class="card-title">YouTube</span><span class="card-sub" id="yt-sub"></span></div>
+      <table id="yt-table">
+        <thead><tr><th>Video</th><th class="n">Published</th><th class="n barcell">Views</th><th class="n">Likes</th><th class="n">Joins</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><span class="card-title">LinkedIn</span><span class="card-sub" id="li-sub"></span></div>
+      <table id="li-table">
+        <thead><tr><th>Post</th><th class="n">Date</th><th class="n barcell">Reactions</th><th class="n">Comments</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><span class="card-title">Newsletter</span><span class="card-sub" id="nl-sub"></span></div>
+      <table id="nl-table">
+        <thead><tr><th>Subject</th><th class="n">Sent</th><th class="n barcell">Open rate</th><th class="n barcell">Click rate</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="sec-title">Community</div>
+      <div class="sec-note">Circle · 24h vs the day before · 7d vs prior 7d</div>
+    </div>
+    <div class="card">
+      <div class="mini-kpis" id="community-kpis"></div>
+      <div class="split">
+        <div>
+          <div class="inner-head"><span class="card-title">Engagement per post, last 30 posts</span><span class="card-sub">(likes + comments) / post</span></div>
+          <div class="card-body"><svg id="perpost-chart" width="100%" height="120"></svg></div>
+        </div>
+        <div>
+          <div class="inner-head"><span class="card-title">Awaiting first reply</span><span class="card-sub">member posts, 0 comments</span></div>
+          <div class="card-body"><ul class="await" id="awaiting"></ul></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="mom-section">
+    <div class="sec-head"><div class="sec-title">Month over month</div></div>
+    <div class="pending" id="mom-note"></div>
+  </section>
+
+  <footer id="footer"></footer>
+</div>
+
+<script src="data.js"></script>
+<script>
+const D = DASHBOARD_DATA;
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt = n => n == null ? '–' : n.toLocaleString('en-US');
+const money = n => '$' + Math.round(Math.abs(n)).toLocaleString('en-US');
+const day = iso => new Date(iso + 'T00:00:00').toLocaleDateString('en-US', {month:'short', day:'numeric'});
+
+function deltaHtml(v, win, opts = {}) {
+  if (v == null) return '';
+  const cls = v > 0 ? 'pos' : v < 0 ? 'neg' : 'flat';
+  const sign = v > 0 ? '+' : v < 0 ? '−' : '±';
+  const val = sign + (opts.money ? money(v) : fmt(Math.abs(v)));
+  return `<span class="delta ${cls}">${val}<span class="win">${win}</span></span>`;
+}
+
+function spark(values, w = 220, h = 46) {
+  if (!values || values.length < 2) return '';
+  const min = Math.min(...values), max = Math.max(...values), span = (max - min) || 1;
+  const pts = values.map((v, i) => [ (i / (values.length - 1)) * (w - 8) + 2, h - 4 - ((v - min) / span) * (h - 10) ]);
+  const line = pts.map(p => p.map(n => n.toFixed(1)).join(',')).join(' ');
+  const last = pts[pts.length - 1];
+  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+    <polyline points="${line}" fill="none" stroke="var(--chart)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+    <circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="2.6" fill="var(--chart)"/>
+  </svg>`;
+}
+
+/* header */
+$('header-meta').innerHTML =
+  `<strong>${new Date(D.meta.date + 'T00:00:00').toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric', year:'numeric'})}</strong><br>
+   ${esc(D.meta.updatedTag)} · data: ${esc(D.meta.dataStatus)}`;
+
+/* brief */
+$('brief').insertAdjacentHTML('beforeend', D.brief.map(p => `<p>${esc(p)}</p>`).join(''));
+
+/* KPIs */
+const kpis = [
+  { label: 'MRR', value: money(D.stripe.mrr.value),
+    deltas: deltaHtml(D.stripe.mrr.delta24h, '24h', {money:true}) + deltaHtml(D.stripe.mrr.delta7d, '7d', {money:true}),
+    trend: D.stripe.mrr.trend30d, note: D.stripe.mrr.note },
+  { label: 'Active subscribers', value: fmt(D.stripe.activeSubscribers.value),
+    deltas: deltaHtml(D.stripe.activeSubscribers.delta24h, '24h') + deltaHtml(D.stripe.activeSubscribers.delta7d, '7d'),
+    trend: D.stripe.activeSubscribers.trend30d, note: D.stripe.activeSubscribers.note },
+  { label: 'Net member movement · 24h', value: (D.stripe.memberMovement.net.d24h > 0 ? '+' : '') + fmt(D.stripe.memberMovement.net.d24h),
+    deltas: deltaHtml(D.stripe.memberMovement.net.d7d, '7d net') + deltaHtml(D.stripe.memberMovement.net.d30d, '30d net'),
+    trend: D.stripe.movementTrend30d.map(d => d.gained + d.reactivated - d.churned),
+    note: `${fmt(D.stripe.memberMovement.gained.d24h)} gained · ${fmt(D.stripe.memberMovement.reactivated.d24h)} reactivated · ${fmt(D.stripe.memberMovement.churned.d24h)} churned` },
+  { label: 'YouTube daily views', value: fmt(D.youtube.viewsLatest.value),
+    deltas: deltaHtml(D.youtube.viewsLatest.delta24h, '24h') + deltaHtml(D.youtube.viewsLatest.delta7d, '7d'),
+    trend: D.youtube.viewsLatest.trend14d, note: D.youtube.viewsLatest.note },
+  { label: 'Engagement / post', value: D.community.engagementPerPost.value.toFixed(1),
+    deltas: deltaHtml(+(D.community.engagementPerPost.value - D.community.engagementPerPost.prev7d).toFixed(1), 'vs prior 7d'),
+    trend: D.community.perPost.map(p => p.eng), note: D.community.engagementPerPost.note },
+  { label: 'Newsletter open rate', value: D.newsletter.issues[0].openRate.toFixed(1) + '%',
+    deltas: deltaHtml(+(D.newsletter.issues[0].openRate - D.newsletter.issues[1].openRate).toFixed(1), 'vs prior send'),
+    trend: [...D.newsletter.issues].reverse().map(i => i.openRate),
+    note: 'last send: ' + D.newsletter.issues[0].subject }
+];
+$('kpis').innerHTML = kpis.map(k => `
+  <div class="kpi">
+    <div class="kpi-label">${esc(k.label)}</div>
+    <div class="kpi-value num">${k.value}</div>
+    <div class="kpi-deltas">${k.deltas}</div>
+    <div class="kpi-note">${esc(k.note || '')}</div>
+    ${spark(k.trend)}
+  </div>`).join('');
+
+/* funnel */
+$('funnel-window').textContent = D.funnel.windowLabel;
+$('attr-window').textContent = D.funnel.attributionWindow;
+const fmax = Math.max(...D.funnel.stages.filter(s => !s.unavailable).map(s => s.value));
+$('funnel-stages').innerHTML = D.funnel.stages.map((s, i) => {
+  const next = D.funnel.stages[i + 1];
+  let conv = '';
+  if (next && !s.unavailable && !next.unavailable) {
+    const r = next.value / s.value * 100;
+    conv = `<div class="fconv">↓ ${r.toFixed(r < 5 ? 2 : 1)}% convert to ${esc(next.label.toLowerCase())}</div>`;
+  }
+  if (s.unavailable) {
+    return `<div class="fstage na">
+      <div class="fstage-top"><span class="fstage-name">${esc(s.label)}</span><span class="fstage-val">${esc(s.note)}</span></div>
+      <div class="fbar-track"></div></div>`;
+  }
+  const d = s.prev7d ? Math.round((s.value - s.prev7d) / s.prev7d * 1000) / 10 : null;
+  const dHtml = d == null ? '' : `<span class="delta ${d >= 0 ? 'pos' : 'neg'}">${d > 0 ? '+' : ''}${d}%<span class="win">vs prior 7d</span></span>`;
+  return `<div class="fstage">
+    <div class="fstage-top">
+      <span class="fstage-name">${esc(s.label)}<span class="sub">${esc(s.note)}</span></span>
+      <span class="fstage-val num">${fmt(s.value)}${dHtml}</span>
+    </div>
+    <div class="fbar-track"><div class="fbar" style="width:${Math.max(1.5, s.value / fmax * 100)}%"></div></div>
+    ${conv}</div>`;
+}).join('');
+
+const tvmax = Math.max(...D.funnel.topVideos.map(v => v.joins / v.visitors));
+$('topvideos').querySelector('tbody').innerHTML = D.funnel.topVideos.map(v => {
+  const rate = v.joins / v.visitors * 100;
+  return `<tr>
+    <td>${esc(v.title)}</td>
+    <td class="n num">${fmt(v.visitors)}</td>
+    <td class="n num">${fmt(v.joins)}</td>
+    <td class="n barcell"><span class="rowbar accent" style="width:${Math.max(4, rate / (tvmax * 100) * 64).toFixed(0)}px"></span><span class="num">${rate.toFixed(1)}%</span></td>
+  </tr>`;
+}).join('');
+
+/* movement chart: diverging daily columns */
+(function() {
+  const data = D.stripe.movementTrend30d;
+  const svg = $('movement-chart');
+  const W = 640, H = 180, mid = 102, pad = 6;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const maxUp = Math.max(...data.map(d => d.gained + d.reactivated));
+  const maxDn = Math.max(...data.map(d => d.churned));
+  const upScale = (mid - 28) / maxUp, dnScale = (H - mid - 30) / maxDn;
+  const bw = (W - pad * 2) / data.length;
+  let out = `<line x1="0" y1="${mid}" x2="${W}" y2="${mid}" stroke="var(--line)" stroke-width="1"/>`;
+  data.forEach((d, i) => {
+    const x = pad + i * bw + bw * 0.18, w = bw * 0.64;
+    const up = (d.gained + d.reactivated) * upScale, dn = d.churned * dnScale;
+    out += `<rect x="${x.toFixed(1)}" y="${(mid - up).toFixed(1)}" width="${w.toFixed(1)}" height="${Math.max(up,1).toFixed(1)}" fill="var(--pos)" rx="1"><title>${day(d.date)} · +${d.gained + d.reactivated}</title></rect>`;
+    out += `<rect x="${x.toFixed(1)}" y="${mid + 1}" width="${w.toFixed(1)}" height="${Math.max(dn,1).toFixed(1)}" fill="var(--neg)" opacity=".85" rx="1"><title>${day(d.date)} · −${d.churned}</title></rect>`;
+  });
+  const peak = data.reduce((a, b) => (b.gained + b.reactivated) > (a.gained + a.reactivated) ? b : a);
+  const pi = data.indexOf(peak);
+  out += `<text x="${(pad + pi * bw + bw / 2).toFixed(1)}" y="${(mid - (peak.gained + peak.reactivated) * upScale - 8).toFixed(1)}" font-size="11" font-family="Inter" fill="var(--muted)" text-anchor="middle">+${peak.gained + peak.reactivated} · ${day(peak.date)}</text>`;
+  out += `<text x="${pad}" y="${H - 5}" font-size="11" font-family="Inter" fill="var(--faint)">${day(data[0].date)}</text>`;
+  out += `<text x="${W - pad}" y="${H - 5}" font-size="11" font-family="Inter" fill="var(--faint)" text-anchor="end">${day(data[data.length - 1].date)}</text>`;
+  svg.innerHTML = out;
+})();
+
+/* movement summary table */
+const mm = D.stripe.memberMovement;
+const signed = n => (n > 0 ? '+' : '') + fmt(n);
+$('movement-summary').querySelector('tbody').innerHTML = `
+  <tr><td>Gained</td><td class="n num">${fmt(mm.gained.d24h)}</td><td class="n num">${fmt(mm.gained.d7d)}</td><td class="n num">${fmt(mm.gained.d30d)}</td></tr>
+  <tr><td>Reactivated</td><td class="n num">${fmt(mm.reactivated.d24h)}</td><td class="n num">${fmt(mm.reactivated.d7d)}</td><td class="n num">${fmt(mm.reactivated.d30d)}</td></tr>
+  <tr><td>Churned</td><td class="n num">${fmt(mm.churned.d24h)}</td><td class="n num">${fmt(mm.churned.d7d)}</td><td class="n num">${fmt(mm.churned.d30d)}</td></tr>
+  <tr style="font-weight:600"><td>Net</td><td class="n num">${signed(mm.net.d24h)}</td><td class="n num">${signed(mm.net.d7d)}</td><td class="n num">${signed(mm.net.d30d)}</td></tr>
+  <tr><td colspan="4" style="font-size:11.5px;color:var(--faint);line-height:1.5">Billing overview ${esc(D.stripe.billingOverviewRef.window)}: ${D.stripe.billingOverviewRef.newSubscribers} new · ${D.stripe.billingOverviewRef.reactivated} reactivated · ${D.stripe.billingOverviewRef.churned} churned · net +${D.stripe.billingOverviewRef.netGrowth} (verified ${esc(D.stripe.billingOverviewRef.verifiedOn)})</td></tr>`;
+
+/* YouTube table */
+$('yt-sub').textContent = D.youtube.channel + ' · last 10 uploads';
+const ytmax = Math.max(...D.youtube.videos.map(v => v.views));
+$('yt-table').querySelector('tbody').innerHTML = [...D.youtube.videos]
+  .sort((a, b) => b.views - a.views)
+  .map(v => `<tr>
+    <td>${esc(v.title)}</td>
+    <td class="n num" style="color:var(--muted)">${day(v.date)}</td>
+    <td class="n barcell"><span class="rowbar" style="width:${Math.max(4, v.views / ytmax * 110).toFixed(0)}px"></span><span class="num">${fmt(v.views)}</span></td>
+    <td class="n num">${fmt(v.likes)}</td>
+    <td class="n num">${v.joins == null ? '–' : fmt(v.joins)}</td>
+  </tr>`).join('');
+
+/* LinkedIn table */
+$('li-sub').textContent = D.linkedin.profile + ' · all posts, last 30d';
+const limax = Math.max(...D.linkedin.posts.map(p => p.reactions));
+$('li-table').querySelector('tbody').innerHTML = D.linkedin.posts.map(p => `<tr>
+    <td>${esc(p.hook)}</td>
+    <td class="n num" style="color:var(--muted)">${day(p.date)}</td>
+    <td class="n barcell"><span class="rowbar" style="width:${Math.max(4, p.reactions / limax * 90).toFixed(0)}px"></span><span class="num">${fmt(p.reactions)}</span></td>
+    <td class="n num">${fmt(p.comments)}</td>
+  </tr>`).join('');
+
+/* Newsletter table: open and click on separate scales */
+$('nl-sub').textContent = D.newsletter.list + ' · last ' + D.newsletter.issues.length + ' sends';
+const omax = Math.max(...D.newsletter.issues.map(i => i.openRate));
+const cmax = Math.max(...D.newsletter.issues.map(i => i.clickRate));
+$('nl-table').querySelector('tbody').innerHTML = D.newsletter.issues.map(i => `<tr>
+    <td>${esc(i.subject)}</td>
+    <td class="n num" style="color:var(--muted)">${day(i.date)}</td>
+    <td class="n barcell"><span class="rowbar" style="width:${Math.max(4, i.openRate / omax * 80).toFixed(0)}px"></span><span class="num">${i.openRate.toFixed(1)}%</span></td>
+    <td class="n barcell"><span class="rowbar accent" style="width:${Math.max(4, i.clickRate / cmax * 56).toFixed(0)}px"></span><span class="num">${i.clickRate.toFixed(1)}%</span></td>
+  </tr>`).join('');
+
+/* community */
+const act = D.community.activity;
+const cKpis = [
+  { label: 'Posts · 24h', value: fmt(act.posts.value), deltas: deltaHtml(act.posts.prev == null ? null : act.posts.value - act.posts.prev, 'vs prior day'), note: `7d: ${fmt(act.posts.d7)} vs ${fmt(act.posts.d7prev)} prior` },
+  { label: 'Comments · 24h', value: fmt(act.comments.value), deltas: deltaHtml(act.comments.prev == null ? null : act.comments.value - act.comments.prev, 'vs prior day'), note: `7d: ${fmt(act.comments.d7)}` },
+  { label: 'Likes on new posts · 24h', value: fmt(act.likesOnNewPosts.value), deltas: '', note: 'likes on posts created in the last 24h (Circle exposes no like timestamps)' },
+  { label: 'Engagement / post · 7d', value: D.community.engagementPerPost.value.toFixed(1), deltas: deltaHtml(+(D.community.engagementPerPost.value - D.community.engagementPerPost.prev7d).toFixed(1), 'vs prior 7d'), note: `24h cohort: ${D.community.engagementPerPost.cohort24h}` }
+];
+$('community-kpis').innerHTML = cKpis.map(k => `
+  <div class="mini-kpi">
+    <div class="kpi-label">${esc(k.label)}</div>
+    <div class="kpi-value num">${k.value}</div>
+    <div class="kpi-deltas">${k.deltas}</div>
+    <div class="kpi-note">${esc(k.note)}</div>
+  </div>`).join('');
+
+/* per-post engagement bars */
+(function() {
+  const posts = D.community.perPost;
+  const svg = $('perpost-chart');
+  const W = 560, H = 120, pad = 4, base = H - 18;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const max = Math.max(...posts.map(p => p.eng), 1);
+  const bw = (W - pad * 2) / posts.length;
+  let out = `<line x1="0" y1="${base}" x2="${W}" y2="${base}" stroke="var(--line)"/>`;
+  posts.forEach((p, i) => {
+    const h = Math.max(1.5, p.eng / max * (base - 14));
+    out += `<rect x="${(pad + i * bw + bw * 0.2).toFixed(1)}" y="${(base - h).toFixed(1)}" width="${(bw * 0.6).toFixed(1)}" height="${h.toFixed(1)}" fill="var(--chart)" opacity="${p.eng === 0 ? .25 : .85}" rx="1"><title>${esc(p.t)} · ${p.eng} · ${esc(p.author)}</title></rect>`;
+  });
+  out += `<text x="${pad}" y="${H - 4}" font-size="11" font-family="Inter" fill="var(--faint)">oldest</text>`;
+  out += `<text x="${W - pad}" y="${H - 4}" font-size="11" font-family="Inter" fill="var(--faint)" text-anchor="end">newest</text>`;
+  svg.innerHTML = out;
+})();
+
+/* awaiting reply */
+$('awaiting').innerHTML = (D.community.awaitingReply || []).map(a => `
+  <li><span><span class="who">${esc(a.name)}</span> · ${esc(a.title)}</span>
+  <span class="meta">${esc(a.space)} · ${a.daysWaiting === 0 ? 'today' : a.daysWaiting + 'd waiting'}</span></li>`).join('')
+  || '<li style="color:var(--muted)">Every member post has a reply.</li>';
+
+/* MoM */
+if (D.mom && D.mom.pending) { $('mom-note').textContent = D.mom.note; }
+else { $('mom-section').style.display = 'none'; }
+
+/* footer */
+$('footer').innerHTML = `Sources: Stripe (Billing-anchored) · PostHog · YouTube Analytics / VidIQ · Apify (LinkedIn) · Kit · Circle Admin API.<br>
+YouTube Analytics lags ~2 days · checkout stage not instrumented (runs on Circle's domain) · generated ${esc(D.meta.date)}.`;
+</script>
+</body>
+</html>

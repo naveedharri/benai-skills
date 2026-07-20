@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" role="img" aria-label="{{BRAND_NAME}} logo">
+  <title>{{BRAND_NAME}}</title>
+  <g transform="translate(8, 8)">
+    {{MOTIF_PATHS}}
+  </g>
+  <text x="88" y="52"
+        font-family="{{FONT_FAMILY}}, 'Inter Variable', ui-sans-serif, system-ui, sans-serif"
+        font-weight="700"
+        font-size="42"
+        letter-spacing="-0.02em"
+        fill="{{INK_HEX}}">{{BRAND_NAME}}</text>
+</svg>

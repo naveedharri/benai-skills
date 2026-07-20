@@ -1,0 +1,126 @@
+/*
+ * {{BRAND_NAME}} — Marp theme
+ *
+ * Usage: save as `{{BRAND_SLUG}}.css` in your Marp theme directory, or reference in
+ * slide front-matter: `theme: {{BRAND_SLUG}}`.
+ *
+ * Classes available per-slide (via `<!-- _class: name -->`):
+ *   - `title`     — title slide, stacked lockup
+ *   - `section`   — section divider (ink bg)
+ *   - `big-number`— one huge number, one sentence below
+ *   - `dark`      — ink-900 background
+ *   - `brand`     — brand/900 background
+ *   - `quote`     — large left-aligned quote
+ */
+
+/* @theme {{BRAND_SLUG}} */
+@import 'default';
+
+:root {
+  --paper:    {{PAPER_HEX}};
+  --surface:  {{SURFACE_HEX}};
+  --ink-900:  {{INK_HEX}};
+  --ink-700:  {{INK_700}};
+  --ink-600:  {{INK_600}};
+  --ink-500:  {{INK_500}};
+  --ink-200:  {{INK_200}};
+  --ink-100:  {{INK_100}};
+  --brand:    {{PRIMARY_HEX}};
+  --brand-700:{{BRAND_700}};
+  --brand-900:{{BRAND_900}};
+  --brand-wash:{{BRAND_100}};
+  --line:     {{LINE_HEX}};
+}
+
+section {
+  width: 1920px;
+  height: 1080px;
+  background: var(--paper);
+  color: var(--ink-900);
+  font-family: '{{FONT_FAMILY}}', system-ui, -apple-system, sans-serif;
+  padding: 96px;
+  font-size: 32px;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Type scale */
+h1 { font-size: 72px; line-height: 80px; font-weight: 600; letter-spacing: -0.02em; color: var(--ink-900); margin: 0 0 24px 0; }
+h2 { font-size: 56px; line-height: 64px; font-weight: 600; letter-spacing: -0.02em; color: var(--ink-900); margin: 0 0 24px 0; }
+h3 { font-size: 40px; line-height: 48px; font-weight: 600; letter-spacing: -0.015em; color: var(--ink-900); margin: 0 0 16px 0; }
+p, li { font-size: 32px; line-height: 48px; color: var(--ink-700); margin: 0 0 24px 0; }
+
+strong { color: var(--brand); font-weight: 600; }
+em { font-style: normal; color: var(--brand); }
+
+ul { padding-left: 32px; }
+li { margin-bottom: 16px; }
+li::marker { color: var(--brand); }
+
+blockquote {
+  border-left: 4px solid var(--brand);
+  padding-left: 32px;
+  margin: 32px 0;
+  font-size: 40px;
+  color: var(--ink-900);
+  font-weight: 500;
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 24px;
+  background: var(--ink-100);
+  color: var(--ink-900);
+  border-radius: 6px;
+  padding: 2px 8px;
+}
+pre { padding: 24px; line-height: 1.5; }
+
+footer {
+  position: absolute;
+  bottom: 48px;
+  left: 96px;
+  right: 96px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  color: var(--ink-500);
+  font-weight: 500;
+}
+
+/* Title slide */
+section.title { justify-content: center; align-items: center; text-align: center; }
+section.title h1 { font-size: 96px; line-height: 104px; }
+
+/* Section divider */
+section.section { background: var(--ink-900); color: var(--paper); justify-content: center; }
+section.section h1 { color: var(--paper); font-size: 96px; line-height: 104px; }
+section.section .number { font-size: 120px; color: var(--brand); font-weight: 600; margin-bottom: 16px; }
+
+/* Big number */
+section.big-number { justify-content: center; align-items: center; text-align: center; }
+section.big-number h1 { font-size: 240px; line-height: 240px; color: var(--brand); letter-spacing: -0.03em; margin-bottom: 40px; }
+section.big-number p { font-size: 48px; line-height: 60px; max-width: 1200px; color: var(--ink-700); }
+
+/* Quote */
+section.quote h1 { font-size: 56px; line-height: 72px; max-width: 1500px; }
+section.quote p { font-size: 28px; color: var(--ink-600); margin-top: 32px; }
+
+/* Dark / brand backgrounds */
+section.dark { background: var(--ink-900); color: var(--paper); }
+section.dark h1, section.dark h2, section.dark h3 { color: var(--paper); }
+section.dark p, section.dark li { color: var(--ink-200); }
+
+section.brand { background: var(--brand-900); color: var(--paper); }
+section.brand h1, section.brand h2 { color: var(--paper); }
+section.brand p, section.brand li { color: {{BRAND_300}}; }
+
+/* Tables */
+table { border-collapse: collapse; width: 100%; font-size: 24px; }
+th, td { border-bottom: 1px solid var(--line); padding: 16px 24px; text-align: left; }
+th { font-weight: 600; color: var(--ink-700); font-size: 18px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+/* Image treatment */
+img { border-radius: 16px; display: block; }

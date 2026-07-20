@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signal Report · Getting Cited by AI Search · Ben AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAF3E3; --bg-alt:#E5F5F9; --ink:#020309;
+    --green:#D2ECD0; --red:#F3C1C0; --yellow:#FDEEC4; --blue:#E5F5F9;
+    --text:#020309; --muted:#5b5b52;
+    --shadow:8px 8px 0 #020309; --shadow-sm:4px 4px 0 #020309;
+    --border:2px solid #020309; --radius:10px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Montserrat',Georgia,sans-serif;background:var(--bg);color:var(--text);
+    line-height:1.5;padding:28px 20px 80px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto}
+  h1,h2,h3,.grotesk{font-family:'Space Grotesk',sans-serif}
+  a{color:inherit}
+
+  header{border:var(--border);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow);
+    padding:24px 28px;margin-bottom:22px;position:relative;overflow:hidden}
+  header::after{content:"";position:absolute;top:-46px;right:-46px;width:180px;height:180px;
+    background:var(--blue);border:var(--border);border-radius:50%;z-index:0;opacity:.55}
+  header::before{content:"";position:absolute;bottom:-60px;right:120px;width:120px;height:120px;
+    background:var(--yellow);border:var(--border);border-radius:50%;z-index:0;opacity:.45}
+  .brand-badge{font-family:'Space Grotesk';font-weight:700;font-size:13px;letter-spacing:.5px;
+    background:var(--ink);color:var(--yellow);padding:5px 12px;border-radius:6px;display:inline-block;position:relative;z-index:1}
+  h1{font-size:41px;font-weight:700;letter-spacing:-1.2px;margin:13px 0 6px;line-height:1.02;position:relative;z-index:1;max-width:820px}
+  .sub{color:var(--muted);font-size:15px;max-width:720px;position:relative;z-index:1}
+  .meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;position:relative;z-index:1}
+  .chip{font-size:12.5px;font-weight:600;border:var(--border);border-radius:999px;padding:5px 13px;background:#fff}
+  .chip.live{background:var(--green)} .chip.warn{background:var(--yellow)}
+  .chip .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#1f9d55;margin-right:6px;vertical-align:middle}
+
+  /* section nav */
+  .nav{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap}
+  .nav a{font-family:'Space Grotesk';font-weight:600;font-size:13.5px;text-decoration:none;
+    border:var(--border);border-radius:9px;padding:9px 15px;background:#fff;
+    box-shadow:var(--shadow-sm);transition:transform .08s,box-shadow .08s}
+  .nav a:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 #020309;background:var(--ink);color:var(--yellow)}
+
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:30px}
+  .kpi{border:var(--border);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow-sm);padding:17px 18px;display:flex;flex-direction:column}
+  .kpi .lab{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted)}
+  .kpi .val{font-family:'Space Grotesk';font-size:33px;font-weight:700;margin:8px 0 3px;letter-spacing:-1px;line-height:1}
+  .kpi .note{font-size:12px;color:var(--muted);margin-top:auto}
+  .kpi .src{font-size:10.5px;font-weight:700;color:var(--muted);margin-top:9px;text-transform:uppercase;letter-spacing:.3px}
+  .kpi.accent{background:var(--green)} .kpi.accent2{background:var(--blue)} .kpi.accent3{background:var(--yellow)} .kpi.accent4{background:var(--red)}
+
+  .sec{margin:0 0 34px}
+  .sec-lab{font-family:'Space Grotesk';font-weight:700;font-size:14px;letter-spacing:.8px;
+    text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:9px;margin:0 4px 14px}
+  .sec-lab::before{content:"";width:26px;height:3px;background:var(--ink);display:inline-block}
+  .sec-intro{font-size:14px;color:#3a3a30;max-width:760px;margin:0 4px 18px}
+
+  /* generic card */
+  .card{border:var(--border);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow-sm);padding:18px 20px;margin-bottom:14px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+  /* the brief block */
+  .brief{border:var(--border);border-radius:var(--radius);background:var(--green);box-shadow:var(--shadow);padding:22px 24px;margin-bottom:30px}
+  .brief h2{font-size:20px;letter-spacing:-.3px;margin-bottom:10px}
+  .brief p{font-size:14.5px;margin-bottom:10px}
+  .brief p:last-child{margin-bottom:0}
+  .brief b{background:#fff;padding:1px 5px;border-radius:4px;box-decoration-break:clone}
+
+  /* evidence cards */
+  .ev{border-left:6px solid var(--ink)}
+  .ev .ev-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px}
+  .ev .ev-h{font-family:'Space Grotesk';font-weight:700;font-size:16px;line-height:1.2}
+  .ev .ev-b{font-size:13.5px;color:#3a3a30}
+  .ev .ev-b b{font-weight:700;color:var(--ink)}
+
+  .badge{font-family:'Space Grotesk';font-weight:700;font-size:10.5px;letter-spacing:.4px;text-transform:uppercase;
+    border:var(--border);border-radius:6px;padding:3px 9px;white-space:nowrap;background:#fff}
+  .b-verified{background:var(--green)} .b-partial{background:var(--yellow)} .b-projection{background:var(--blue)}
+  .b-vendor{background:var(--yellow)} .b-anec{background:#efe9d8} .b-corrected{background:var(--red)}
+
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px}
+  .tag{font-size:11px;font-weight:600;border:1.5px solid var(--ink);border-radius:999px;padding:2px 10px;background:var(--bg)}
+  .tag.paper{background:var(--blue)} .tag.forum{background:var(--red)} .tag.creator{background:var(--yellow)} .tag.vendor{background:#efe9d8} .tag.data{background:var(--green)}
+  .srcline{font-size:11.5px;font-weight:600;margin-top:10px}
+  .srcline a{color:#1156b0}
+
+  /* playbook */
+  .pb{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .play{border:var(--border);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow-sm);padding:16px 18px}
+  .play .p-n{font-family:'Space Grotesk';font-weight:700;font-size:13px;width:30px;height:30px;line-height:26px;text-align:center;
+    border:var(--border);border-radius:8px;background:var(--yellow);display:inline-block;margin-bottom:9px}
+  .play h3{font-size:15.5px;line-height:1.15;margin-bottom:6px}
+  .play p{font-size:13px;color:#3a3a30}
+  .corrob{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:var(--muted);margin-top:10px}
+
+  /* skeptic block */
+  .skeptic{border:var(--border);border-radius:var(--radius);background:var(--red);box-shadow:var(--shadow);padding:22px 24px}
+  .skeptic h2{font-size:19px;margin-bottom:6px}
+  .skeptic .sk-sub{font-size:13.5px;margin-bottom:16px;max-width:720px}
+  .quotes{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+  .q{background:#fff;border:var(--border);border-radius:var(--radius);padding:13px 15px;box-shadow:var(--shadow-sm)}
+  .q p{font-size:13px;font-style:italic;line-height:1.45}
+  .q .q-src{font-size:11px;font-weight:700;color:var(--muted);margin-top:8px;font-style:normal}
+  .q .q-src a{color:#1156b0}
+
+  /* tool table */
+  .tbl-scroll{overflow-x:auto;border:var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);background:#fff}
+  table{border-collapse:collapse;width:100%;min-width:820px;font-size:13px}
+  thead th{font-family:'Space Grotesk';font-weight:700;font-size:11.5px;text-transform:uppercase;letter-spacing:.4px;
+    text-align:left;padding:12px 14px;background:var(--ink);color:var(--yellow);position:sticky;top:0}
+  tbody td{padding:12px 14px;border-top:2px solid var(--ink);vertical-align:top}
+  tbody tr:nth-child(even){background:var(--bg)}
+  tbody td b{font-family:'Space Grotesk';font-size:13.5px}
+  .price{font-family:'Space Grotesk';font-weight:700;white-space:nowrap}
+  .firstparty td{background:var(--blue)}
+
+  /* voice of market */
+  .voc{display:grid;grid-template-columns:1.1fr 1fr;gap:16px}
+  .qbox,.pbox{border:var(--border);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow-sm);padding:18px 20px}
+  .qbox h3,.pbox h3{font-size:14px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:12px}
+  .qbox ul{list-style:none}
+  .qbox li{font-size:13.5px;padding:7px 0;border-bottom:1px dotted #d8cfb8;display:flex;gap:9px}
+  .qbox li:last-child{border-bottom:none}
+  .qbox li::before{content:"?";font-family:'Space Grotesk';font-weight:700;color:#c08a1f;flex:0 0 auto}
+  .phrases{display:flex;gap:8px;flex-wrap:wrap}
+  .phrase{font-family:'Space Grotesk';font-weight:600;font-size:12.5px;border:1.5px solid var(--ink);border-radius:7px;padding:5px 11px;background:var(--bg)}
+
+  /* claims ledger */
+  .ledger .lrow{border:var(--border);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow-sm);padding:14px 16px;margin-bottom:11px}
+  .ledger .l-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  .ledger .l-claim{font-size:13.5px;font-weight:600;line-height:1.35}
+  .ledger .l-caveat{font-size:12.5px;color:var(--muted);margin-top:7px}
+  .ledger .l-caveat b{color:var(--ink);font-weight:700}
+  .ledger .l-src{font-size:11px;font-weight:700;margin-top:7px}
+  .ledger .l-src a{color:#1156b0}
+  .legend{display:flex;gap:9px;flex-wrap:wrap;margin:0 4px 16px}
+  .legend span{font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--muted)}
+  .legend i{width:14px;height:14px;border:var(--border);border-radius:4px;display:inline-block}
+
+  /* sources */
+  .src-groups{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .src-col{border:var(--border);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow-sm);padding:16px 18px}
+  .src-col h3{font-size:12.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:11px;display:flex;align-items:center;gap:7px}
+  .src-col ol{margin-left:17px}
+  .src-col li{font-size:12.5px;margin-bottom:8px;line-height:1.4}
+  .src-col li a{color:#1156b0}
+
+  footer{margin-top:40px;border-top:var(--border);padding-top:18px;font-size:12.5px;color:var(--muted);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer b{color:var(--ink)}
+
+  @media(max-width:900px){
+    h1{font-size:31px}
+    .kpis{grid-template-columns:repeat(2,1fr)}
+    .grid2,.pb,.quotes,.voc,.src-groups{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="brand-badge">BEN AI · SIGNAL REPORT</span>
+    <h1>Getting cited by AI search: what actually works</h1>
+    <p class="sub">A topical-research brief on GEO / AEO, the practice of getting your brand named and cited by ChatGPT, Perplexity, and Google AI Overviews. Researched across papers, forums, creators, and vendor docs, then every hard number run through a fact-check pass before it earned a place here.</p>
+    <div class="meta">
+      <span class="chip live"><span class="dot"></span>19 hard claims fact-checked</span>
+      <span class="chip warn">1 corrected before publish</span>
+      <span class="chip">4 source types triangulated</span>
+      <span class="chip">Brief prepared 8 Jul 2026</span>
+    </div>
+  </header>
+
+  <nav class="nav">
+    <a href="#brief">The brief</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#playbook">What works</a>
+    <a href="#skeptics">The pushback</a>
+    <a href="#tools">Tool landscape</a>
+    <a href="#voice">Voice of market</a>
+    <a href="#verify">Claims verified</a>
+    <a href="#sources">Sources</a>
+  </nav>
+
+  <div class="kpis">
+    <div class="kpi accent">
+      <div class="lab">Visibility lift</div>
+      <div class="val">+40%</div>
+      <div class="note">Peak gain from adding citations, quotes, and statistics to content.</div>
+      <div class="src">GEO paper · KDD 2024</div>
+    </div>
+    <div class="kpi accent2">
+      <div class="lab">Click-through, AI summary shown</div>
+      <div class="val">8%</div>
+      <div class="note">Down from 15% when no AI summary appears. Just 1% click a link inside the summary.</div>
+      <div class="src">Pew · Jul 2025</div>
+    </div>
+    <div class="kpi accent3">
+      <div class="lab">Mentions vs backlinks</div>
+      <div class="val">0.66<span style="font-size:16px;color:var(--muted)"> / 0.22</span></div>
+      <div class="note">Brand web mentions correlate with AI Overview visibility ~3x stronger than backlinks.</div>
+      <div class="src">Ahrefs · 75K brands</div>
+    </div>
+    <div class="kpi accent4">
+      <div class="lab">Top-cited source</div>
+      <div class="val">Reddit</div>
+      <div class="note">40.1% of AI citations pointed to Reddit in a June 2025 snapshot. Volatile, but the pattern holds.</div>
+      <div class="src">Semrush · 150K citations</div>
+    </div>
+  </div>
+
+  <!-- THE BRIEF -->
+  <div class="brief" id="brief">
+    <h2>The brief, in one breath</h2>
+    <p>AI search is not replacing Google tomorrow, but it is quietly re-routing how people discover brands, and the rules for getting picked are genuinely different from classic SEO. <b>Keyword tricks do not transfer. Credibility signals do.</b> The single biggest lever is being <b>mentioned across the web</b> (especially on Reddit, YouTube, and review sites), not building backlinks.</p>
+    <p>Content wins citations when it <b>leads with the answer</b>, backs claims with <b>statistics and quotes</b>, stays <b>fresh</b>, and is <b>crawlable</b> by the AI bots. Measurement is the weak spot: you can track mentions and share-of-voice, but tying them to revenue is still unsolved, and half the practitioner world thinks the whole category is SEO in a new outfit.</p>
+    <p>For a writer, the takeaway is simple: <b>this is a real shift worth a strong, honest piece</b>, one that respects the evidence and names the hype. The sections below are the raw material.</p>
+  </div>
+
+  <!-- EVIDENCE -->
+  <div class="sec" id="evidence">
+    <div class="sec-lab">The evidence</div>
+    <p class="sec-intro">The findings with real studies behind them. Each was read from its primary source, not a blog summary, and carries its verdict and caveat.</p>
+
+    <div class="card ev">
+      <div class="ev-top">
+        <div class="ev-h">Credibility beats keywords, by up to 40%</div>
+        <span class="badge b-verified">Verified</span>
+      </div>
+      <div class="ev-b">The foundational GEO study tested nine content tweaks across 10,000 queries. Adding <b>citations, quotations, and statistics</b> lifted a source's visibility in generative answers by up to 40%. Classic <b>keyword stuffing did nothing</b>, it dipped below baseline. It even helped lower-ranked pages most: a rank-5 site gained +115% visibility while the top result often lost ground.</div>
+      <div class="tags"><span class="tag paper">Paper</span><span class="tag forum">Echoed in forums</span></div>
+      <div class="srcline">Aggarwal et al., KDD 2024 · <a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener">arxiv.org/abs/2311.09735</a></div>
+    </div>
+
+    <div class="grid2">
+      <div class="card ev">
+        <div class="ev-top">
+          <div class="ev-h">The zero-click reality</div>
+          <span class="badge b-verified">Verified</span>
+        </div>
+        <div class="ev-b">When Google shows an AI summary, users click a normal result just <b>8% of the time</b> versus 15% without one, and only <b>1% click a link inside the summary</b>. Sessions end 26% of the time vs 16%. The traffic you used to earn from a ranking is evaporating into the answer itself.</div>
+        <div class="tags"><span class="tag data">Industry data</span></div>
+        <div class="srcline">Pew Research, Jul 2025 (68,879 searches) · <a href="https://www.pewresearch.org/short-reads/2025/07/22/google-users-are-less-likely-to-click-on-links-when-an-ai-summary-appears-in-the-results/" target="_blank" rel="noopener">pewresearch.org</a></div>
+      </div>
+
+      <div class="card ev">
+        <div class="ev-top">
+          <div class="ev-h">Mentions, not backlinks</div>
+          <span class="badge b-verified">Verified</span>
+        </div>
+        <div class="ev-b">Across 75,000 brands, how often a brand is <b>mentioned around the web</b> correlated with AI Overview visibility at <b>0.66</b>, versus <b>0.22 for backlinks</b>, roughly 3x stronger. The old link-building playbook is not the lever here. Being talked about is.</div>
+        <div class="tags"><span class="tag data">Industry data</span><span class="tag creator">Every creator agrees</span></div>
+        <div class="srcline">Ahrefs, May 2025 · <a href="https://ahrefs.com/blog/ai-overview-brand-correlation/" target="_blank" rel="noopener">ahrefs.com</a></div>
+      </div>
+
+      <div class="card ev">
+        <div class="ev-top">
+          <div class="ev-h">Four universal "gatekeeper" factors</div>
+          <span class="badge b-verified">Verified</span>
+        </div>
+        <div class="ev-b">A 252,000-trial study across 6 models found four factors that predicted citation in <b>every</b> model with huge effect: <b>on-topic relevance, an explicit price, a recent timestamp, and higher list position</b>. Formatting-only edits barely moved anything.</div>
+        <div class="tags"><span class="tag paper">Paper</span></div>
+        <div class="srcline">Vishwakarma et al. (Sprinklr), SIGIR 2026 · <a href="https://arxiv.org/abs/2605.25517" target="_blank" rel="noopener">arxiv.org/abs/2605.25517</a></div>
+      </div>
+
+      <div class="card ev">
+        <div class="ev-top">
+          <div class="ev-h">Referrals up 206%, but still small</div>
+          <span class="badge b-verified">Verified</span>
+        </div>
+        <div class="ev-b">ChatGPT outbound referral traffic grew <b>206% year over year</b>, yet ChatGPT only runs a live web search on <b>34.5% of prompts</b> (down from 46%), and 65 to 85% of prompts use language that never matches a search keyword. The channel is real, growing, and behaves nothing like search.</div>
+        <div class="tags"><span class="tag data">Industry data</span></div>
+        <div class="srcline">Semrush clickstream, Apr 2026 · <a href="https://www.semrush.com/blog/chatgpt-search-insights/" target="_blank" rel="noopener">semrush.com</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLAYBOOK -->
+  <div class="sec" id="playbook">
+    <div class="sec-lab">What actually moves the needle</div>
+    <p class="sec-intro">The tactics that recur across the evidence, the creators, and the forums. The "corroborated by" line shows how many independent source types back each one, the closest thing to signal in a noisy space.</p>
+    <div class="pb">
+      <div class="play">
+        <span class="p-n">1</span>
+        <h3>Get mentioned everywhere that matters</h3>
+        <p>Earned mentions on credible third-party sites teach the model your brand-topic association. This is the number-one lever, ahead of any on-page trick.</p>
+        <div class="corrob">Corroborated by: paper · creators · forums</div>
+      </div>
+      <div class="play">
+        <span class="p-n">2</span>
+        <h3>Live where AI already looks: Reddit, YouTube, reviews</h3>
+        <p>Answer engines lean heavily on Reddit, YouTube, and UGC/review platforms (G2, Capterra). A handful of authentic Reddit comments can move the needle. Self-promo gets you flagged.</p>
+        <div class="corrob">Corroborated by: data · creators · forums</div>
+      </div>
+      <div class="play">
+        <span class="p-n">3</span>
+        <h3>Lead with the answer, back it with proof</h3>
+        <p>Front-load the direct answer, then support it with statistics, quotes, and citations. Models retrieve passages, not whole pages, so each section must stand alone.</p>
+        <div class="corrob">Corroborated by: paper · creators</div>
+      </div>
+      <div class="play">
+        <span class="p-n">4</span>
+        <h3>Answer the fan-out, not the headline</h3>
+        <p>One prompt silently explodes into 10 to 30 sub-questions. Winning content answers the hyper-specific long-tail follow-ups, not just the head term.</p>
+        <div class="corrob">Corroborated by: creators (4 of 5)</div>
+      </div>
+      <div class="play">
+        <span class="p-n">5</span>
+        <h3>Check you are not blocking the bots</h3>
+        <p>A robots.txt written in 2023 may still block GPTBot and ClaudeBot, making you invisible in AI answers. Free to fix, and commonly overlooked.</p>
+        <div class="corrob">Corroborated by: creators · forums</div>
+      </div>
+      <div class="play">
+        <span class="p-n">6</span>
+        <h3>Stay fresh and diversify per engine</h3>
+        <p>AI-cited content skews newer, so keep key pages on a refresh cycle. And optimize each engine separately: only ~7 of the top 50 cited domains overlap across ChatGPT, Perplexity, and Google.</p>
+        <div class="corrob">Corroborated by: creators · forums</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKEPTICS -->
+  <div class="sec" id="skeptics">
+    <div class="sec-lab">The pushback (why a writer must not overclaim)</div>
+    <div class="skeptic">
+      <h2>The loudest sound in the room is doubt</h2>
+      <p class="sk-sub">Across every forum, the dominant sentiment is not excitement, it is distrust: that GEO is SEO relabeled, that measurement is invented, and that the space is full of people selling tools. An honest piece names this. It is also the strongest angle, because almost no one else is being straight about it.</p>
+      <div class="quotes">
+        <div class="q">
+          <p>"AEO, AIO, CRO are all part of a holistic SEO approach. Just new terminology thrown around to fool those that are a bit more gullible."</p>
+          <div class="q-src">r/seogrowth · <a href="https://www.reddit.com/r/seogrowth/comments/1nv4hra/" target="_blank" rel="noopener">thread</a></div>
+        </div>
+        <div class="q">
+          <p>"There's no fixed real-world value underneath that 52%. The instrument is producing the reading, not detecting it."</p>
+          <div class="q-src">r/aeo · <a href="https://www.reddit.com/r/aeo/comments/1u037e3/" target="_blank" rel="noopener">4-month AMA</a></div>
+        </div>
+        <div class="q">
+          <p>Google's own guide reportedly says llms.txt does nothing, stop obsessing over schema, and chunking is "smoke and mirrors." Selling chunking "is basically charging for the weather."</p>
+          <div class="q-src">r/DigitalMarketing · <a href="https://www.reddit.com/r/DigitalMarketing/comments/1u018ub/" target="_blank" rel="noopener">viral thread</a></div>
+        </div>
+        <div class="q">
+          <p>"I love how once you become a GEO tool developer you can just run all these studies that give data that align perfectly with your propaganda."</p>
+          <div class="q-src">r/Agentic_SEO · <a href="https://www.reddit.com/r/Agentic_SEO/comments/1u9bihx/" target="_blank" rel="noopener">270-answer study</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOOLS -->
+  <div class="sec" id="tools">
+    <div class="sec-lab">The tool landscape</div>
+    <p class="sec-intro">Every third-party tool works the same way at core: you define a prompt list, it runs them through the models on a schedule, and records whether you were mentioned or cited. The differences are engine coverage, price, and whether prompts are real-demand-weighted or synthetic. Only the platforms themselves (Google, Bing) report first-party data, and only partially.</p>
+    <div class="tbl-scroll">
+      <table>
+        <thead>
+          <tr><th>Tool</th><th>What it measures</th><th>Engines</th><th>Entry price</th><th>Differentiator (vendor claim)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><b>Profound</b></td><td>Share of voice, citations, sentiment, aggregate consumer-prompt volume + content tooling</td><td>Up to 10 (ChatGPT, Perplexity, Claude, Gemini, Copilot, Grok, Meta AI, DeepSeek, AI Overviews)</td><td class="price">$99/mo</td><td>Positions AI search from "black box" to end-to-end monitor + optimize</td></tr>
+          <tr><td><b>Ahrefs Brand Radar</b></td><td>Mentions + citations, competitor benchmarking, search demand; Reddit/YouTube/TikTok in beta</td><td>AI Overviews, AI Mode, ChatGPT, Perplexity, Copilot, Gemini, Grok</td><td class="price">$398/mo</td><td>"Largest AI visibility database," real search-backed prompts, not synthetic</td></tr>
+          <tr><td><b>Peec AI</b></td><td>Visibility, position, sentiment, competitor benchmarking, AI-suggested prompts</td><td>ChatGPT, Perplexity, Gemini (4th is an add-on)</td><td class="price">~€89/mo</td><td>Built for agencies: unlimited seats, Looker + API + MCP</td></tr>
+          <tr><td><b>Semrush AI Visibility</b></td><td>Share of voice vs competitor median, sentiment, prompt tracking, AI-search site audit</td><td>ChatGPT, AI Overviews, AI Mode, Gemini, Perplexity</td><td class="price">$99/mo</td><td>Bundled inside the full Semrush SEO suite</td></tr>
+          <tr><td><b>Otterly.ai</b></td><td>Mentions, citations/links, share of voice, sentiment, prompt tracking</td><td>ChatGPT, AI Overviews, AI Mode, Gemini, Perplexity, Copilot</td><td class="price">$29/mo</td><td>Lowest entry price; captures the actual links surfaced</td></tr>
+          <tr><td><b>Scrunch AI</b></td><td>Prompt/entity tracking, share of voice by persona/topic/geo, live bot-crawl feed</td><td>ChatGPT, Perplexity, Claude, Gemini, Copilot</td><td class="price">Not public</td><td>Also serves machine-readable pages to AI crawlers</td></tr>
+          <tr class="firstparty"><td><b>Google Search Console</b></td><td>Impressions of your URLs inside AI Overviews + AI Mode (no click data)</td><td>Google only</td><td class="price">Free</td><td>First-party, but impressions-only and still rolling out</td></tr>
+          <tr class="firstparty"><td><b>Bing Webmaster Tools</b></td><td>How often you are cited in Copilot + Bing AI summaries; grounding queries, citation share</td><td>Microsoft Copilot + Bing</td><td class="price">Free</td><td>First-party citation counts, but sampled and aggregated</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- VOICE OF MARKET -->
+  <div class="sec" id="voice">
+    <div class="sec-lab">Voice of the market</div>
+    <p class="sec-intro">The exact questions and phrases practitioners use. This is the raw language a piece should mirror to sound native, straight from the forums.</p>
+    <div class="voc">
+      <div class="qbox">
+        <h3>The questions people actually ask</h3>
+        <ul>
+          <li>Is GEO/AEO a new skill, or just SEO with a fancy name?</li>
+          <li>What tools do I actually use to track AI visibility?</li>
+          <li>How do I get my site cited in ChatGPT answers?</li>
+          <li>My boss wants AEO up 3x in 3 months. What do I do?</li>
+          <li>Can anyone show a real before/after, not theory?</li>
+          <li>How do I connect any of this to revenue?</li>
+        </ul>
+      </div>
+      <div class="pbox">
+        <h3>The language they use</h3>
+        <div class="phrases">
+          <span class="phrase">get cited</span>
+          <span class="phrase">get mentioned</span>
+          <span class="phrase">AI visibility</span>
+          <span class="phrase">share of voice</span>
+          <span class="phrase">answer-first</span>
+          <span class="phrase">front-load the answer</span>
+          <span class="phrase">entity consistency</span>
+          <span class="phrase">information gain</span>
+          <span class="phrase">commodity vs non-commodity</span>
+          <span class="phrase">content a model can't invent</span>
+          <span class="phrase">llms.txt theater</span>
+          <span class="phrase">cast a large net of prompts</span>
+        </div>
+        <p style="font-size:12.5px;color:var(--muted);margin-top:15px;line-height:1.5">Note the meta-signal: an entire ecosystem of subreddits (r/aeo, r/GEO_optimization, r/Agentic_SEO, r/LLMTraffic and more) has appeared in under 18 months. The category is real enough to have colonized Reddit, even as Reddit doubts it.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLAIMS VERIFIED -->
+  <div class="sec ledger" id="verify">
+    <div class="sec-lab">Claims verified before publish</div>
+    <p class="sec-intro">The fact-check pass. Every hard number that made it into this brief, with its verdict and the caveat that keeps it honest. One claim was corrected outright, exactly what this step is for.</p>
+    <div class="legend">
+      <span><i style="background:var(--green)"></i>Verified</span>
+      <span><i style="background:var(--yellow)"></i>Partial / caveated</span>
+      <span><i style="background:var(--blue)"></i>Projection</span>
+      <span><i style="background:#efe9d8"></i>Anecdotal</span>
+      <span><i style="background:var(--red)"></i>Corrected</span>
+    </div>
+
+    <div class="lrow">
+      <div class="l-top">
+        <div class="l-claim">GEO methods (citations, quotes, statistics) boost visibility up to 40%; keyword stuffing does not.</div>
+        <span class="badge b-verified">Verified</span>
+      </div>
+      <div class="l-caveat"><b>Caveat:</b> "40%" is a peak on one metric for specific tactics, from an academic benchmark, not an across-the-board average on live engines. Keep the "up to."</div>
+      <div class="l-src"><a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener">arxiv.org/abs/2311.09735</a></div>
+    </div>
+
+    <div class="lrow">
+      <div class="l-top">
+        <div class="l-claim">Pew: 8% click with an AI summary vs 15% without; 1% click inside the summary.</div>
+        <span class="badge b-verified">Verified</span>
+      </div>
+      <div class="l-caveat"><b>Caveat:</b> opt-in browsing panel, single month (Mar 2025). Google publicly disputes the methodology.</div>
+      <div class="l-src"><a href="https://www.pewresearch.org/short-reads/2025/07/22/google-users-are-less-likely-to-click-on-links-when-an-ai-summary-appears-in-the-results/" target="_blank" rel="noopener">pewresearch.org</a></div>
+    </div>
+
+    <div class="lrow">
+      <div class="l-top">
+        <div class="l-claim">Ahrefs: brand mentions correlate 0.66 with AI visibility vs 0.22 for backlinks (75K brands).</div>
+        <span class="badge b-verified">Verified</span>
+      </div>
+      <div class="l-caveat"><b>Caveat:</b> correlation, not causation. Ahrefs sells an AI-visibility product.</div>
+      <div class="l-src"><a href="https://ahrefs.com/blog/ai-overview-brand-correlation/" target="_blank" rel="noopener">ahrefs.com</a></div>
+    </div>
+
+    <div class="lrow">
+      <div class="l-top">
+        <div class="l-claim">Reddit is the most-cited source: ~40.1% of AI citations, Wikipedia 26.3% (150K citations).</div>
+        <span class="badge b-partial">Partial</span>
+      </div>
+      <div class="l-caveat"><b>Caveat:</b> a June 2025 cross-engine average, and volatile. Reddit's share inside ChatGPT later swung from ~60% to ~10%. Present as a snapshot, not a constant.</div>
+      <div class="l-src"><a href="https://www.semrush.com/blog/most-cited-domains-ai/" target="_blank" rel="noopener">semrush.com</a></div>
+    </div>
+
+    <div class="lrow">
+      <div class="l-top">
+        <div class="l-claim">Cloudflare crawl-to-referral ratios: OpenAI ~400:1, Anthropic 5-figure.</div>
+        <span class="badge b-corrected">Corrected</span>
+      </div>
+      <div class="l-caveat"><b>Correction:</b> the "400:1" figure circulating on Reddit is wrong. Cloudflare's actual OpenAI ratio was ~1,091:1 (Jul 2025); Anthropic ~38,066:1; Google ~5.4:1. The bots read thousands of pages per visitor they send, but use the real numbers.</div>
+      <div class="l-src"><a href="https://blog.cloudflare.com/crawlers-click-ai-bots-training/" target="_blank" rel="noopener">blog.cloudflare.com</a></div>
+    </div>
+
+    <div class="lrow">
+      <div class="l-top">
+        <div class="l-claim">HubSpot: AEO strategy drove +433% AI citations and ~1,850% more AI-sourced leads.</div>
+        <span class="badge b-vendor">Vendor case study</span>
+      </div>
+      <div class="l-caveat"><b>Caveat:</b> HubSpot's own self-reported results while selling an AEO product, not independently audited. Attribute clearly; do not present as neutral evidence.</div>
+      <div class="l-src"><a href="https://blog.hubspot.com/marketing/hubspot-aeo-case-study" target="_blank" rel="noopener">blog.hubspot.com</a></div>
+    </div>
+
+    <div class="lrow">
+      <div class="l-top">
+        <div class="l-claim">Webflow: LLM-referred traffic converts ~6x better than Google search; ~8% of signups from LLMs.</div>
+        <span class="badge b-anec">Anecdotal</span>
+      </div>
+      <div class="l-caveat"><b>Caveat:</b> a single practitioner's account (Ethan Smith, Graphite) on Lenny's Podcast. No public dataset. Label as anecdote, not study.</div>
+      <div class="l-src"><a href="https://graphite.io/five-percent/the-ultimate-guide-to-aeo-on-lennys-podcast" target="_blank" rel="noopener">graphite.io</a></div>
+    </div>
+
+    <div class="lrow">
+      <div class="l-top">
+        <div class="l-claim">Gartner: traditional search volume will drop 25% by 2026 due to AI chatbots.</div>
+        <span class="badge b-projection">Projection</span>
+      </div>
+      <div class="l-caveat"><b>Caveat:</b> a real Gartner forecast (Feb 2024), but an analyst projection, not measured data, and one that has drawn public skepticism.</div>
+      <div class="l-src"><a href="https://www.gartner.com/en/newsroom/press-releases/2024-02-19-gartner-predicts-search-engine-volume-will-drop-25-percent-by-2026-due-to-ai-chatbots-and-other-virtual-agents" target="_blank" rel="noopener">gartner.com</a></div>
+    </div>
+  </div>
+
+  <!-- SOURCES -->
+  <div class="sec" id="sources">
+    <div class="sec-lab">Sources</div>
+    <div class="src-groups">
+      <div class="src-col">
+        <h3>📄 Papers &amp; evidence</h3>
+        <ol>
+          <li>Aggarwal et al., <i>GEO: Generative Engine Optimization</i>, KDD 2024 — <a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener">arxiv 2311.09735</a></li>
+          <li>Vishwakarma et al. (Sprinklr), <i>What Gets Cited: Competitive GEO</i>, SIGIR 2026 — <a href="https://arxiv.org/abs/2605.25517" target="_blank" rel="noopener">arxiv 2605.25517</a></li>
+          <li><i>When Content is Goliath</i> (style/semantic effects in generative search) — <a href="https://arxiv.org/abs/2509.14436" target="_blank" rel="noopener">arxiv 2509.14436</a></li>
+          <li>Pew Research, <i>Clicks when an AI summary appears</i>, Jul 2025 — <a href="https://www.pewresearch.org/short-reads/2025/07/22/google-users-are-less-likely-to-click-on-links-when-an-ai-summary-appears-in-the-results/" target="_blank" rel="noopener">pewresearch.org</a></li>
+          <li>Ahrefs, <i>AI Overview brand visibility, 75K brands</i>, May 2025 — <a href="https://ahrefs.com/blog/ai-overview-brand-correlation/" target="_blank" rel="noopener">ahrefs.com</a></li>
+          <li>Semrush, <i>ChatGPT clickstream, 17 months</i>, Apr 2026 — <a href="https://www.semrush.com/blog/chatgpt-search-insights/" target="_blank" rel="noopener">semrush.com</a></li>
+          <li>Semrush, <i>Most-cited domains in AI</i>, Jun 2025 — <a href="https://www.semrush.com/blog/most-cited-domains-ai/" target="_blank" rel="noopener">semrush.com</a></li>
+          <li>Gartner, <i>Search volume to drop 25% by 2026</i>, Feb 2024 — <a href="https://www.gartner.com/en/newsroom/press-releases/2024-02-19-gartner-predicts-search-engine-volume-will-drop-25-percent-by-2026-due-to-ai-chatbots-and-other-virtual-agents" target="_blank" rel="noopener">gartner.com</a></li>
+          <li>Cloudflare, <i>Crawl-to-referral ratios for AI bots</i> — <a href="https://blog.cloudflare.com/crawlers-click-ai-bots-training/" target="_blank" rel="noopener">blog.cloudflare.com</a></li>
+        </ol>
+      </div>
+      <div class="src-col">
+        <h3>🎥 Creators &nbsp;·&nbsp; 💬 Forums &nbsp;·&nbsp; 🛠 Vendors</h3>
+        <ol>
+          <li>Ethan Smith (Graphite), <i>The ultimate guide to AEO</i> — Lenny's Podcast (170K views) — <a href="https://www.youtube.com/watch?v=iT7kq-R3Gjc" target="_blank" rel="noopener">youtube</a></li>
+          <li>Neil Patel, <i>How to Train Google's AI</i> (194K) — <a href="https://www.youtube.com/watch?v=bfA6GAk7_WQ" target="_blank" rel="noopener">youtube</a></li>
+          <li>Surfer Academy, <i>Dominate AI Search in 2026</i> (137K) — <a href="https://www.youtube.com/watch?v=bhTo8fDmr5I" target="_blank" rel="noopener">youtube</a></li>
+          <li>HubSpot, <i>Winning AEO Playbook</i> (85K) — <a href="https://www.youtube.com/watch?v=fTNgkqSQVQU" target="_blank" rel="noopener">youtube</a></li>
+          <li>Ahrefs, <i>New SEO Playbook for AI Search</i> (27K) — <a href="https://www.youtube.com/watch?v=gReszNnykpg" target="_blank" rel="noopener">youtube</a></li>
+          <li>r/aeo — 4-month local AMA &amp; $12.5K retainer AMA — <a href="https://www.reddit.com/r/aeo/comments/1u037e3/" target="_blank" rel="noopener">reddit</a></li>
+          <li>r/DigitalMarketing — Google's guide contradicts what agencies sell — <a href="https://www.reddit.com/r/DigitalMarketing/comments/1u018ub/" target="_blank" rel="noopener">reddit</a></li>
+          <li>r/Agentic_SEO — studied 270 AI answers — <a href="https://www.reddit.com/r/Agentic_SEO/comments/1u9bihx/" target="_blank" rel="noopener">reddit</a></li>
+          <li>Tool docs: <a href="https://www.tryprofound.com/pricing" target="_blank" rel="noopener">Profound</a>, <a href="https://peec.ai/pricing" target="_blank" rel="noopener">Peec</a>, <a href="https://ahrefs.com/brand-radar" target="_blank" rel="noopener">Ahrefs Brand Radar</a>, <a href="https://www.semrush.com/kb/1493-ai-visibility-toolkit" target="_blank" rel="noopener">Semrush</a>, <a href="https://otterly.ai/" target="_blank" rel="noopener">Otterly</a>, <a href="https://scrunch.com/" target="_blank" rel="noopener">Scrunch</a></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span><b>Ben AI · Signal Report.</b> Researched with Firecrawl + Reddit + YouTube, verified with the fact-checker skill. The research half of "research then write."</span>
+    <span>Topic: GEO / AEO &nbsp;·&nbsp; Brief prepared 8 Jul 2026</span>
+  </footer>
+</div>
+</body>
+</html>

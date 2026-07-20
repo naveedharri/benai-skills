@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1350" width="1080" height="1350">
+  <rect width="1080" height="1350" fill="{{PAPER_HEX}}"/>
+
+  <!-- Overline / kicker -->
+  <text x="72" y="180"
+        font-family="{{FONT_FAMILY}}, ui-sans-serif, system-ui, sans-serif"
+        font-weight="600"
+        font-size="22"
+        letter-spacing="0.08em"
+        fill="{{PRIMARY_HEX}}">{{OVERLINE_UPPERCASE}}</text>
+
+  <!-- Hook headline — up to 3 lines, dy=110 between. -->
+  <text x="72" y="340"
+        font-family="{{FONT_FAMILY}}, ui-sans-serif, system-ui, sans-serif"
+        font-weight="600"
+        font-size="96"
+        letter-spacing="-0.02em"
+        fill="{{INK_HEX}}">
+    <tspan x="72" dy="0">{{HOOK_LINE_1}}</tspan>
+    <tspan x="72" dy="110">{{HOOK_LINE_2}}</tspan>
+    <tspan x="72" dy="110">{{HOOK_LINE_3}}</tspan>
+  </text>
+
+  <!-- Footer -->
+  <g transform="translate(0, 1238)">
+    <rect x="72" y="0" width="936" height="1" fill="{{LINE_HEX}}"/>
+
+    <!-- Small mark -->
+    <g transform="translate(72, 36) scale(0.8)">
+      {{MOTIF_PATHS}}
+    </g>
+
+    <text x="140" y="80"
+          font-family="{{FONT_FAMILY}}, ui-sans-serif, system-ui, sans-serif"
+          font-weight="700"
+          font-size="26"
+          letter-spacing="-0.02em"
+          fill="{{INK_HEX}}">{{BRAND_NAME}}</text>
+
+    <text x="1008" y="80"
+          text-anchor="end"
+          font-family="{{FONT_FAMILY}}, ui-sans-serif, system-ui, sans-serif"
+          font-weight="500"
+          font-size="18"
+          fill="{{INK_500_HEX}}">1 / {{SLIDE_COUNT}} →</text>
+  </g>
+</svg>

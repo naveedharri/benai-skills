@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" width="1200" height="1200">
+  <rect width="1200" height="1200" fill="{{PAPER_HEX}}"/>
+
+  <!-- Kicker -->
+  <text x="96" y="220"
+        font-family="{{FONT_FAMILY}}, ui-sans-serif, system-ui, sans-serif"
+        font-weight="600"
+        font-size="22"
+        letter-spacing="0.08em"
+        fill="{{PRIMARY_HEX}}">{{KICKER_UPPERCASE}}</text>
+
+  <!-- Big number / stat -->
+  <text x="96" y="480"
+        font-family="{{FONT_FAMILY}}, ui-sans-serif, system-ui, sans-serif"
+        font-weight="600"
+        font-size="240"
+        letter-spacing="-0.02em"
+        fill="{{PRIMARY_HEX}}">{{BIG_STAT}}</text>
+
+  <!-- Headline beneath -->
+  <text x="96" y="620"
+        font-family="{{FONT_FAMILY}}, ui-sans-serif, system-ui, sans-serif"
+        font-weight="600"
+        font-size="56"
+        letter-spacing="-0.015em"
+        fill="{{INK_HEX}}">
+    <tspan x="96" dy="0">{{STAT_DESCRIPTION}}</tspan>
+  </text>
+
+  <!-- Context body -->
+  <text x="96" y="760"
+        font-family="{{FONT_FAMILY}}, ui-sans-serif, system-ui, sans-serif"
+        font-weight="400"
+        font-size="28"
+        fill="{{INK_600_HEX}}">
+    <tspan x="96" dy="0">{{CONTEXT_LINE_1}}</tspan>
+    <tspan x="96" dy="40">{{CONTEXT_LINE_2}}</tspan>
+    <tspan x="96" dy="40">{{CONTEXT_LINE_3}}</tspan>
+  </text>
+
+  <!-- Footer -->
+  <g transform="translate(0, 1080)">
+    <rect x="96" y="0" width="1008" height="1" fill="{{LINE_HEX}}"/>
+
+    <g transform="translate(96, 40) scale(0.85)">
+      {{MOTIF_PATHS}}
+    </g>
+
+    <text x="170" y="92"
+          font-family="{{FONT_FAMILY}}, ui-sans-serif, system-ui, sans-serif"
+          font-weight="700"
+          font-size="32"
+          letter-spacing="-0.02em"
+          fill="{{INK_HEX}}">{{BRAND_NAME}}</text>
+
+    <text x="1104" y="92"
+          text-anchor="end"
+          font-family="{{FONT_FAMILY}}, ui-sans-serif, system-ui, sans-serif"
+          font-weight="500"
+          font-size="22"
+          fill="{{INK_500_HEX}}">{{BRAND_DOMAIN}}</text>
+  </g>
+</svg>
