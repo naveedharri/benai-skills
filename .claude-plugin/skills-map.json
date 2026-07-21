@@ -85,6 +85,10 @@
         "marketing-analytics": {
           "displayName": "Marketing Analytics",
           "summary": "Build and refresh the single-page Marketing Pulse dashboard (attention, conversion, revenue, retention) with SETUP and scheduled REFRESH modes"
+        },
+        "instant-ui": {
+          "displayName": "Instant UI",
+          "summary": "Build a BenAI-branded HTML page in the neo-brutalist instant-ui design language (cream bg, hard borders and shadows, blue/green/amber stripe, system font, weight-900 headings) from a fixed token set and 20-component library; for landing, offer, pricing, and onboarding pages that must match the Champion Offer assets 1:1"
         }
       }
     },
