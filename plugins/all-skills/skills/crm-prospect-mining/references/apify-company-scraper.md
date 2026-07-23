@@ -2,7 +2,7 @@
 
 ## Actor: `scrapeverse/linkedin-company-profile-scraper-pay-per-event`
 
-Pay-per-event actor for scraping LinkedIn company page data. No subscription required — you pay per company scraped (~$0.006/company).
+Pay-per-event actor for scraping LinkedIn company page data. No subscription required, you pay per company scraped (~$0.006/company).
 
 ### Input Schema
 ```json
@@ -60,8 +60,8 @@ The MCP connector times out after ~30 seconds. For batches larger than ~20 URLs,
 
 - Must be full LinkedIn company page URLs: `https://www.linkedin.com/company/[slug]`
 - Country subdomains work but normalize to `www.linkedin.com` for consistency
-- Don't include personal profile URLs (`/in/...`) — this actor is for company pages only
-- Remove duplicates before sending — paying twice for the same company is wasteful
+- Don't include personal profile URLs (`/in/...`), this actor is for company pages only
+- Remove duplicates before sending, paying twice for the same company is wasteful
 
 ### Empty Results
 
@@ -70,7 +70,7 @@ Some companies return empty objects (no data). This happens when:
 - The page is restricted/private
 - The URL slug changed
 
-Handle gracefully — skip these in your analysis rather than erroring out.
+Handle gracefully, skip these in your analysis rather than erroring out.
 
 ### Cost Estimation
 

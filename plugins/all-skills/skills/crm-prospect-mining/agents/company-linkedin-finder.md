@@ -40,4 +40,4 @@ Save results as a JSON array to the specified file path:
 ]
 ```
 
-Return ALL leads in your batch — both found and not-found.
+Return ALL leads in your batch, both found and not-found.

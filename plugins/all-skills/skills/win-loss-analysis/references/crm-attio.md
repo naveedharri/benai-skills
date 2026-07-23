@@ -1,4 +1,4 @@
-# Attio CRM — Data Extraction Guide
+# Attio CRM, Data Extraction Guide
 
 ## Architecture
 
@@ -8,7 +8,7 @@ Attio organizes data as Objects (like "People", "Companies") and Lists (like pip
 
 1. **Find the list**: Use `list-lists` (optionally with a `query` parameter matching the user's pipeline name) to find the list ID and parent object type.
 2. **Get list attributes**: Use `list-list-attribute-definitions` on the list ID. This reveals attribute slugs for stage, deal size, lost reason, priority, source, notes, etc. Paginate if needed (limit 10 per call, use offset).
-3. **Get stage options**: The stage attribute (usually slug `stage`) will have status options. Note the UUIDs for the Won and Lost stages — you'll need these for filtering.
+3. **Get stage options**: The stage attribute (usually slug `stage`) will have status options. Note the UUIDs for the Won and Lost stages, you'll need these for filtering.
 
 ## Efficient Data Extraction
 
@@ -48,20 +48,20 @@ Attio does NOT support email domain filtering at the API level. You must:
 ### Key Attribute Slugs (Common)
 
 These vary by workspace but commonly include:
-- `stage` — deal status/pipeline stage
-- `deal_size` or similar — monetary value
-- `priority` — lead priority
-- `lost_reason` — why the deal was lost
-- `source` — lead source/channel
-- `notes_next_steps` — free-text notes
-- `close_date` — when the deal closed
-- `deal_owner` — who owns the deal
+- `stage`, deal status/pipeline stage
+- `deal_size` or similar, monetary value
+- `priority`, lead priority
+- `lost_reason`, why the deal was lost
+- `source`, lead source/channel
+- `notes_next_steps`, free-text notes
+- `close_date`, when the deal closed
+- `deal_owner`, who owns the deal
 
 Always use `list-list-attribute-definitions` to discover the actual slugs in the user's workspace.
 
 ## Email Enrichment
 
-Use `search-emails-by-metadata` with the prospect's email address in `participant_email_addresses`. This returns email metadata (subject, sender, date) — NOT full content. Use `get-email-content` with the mailbox ID and email ID to read specific emails if needed.
+Use `search-emails-by-metadata` with the prospect's email address in `participant_email_addresses`. This returns email metadata (subject, sender, date), NOT full content. Use `get-email-content` with the mailbox ID and email ID to read specific emails if needed.
 
 ## Call Transcript Enrichment
 

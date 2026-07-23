@@ -1,6 +1,6 @@
 # Sales Scoring Frameworks Reference
 
-When the user selects or requests a specific scoring framework, use this reference to map framework dimensions to grading criteria.
+When the user selects or requests a specific scoring framework, use this reference to map framework dimensions to grading criteria. If the user chose no framework, use the 10 default grading dimensions in `analysis-standards.md` instead.
 
 ## Table of Contents
 1. BANT
@@ -28,7 +28,7 @@ Best for: SMB sales, shorter sales cycles, transactional deals.
 - **A**: Rep consistently uncovers all 4 BANT elements across calls, with probing follow-ups
 - **B**: Rep covers 3 of 4 elements on most calls, with some depth
 - **C**: Rep covers 1-2 elements inconsistently, surface-level questions
-- **D/F**: Rep rarely qualifies — mostly just demos features
+- **D/F**: Rep rarely qualifies, mostly just demos features
 
 ---
 
@@ -61,7 +61,7 @@ Best for: Consultative sales, reps who need to improve discovery depth.
 
 | Phase | What to Grade |
 |-------|--------------|
-| **Situation Questions** | Does the rep gather context? Company size, current tools, team structure? (Should be brief — don't over-index here) |
+| **Situation Questions** | Does the rep gather context? Company size, current tools, team structure? (Should be brief, don't over-index here) |
 | **Problem Questions** | Does the rep uncover difficulties and dissatisfactions? "What's not working about your current approach?" |
 | **Implication Questions** | Does the rep amplify the pain? "What happens if this problem continues?" / "How does this affect your team's ability to hit targets?" |
 | **Need-Payoff Questions** | Does the rep guide the prospect to articulate the value of solving the problem? "If you could automate that, what would you do with the saved time?" |

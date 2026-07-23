@@ -24,19 +24,23 @@ A marketplace of expert automation plugins for Claude Code, organized by departm
 
 **Commands:** `/marketing` (skill overview), `/repurpose` (content repurposing workflow)
 
-### Sales (8 skills)
+### BenAI Sales (14 skills)
 | Skill | Command | Purpose |
 |-------|---------|---------|
+| lead-generation | `/lead-generation` | Source, qualify, enrich, and research B2B leads end to end |
+| crm-prospect-mining | `/crm-prospect-mining` | Mine prospects from CRM lost/stalled stages |
+| linkedin-post-engagers | `/linkedin-post-engagers` | Scrape LinkedIn post commenters/reactors into a warm list |
+| call-prep | `/call-prep` | Prep calls into a live BenAI-branded instant-ui dashboard |
+| client-onepager | `/client-onepager` | Personalize and deploy the client one-pager from the template |
+| pipeline-review | `/pipeline-review` | Read-only pipeline stage review delivered to Slack |
+| post-disco-followup | `/post-disco-followup` | Post-discovery recap email + proposal from the transcript |
+| setup-post-disco | `/setup-post-disco` | One-time interactive setup for post-disco-followup |
+| sales-rep-analyzer | `/sales-rep-analyzer` | Grade sales call performance with an instant-ui report |
+| create-an-asset | `/create-an-asset` | Tailored sales asset (landing page, deck, one-pager, demo) |
 | email-personalization | `/email-personalization` | Hyper-personalized email icebreakers |
 | lead-intelligence | `/lead-intelligence` | Deep-research leads via web & LinkedIn |
 | lead-qualification | `/lead-qualification` | Qualify & score leads against ICP |
-| crm-prospect-mining | `/crm-prospect-mining` | Mine prospects from CRM lost/stalled stages |
-| linkedin-post-engagers | `/linkedin-post-engagers` | Scrape LinkedIn post commenters/reactors |
-| pipeline-review | `/pipeline-review` | Review active deals with action items |
-| sales-rep-analyzer | `/sales-rep-analyzer` | Grade sales call performance |
 | win-loss-analysis | `/win-loss-analysis` | Analyze won vs lost deal patterns |
-
-**Commands:** `/outbound-pipeline` (B2B lead qualification + research + personalization pipeline), `/post-engagers-outbound-pipeline` (LinkedIn engagers to outbound pipeline)
 
 **Agents:** `lead-qualifier`, `lead-researcher`, `icebreaker-writer`, `linkedin-scraper`
 

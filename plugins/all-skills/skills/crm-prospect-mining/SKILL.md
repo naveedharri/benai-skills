@@ -1,13 +1,16 @@
 ---
 name: crm-prospect-mining
 description: >
-  Mine high-value prospects from CRM pipeline stages (Lost, No Show, Churned, Stalled) by cross-referencing
-  records with LinkedIn company data and comms history. Connects to any CRM, pulls records from target stages,
-  filters out personal email domains, bulk-scrapes company sizes via Apify, and filters by the user's
-  "high-value" definition (headcount, industry, deal size). MANDATORY TRIGGERS: "find high-value prospects",
-  "mine my lost deals", "reactivate pipeline", "prospect mining", "CRM mining", "re-engage lost leads",
-  "company size analysis", "headcount filter", or any request about identifying which CRM prospects are
-  worth pursuing based on company size, industry, or intent signals.
+  Mine high-value prospects from CRM pipeline stages (Lost, No Show, Churned, Stalled) by cross-referencing records
+  with LinkedIn company data and comms history. Connects to any CRM, pulls records from target stages, filters out
+  personal email domains, finds company LinkedIn pages via web research, bulk-scrapes company sizes via Apify, and
+  filters by the user's "high-value" definition (headcount, industry, deal size). Optionally adds intent analysis
+  from emails and transcripts. MANDATORY TRIGGERS: "find high-value prospects", "mine my lost deals", "reactivate
+  pipeline", "which lost leads are worth re-engaging", "analyze my lost deals", "prospect mining", "CRM mining",
+  "pipeline mining", "re-engage lost leads", "high-value lost leads", "company size analysis", "enrich pipeline
+  with LinkedIn", "headcount filter", "filter by company size", or any request about identifying which CRM
+  prospects are worth pursuing based on company size, industry, or intent signals.
+disable-model-invocation: true
 ---
 
 # CRM Prospect Mining
@@ -22,9 +25,9 @@ CRM Records → Filter Domains → Find LinkedIn Pages → Scrape Company Sizes 
 
 Each step is explained in detail below. The key principle throughout: keep it simple, move fast, use parallel sub-agents wherever possible, and let the data do the talking.
 
-## Phase 1: Discovery — Understanding the User's Setup
+## Phase 1: Discovery, Understanding the User's Setup
 
-Before touching any data, you need to understand three things. Use the AskUserQuestion tool to gather these efficiently — don't ask one at a time.
+Before touching any data, you need to understand three things. Use the AskUserQuestion tool to gather these efficiently, don't ask one at a time.
 
 ### 1. What does "high-value" mean to them?
 
@@ -36,7 +39,7 @@ Every user defines this differently. Common dimensions:
 - **Geography**: "US-based", "EMEA only"
 - **Any combination**: "50+ employees AND in the US AND deal value over $5k"
 
-If they're unsure, suggest headcount as a sensible default starting point — it's the most reliable signal you can get from LinkedIn and correlates well with budget. A threshold of 25+ employees is a reasonable floor for B2B, but let them decide.
+If they're unsure, suggest headcount as a sensible default starting point, it's the most reliable signal you can get from LinkedIn and correlates well with budget. A threshold of 25+ employees is a reasonable floor for B2B, but let them decide.
 
 ### 2. Do they want intent analysis?
 
@@ -51,7 +54,7 @@ Default to metrics-only unless the user asks for deeper analysis. If they have a
 
 You need to understand what you're working with before writing any queries. This is where the approach varies most between users.
 
-**Discover the CRM structure programmatically.** Don't ask the user to describe their schema — look at it yourself:
+**Discover the CRM structure programmatically.** Don't ask the user to describe their schema, look at it yourself:
 
 - **Attio**: Use `list-lists` to see available lists, then `list-list-attribute-definitions` on the relevant list to understand fields, stages, and statuses. Use `list-records-in-list` with appropriate filters to pull data.
 - **HubSpot**: Use deal pipeline endpoints to understand stages, then pull deals by stage.
@@ -60,18 +63,18 @@ You need to understand what you're working with before writing any queries. This
 
 Ask the user which list/pipeline to analyze and which stages to pull (Lost, No Show, etc.). Then inspect the schema yourself to understand what fields are available (deal value, priority, source, notes, etc.).
 
-**Important**: Different CRMs store data differently. Some have person records linked to company records. Some have deals linked to contacts. Some have flat lists. Read the CRM structure and adapt — don't assume any particular schema.
+**Important**: Different CRMs store data differently. Some have person records linked to company records. Some have deals linked to contacts. Some have flat lists. Read the CRM structure and adapt, don't assume any particular schema.
 
 ## Phase 2: Data Extraction
 
 ### Step 1: Pull all records from the target stages
 
-Query the CRM for all records in the user's specified stages. Handle pagination — most CRM APIs cap at 50 records per request, so loop with offset until you've got everything.
+Query the CRM for all records in the user's specified stages. Handle pagination, most CRM APIs cap at 50 records per request, so loop with offset until you've got everything.
 
 **For Attio specifically:**
 - Use `list-records-in-list` with a filter on the stage/status field
-- The stage field might be called `stage`, `status`, `pipeline_stage`, or something else — check the attribute definitions first
-- Records come back with `parent_record_id` — you'll need this to fetch person/company details
+- The stage field might be called `stage`, `status`, `pipeline_stage`, or something else, check the attribute definitions first
+- Records come back with `parent_record_id`, you'll need this to fetch person/company details
 - Use `get-records-by-ids` to fetch full person records in batches (the list entries only have entry-level attributes, not the person's email/phone/name)
 
 **Critical**: Capture ALL relevant fields from the outset. You'll need at minimum:
@@ -82,11 +85,11 @@ Query the CRM for all records in the user's specified stages. Handle pagination 
 - The stage they're in (Lost, No Show, etc.)
 - Record ID (for later lookups)
 
-Save the raw extracted data to a JSON file immediately. Never rely on conversation context to hold large datasets — it will be lost during context compaction.
+Save the raw extracted data to a JSON file immediately. Never rely on conversation context to hold large datasets, it will be lost during context compaction.
 
 ### Step 2: Filter out personal email domains
 
-This is a fast, critical filter. Contacts using personal email addresses (gmail.com, yahoo.com, hotmail.com, outlook.com, etc.) typically aren't representing a company — or if they are, you can't identify the company from the email alone.
+This is a fast, critical filter. Contacts using personal email addresses (gmail.com, yahoo.com, hotmail.com, outlook.com, etc.) typically aren't representing a company, or if they are, you can't identify the company from the email alone.
 
 Personal domains to filter out:
 ```
@@ -96,7 +99,7 @@ fastmail.com, hushmail.com, inbox.com, msn.com, qq.com, 163.com, 126.com,
 rediffmail.com, web.de, gmx.de, t-online.de, orange.fr, free.fr, laposte.net
 ```
 
-Also filter any domain that looks personal (single-person domains are fine to keep — they usually indicate a freelancer/consultant, which may or may not be relevant depending on the user's ICP).
+Also filter any domain that looks personal (single-person domains are fine to keep, they usually indicate a freelancer/consultant, which may or may not be relevant depending on the user's ICP).
 
 Write a Python script to do this filtering. It should:
 1. Load the raw records
@@ -135,21 +138,21 @@ Use the Apify actor `scrapeverse/linkedin-company-profile-scraper-pay-per-event`
 }
 ```
 
-**Send ALL URLs in a single call.** Don't batch into multiple runs — the actor handles any number of URLs.
+**Send ALL URLs in a single call.** Don't batch into multiple runs, the actor handles any number of URLs.
 
 **Calling the actor:**
 1. Call `call-actor` with `actor: "scrapeverse/linkedin-company-profile-scraper-pay-per-event"`, `step: "info"` first
 2. Then call with `step: "call"` and the input above
-3. The MCP tool will likely timeout after ~30 seconds — this is normal. The run continues in the background.
+3. The MCP tool will likely timeout after ~30 seconds, this is normal. The run continues in the background.
 4. Extract the `runId` from the partial response
 5. Poll with `get-actor-run` every 60 seconds until status is `SUCCEEDED`
 6. Fetch results with `get-dataset-items` using the `datasetId`
 
 **Key fields from the response:**
-- `inputURL` — the LinkedIn URL you sent (use for matching back to your leads)
-- `company_name` — the company's name on LinkedIn
-- `company_size_on_linkedin` — numeric employee count (this is the gold)
-- `company_size` — text range like "51-200 employees"
+- `inputURL`, the LinkedIn URL you sent (use for matching back to your leads)
+- `company_name`, the company's name on LinkedIn
+- `company_size_on_linkedin`, numeric employee count (this is the gold)
+- `company_size`, text range like "51-200 employees"
 
 Save the full dataset to disk immediately after fetching.
 
@@ -168,7 +171,7 @@ Report the funnel: "161 total records → 112 domain leads → 96 matched Linked
 
 ### Entry-level CRM data
 
-Go back to the CRM and pull entry-level attributes for the high-value leads. These are fields that live on the list entry (not the person record) — things like deal value, priority, source, lost reason, notes, agreement stage.
+Go back to the CRM and pull entry-level attributes for the high-value leads. These are fields that live on the list entry (not the person record), things like deal value, priority, source, lost reason, notes, agreement stage.
 
 For Attio: use `list-records-in-list` and page through all entries, matching by `parent_record_id` to your high-value record IDs.
 
@@ -181,17 +184,17 @@ If the user opted for metrics + intent analysis, search for email communications
 **Email comms** (via CRM email search):
 - Search by each lead's email address
 - Summarize the last 1-3 communications in 1-2 sentences: what was discussed, what the outcome was, why the deal stalled
-- Focus on actionable intel: "Budget wasn't approved", "Built in-house instead", "Timing was wrong — revisit Q2", "Competitor won on price"
+- Focus on actionable intel: "Budget wasn't approved", "Built in-house instead", "Timing was wrong, revisit Q2", "Competitor won on price"
 
 **Meeting transcripts** (via Fireflies, Gong, or other transcription tools):
 - Search for transcripts involving each lead's email
 - Extract key themes: objections raised, interest signals, decision-maker involvement, next steps that were promised but never happened
 
-For efficiency, batch email searches across sub-agents — one sub-agent per ~7 leads works well. Each sub-agent searches, reads the recent emails, and returns a one-line summary.
+For efficiency, batch email searches across sub-agents, one sub-agent per ~7 leads works well. Each sub-agent searches, reads the recent emails, and returns a one-line summary.
 
 ## Phase 4: Report Generation
 
-Generate the final output as an Excel (.xlsx) file. Use the `xlsx` skill (invoke it via the Skill tool) before creating the spreadsheet for best practices on formatting.
+Generate the final output as an Excel (.xlsx) file. Read the xlsx skill (`/sessions/zen-beautiful-cannon/mnt/.skills/skills/xlsx/SKILL.md`) before creating the spreadsheet for best practices on formatting.
 
 ### Required columns:
 | Column | Source |
@@ -211,14 +214,14 @@ Generate the final output as an Excel (.xlsx) file. Use the `xlsx` skill (invoke
 | Comms Summary | Email/transcript analysis (if requested) |
 
 ### Formatting:
-- Color-code rows by company tier (Enterprise 500+, Mid-Market 100-499, SMB 25-99 — or whatever tiers make sense for the user's threshold)
+- Color-code rows by company tier (Enterprise 500+, Mid-Market 100-499, SMB 25-99, or whatever tiers make sense for the user's threshold)
 - Sort by employee count descending (biggest opportunities first)
 - Include a Summary Stats sheet with funnel metrics and top 10 leads
 - Freeze header row, enable auto-filter
 - Use professional fonts and clean formatting
 
 ### Presentation:
-When delivering the report, give the user a brief summary: how many high-value leads were found, the top 5 by company size, and any patterns you noticed (e.g., "Most lost deals came from Ben AI source", "Budget was cited as the reason in 3 cases"). Don't over-explain — let them open the file and explore.
+When delivering the report, give the user a brief summary: how many high-value leads were found, the top 5 by company size, and any patterns you noticed (e.g., "Most lost deals came from Ben AI source", "Budget was cited as the reason in 3 cases"). Don't over-explain, let them open the file and explore.
 
 ## Key Principles
 
@@ -231,3 +234,12 @@ When delivering the report, give the user a brief summary: how many high-value l
 4. **Adapt to the CRM.** Don't assume Attio's data model. Inspect the schema first, understand how records, entries, and attributes relate, then build your extraction logic accordingly.
 
 5. **Keep the user informed.** Report progress at each major step: "Pulled 161 records", "Filtered to 112 domain leads", "Found 96 LinkedIn pages", "35 leads meet your criteria". This builds confidence and catches issues early.
+
+## Self-improvement
+
+This skill is never finished. Improve it as you use it.
+
+- When the user corrects how a step was done, update the relevant reference file (or this SKILL.md) so the correction sticks. Do not just fix it for this run.
+- When a correction is a hard rule ("always do X", "never do Y"), add it as a permanent rule here.
+- When the user says an output was genuinely good, save it to `references/examples/` so it becomes a model for future runs.
+- Keep the skill small while you do this: when you add something, run the deletion test and cut anything that no longer changes behavior.

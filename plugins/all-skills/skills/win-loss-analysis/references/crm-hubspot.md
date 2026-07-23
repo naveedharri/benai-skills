@@ -1,4 +1,4 @@
-# HubSpot CRM — Data Extraction Guide
+# HubSpot CRM, Data Extraction Guide
 
 ## Architecture
 
@@ -15,8 +15,8 @@ HubSpot uses Deals (in a Pipeline with Stages), Contacts, and Companies as core 
 ### Filtering by Stage (HubSpot's Strength)
 
 HubSpot's deal search/filter API is robust. You can filter by:
-- `dealstage` — the pipeline stage ID
-- `pipeline` — if there are multiple pipelines
+- `dealstage`, the pipeline stage ID
+- `pipeline`, if there are multiple pipelines
 
 This is the most efficient CRM for stage filtering. Use it to pull ONLY Won and Lost deals.
 
@@ -27,7 +27,7 @@ HubSpot deals are associated with contacts. The flow:
 2. For each deal, get its associated contacts via the associations API.
 3. Retrieve contact properties: email, firstname, lastname, company, phone.
 
-Many HubSpot MCP connectors can return associated contacts inline with the deal — check if your connector supports `associations` in the deal fetch.
+Many HubSpot MCP connectors can return associated contacts inline with the deal, check if your connector supports `associations` in the deal fetch.
 
 ### Email Domain Filtering
 
@@ -42,20 +42,20 @@ However, "does not contain" filters can be tricky with multiple domains. Often f
 
 ### Key HubSpot Properties (Standard)
 
-- `dealstage` — pipeline stage
-- `amount` — deal value
-- `closedate` — close date
-- `dealname` — deal name
-- `pipeline` — which pipeline
-- `closed_lost_reason` — why lost (if configured)
-- `hs_analytics_source` — lead source
-- `hubspot_owner_id` — deal owner
+- `dealstage`, pipeline stage
+- `amount`, deal value
+- `closedate`, close date
+- `dealname`, deal name
+- `pipeline`, which pipeline
+- `closed_lost_reason`, why lost (if configured)
+- `hs_analytics_source`, lead source
+- `hubspot_owner_id`, deal owner
 
 Contact properties:
-- `email` — primary email
-- `firstname`, `lastname` — name
-- `company` — company name
-- `website` — company website
+- `email`, primary email
+- `firstname`, `lastname`, name
+- `company`, company name
+- `website`, company website
 
 ## Email Enrichment
 

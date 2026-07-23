@@ -27,7 +27,7 @@ Attio lists use a `status` type field for pipeline stages. Filter syntax:
 ```json
 {"attribute": "stage_field_slug", "op": "eq", "value": "Lost"}
 ```
-The stage field slug varies by list — always check `list-list-attribute-definitions` first.
+The stage field slug varies by list, always check `list-list-attribute-definitions` first.
 
 For multiple stages, make separate queries (one per stage) rather than using OR filters, as OR filter support varies.
 

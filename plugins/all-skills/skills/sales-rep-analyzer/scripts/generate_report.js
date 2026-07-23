@@ -4,9 +4,6 @@
  * This script generates a professional .docx report from analyzed sales data.
  * It expects a JSON data file as input with the structure defined below.
  *
- * Dependencies:
- *   npm install docx
- *
  * Usage:
  *   node generate_report.js <data.json> <output.docx>
  *
@@ -149,7 +146,7 @@ function bulletPoint(text, opts = {}) {
 function quoteBlock(text, attribution) {
   return rp([
     { text: `"${text}"`, italics: true, color: "555555" },
-    { text: attribution ? ` — ${attribution}` : "", color: "777777", size: 18 }
+    { text: attribution ? `, ${attribution}` : "", color: "777777", size: 18 }
   ], { spacing: { before: 60, after: 100 } });
 }
 
@@ -206,7 +203,7 @@ function buildReport(data) {
   );
   data.grades.forEach((g, i) => {
     sections.push(
-      tp(`${g.dimension} — ${g.grade}`, { size: 24, bold: true, color: gradeColor(g.grade), spacing: { before: 240, after: 80 } }),
+      tp(`${g.dimension}: ${g.grade}`, { size: 24, bold: true, color: gradeColor(g.grade), spacing: { before: 240, after: 80 } }),
       tp(g.verdict, { italics: true, color: "555555", spacing: { after: 120 } })
     );
     if (g.strengths && g.strengths.length > 0) {
@@ -240,7 +237,7 @@ function buildReport(data) {
       dealRows.push(new TableRow({ children: [
         bCell(tp(d.prospect, { bold: true }), 2800),
         bCell(tp(d.status, { bold: true, color: d.status === "Won" ? GREEN : d.status === "Lost" ? RED : AMBER }), 1200),
-        bCell(tp(String(d.meetingCount || "—"), { align: AlignmentType.CENTER }), 1000),
+        bCell(tp(String(d.meetingCount || "-"), { align: AlignmentType.CENTER }), 1000),
         bCell(tp(d.evidence, { size: 18 }), 4360)
       ]}));
     });
@@ -260,7 +257,7 @@ function buildReport(data) {
     );
     data.prospectJourneys.forEach(pj => {
       sections.push(
-        tp(`${pj.prospect} — ${pj.outcome}`, {
+        tp(`${pj.prospect}: ${pj.outcome}`, {
           size: 22, bold: true,
           color: pj.outcome === "Won" ? GREEN : pj.outcome === "Lost" ? RED : AMBER,
           spacing: { before: 200, after: 60 }
@@ -347,7 +344,7 @@ function buildReport(data) {
       },
       headers: {
         default: new Header({
-          children: [tp(`${data.repName} — Sales Performance Analysis`, { size: 16, color: "999999", align: AlignmentType.RIGHT })]
+          children: [tp(`${data.repName} - Sales Performance Analysis`, { size: 16, color: "999999", align: AlignmentType.RIGHT })]
         })
       },
       footers: {

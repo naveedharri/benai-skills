@@ -1,4 +1,4 @@
-# Generic CRM — Data Extraction Guide
+# Generic CRM, Data Extraction Guide
 
 Use this when no specific CRM reference file matches, or when working with Pipedrive, Close, Copper, Monday CRM, Zoho CRM, or any other CRM.
 

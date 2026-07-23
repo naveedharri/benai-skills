@@ -1,4 +1,4 @@
-# Salesforce CRM — Data Extraction Guide
+# Salesforce CRM, Data Extraction Guide
 
 ## Architecture
 
@@ -51,12 +51,12 @@ This is one of the few CRMs where server-side email domain filtering is practica
 
 ### Key Salesforce Fields
 
-- `StageName` — deal stage
-- `Amount` — deal value
-- `CloseDate` — when closed
-- `LeadSource` — lead origin
-- `OwnerId` → User.Name — deal owner
-- `Description` — notes
+- `StageName`, deal stage
+- `Amount`, deal value
+- `CloseDate`, when closed
+- `LeadSource`, lead origin
+- `OwnerId` → User.Name, deal owner
+- `Description`, notes
 - Custom fields vary widely (often `Loss_Reason__c`, `Priority__c`, etc.)
 
 ## Email Enrichment
@@ -74,4 +74,4 @@ Salesforce with SOQL is the most efficient CRM for this workflow:
 - **Email domain filtering**: Server-side via SOQL WHERE clauses
 - **Total**: Potentially as few as 5-10 API calls for a complete dataset
 
-If the Salesforce MCP doesn't support SOQL, fall back to REST API endpoints for Opportunities, then Contacts, then Activities — similar to the Attio pattern but with better built-in filtering.
+If the Salesforce MCP doesn't support SOQL, fall back to REST API endpoints for Opportunities, then Contacts, then Activities, similar to the Attio pattern but with better built-in filtering.

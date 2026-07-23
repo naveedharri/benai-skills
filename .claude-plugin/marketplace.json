@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Expert automation plugins that turn Claude into a specialist for your team. Install by department to get skills for marketing, sales, operations, creative, and product workflows.",
-    "version": "1.7.0"
+    "version": "1.9.0"
   },
   "plugins": [
     {
@@ -35,11 +35,31 @@
       ]
     },
     {
+      "name": "benai-sales",
+      "displayName": "BenAI Sales",
+      "source": "./plugins/benai-sales",
+      "description": "The BenAI sales OS as skills: lead generation, qualification and research, CRM mining, LinkedIn engagers, email personalization, call prep, one-pagers, pipeline reviews, post-disco proposals, rep grading, win/loss analysis, and sales assets.",
+      "version": "1.1.0",
+      "author": {
+        "name": "BenAI",
+        "url": "https://benai.co"
+      },
+      "keywords": [
+        "sales",
+        "lead-generation",
+        "outreach",
+        "crm",
+        "call-prep",
+        "pipeline",
+        "proposals"
+      ]
+    },
+    {
       "name": "all-skills",
       "displayName": "All Skills",
       "source": "./plugins/all-skills",
-      "description": "Every BenAI skill in one install. All 100 skills across marketing, sales, SEO, ads, design, YouTube, creative, operations, second-brain OS, and general productivity. Add this one plugin to get the complete library.",
-      "version": "1.5.0",
+      "description": "Every BenAI skill in one install. All 105 skills across marketing, sales, SEO, ads, design, YouTube, creative, operations, second-brain OS, and general productivity. Add this one plugin to get the complete library.",
+      "version": "1.6.0",
       "author": {
         "name": "BenAI"
       },
@@ -99,22 +119,6 @@
         "newsletter",
         "repurpose",
         "gif"
-      ]
-    },
-    {
-      "name": "sales",
-      "source": "./plugins/sales",
-      "description": "Research and score B2B leads, craft personalized outreach sequences, and build client success stories. Turn discovery call transcripts into actionable automation blueprints.",
-      "version": "1.0.0",
-      "author": {
-        "name": "BenAI"
-      },
-      "keywords": [
-        "lead-generation",
-        "b2b",
-        "sales",
-        "outreach",
-        "prospecting"
       ]
     },
     {

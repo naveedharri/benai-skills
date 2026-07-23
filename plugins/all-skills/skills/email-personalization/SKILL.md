@@ -6,6 +6,7 @@ description: Write hyper-personalized cold email icebreakers for B2B leads using
   enriched leads and wants to write the first line of a cold email for each. Also trigger when the user has
   a CSV with lead intelligence columns and wants to generate personalized outreach copy. This skill produces
   icebreakers that sound human, reference real observations, and tie back to the user's product/service.
+disable-model-invocation: true
 ---
 
 # Email Personalization
@@ -120,7 +121,7 @@ These rules are non-negotiable. Every icebreaker must follow ALL of them.
 
 ### Formatting Bans
 
-- NEVER use m-dashes or em-dashes. No "—" characters. Use commas, semicolons, or periods instead.
+- NEVER use m-dashes or em-dashes. No ", " characters. Use commas, semicolons, or periods instead.
 - NEVER use bullet points or lists in an icebreaker. It's a sentence, not a document.
 
 ### Opening Line Rules
@@ -231,7 +232,7 @@ After generating all icebreakers, run a programmatic scan for violations:
 ```python
 bad_starts = ["saw your post", "saw your recent", "noticed", "impressive", "loved seeing", "loved that", "your "]
 bad_words = ["spot on", "data-driven", "data driven", "values-driven", "ai-first", "compelling", "resonated", "innovative", "leverage", "synergize"]
-# Also check for m-dashes: "—" and "---"
+# Also check for m-dashes: ", " and "---"
 ```
 
 Fix any violations before saving to the CSV. Common fixes:
@@ -244,3 +245,12 @@ Fix any violations before saving to the CSV. Common fixes:
 ## Output
 
 Add an `Email Personalization` column to the CSV. Match by lead name (watch for suffixes like "mba", "ma" in last names). Report the total count and confirm all leads were matched.
+
+## Self-improvement
+
+This skill is never finished. Improve it as you use it.
+
+- When the user corrects how a step was done, update the relevant reference file (or this SKILL.md) so the correction sticks. Do not just fix it for this run.
+- When a correction is a hard rule ("always do X", "never do Y"), add it as a permanent rule here.
+- When the user says an output was genuinely good, save it to `references/examples/` so it becomes a model for future runs.
+- Keep the skill small while you do this: when you add something, run the deletion test and cut anything that no longer changes behavior.

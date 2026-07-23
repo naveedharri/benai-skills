@@ -1,0 +1,260 @@
+<!-- BenAI call-prep dashboard template. Clone this, fill placeholders in [BRACKETS], duplicate the .call card per call.
+     PUBLISH AS AN ARTIFACT: keep the <style> and body markup; the Artifact wrapper supplies <!doctype>/<html>/<head>/<body>.
+     RULES: correct logo only (circle + single U-smile, no eyes). No green-dot hero eyebrow. Headings 900. Numbers/times in mono. -->
+<style>
+  :root {
+    --bg: #fffef8; --bg-alt: #f8fafc;
+    --ink: #111; --text: #444; --text-light: #666; --text-muted: #999;
+    --accent: #2563eb; --accent-dark: #1d4ed8; --accent-pale: #dbeafe;
+    --green: #16a34a; --green-pale: #dcfce7;
+    --amber: #d97706; --amber-pale: #fef3c7;
+    --yellow-pale: #fef9c3;
+    --red: #dc2626; --red-pale: #fee2e2;
+    --border: #111; --border-light: #e5e7eb;
+    --shadow: 6px 6px 0 #111; --shadow-sm: 4px 4px 0 #111; --shadow-xs: 3px 3px 0 #111;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: "SF Mono", "Fira Code", Menlo, monospace;
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+  body { font-family: var(--font); color: var(--ink); background: var(--bg); line-height: 1.6; }
+  a { color: inherit; text-decoration: none; }
+  strong { font-weight: 700; color: var(--ink); }
+
+  .top-stripe { height: 4px; background: linear-gradient(90deg, #3b82f6, #22c55e, #f59e0b); position: sticky; top: 0; z-index: 1001; }
+
+  .site-header { position: sticky; top: 4px; height: 64px; background: var(--ink); z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 0 28px; border-bottom: 3px solid var(--border); }
+  .header-brand { display: flex; align-items: center; gap: 16px; }
+  .header-brand .smiley { width: 30px; height: 30px; color: #fffef8; }
+  .header-brand .brand-name { color: #fffef8; font-size: 17px; font-weight: 900; letter-spacing: -0.01em; }
+  .header-divider { width: 2px; height: 24px; background: rgba(255,255,255,0.2); }
+  .header-title { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.6); letter-spacing: 0.1em; text-transform: uppercase; }
+  .header-nav { display: flex; gap: 24px; list-style: none; align-items: center; }
+  .header-nav a { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.08em; padding: 22px 0; transition: color 0.15s; }
+  .header-nav a:hover { color: #fff; }
+  .header-cta { background: #fffef8; color: var(--ink); font-size: 11px; font-weight: 900; padding: 8px 16px; border: 2px solid #fffef8; text-transform: uppercase; letter-spacing: 0.08em; font-family: var(--mono); }
+
+  .cover { border-bottom: 3px solid var(--border); background: var(--bg); }
+  .cover-inner { max-width: 1180px; margin: 0 auto; padding: 64px 40px 56px; }
+  .cover h1 { font-size: 72px; font-weight: 900; line-height: 0.96; letter-spacing: -0.045em; color: var(--ink); margin-bottom: 22px; }
+  .cover h1 .champion-mark { display: inline-block; background: var(--ink); color: var(--amber-pale); padding: 0 16px 4px; border: 3px solid var(--border); box-shadow: var(--shadow); letter-spacing: -0.045em; }
+  .cover-subtitle { font-size: 20px; color: var(--text); line-height: 1.5; max-width: 780px; font-weight: 500; }
+
+  .hero-stats { margin-top: 48px; border: 3px solid var(--border); box-shadow: var(--shadow); background: #fff; display: grid; grid-template-columns: repeat(4, 1fr); }
+  .hero-stat { padding: 28px 24px; border-right: 3px solid var(--border); }
+  .hero-stat:last-child { border-right: none; }
+  .hero-stat .num { font-family: var(--mono); font-size: 42px; font-weight: 900; letter-spacing: -0.04em; color: var(--ink); line-height: 1; display: block; margin-bottom: 10px; }
+  .hero-stat .num.accent { color: var(--accent); }
+  .hero-stat .num.green { color: var(--green); }
+  .hero-stat .num.amber { color: var(--amber); }
+  .hero-stat .num.red { color: var(--red); }
+  .hero-stat .label { font-size: 11px; color: var(--text-light); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  .section { padding: 64px 40px; border-bottom: 3px solid var(--border); }
+  .section.alt { background: var(--bg-alt); }
+  .section-inner { max-width: 1180px; margin: 0 auto; }
+  .s-label { display: inline-block; background: var(--accent-pale); color: var(--ink); font-size: 10px; font-weight: 900; padding: 6px 12px; border: 2px solid var(--border); box-shadow: var(--shadow-xs); text-transform: uppercase; letter-spacing: 0.12em; font-family: var(--mono); }
+  .s-label.green { background: var(--green-pale); }
+  .s-label.amber { background: var(--amber-pale); }
+  .s-label.red { background: var(--red-pale); }
+  .section h2 { font-size: 44px; font-weight: 900; line-height: 1.02; letter-spacing: -0.035em; color: var(--ink); margin: 18px 0 10px; }
+  .section-lead { font-size: 17px; color: var(--text-light); max-width: 760px; line-height: 1.6; }
+
+  .priorities { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+  .pcard { background: #fff; border: 3px solid var(--border); box-shadow: var(--shadow); padding: 30px; position: relative; }
+  .pcard::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: var(--red); }
+  .pcard.amber::before { background: var(--amber); }
+  .pcard.green::before { background: var(--green); }
+  .pcard .badge { display: inline-block; font-family: var(--mono); font-size: 10px; font-weight: 900; background: var(--red-pale); color: #7f1d1d; padding: 5px 11px; border: 2px solid #991b1b; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; }
+  .pcard.amber .badge { background: var(--amber-pale); color: #7c4a03; border-color: #b45309; }
+  .pcard.green .badge { background: var(--green-pale); color: #14532d; border-color: #15803d; }
+  .pcard h3 { font-size: 19px; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 10px; line-height: 1.2; }
+  .pcard p { font-size: 14px; color: var(--text); line-height: 1.6; }
+  .pcard .who { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 14px; display: block; }
+
+  .calls-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px; margin-top: 44px; }
+  .call { background: #fff; border: 3px solid var(--border); box-shadow: var(--shadow); position: relative; display: flex; flex-direction: column; }
+  .call::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 6px; }
+  .call.st-save::before { background: var(--red); }
+  .call.st-close::before { background: var(--green); }
+  .call.st-discovery::before { background: var(--accent); }
+  .call.st-qualify::before { background: var(--amber); }
+  .call.st-recovery::before { background: var(--amber); }
+  .call-head { padding: 26px 28px 20px; border-bottom: 3px solid var(--border); }
+  .call-topline { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+  .call-time { font-family: var(--mono); font-size: 12px; font-weight: 900; color: var(--ink); letter-spacing: 0.04em; }
+  .stage { font-family: var(--mono); font-size: 10px; font-weight: 900; padding: 5px 10px; border: 2px solid var(--border); text-transform: uppercase; letter-spacing: 0.1em; }
+  .stage.save { background: var(--red-pale); color: #7f1d1d; }
+  .stage.close { background: var(--green-pale); color: #14532d; }
+  .stage.discovery { background: var(--accent-pale); color: #1e3a8a; }
+  .stage.qualify { background: var(--amber-pale); color: #7c4a03; }
+  .stage.recovery { background: var(--amber-pale); color: #7c4a03; }
+  .call-head h3 { font-size: 23px; font-weight: 900; letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 6px; }
+  .call-co { font-size: 14px; color: var(--text-light); font-weight: 500; }
+  .call-meta { font-family: var(--mono); font-size: 11px; color: var(--text-muted); letter-spacing: 0.03em; margin-top: 8px; }
+  .call-body { padding: 22px 28px 26px; display: flex; flex-direction: column; gap: 18px; flex: 1; }
+  .flag { background: var(--red-pale); border: 2px solid #991b1b; padding: 12px 14px; font-size: 13px; color: #7f1d1d; line-height: 1.5; }
+  .flag.amber { background: var(--amber-pale); border-color: #b45309; color: #7c4a03; }
+  .flag.green { background: var(--green-pale); border-color: #15803d; color: #14532d; }
+  .flag b { font-weight: 900; }
+  .cblock h5 { font-family: var(--mono); font-size: 10px; font-weight: 900; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 8px; }
+  .cblock p { font-size: 14px; color: var(--text); line-height: 1.6; }
+  .cblock ul { list-style: none; }
+  .cblock li { font-size: 13.5px; color: var(--text); line-height: 1.5; padding: 7px 0 7px 22px; border-bottom: 2px solid var(--border-light); position: relative; }
+  .cblock li:last-child { border-bottom: none; }
+  .cblock.q li::before { content: "?"; position: absolute; left: 0; color: var(--accent); font-weight: 900; font-family: var(--mono); }
+  .cblock.obj li { padding-left: 0; }
+  .cblock.obj li b { display: block; color: var(--ink); font-weight: 900; font-size: 13px; margin-bottom: 2px; }
+  .cblock.obj li span { color: var(--text-light); }
+
+  .site-footer { background: var(--bg-alt); padding: 40px 0; border-top: 3px solid var(--border); }
+  .footer-inner { max-width: 1180px; margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+  .footer-logo { display: flex; align-items: center; gap: 10px; }
+  .footer-logo .smiley { width: 24px; height: 24px; color: var(--ink); }
+  .footer-logo span { font-weight: 900; font-size: 14px; letter-spacing: -0.01em; }
+  .footer-meta { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; font-family: var(--mono); }
+
+  @media (max-width: 980px) {
+    .cover-inner { padding: 48px 24px; }
+    .cover h1 { font-size: 46px; }
+    .section { padding: 48px 24px; }
+    .section h2 { font-size: 32px; }
+    .hero-stats { grid-template-columns: 1fr 1fr; }
+    .hero-stat:nth-child(1), .hero-stat:nth-child(2) { border-bottom: 3px solid var(--border); }
+    .hero-stat:nth-child(2), .hero-stat:nth-child(4) { border-right: none; }
+    .priorities { grid-template-columns: 1fr; }
+    .calls-grid { grid-template-columns: 1fr; }
+    .header-nav { display: none; }
+  }
+  @media (max-width: 720px) {
+    .site-header { padding: 0 16px; height: 60px; }
+    .header-divider, .header-title { display: none; }
+  }
+</style>
+
+<div class="top-stripe"></div>
+
+<!-- ===== HEADER. The BenAI mark is a circle + single U-smile. NO eyes. Do not change the SVG. ===== -->
+<header class="site-header">
+  <div class="header-brand">
+    <svg class="smiley" viewBox="0 0 48 48" fill="none">
+      <circle cx="24" cy="24" r="21" stroke="currentColor" stroke-width="3.5" fill="none"/>
+      <path d="M16 23 C16 29.5 19.5 33 24 33 C28.5 33 32 29.5 32 23" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+    </svg>
+    <span class="brand-name">BenAI</span>
+    <div class="header-divider"></div>
+    <span class="header-title">Sales Call Prep</span>
+  </div>
+  <div class="header-meta" style="display:flex;align-items:center;gap:24px;">
+    <ul class="header-nav">
+      <li><a href="#priorities">Priorities</a></li>
+      <li><a href="#calls">All Calls</a></li>
+    </ul>
+    <span class="header-cta">[DATE e.g. 22 Jul 2026]</span>
+  </div>
+</header>
+
+<!-- ===== HERO. NO green-dot eyebrow. Context goes in the subtitle. ===== -->
+<section class="cover">
+  <div class="cover-inner">
+    <h1>Call Prep<br><span class="champion-mark">Command Center</span></h1>
+    <p class="cover-subtitle">[One plain line: N calls, weekday date, all times TZ. Then one line on what the day looks like. Grounded in web, Attio, Gmail, Fireflies.]</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="num">[N]</span><div class="label">External Calls</div></div>
+      <div class="hero-stat"><span class="num green">[N]</span><div class="label">In Closing Motion</div></div>
+      <div class="hero-stat"><span class="num red">[N]</span><div class="label">Saves Needed</div></div>
+      <div class="hero-stat"><span class="num amber">[N]</span><div class="label">Action Items</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRIORITIES. One .pcard per pre-call action item. Use amber/green class on .pcard to change the top bar. Omit section if none. ===== -->
+<section class="section alt" id="priorities">
+  <div class="section-inner">
+    <div class="s-label red">Do These First</div>
+    <h2>[Headline, e.g. Three things that need you now.]</h2>
+    <p class="section-lead">[One line of setup.]</p>
+    <div class="priorities">
+      <div class="pcard">
+        <span class="badge">[e.g. Confirm before call]</span>
+        <h3>[Action item title]</h3>
+        <p>[What to do and why.]</p>
+        <span class="who">[Who · Company · Time]</span>
+      </div>
+      <!-- duplicate .pcard as needed -->
+    </div>
+  </div>
+</section>
+
+<!-- ===== CALLS. Clone one .call per call. Set stage class on BOTH the card (st-*) and badge (stage .*).
+     Stages: save=red, close/warm=green, discovery=blue, qualify/recovery=amber.
+     Drop the .flag if there is no status flag. Keep questions to 3, objections to 2-3. ===== -->
+<section class="section" id="calls">
+  <div class="section-inner">
+    <div class="s-label">The Full Slate</div>
+    <h2>[Headline, e.g. All eight, in order.]</h2>
+    <p class="section-lead">[One line: highest-leverage call, lowest priority.]</p>
+
+    <div class="calls-grid">
+
+      <!-- EXAMPLE CARD A: a call with a status flag (save/close/etc.) -->
+      <div class="call st-save">
+        <div class="call-head">
+          <div class="call-topline"><span class="call-time">[HH:MM TZ]</span><span class="stage save">[Stage]</span></div>
+          <h3>[Contact name(s)]</h3>
+          <div class="call-co">[Company · what they do · offer]</div>
+          <div class="call-meta">[Who leads · CRM/budget · other meta]</div>
+        </div>
+        <div class="call-body">
+          <div class="flag"><b>[Status flag headline.]</b> [One line of detail.]</div>
+          <div class="cblock"><h5>Play</h5><p>[The angle for this call.]</p></div>
+          <div class="cblock q"><h5>Ask</h5><ul>
+            <li>[Question 1]</li>
+            <li>[Question 2]</li>
+            <li>[Question 3]</li>
+          </ul></div>
+          <div class="cblock obj"><h5>Objections</h5><ul>
+            <li><b>"[Objection]"</b><span>[Response.]</span></li>
+            <li><b>"[Objection]"</b><span>[Response.]</span></li>
+          </ul></div>
+        </div>
+      </div>
+
+      <!-- EXAMPLE CARD B: a straightforward discovery call, no flag -->
+      <div class="call st-discovery">
+        <div class="call-head">
+          <div class="call-topline"><span class="call-time">[HH:MM TZ]</span><span class="stage discovery">Discovery</span></div>
+          <h3>[Contact name]</h3>
+          <div class="call-co">[Company · what they do · offer]</div>
+          <div class="call-meta">[Who leads · CRM/budget · other meta]</div>
+        </div>
+        <div class="call-body">
+          <div class="cblock"><h5>Play</h5><p>[The angle.]</p></div>
+          <div class="cblock q"><h5>Ask</h5><ul>
+            <li>[Question 1]</li>
+            <li>[Question 2]</li>
+            <li>[Question 3]</li>
+          </ul></div>
+          <div class="cblock obj"><h5>Objections</h5><ul>
+            <li><b>"[Objection]"</b><span>[Response.]</span></li>
+            <li><b>"[Objection]"</b><span>[Response.]</span></li>
+          </ul></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <svg class="smiley" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="21" stroke="currentColor" stroke-width="3.5" fill="none"/>
+        <path d="M16 23 C16 29.5 19.5 33 24 33 C28.5 33 32 29.5 32 23" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+      </svg>
+      <span>BenAI</span>
+    </div>
+    <div class="footer-meta">Sales Call Prep · [DATE] · Sources: Web · Attio · Gmail · Fireflies</div>
+  </div>
+</footer>

@@ -7,6 +7,7 @@ description: Deep-research lead intelligence gathering for B2B qualified leads. 
   "find out about these companies", "LinkedIn scraping", "scrape LinkedIn profiles", or has a qualified lead
   list and wants to gather intelligence before outreach. Also trigger when the user mentions Apify actors,
   or wants to combine web + LinkedIn research on leads.
+disable-model-invocation: true
 ---
 
 # Lead Intelligence
@@ -86,11 +87,11 @@ This layer scrapes LinkedIn profiles AND recent posts using two Apify actors. **
    - Returns: recent posts with content, engagement, posting date
    - Call via: `mcp__Apify__call-actor` with `actor: "harvestapi/linkedin-profile-posts"`, `step: "call"`
 
-**CRITICAL: Do NOT use actor `A3cAPGpwBEG8RJwse` for posts. It is deprecated — sub-agents using it save run metadata instead of actual post items, causing 0 posts to be matched.**
+**CRITICAL: Do NOT use actor `A3cAPGpwBEG8RJwse` for posts. It is deprecated, sub-agents using it save run metadata instead of actual post items, causing 0 posts to be matched.**
 
 **CRITICAL: Actor `2SyF0bVxmgGr8IVCZ` is for PERSONAL profiles only. Never pass company page URLs.**
 
-### Single Batch — Never Split Into Multiple Runs
+### Single Batch, Never Split Into Multiple Runs
 
 **CRITICAL: Send ALL LinkedIn URLs in a single API call per actor.** Both Apify actors accept unlimited input URLs. There is no maximum. Do NOT split URLs into multiple batches/runs. One call to the profile scraper with ALL URLs, one call to the posts scraper with ALL URLs.
 
@@ -100,8 +101,8 @@ Splitting into multiple runs is wasteful (more API calls, more complexity, more 
 
 **The Apify MCP `call-actor` tool enforces a mandatory two-step process. You CANNOT skip step 1.**
 
-1. **Step 1 — Get actor info**: Call `call-actor` with `step: "info"` and the actor name/ID. This returns the actor's input schema and required parameters.
-2. **Step 2 — Execute the actor**: Only after step 1, call `call-actor` with `step: "call"` and the proper input based on the schema from step 1.
+1. **Step 1, Get actor info**: Call `call-actor` with `step: "info"` and the actor name/ID. This returns the actor's input schema and required parameters.
+2. **Step 2, Execute the actor**: Only after step 1, call `call-actor` with `step: "call"` and the proper input based on the schema from step 1.
 
 If you skip step 1 and go directly to `step: "call"`, the Apify MCP tool will reject the request. Always do info first, call second. That's 4 total `call-actor` calls: info for profiles, call for profiles, info for posts, call for posts.
 
@@ -111,8 +112,8 @@ Use the Apify MCP tools directly:
 
 1. Call `call-actor` with `step="info"` for both actors to get their input schemas
 2. Call `call-actor` with `step="call"` for both actors (profiles and posts) with ALL URLs in a single call each
-3. The MCP tool may timeout after 30 seconds — this is expected. The Apify run continues in the background.
-4. If timeout occurs: read the beginning of the partial response — it always contains the runId and datasetId
+3. The MCP tool may timeout after 30 seconds, this is expected. The Apify run continues in the background.
+4. If timeout occurs: read the beginning of the partial response, it always contains the runId and datasetId
 5. Wait 60-90 seconds for the run to complete, confirm with `get-actor-run`, then fetch with `get-dataset-items`
 6. For large datasets that exceed the MCP token limit, read the saved overflow file instead of re-fetching (see below)
 
@@ -122,7 +123,7 @@ The Apify MCP connector has a ~30 second timeout. For large scraping jobs, the a
 
 ### The Partial Response Pattern (CRITICAL)
 
-When `call-actor` times out, the response is cut off — but the **beginning** of the response always contains:
+When `call-actor` times out, the response is cut off, but the **beginning** of the response always contains:
 
 ```
 Actor finished with runId: <RUN_ID>, datasetId <DATASET_ID>
@@ -132,7 +133,7 @@ Actor finished with runId: <RUN_ID>, datasetId <DATASET_ID>
 
 **Fallback:** If the partial response is empty, use `get-dataset-list` with `desc: true` to find the most recently created dataset by timestamp.
 
-## Oversized Dataset Recovery — Read Saved Files Instead of Re-Fetching
+## Oversized Dataset Recovery, Read Saved Files Instead of Re-Fetching
 
 **CRITICAL: When `get-dataset-items` returns an error like "result exceeds maximum allowed tokens", the MCP tool automatically saves the FULL result to a file on disk.** The error message tells you exactly where:
 
@@ -177,7 +178,7 @@ After LinkedIn data is fetched, ALWAYS:
    - Normalizes URLs for matching (strip protocol, www, country subdomains, trailing slash, lowercase)
    - Builds the "LinkedIn Lead Research" text block per lead
    - Writes back to the CSV
-4. **Run the script** — never try to do this merge inline in the conversation
+4. **Run the script**, never try to do this merge inline in the conversation
 
 ### Why This Pattern Is Mandatory
 
@@ -185,7 +186,7 @@ In previous runs, Apify datasets exceeded context limits, causing conversation c
 
 ### Posts Data Specifics
 
-The `harvestapi/linkedin-profile-posts` actor returns posts with deeply nested objects (`postedAt`, `engagement`, `query`, `author`). **Do NOT use `fields`/`flatten` parameters** — the dot-notation flattening is unreliable for this actor's schema. Fetch all items raw, then slim them in Python:
+The `harvestapi/linkedin-profile-posts` actor returns posts with deeply nested objects (`postedAt`, `engagement`, `query`, `author`). **Do NOT use `fields`/`flatten` parameters**, the dot-notation flattening is unreliable for this actor's schema. Fetch all items raw, then slim them in Python:
 
 ```python
 slim_posts = []
@@ -201,7 +202,7 @@ for p in raw_posts:
     })
 ```
 
-**CRITICAL: Save the `slim_posts` list (a JSON array) to `all_posts.json`. NEVER save a dict like `{"status": "success", "total_posts": N, "dataset_id": "..."}` — that is run metadata, not usable post data.**
+**CRITICAL: Save the `slim_posts` list (a JSON array) to `all_posts.json`. NEVER save a dict like `{"status": "success", "total_posts": N, "dataset_id": "..."}`, that is run metadata, not usable post data.**
 
 Posts match to leads via the `targetUrl` field, which contains the LinkedIn profile URL that was originally queried.
 
@@ -251,3 +252,12 @@ Add these columns to the CSV:
 - `LinkedIn Lead Research` - populated for leads with LinkedIn data (empty if no LinkedIn path)
 
 Report: leads enriched, LinkedIn data found, posts scraped, time taken.
+
+## Self-improvement
+
+This skill is never finished. Improve it as you use it.
+
+- When the user corrects how a step was done, update the relevant reference file (or this SKILL.md) so the correction sticks. Do not just fix it for this run.
+- When a correction is a hard rule ("always do X", "never do Y"), add it as a permanent rule here.
+- When the user says an output was genuinely good, save it to `references/examples/` so it becomes a model for future runs.
+- Keep the skill small while you do this: when you add something, run the deletion test and cut anything that no longer changes behavior.

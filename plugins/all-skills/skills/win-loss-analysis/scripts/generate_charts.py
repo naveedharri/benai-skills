@@ -18,7 +18,7 @@ import sys
 import os
 import argparse
 
-# matplotlib setup — must happen before importing pyplot
+# matplotlib setup - must happen before importing pyplot
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -69,7 +69,7 @@ def setup_style():
 
 def horizontal_bar(config, output_path):
     """
-    Horizontal bar chart — good for categories like industries, job titles, lost reasons.
+    Horizontal bar chart - good for categories like industries, job titles, lost reasons.
     config keys: title, labels[], values[], color (optional), subtitle (optional),
                  show_values (bool), value_suffix (str)
     """
@@ -108,7 +108,7 @@ def horizontal_bar(config, output_path):
 
 def grouped_bar(config, output_path):
     """
-    Side-by-side grouped bar chart — good for Won vs Lost comparisons.
+    Side-by-side grouped bar chart - good for Won vs Lost comparisons.
     config keys: title, categories[], won_values[], lost_values[], subtitle (optional)
     """
     categories = config['categories']
@@ -148,7 +148,7 @@ def grouped_bar(config, output_path):
 
 def donut_chart(config, output_path):
     """
-    Donut/pie chart — good for lost reason breakdown, source distribution.
+    Donut/pie chart - good for lost reason breakdown, source distribution.
     config keys: title, labels[], values[], subtitle (optional)
     """
     labels = config['labels']
@@ -183,7 +183,7 @@ def donut_chart(config, output_path):
 
 def metric_cards(config, output_path):
     """
-    Summary metric cards — a row of key stats (like a dashboard header).
+    Summary metric cards - a row of key stats (like a dashboard header).
     config keys: title, metrics[{label, value, subtitle?, color?}]
     """
     metrics = config['metrics']
@@ -225,7 +225,7 @@ def metric_cards(config, output_path):
 
 def stacked_bar(config, output_path):
     """
-    Stacked bar chart — good for showing composition (e.g., deal sizes by range).
+    Stacked bar chart - good for showing composition (e.g., deal sizes by range).
     config keys: title, categories[], datasets[{label, values[], color}], subtitle (optional)
     """
     categories = config['categories']
@@ -326,7 +326,7 @@ if __name__ == '__main__':
 #     {
 #       "type": "horizontal_bar",
 #       "filename": "industries.png",
-#       "title": "Top Industries — Won vs Lost",
+#       "title": "Top Industries - Won vs Lost",
 #       "labels": ["SEO Agency", "Digital Agency", "E-commerce", "Enterprise", "Tech/SaaS"],
 #       "values": [12, 8, 4, 2, 1],
 #       "show_values": true

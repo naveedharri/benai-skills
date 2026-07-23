@@ -349,10 +349,6 @@
           "displayName": "Pipeline Review",
           "summary": "Review active deals with risk flags and recommended action items"
         },
-        "pipeline-review-v2": {
-          "displayName": "Pipeline Review V2",
-          "summary": "Manual-only duplicate of pipeline-review (no auto-invoke) \u2014 run explicitly via /pipeline-review-v2"
-        },
         "process-interviewer": {
           "displayName": "Process Interviewer",
           "summary": "Relentless interviewer that extracts a complete plan from your head before building"
@@ -546,6 +542,30 @@
         "market-intelligence-report": {
           "displayName": "Market Intelligence Report",
           "summary": "YouTube + Twitter/X + official-source competitive intelligence, rendered as a BenAI-branded instant-ui HTML dashboard"
+        },
+        "lead-generation": {
+          "displayName": "Lead Generation",
+          "summary": "Source, qualify, enrich, and research B2B leads end to end from any source (Apollo, Apify, CSV), fanning out to subagents in batches"
+        },
+        "call-prep": {
+          "displayName": "Call Prep",
+          "summary": "Prep one call or a whole day of calls into a live, shareable BenAI-branded instant-ui dashboard, researched via web, Attio, Gmail, and Fireflies"
+        },
+        "client-onepager": {
+          "displayName": "Client One-Pager",
+          "summary": "Personalize and deploy the client one-pager from the pre-filled template, pre-call or post-call, with an enumerated substitution map"
+        },
+        "post-disco-followup": {
+          "displayName": "Post-Disco Followup",
+          "summary": "Generate the post-discovery follow-up touch: recap email and proposal from the call transcript, config-driven, Google Docs or PandaDoc backend"
+        },
+        "setup-post-disco": {
+          "displayName": "Setup Post-Disco",
+          "summary": "One-time interactive setup for post-disco-followup: stack pre-flight, offer interview, proposal backend, qualification rules, config write"
+        },
+        "create-an-asset": {
+          "displayName": "Create an Asset",
+          "summary": "Create a tailored sales asset (interactive landing page, deck, one-pager, or workflow demo) for a specific prospect from researched context"
         }
       }
     },
@@ -607,48 +627,6 @@
         "course-creator": {
           "displayName": "Course Creator",
           "summary": "Interactive 7-phase course creation \u2014 from idea or YouTube video to launch-ready package with curriculum, scripts, sales page, emails, and launch plan"
-        }
-      }
-    },
-    "sales": {
-      "agents": [
-        "lead-qualifier",
-        "lead-researcher",
-        "icebreaker-writer",
-        "linkedin-scraper"
-      ],
-      "skills": {
-        "email-personalization": {
-          "displayName": "Email Personalization",
-          "summary": "Generate hyper-personalized email icebreakers using lead intelligence"
-        },
-        "lead-intelligence": {
-          "displayName": "Lead Intelligence",
-          "summary": "Deep-research leads with web scraping and LinkedIn analysis"
-        },
-        "lead-qualification": {
-          "displayName": "Lead Qualification",
-          "summary": "Qualify and score leads against an Ideal Customer Profile"
-        },
-        "crm-prospect-mining": {
-          "displayName": "CRM Prospect Mining",
-          "summary": "Mine prospects from CRM lost/stalled deal stages for re-engagement"
-        },
-        "linkedin-post-engagers": {
-          "displayName": "LinkedIn Post Engagers",
-          "summary": "Scrape LinkedIn post commenters and reactors for targeted outreach"
-        },
-        "pipeline-review": {
-          "displayName": "Pipeline Review",
-          "summary": "Review active deals with risk flags and recommended action items"
-        },
-        "sales-rep-analyzer": {
-          "displayName": "Sales Rep Analyzer",
-          "summary": "Grade and analyze sales call performance with scoring frameworks"
-        },
-        "win-loss-analysis": {
-          "displayName": "Win/Loss Analysis",
-          "summary": "Analyze won vs lost deal patterns across CRM data"
         }
       }
     },
@@ -1103,6 +1081,72 @@
           "summary": "Generate optimized prompts for any AI tool \u2014 LLMs, image AI, video AI, coding agents"
         }
       }
+    },
+    "benai-sales": {
+      "skills": {
+        "lead-generation": {
+          "displayName": "Lead Generation",
+          "summary": "Source, qualify, enrich, and research B2B leads end to end from any source (Apollo, Apify, CSV), fanning out to subagents in batches"
+        },
+        "crm-prospect-mining": {
+          "displayName": "CRM Prospect Mining",
+          "summary": "Mine high-value past prospects from CRM lost, no-show, churned, and stalled stages, cross-referenced with LinkedIn company data and comms history"
+        },
+        "linkedin-post-engagers": {
+          "displayName": "LinkedIn Post Engagers",
+          "summary": "Scrape LinkedIn post commenters and reactors into a deduplicated, ICP-qualified, enriched warm lead list via Apify"
+        },
+        "call-prep": {
+          "displayName": "Call Prep",
+          "summary": "Prep one call or a whole day of calls into a live, shareable BenAI-branded instant-ui dashboard, researched via web, Attio, Gmail, and Fireflies"
+        },
+        "client-onepager": {
+          "displayName": "Client One-Pager",
+          "summary": "Personalize and deploy the client one-pager from the pre-filled template, pre-call or post-call, with an enumerated substitution map"
+        },
+        "pipeline-review": {
+          "displayName": "Pipeline Review",
+          "summary": "Read-only pipeline stage review: per-prospect status, sales cycle recap, action items, and CRM hygiene, delivered to Slack"
+        },
+        "post-disco-followup": {
+          "displayName": "Post-Disco Followup",
+          "summary": "Generate the post-discovery follow-up touch: recap email and proposal from the call transcript, config-driven, Google Docs or PandaDoc backend"
+        },
+        "setup-post-disco": {
+          "displayName": "Setup Post-Disco",
+          "summary": "One-time interactive setup for post-disco-followup: stack pre-flight, offer interview, proposal backend, qualification rules, config write"
+        },
+        "sales-rep-analyzer": {
+          "displayName": "Sales Rep Analyzer",
+          "summary": "Grade sales rep performance from real transcripts cross-referenced with CRM data, with evidence-backed grades and an instant-ui dashboard report"
+        },
+        "create-an-asset": {
+          "displayName": "Create an Asset",
+          "summary": "Create a tailored sales asset (interactive landing page, deck, one-pager, or workflow demo) for a specific prospect from researched context"
+        },
+        "email-personalization": {
+          "displayName": "Email Personalization",
+          "summary": "Generate hyper-personalized email icebreakers using lead intelligence"
+        },
+        "lead-intelligence": {
+          "displayName": "Lead Intelligence",
+          "summary": "Deep-research leads with web scraping and LinkedIn analysis"
+        },
+        "lead-qualification": {
+          "displayName": "Lead Qualification",
+          "summary": "Qualify and score leads against an Ideal Customer Profile"
+        },
+        "win-loss-analysis": {
+          "displayName": "Win/Loss Analysis",
+          "summary": "Analyze won vs lost deal patterns across CRM data"
+        }
+      },
+      "agents": [
+        "lead-qualifier",
+        "lead-researcher",
+        "icebreaker-writer",
+        "linkedin-scraper"
+      ]
     }
   }
 }

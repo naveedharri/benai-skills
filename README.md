@@ -59,17 +59,23 @@ Or copy from this repo's `.env.example` and fill in your keys.
 
 **Commands:** `/marketing` (skill overview), `/repurpose` (content repurposing workflow)
 
-### Sales (6 skills)
+### BenAI Sales (14 skills)
 | Skill | Command | Purpose |
 |-------|---------|---------|
-| Lead Research Assistant | `/lead-research-assistant` | B2B lead generation & ICP scoring |
-| Email Sequence | `/email-sequence` | Email sequences & drip campaigns |
-| Case Study | `/case-study` | Data-driven case studies |
+| Lead Generation | `/lead-generation` | Source, qualify, enrich, and research B2B leads end to end |
+| CRM Prospect Mining | `/crm-prospect-mining` | Mine prospects from CRM lost/stalled stages |
+| LinkedIn Post Engagers | `/linkedin-post-engagers` | Scrape LinkedIn post commenters/reactors into a warm list |
+| Call Prep | `/call-prep` | Prep calls into a live BenAI-branded instant-ui dashboard |
+| Client One-Pager | `/client-onepager` | Personalize and deploy the client one-pager from the template |
+| Pipeline Review | `/pipeline-review` | Read-only pipeline stage review delivered to Slack |
+| Post-Disco Followup | `/post-disco-followup` | Post-discovery recap email + proposal from the transcript |
+| Setup Post-Disco | `/setup-post-disco` | One-time interactive setup for post-disco-followup |
+| Sales Rep Analyzer | `/sales-rep-analyzer` | Grade sales call performance with an instant-ui report |
+| Create an Asset | `/create-an-asset` | Tailored sales asset (landing page, deck, one-pager, demo) |
 | Email Personalization | `/email-personalization` | Hyper-personalized email icebreakers |
 | Lead Intelligence | `/lead-intelligence` | Deep-research leads via web & LinkedIn |
 | Lead Qualification | `/lead-qualification` | Qualify & score leads against ICP |
-
-**Commands:** `/sales` (skill overview), `/outbound-pipeline` (B2B lead qualification + research + personalization pipeline)
+| Win/Loss Analysis | `/win-loss-analysis` | Analyze won vs lost deal patterns |
 
 **Agents:** `lead-qualifier`, `lead-researcher`, `icebreaker-writer`, `linkedin-scraper`
 
@@ -160,7 +166,7 @@ Repurpose content into multiple formats via the `/repurpose` command in the Mark
 
 ### Outbound Pipeline
 
-The Sales plugin includes a full B2B outbound pipeline (`/outbound-pipeline`) that orchestrates four sub-agents in parallel: **lead-qualifier** scores leads against your ICP, **lead-researcher** gathers deep company intelligence, **linkedin-scraper** pulls LinkedIn profiles and posts via Apify, and **icebreaker-writer** generates hyper-personalized email openers from the collected intelligence.
+The BenAI Sales plugin includes a full B2B outbound pipeline (`/lead-generation`) that orchestrates four sub-agents in parallel: **lead-qualifier** scores leads against your ICP, **lead-researcher** gathers deep company intelligence, **linkedin-scraper** pulls LinkedIn profiles and posts via Apify, and **icebreaker-writer** generates hyper-personalized email openers from the collected intelligence.
 
 ## Project Structure
 

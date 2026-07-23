@@ -6,6 +6,7 @@ description: Qualify B2B leads against a user-defined Ideal Customer Profile (IC
   when the user says "qualify leads", "filter my leads", "which leads match my ICP", "score these leads",
   "segment this list", "clean up my lead list", or "find the best leads". This skill handles lead lists of
   any size by automatically batching work across parallel sub-agents.
+disable-model-invocation: true
 ---
 
 # Lead Qualification
@@ -56,7 +57,7 @@ This lets the user confirm the data is loaded correctly and gives you a chance t
 
 The sub-agent's job for each lead:
 1. Read the available CSV columns for the lead
-2. Use WebSearch to research the company from multiple sources — not just the company's own website
+2. Use WebSearch to research the company from multiple sources, not just the company's own website
 3. Cross-reference findings from review sites (G2, Clutch, Trustpilot), industry directories, news articles, LinkedIn company pages, job boards, and other third-party sources
 4. Check whether the combined evidence confirms the company matches the ICP
 
@@ -153,3 +154,12 @@ Qualification complete.
 - If a sub-agent fails, retry it once. If it fails again, report which lead indices couldn't be processed and why.
 - If the lead list file is malformed, help the user fix it before proceeding.
 - If the user's ICP is ambiguous even after clarification, document your interpretation and get confirmation before running.
+
+## Self-improvement
+
+This skill is never finished. Improve it as you use it.
+
+- When the user corrects how a step was done, update the relevant reference file (or this SKILL.md) so the correction sticks. Do not just fix it for this run.
+- When a correction is a hard rule ("always do X", "never do Y"), add it as a permanent rule here.
+- When the user says an output was genuinely good, save it to `references/examples/` so it becomes a model for future runs.
+- Keep the skill small while you do this: when you add something, run the deletion test and cut anything that no longer changes behavior.

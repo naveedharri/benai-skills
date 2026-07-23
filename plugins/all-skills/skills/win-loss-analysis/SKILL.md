@@ -2,6 +2,7 @@
 name: win-loss-analysis
 description: Win/loss pattern analysis for B2B sales. Pulls deal data from ANY CRM (Attio, HubSpot, Salesforce, Pipedrive, etc.), enriches with emails, call transcripts (Fireflies/Gong), and web research, then analyzes won vs lost deal patterns to build an ideal prospect persona and strategy recommendations as a .docx report.
   MANDATORY TRIGGERS: "win/loss analysis", "won vs lost", "deal analysis", "sales patterns", "pipeline analysis", "prospect persona", "ICP from deals", "why deals are lost", "deal patterns", "lost deal analysis", "winning persona", "deal forensics", "pipeline forensics", "sales retrospective", "analyze my pipeline", "what's working in sales", or any request about understanding close/win vs loss patterns, what makes deals close, or building an ICP from historical deal data.
+disable-model-invocation: true
 ---
 
 # Win/Loss Pattern Analysis
@@ -27,9 +28,9 @@ Confirm understanding in one sentence before proceeding.
 
 ### Strategy
 
-1. **Filter at API level** — only request Won/Lost stage records, never pull all then filter locally
-2. **Request only needed fields** — name, email, company/domain, deal size, priority, source, close date
-3. **Read CRM-specific reference** — check available MCP tools, then read the appropriate file:
+1. **Filter at API level**, only request Won/Lost stage records, never pull all then filter locally
+2. **Request only needed fields**, name, email, company/domain, deal size, priority, source, close date
+3. **Read CRM-specific reference**, check available MCP tools, then read the appropriate file:
    - Attio → `references/crm-attio.md` | HubSpot → `references/crm-hubspot.md` | Salesforce → `references/crm-salesforce.md` | Other → `references/crm-generic.md`
 
 ### Steps
@@ -40,7 +41,7 @@ Confirm understanding in one sentence before proceeding.
 4. Filter out personal email domains (`gmail.com`, `yahoo.com`, `hotmail.com`, `outlook.com`, `icloud.com`, `googlemail.com`, `aol.com`, `protonmail.com`, `live.com`, `me.com`, `mail.com`, `yandex.com`, `zoho.com`, `gmx.com`, `fastmail.com`). Keep a count of filtered leads for the report.
 5. Organize into two clean lists with counts
 
-**CRITICAL — Save extracted data to files immediately:**
+**CRITICAL, Save extracted data to files immediately:**
 ```
 analysis_summary.json    # Counts, value distributions, aggregate stats
 won_deals.json           # Full won deal list
@@ -49,10 +50,10 @@ domain_analysis.json     # Business vs personal email breakdown
 ```
 This prevents data loss if enrichment phases hit errors or context limits. Never rely on holding all data in conversation context alone.
 
-**CRITICAL — Validate CRM field reliability:**
+**CRITICAL, Validate CRM field reliability:**
 After initial extraction, check which CRM fields actually contain useful data vs. being mostly empty. Fields like `lost_reason`, `agency`, `requirement`, `source`, and other custom fields are **frequently empty or unreliable** (e.g., 126/131 lost deals having "None" as lost reason is common). Before relying on any field for analysis:
 - Count how many records have non-empty values for each field
-- If a field is <30% populated, flag it as unreliable — don't use it as a primary analysis dimension
+- If a field is <30% populated, flag it as unreliable, don't use it as a primary analysis dimension
 - Tell the user which fields have reliable data and which don't, ask if any you're unsure about are actually maintained
 - Derive insights from enrichment data (transcripts, emails, web research) instead of empty CRM fields
 
@@ -64,24 +65,24 @@ Raw CRM data tells you WHAT happened; enrichment tells you WHY. **Complete ALL e
 
 ### Stream A: Email Analysis (Two-Step Process)
 
-**Step 1 — Metadata search**: Find emails involving top leads by deal size (10-15 per bucket). Use `search-emails-by-metadata` (Attio), engagement APIs (HubSpot), or activity records (Salesforce).
+**Step 1, Metadata search**: Find emails involving top leads by deal size (10-15 per bucket). Use `search-emails-by-metadata` (Attio), engagement APIs (HubSpot), or activity records (Salesforce).
 
-**Step 2 — Read actual content**: Metadata only gives subject lines and timestamps. You MUST read the actual email body using `get-email-content` (Attio) or equivalent to extract: objections raised, pricing discussions, competitive mentions, enthusiasm/hesitation signals, specific questions asked.
+**Step 2, Read actual content**: Metadata only gives subject lines and timestamps. You MUST read the actual email body using `get-email-content` (Attio) or equivalent to extract: objections raised, pricing discussions, competitive mentions, enthusiasm/hesitation signals, specific questions asked.
 
 **What to capture per lead**: Email count, date range, key content themes, standout quotes, response patterns.
 
 ### Stream B: External Company Research
 
-For top 10-15 leads per bucket, quick web research via `WebSearch`/`WebFetch`: company size, industry, tech stack, growth signals. 2-3 minutes per company max — focus on cohort patterns.
+For top 10-15 leads per bucket, quick web research via `WebSearch`/`WebFetch`: company size, industry, tech stack, growth signals. 2-3 minutes per company max, focus on cohort patterns.
 
 ### Stream C: Call Transcript Analysis
 
-**Search ALL available transcript tools** — don't stop at one source:
+**Search ALL available transcript tools**, don't stop at one source:
 - Fireflies: `fireflies_search`, `fireflies_get_transcript`, `fireflies_get_summary`
 - Attio: `search-call-recordings-by-metadata`, `semantic-search-call-recordings`, `get-call-recording`
 - Gong: Gong MCP search tools
 
-**Fireflies search strategy**: Use targeted queries — search by company name, contact name, or domain individually. Broad keyword searches return massive result sets that overflow context. Example: search "Boostability" not "SEO demo call".
+**Fireflies search strategy**: Use targeted queries, search by company name, contact name, or domain individually. Broad keyword searches return massive result sets that overflow context. Example: search "Boostability" not "SEO demo call".
 
 **What to extract**: Number of calls, call progression arc, pain points (concrete vs vague), buying signals, objections, who attended, prospect's stated intent. Capture direct quotes for the report.
 
@@ -108,7 +109,7 @@ Compare Won vs Lost across 6 dimensions. For each, document the pattern, the con
 5. **Deal Dynamics**: Deal size sweet spot, source/channel effectiveness, sales cycle length
 6. **Objections & Red Flags**: Objections overcome in wins, fatal objections in losses, early warning signals
 
-**For lost deal reasons**: Don't rely on the CRM lost_reason field — it's almost always empty. Instead, categorize losses from enrichment evidence (transcripts, emails, web research) into archetypes like: Went Cold, Enterprise Procurement Complexity, Product Quality Issues, Pricing/Cost, Competitive/Build Own, Poor Product Fit.
+**For lost deal reasons**: Don't rely on the CRM lost_reason field, it's almost always empty. Instead, categorize losses from enrichment evidence (transcripts, emails, web research) into archetypes like: Went Cold, Enterprise Procurement Complexity, Product Quality Issues, Pricing/Cost, Competitive/Build Own, Poor Product Fit.
 
 ## Phase 4: Persona Construction
 
@@ -141,7 +142,7 @@ Build `charts_config.json` with these (replace placeholder values with actual da
 4. **Geographic Distribution** (`grouped_bar`): Won vs Lost by region
 5. **Top Industries Won** (`horizontal_bar`, green): Where you win most
 6. **Top Industries Lost** (`horizontal_bar`, red): Where you lose most
-7. **Engagement Depth** (`horizontal_bar`): Avg meeting duration, questions per meeting, calls per deal, email touches — derived from transcript/email enrichment
+7. **Engagement Depth** (`horizontal_bar`): Avg meeting duration, questions per meeting, calls per deal, email touches, derived from transcript/email enrichment
 8. **Key Differentiators** (`horizontal_bar`): % of won deals showing each winning trait
 
 **Optional**: Lead source distribution, sales cycle comparison, priority distribution.
@@ -192,9 +193,18 @@ Save to outputs directory. Offer executive summary as separate doc if report is 
 
 ## Performance Notes
 
-1. **Filter at API level** — never pull all records then filter locally
-2. **Batch record lookups** — groups of 20-50 per call
-3. **Parallelize enrichment** — email, web, transcripts are independent streams
-4. **Prioritize by deal size** — highest-value deals get deepest enrichment
-5. **Save intermediate files** — extracted data, enrichment results, analysis summaries. Single most important practice for resilience against context limits and errors.
-6. **Adapt to missing data** — no transcripts? lean on emails. No emails? lean on CRM notes + transcripts. Thin data (<15 per bucket)? discuss with user.
+1. **Filter at API level**, never pull all records then filter locally
+2. **Batch record lookups**, groups of 20-50 per call
+3. **Parallelize enrichment**, email, web, transcripts are independent streams
+4. **Prioritize by deal size**, highest-value deals get deepest enrichment
+5. **Save intermediate files**, extracted data, enrichment results, analysis summaries. Single most important practice for resilience against context limits and errors.
+6. **Adapt to missing data**, no transcripts? lean on emails. No emails? lean on CRM notes + transcripts. Thin data (<15 per bucket)? discuss with user.
+
+## Self-improvement
+
+This skill is never finished. Improve it as you use it.
+
+- When the user corrects how a step was done, update the relevant reference file (or this SKILL.md) so the correction sticks. Do not just fix it for this run.
+- When a correction is a hard rule ("always do X", "never do Y"), add it as a permanent rule here.
+- When the user says an output was genuinely good, save it to `references/examples/` so it becomes a model for future runs.
+- Keep the skill small while you do this: when you add something, run the deletion test and cut anything that no longer changes behavior.
