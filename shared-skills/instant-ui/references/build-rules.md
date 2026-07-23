@@ -18,6 +18,7 @@ The BenAI brand voice is plain-English, direct, builder-first.
 6. **Numbers are specific.** Not "dozens of integrations." Say "11 integrations." Not "fast." Say "2 weeks."
 7. **The champion-mark highlight holds ONE phrase.** Usually the thing you want them to remember. Do not box more than one word or phrase per hero.
 8. **Pills, labels, and meta use mono caps.** "SECTION 01 · THE PROBLEM", "WEEK 01", "02 WEEKS TO HANDOFF."
+9. **No AI-tell hero eyebrow.** Never open a page (especially a dashboard) with a mono kicker line led by a colored dot, like "● NAME · DATE · META" (the `.cover-pre` + `.dot` pattern). It reads as AI-generated. Put date and context in the header meta, a plain sub-label, or fold it into the subtitle. Dashboards never use `.cover-pre`.
 
 ## 2. Hard build constraints
 
@@ -55,7 +56,8 @@ Run before confirming output.
 - [ ] All headings are `font-weight: 900`
 - [ ] All numbers and stats use `var(--mono)`
 - [ ] Borders are `3px solid var(--border)`, shadows are hard (`6px 6px 0 #111`)
-- [ ] BenAI smiley SVG rendered in header and footer
+- [ ] BenAI smiley SVG rendered in header and footer (circle + single U-smile, NO eyes)
+- [ ] No green-dot hero eyebrow (`.cover-pre` with `.dot`) on dashboards
 - [ ] Page background is cream `#fffef8`, not white
 - [ ] No placeholder copy, every sentence is specific
 - [ ] Responsive breakpoints at 980px and 720px

@@ -82,6 +82,8 @@ Universal section/status label. Appears above section headings.
 
 ## 3. Hero / Cover
 
+> Caution: the `.cover-pre` eyebrow (mono kicker led by a `.dot`) is for marketing landing pages only. **Never use it on dashboards** (see build rule 9). It reads as AI-generated. On dashboards, put date/context in the header meta or the subtitle.
+
 ```css
 .cover { border-bottom: 3px solid var(--border); background: var(--bg); position: relative; overflow: hidden; }
 .cover-inner { max-width: 1120px; margin: 0 auto; padding: 88px 40px 96px; position: relative; }

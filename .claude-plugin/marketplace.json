@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Expert automation plugins that turn Claude into a specialist for your team. Install by department to get skills for marketing, sales, operations, creative, and product workflows.",
-    "version": "1.9.0"
+    "version": "1.9.1"
   },
   "plugins": [
     {
@@ -14,7 +14,7 @@
       "displayName": "BenAI Marketing",
       "source": "./plugins/benai-marketing",
       "description": "The BenAI marketing OS as skills: research, copywriting in Ben's voice, design systems, carousels, thumbnails, video editing, and analytics. competitor-radar and analytics-dashboard are schedule-ready.",
-      "version": "1.5.0",
+      "version": "1.5.1",
       "author": {
         "name": "BenAI"
       },
@@ -299,7 +299,7 @@
       "name": "agentic-os",
       "displayName": "Agentic OS",
       "source": "./plugins/agentic-os",
-      "description": "Set up an agentic OS \u2014 inside an Obsidian vault (command-center dashboard + bundled plugins) or as a standalone Next.js web dashboard with live MCP integrations and optional Railway deploy. Includes /os-mcp to self-host the Relay MCP server.",
+      "description": "Set up an agentic OS — inside an Obsidian vault (command-center dashboard + bundled plugins) or as a standalone Next.js web dashboard with live MCP integrations and optional Railway deploy. Includes /os-mcp to self-host the Relay MCP server.",
       "version": "1.0.0",
       "author": {
         "name": "BenAI"
@@ -344,7 +344,7 @@
     {
       "name": "autoresearch",
       "source": "./plugins/autoresearch",
-      "description": "Autonomous optimization loop \u2014 iterates on prompts, skills, templates, or code overnight. Two evaluation modes: deterministic (eval.py with proxy heuristics) for mechanical checks, or AI judge (LLM rubric scoring) for creative/subjective quality. Uses 4-way agent separation for unbiased evaluation.",
+      "description": "Autonomous optimization loop — iterates on prompts, skills, templates, or code overnight. Two evaluation modes: deterministic (eval.py with proxy heuristics) for mechanical checks, or AI judge (LLM rubric scoring) for creative/subjective quality. Uses 4-way agent separation for unbiased evaluation.",
       "version": "1.0.0",
       "author": {
         "name": "BenAI"
@@ -364,7 +364,7 @@
       "name": "aios",
       "displayName": "AIOS",
       "source": "./plugins/aios",
-      "description": "Set up an AI OS at the tier that fits \u2014 Skill OS (your entire second brain inside one Claude skill, zero infra) or Cloud OS (synced via Google Drive, OneDrive, iCloud, or Dropbox). Shares one folder structure with the Local OS (Obsidian) tier so you can graduate between them.",
+      "description": "Set up an AI OS at the tier that fits — Skill OS (your entire second brain inside one Claude skill, zero infra) or Cloud OS (synced via Google Drive, OneDrive, iCloud, or Dropbox). Shares one folder structure with the Local OS (Obsidian) tier so you can graduate between them.",
       "version": "1.0.0",
       "author": {
         "name": "BenAI"

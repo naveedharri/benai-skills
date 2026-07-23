@@ -89,14 +89,12 @@ Every page starts from this wrapper. Replace `[TITLE]`, `[PAGE KICKER]`, and `[C
 
 ## 2. BenAI smiley logo (SVG)
 
-Always use this exact markup. It uses `currentColor`, so it inherits `color` from its parent.
+The real BenAI mark is a **circle plus a single U-shaped smile. No eyes, no wide grin.** Reproduced from `benaios-site/public/logo-smiley.png`. Always use this exact markup. It uses `currentColor`, so it inherits `color` from its parent. Never add eye dots or change the smile to a full-width grin.
 
 ```html
 <svg class="smiley" viewBox="0 0 48 48" fill="none">
-  <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="3" fill="none"/>
-  <circle cx="17" cy="18" r="2.5" fill="currentColor"/>
-  <circle cx="31" cy="18" r="2.5" fill="currentColor"/>
-  <path d="M14 30 C14 30 18 36 24 36 C30 36 34 30 34 30" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <circle cx="24" cy="24" r="21" stroke="currentColor" stroke-width="3.5" fill="none"/>
+  <path d="M16 23 C16 29.5 19.5 33 24 33 C28.5 33 32 29.5 32 23" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" fill="none"/>
 </svg>
 ```
 
