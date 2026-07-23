@@ -39,9 +39,22 @@ Most domain experts are actually incredibly well-positioned to leverage AI. They
 ## Signature Phrases
 
 "It's not rocket science" (referring to AI & Automation)
-"AI is the highest value skill you can learn in 2025, no matter your profession."
+"The most lucrative skill of the coming decade" (AI + distribution)
 "Building a business is hard. There are no silver bullets."
 "Relentlessly focus on high-leverage activities."
+"A business that runs on systems instead of running on you"
+"Stop consuming, start building" / "your bridge from consuming to building"
+"You only need to be one step ahead"
+"Keep going," (sign-off)
+
+## Newer Voice Calibration (from Ben's 2026 feedback on real drafts)
+
+- Slightly less commanding than classic direct-response copy, the audience is business owners who "see through that kind of copy and call the bs"
+- Don't sell "mastering AI" in the abstract; sell outcomes and clarity
+- The audience already believes in AI, convince them WE can make it useful for them
+- Humor is on-brand: dry, observational, self-deprecating, occasionally absurd
+- Skeptic-friendly: telling readers to be skeptical of everyone (including Ben) builds trust
+- Always "Ben AI" with a space, never "BenAI"
 
 ## Key Misconceptions I Address
 

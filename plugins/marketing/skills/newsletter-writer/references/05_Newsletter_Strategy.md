@@ -1,92 +1,62 @@
-# Newsletter Strategy
+# Newsletter Strategy (current era, mid-2026)
 
-## Value Proposition
+## What the newsletter is now
 
-"Skip the AI theory trap and build your $10K/month AI business in 90 days - using proven systems from someone who's actually done it (AI agency, AI product, AI education, AI services)."
+A **daily email** to 30,000+ subscribers (sent via Kit), most of whom came from Ben's YouTube channel and lead magnets. Every email delivers one story-driven insight and softly pitches the **Ben AI Accelerator** ($127/month; existing members grandfathered at $97). Occasionally a second CTA points to high-ticket consulting (Calendly application call).
 
-## Category
+Mission of every email: be the reader's **bridge from consuming to building**.
 
-AI Business Acceleration for Domain Experts
+## The email types (choose one per newsletter)
 
-We exist at the intersection of three categories:
+1. **Daily story email** (the default), personal story, travel observation, famous story, community win, or something found online → one lesson → Accelerator CTA. See Part 1 of `08_Newsletter_Examples.md`.
+2. **YouTube promo**, short email pushing the latest video, sent ~5 minutes after the video goes live. Links to the video *inside a playlist* so the sidebar shows only Ben's content. See Part 2 of `08_Newsletter_Examples.md`.
+3. **Engagement / reply-bait**, asks readers to reply with what they're building. Goals: reader insight, make them feel seen, deliverability. ~Monthly.
+4. **Promo campaign**, launches, price raises, deadline sequences. Harder-selling emails can send from Oskar (co-founder); dailies always from Ben. See `09_Sequence_Promo_Examples.md`.
+5. **Lifecycle**, welcome sequence, cart abandonment, churn winback, 90-day re-engagement, failed payment. Automated in Kit. See `09_Sequence_Promo_Examples.md`.
 
-AI/Automation Education (technical training)
-Business Acceleration (GTM, sales, scaling)
-Community-Led Learning (peer support, accountability)
+## Idea sources (in priority order)
 
-## The Arch Enemy
+1. **The stories doc**, daily questions Ben answers about recent moments, travel, conversations, annoyances, realizations. The richest source for daily story emails.
+2. **The values & beliefs doc**, Ben's long-form answers on work, success, fears, habits, diet, routine, past businesses. Source for belief-driven and Q&A-style emails ("Pointless").
+3. **YouTube videos**, each new video gets a promo email; older videos can be mined for insight emails.
+4. **Community activity**, member wins, great posts (quoted with permission/credit), Q&A moments. One member story can fuel an email ("Stop writing perfect prompts", "They told her it would fail…").
+5. **Found online**, viral posts, tweets, job listings worth riffing on.
 
-The AI Tutorial Industrial Complex
+One story can yield MULTIPLE emails: the 200K-subscriber story became "You are setting the wrong goals" AND "(firstname) is a natural" (different angles, spaced days apart). Always consider splitting a rich story.
 
-The endless cycle of:
+## Positioning
 
-YouTube tutorials teaching you to build demos no one will pay for
-Expensive courses ($2K-10K) that leave you with certificates but no clients
-AI hype merchants selling dreams without implementation
-"Gurus" teaching what they've never built themselves
-The comfortable trap of learning instead of earning
-The myth that you need to be an AI expert before starting
+**Category:** AI implementation & acceleration for business operators.
+**The arch enemy:** the AI Tutorial Industrial Complex, hype merchants, demo-builders, $5K courses, "gurus" teaching what they've never built, the comfortable trap of learning instead of earning.
+**Our stance:** anti-guru, anti-hype, anti-perfectionism. Real builds, real clients, real revenue, from a team actually doing it (two $1M ARR businesses built in public).
 
-## Our Position vs The Enemy
+## Core beliefs the emails keep reinforcing
 
-We're the anti-guru, anti-hype, anti-perfectionism movement.
+1. **Consuming ≠ progress.** Stop watching tutorials, start using AI daily. AI literacy is a skill built through reps.
+2. **Focus on inputs, not outputs.** Track what you control (videos published, workflows built), not what you don't (views, subscribers). "Do so much volume it would be unreasonable to fail."
+3. **You only need to be one step ahead** of the person you're helping. Nobody is a full expert yet, that's the opportunity.
+4. **Systems over heroics.** The goal is a business that runs on systems instead of running on you. The best AI system is the one people actually use.
+5. **Distribution > product perfection.** Most businesses fail because they never found a way to get customers at scale (Ben's first startup died this way despite a great product).
+6. **Domain expertise + AI = unfair advantage.** AI is strong at verifiable work, weak at taste and judgment, which is exactly why domain experts win.
+7. **Sell to a starving crowd.** Don't ask "what could I build?", ask "who desperately needs this already?"
+8. **It's still extremely early.** The AI-native bubble is tiny; most businesses haven't implemented anything. Don't compare yourself to the 0.1% ahead of you.
+9. **Small > big.** High-margin business, tiny team of high-agency people, no billion-dollar ambitions. Hard work on high-leverage activities, work-life balance measured in years not days.
+10. **Integrity over hype.** Skepticism of "AI experts" is healthy, including of us. Testimonials talk; we don't overclaim.
 
-While others teach you to build impressive demos, we teach you to get your first paying client.
-While others sell you $5K courses on becoming an "AI expert," we give you $97/month access to systems that generate revenue.
-While others preach overnight success, we share the uncomfortable truth: building a business is hard, but distribution (not technical skills) is what actually matters.
+## The reader should always leave feeling
 
-Our mantra: "Real builds. Real clients. Real revenue. From someone actually doing it."
+- "He gets it. He's been there."
+- "I can do this."
+- "Let me start with that one thing today."
 
-## Core Beliefs / Point of View
+Never: inadequate, overwhelmed, or pitched-at.
 
-### 1. Distribution > Perfection
+## Practical facts (for accurate copy)
 
-95% of aspiring AI entrepreneurs never launch because they're stuck in the learning trap. Your first project should feel uncomfortable. You'll learn more in one client project than six months of tutorials.
-
-### 2. Domain Expertise + AI = Unfair Advantage
-
-You don't need to be an AI expert. You need to be one step ahead of the people you help. Non-technical professionals with domain expertise are better positioned than most AI engineers.
-
-### 3. Custom First, Product Second
-
-Everyone wants to build a "scalable productized business" from day one. That's the expensive mistake. Build custom first, let customers tell you what to productize, then scale what's proven.
-
-### 4. High-Leverage Work > Hard Work
-
-Most people work hard. Successful people work hard on high-leverage activities. Stop perfecting your tech stack. Start practicing acquisition. That's the only skill that compounds forever.
-
-### 5. Build in Public = Infinite Distribution
-
-You're not behind - you're in an AI bubble. Outside this bubble, 99% of businesses haven't implemented a single automation. Show up consistently on one channel for 90 days.
-
-## Controversial Truths We Stand For
-
-Your first client will expose you as a fraud (that's normal)
-YouTube with 500 views beats 50,000 LinkedIn connections
-$97 spent on the right system beats $5,000 on the wrong course
-You're already qualified enough to start today
-Most "AI experts" are one YouTube video ahead of you
-The best time to start was yesterday; the second best is now
-Work-life balance is yearly, not daily (grind hard for 2-3 years, then take a year off)
-
-## The Core Narrative: From AI Consumer to AI Business Owner in 90 Days
-
-### Act 1: The Trap (Current State)
-
-You're stuck. Not because you lack skills. You're stuck because you're doing what feels comfortable: consuming AI content, building demos, perfecting your landing page, waiting until you're "ready." Meanwhile, AI is disrupting your industry.
-
-### Act 2: The Shift (The Realization)
-
-Then you discover the uncomfortable truth: the skill that matters isn't building better AI systems - it's getting clients. Distribution beats perfection. Done beats perfect. You're already one step ahead of 99% of businesses.
-
-### Act 3: The Build (The Journey)
-
-You pick ONE channel. You commit to 2 hours daily on lead generation. You post about what you're learning. You feel like an impostor. Then your first call books. You say yes despite the anxiety. You figure it out as you go.
-
-### Act 4: The Scale (The Outcome)
-
-Project one leads to referral two. Patterns emerge. You standardize. You raise prices. You hit $3K/month, then $5K, then $10K. Not because you became an AI expert, but because you got comfortable being uncomfortable.
-
-### The Meta Message
-
-This newsletter follows the same journey. I'm not teaching theory - I'm sharing what I'm building right now. My wins, my mistakes, my systems. You're watching someone build to $100K MRR in real-time. If I can do it (physiotherapist turned AI entrepreneur), so can you.
+- Platform: Kit (merge tags: `(firstname)`, `{{ subscriber.freebie_name }}`, Deadline Funnel variables for promos)
+- List: 30,000+; daily emails EXCLUDE current Accelerator members (churn protection)
+- YouTube: 200,000+ subscribers, ~100 videos published, ~2 years of weekly uploads
+- Community: 1,000+ members, 4.9 stars across 500+ reviews
+- Businesses: AI education (Accelerator) + AI agency, both $1M+ ARR
+- Price: $127/month since July 2026 ($97 grandfathered); planned steps $167 (Aug), $197 (Sep)
+- High-ticket: "AI Operator" 30-day implementation partnership (10 case-study spots, $200k–$5M revenue businesses)

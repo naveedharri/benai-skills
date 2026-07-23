@@ -1,6 +1,6 @@
 ---
 name: market-intelligence-report
-description: Produce a Market Intelligence Report — YouTube competitive research, channel analysis, content gap discovery, idea generation, daily scanning, and AI trend scouting — then render it as a polished soft-UI HTML dashboard.
+description: Produce a Market Intelligence Report — YouTube competitive research, channel analysis, content gap discovery, idea generation, daily scanning, and AI trend scouting — then render it as a BenAI-branded HTML dashboard in the instant-ui design language.
   Use this skill whenever the user says "market intelligence report", "market intel", "intelligence report", "research channels", "analyze competitors",
   "find trending topics", "niche analysis", "competitive research", "scrape YouTube channels", "generate ideas", "brainstorm videos",
   "video ideas", "content ideas", "ideation", "daily scan", "morning scan", "what's new today", "scan for updates",
@@ -11,11 +11,11 @@ allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Task, AskUserQuestion, Skill
 
 # Market Intelligence Report
 
-This skill conducts YouTube + Twitter/X competitive intelligence — analyzing channels, discovering content gaps, generating video ideas, and scanning for daily opportunities — and then packages the findings into a **polished soft-UI HTML dashboard** the user can open, screenshot, or share.
+This skill conducts YouTube + Twitter/X competitive intelligence — analyzing channels, discovering content gaps, generating video ideas, and scanning for daily opportunities — and then packages the findings into a **BenAI-branded instant-ui HTML dashboard** the user can open, screenshot, or share.
 
 Every run has two halves:
 1. **Gather + synthesize** the intelligence (Standard Workflows below).
-2. **Render the dashboard** from the bundled template using the `soft-ui` aesthetic (see "Dashboard Output").
+2. **Render the dashboard** from the bundled template in the instant-ui design language (see "Dashboard Output").
 
 ## Connectors
 
@@ -144,7 +144,11 @@ The `vidiq` connector exposes vidIQ's proprietary YouTube intelligence layer —
 | `references/youtube-scraping-guide.md` | How the scraper collects data |
 | `references/twitter-watchlist.md` | 330+ scored/tiered Twitter handles for ecosystem monitoring |
 | `references/anthropic-official-sources.md` | Official Anthropic/Claude update sources: GitHub releases, platform changelog, blog, SDKs |
-| `references/dashboard-template.html` | Soft-UI dashboard scaffold rendered at the end of every run |
+| `references/dashboard-template.html` | Instant-ui dashboard scaffold rendered at the end of every run |
+| `references/instant-ui/design-tokens.md` | BenAI instant-ui `:root` token block and typography rules |
+| `references/instant-ui/page-shell.md` | Instant-ui page wrapper, BenAI smiley SVG, responsive breakpoints |
+| `references/instant-ui/components.md` | Instant-ui component library (pills, cards, stat strips, tables, CTA) |
+| `references/instant-ui/build-rules.md` | Instant-ui voice rules, hard build constraints, after-build checklist |
 
 ## Mandatory: Use ALL Connectors
 
@@ -254,7 +258,7 @@ With all collected data:
 
 #### Phase 4: Build the dashboard (ALWAYS — see "Dashboard Output")
 
-After presenting the chat summary, render the soft-UI dashboard from the synthesized data.
+After presenting the chat summary, render the instant-ui dashboard from the synthesized data.
 
 ### Competitive Research ("research channels", "analyze competitors", "niche analysis")
 
@@ -355,8 +359,8 @@ After the ranked list:
 
 ### Steps
 
-1. **Load the soft-UI aesthetic.** Call the `soft-ui` skill (`Skill` tool, skill name `high-end-visual-design`) and follow its design directives — Soft Structuralism vibe (silver-grey / white background, massive bold Grotesk typography, airy floating cards, ultra-soft diffused ambient shadows), nested double-bezel cards, eyebrow pill tags, generous macro-whitespace, and spring-physics micro-motion. The bundled template already encodes this aesthetic; use the skill to refine and extend it, never to replace it with a generic layout.
-2. **Read the template** at `references/dashboard-template.html`. It is a self-contained, single-file HTML document (all CSS inline, no external dependencies, works offline, theme-aware light/dark).
+1. **Load the instant-ui design language.** Read the embedded guides in `references/instant-ui/`: `design-tokens.md` (the `:root` token block and typography rules — cream `#fffef8` canvas, near-black ink, weight-900 headings, SF Mono for every number and label), `page-shell.md` (gradient stripe, dark BenAI header with the smiley SVG, responsive breakpoints), `components.md` (copy component CSS/HTML verbatim if you need blocks beyond the template), and `build-rules.md` (hard constraints and the after-build checklist). The output must look like it came off the same line as every other BenAI instant-ui asset.
+2. **Read the template** at `references/dashboard-template.html`. It is a self-contained, single-file HTML document already built in the instant-ui language (all CSS inline, no external dependencies, works offline).
 3. **Fill every `<!-- FILL: ... -->` placeholder** with the real synthesized data:
    - Report title + generated date/time + scan-window subtitle
    - KPI stat tiles (total signals, top trend, breaking count, video opportunities)
@@ -373,7 +377,7 @@ After the ranked list:
 - The dashboard must be **fully self-contained** — inline all CSS, embed nothing external. It has to open with a double-click and render offline.
 - **No em dashes** anywhere in the rendered copy. Use commas, periods, or parentheses.
 - Match signal-count and engagement numbers exactly to what the chat summary reported. The dashboard is a visualization of the same data, not a second, divergent analysis.
-- Keep the soft-UI look: no harsh borders, no `shadow-md`-style dark drops, no banned fonts (Inter/Roboto/Arial). The template ships with the correct system font stack and soft shadows already.
+- Keep the instant-ui look: cream `#fffef8` background, 3px solid `#111` borders, hard zero-blur shadows, square corners, all headings `font-weight: 900`, SF Mono for every number/label/pill, the 4px blue/green/amber gradient stripe at the top, and the BenAI smiley in header and footer. No Google Fonts, no rounded cards, no soft blurred shadows. Run the after-build checklist in `references/instant-ui/build-rules.md` before confirming the output.
 
 ## Domain Knowledge
 

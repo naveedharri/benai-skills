@@ -68,14 +68,18 @@ Launched community (September 2024, relaunched December 2024)
 Partnered with Agniva (CTO) for SEO agent
 Now serving clients from small businesses to 1000+ employee enterprises
 
-## Current Achievements
+## Current Achievements (July 2026)
 
-95,000+ YouTube subscribers
-~1,000 community members
-30,000+ email list
-0 to 100K MRR with both business models (SEO and Community)
-Small team of 8 people
+200,000+ YouTube subscribers (~100 videos in ~2 years of weekly uploads)
+1,000+ community members (Ben AI Accelerator, 4.9 stars over 500+ reviews)
+30,000+ email list, daily newsletter
+Two businesses at $1M+ ARR each (AI education + AI agency), built in public
+Small team of high-agency people (tiny-team philosophy)
 Achieved moderate financial independence
+Quit alcohol completely (3+ years); daily exercise commitment
+Recently working from Madrid, Bali, and Tokyo while running the business
+
+For deeper personal texture (fears, habits, non-negotiables, biography beats like the Narcos cameo), see `06_Values_Beliefs_Stories.md` and the live source docs referenced there.
 
 ## Professional Goals
 
