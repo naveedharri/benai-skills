@@ -64,41 +64,34 @@ Can combine search queries + video URLs + channel URLs in a **single run**.
 { "searchQueries": ["Claude AI tutorial"], "startUrls": [{"url": "https://www.youtube.com/@channelname"}], "maxResults": 20 }
 ```
 
-#### Twitter/X scraping via `apidojo/twitter-scraper-lite` (Primary)
+#### Existing Twitter/X Routes (Default)
 
-`apidojo/twitter-scraper-lite` (Twitter Scraper Unlimited) is the primary Twitter actor. Use this for all Twitter/X calls.
+Keep the repository's existing Actor order:
 
-| Parameter | Type | What it does |
-|-----------|------|-------------|
-| `searchTerms` | string[] | Keyword search. Supports Twitter advanced syntax (`"from:handle"`, `"to:handle"`) |
-| `twitterHandles` | string[] | Direct handle scraping — preferred for watchlist batch scanning |
-| `author` | string | Single author filter |
-| `start` / `end` | string | Date range filter (ISO 8601). Use for 48-hour lookback windows |
-| `minimumFavorites` | int | Engagement floor — only return tweets with N+ likes |
-| `minimumRetweets` | int | Only return tweets with N+ retweets |
-| `sort` | enum | `"Top"`, `"Latest"`, or `"Latest + Top"` |
-| `maxItems` | int | Max tweets to return per call |
-| `tweetLanguage` | string | ISO 639-1 language code (e.g., `"en"`) |
+1. Use `apidojo/twitter-scraper-lite` as the existing primary route.
+2. Fall back to `apidojo/tweet-scraper` when that route fails.
+3. Keep the same bounded input when switching between those compatible routes.
 
-**Watchlist scan example:**
-```json
-{ "twitterHandles": ["AnthropicAI", "claudeai", "trq212"], "maxItems": 50, "start": "2026-04-13T06:00:00Z", "sort": "Latest" }
-```
+Do not replace an existing configured route automatically.
 
-**Keyword scan example:**
-```json
-{ "searchTerms": ["Claude Cowork", "Anthropic launch"], "maxItems": 30, "sort": "Top", "minimumFavorites": 100 }
-```
+#### Xquik Twitter/X Route (Optional)
 
-#### Twitter/X fallback chain (IMPORTANT)
+Use [Xquik X Tweet Scraper](https://apify.com/xquik/x-tweet-scraper).
+Read `references/youtube-scraping-guide.md` before collecting X data.
+It defines the current inputs, examples, approval, and recovery flow.
+Select Xquik explicitly because its schema differs from the existing routes.
 
-When a Twitter call fails or returns empty (`noResults: true`), follow this **exact order**:
+Always follow these rules:
 
-1. **Switch actor first** — retry the same request with `apidojo/tweet-scraper` using identical input params. Do NOT relax filters on the primary actor. The most likely cause of empty results is the actor being down, not the filters being too strict.
-2. **Only if both actors fail** — then relax filters (remove date range, lower `minimumFavorites`, broaden `searchTerms`).
-3. **Only if both actors fail with relaxed filters** — report the failure to the user and continue with other data sources.
+- Inspect the live schema and pricing first.
+- Show the exact input and run-wide `maxItems` cap.
+- Wait for explicit approval.
+- Separate posts from `diagnostic` and `run-report` rows.
+- Never retry a paid run without new approval.
 
-**Never** relax filters or remove date ranges as a first response to empty results. Switch actor first.
+If any route fails, inspect its run status first. Switch to a compatible
+existing fallback before relaxing filters. Never send one Actor another
+Actor's input without inspecting and translating the schema.
 
 ### `vidiq` connector (YouTube SEO, keyword research, outlier/breakout discovery)
 
@@ -152,11 +145,13 @@ The `vidiq` connector exposes vidIQ's proprietary YouTube intelligence layer —
 
 ## Mandatory: Use ALL Connectors
 
-**Every time this skill is invoked, you MUST use every available connector.** Do not skip any connector. Do not limit the number of queries or calls. Be thorough — cast a wide net.
+**Every time this skill is invoked, use every relevant available connector.**
+Keep every query and paid run bounded.
+Ask before any connector can incur usage.
 
 - **YouTube connector** — Primary for ALL YouTube data: `searchVideos` (with `recency` filter for date-scoped searches), `getVideoDetails`, `getChannelStatistics`, `getChannelTopVideos`, and `getTranscripts` (free). Be mindful of the 10K units/day quota — `searchVideos` costs 100 units per call; all other tools cost ~1 unit.
 - **vidIQ connector** — Mandatory for keyword research, outlier detection, breakout channel discovery, and title/thumbnail scoring. YouTube Data API does not expose search volume or competition scores — vidIQ does. Use `vidiq_keyword_research` on every ideation pass, `vidiq_outliers` and `vidiq_breakout_channels` on competitive research, `vidiq_trending_videos` on trend scouts, and `vidiq_score_title` to validate draft titles.
-- **Apify connector** — Primary for Twitter/X via `apidojo/twitter-scraper-lite`. If it fails or returns empty, fall back to `apidojo/tweet-scraper` (same input params). Fallback for YouTube search via `automation-lab/youtube-scraper` if YouTube connector hits quota limits.
+- **Apify connector:** Keep `apidojo/twitter-scraper-lite` and `apidojo/tweet-scraper` as existing Twitter/X routes. Use `xquik/x-tweet-scraper` when selected explicitly. Inspect the chosen schema and live pricing first. Require an approved cap. Use `automation-lab/youtube-scraper` only when YouTube quota fails.
 - **Official Anthropic sources** — Claude Code GitHub releases, Platform Changelog, and Anthropic News Blog must be checked in every daily scan and trend scout (see `references/anthropic-official-sources.md`). Use `WebFetch` to pull the latest entries.
 
 If a connector fails or is unavailable, try the fallback first. Only tell the user if both primary and fallback fail. Never silently skip a connector.
@@ -206,18 +201,34 @@ Launch as many of these as possible in a single turn. Do not wait for one to fin
 - `vidiq_breakout_channels` in the AI tools/automation niche — catches new competitors gaining momentum that aren't on the watchlist yet.
 - `vidiq_keyword_research` on the day's emerging Twitter keywords (e.g., new feature names from Anthropic releases) — quantifies search demand before deciding whether a topic is worth a video.
 
-**Twitter/X watchlist** — Use `apidojo/twitter-scraper-lite` (fall back to `apidojo/tweet-scraper` on failure). See `references/twitter-watchlist.md` for handle arrays. **Every tier is compulsory. Do not skip any tier or handles within a tier.**
-- **P1 handles** — All ~30 P1 handles via `twitterHandles`, `maxItems: 50`, 48-hour `start` window, `sort: "Latest"`. No engagement filter.
-- **P2 handles** — All ~69 P2 handles via `twitterHandles`, `maxItems: 50`, 48-hour `start` window, `minimumFavorites: 10`.
-- **P3 handles** — All ~120 P3 handles via `twitterHandles` (split into 2-3 batches), `maxItems: 30` per batch, 48-hour `start` window, `minimumFavorites: 50`.
-- **P4 handles** — All ~93 P4 handles via `twitterHandles`, `maxItems: 30`, 48-hour `start` window, `minimumFavorites: 100`.
-- **Keyword scan** — `searchTerms: ["Claude Cowork", "Claude Desktop", "Anthropic", "Claude MCP", "Claude skills", "Claude agents"]`, `maxItems: 30`, 48-hour `start` window, `sort: "Top"`.
+**Twitter/X watchlist:** Keep the existing Actor route unless Xquik is selected explicitly. See `references/twitter-watchlist.md`. Inspect and approve each bounded run first.
 
-**Twitter/X discovery (beyond the watchlist)** — catches signals the watchlist might miss. All with 48-hour `start` window:
-- **Broad ecosystem** — `searchTerms: ["Claude AI", "Anthropic", "Claude Code", "Claude Cowork"]`, `maxItems: 50`, `sort: "Top"`, `minimumFavorites: 50`.
-- **Adjacent AI tools** — `searchTerms: ["AI automation for business", "AI tools non-technical", "AI workflow no code", "AI assistant for work"]`, `maxItems: 30`, `sort: "Top"`, `minimumFavorites: 100`.
-- **Competitor mentions** — `searchTerms: ["ChatGPT vs Claude", "Cursor vs Claude", "Copilot vs Claude", "best AI tool 2026"]`, `maxItems: 30`, `sort: "Top"`, `minimumFavorites: 50`.
-- **Viral AI content** — `searchTerms: ["AI changed my workflow", "AI saved me hours", "built this with AI"]`, `maxItems: 30`, `sort: "Top"`, `minimumFavorites: 200`.
+For the existing route:
+
+- **P1 handles:** Use all P1 handles through `twitterHandles`, `maxItems: 50`, a 48-hour `start` window, and `sort: "Latest"`.
+- **P2 handles:** Use all P2 handles with `maxItems: 50` and `minimumFavorites: 10`.
+- **P3 handles:** Split P3 into bounded batches. Use `maxItems: 30` and `minimumFavorites: 50`.
+- **P4 handles:** Use all P4 handles with `maxItems: 30` and `minimumFavorites: 100`.
+- **Keyword scan:** Use bounded `searchTerms`, a 48-hour `start` window, and `sort: "Top"`.
+
+For Xquik:
+
+1. Convert each handle to a `from:<handle>` search term.
+2. Set `time.sinceTime` to 48 hours ago.
+3. Set `queryType: "Latest"` and `includeSearchTerms: true`.
+4. Use the same run-wide caps.
+5. Translate `minimumFavorites` to `engagement.minLikes`.
+
+**Twitter/X discovery (beyond the watchlist):** Use the chosen Actor's
+48-hour field and engagement syntax.
+
+- **Broad ecosystem:** Use a run-wide cap of 50 and a 50-like floor.
+- **Adjacent AI tools:** Use a cap of 30 and a 100-like floor.
+- **Competitor mentions:** Use a cap of 30 and a 50-like floor.
+- **Viral AI content:** Use a cap of 30 and a 200-like floor.
+
+Use top-ranked search on the selected Actor. Preserve query attribution when
+Xquik is selected.
 
 #### Phase 2: Expand (after Phase 1 data is back)
 
@@ -284,7 +295,7 @@ After presenting the chat summary, render the instant-ui dashboard from the synt
 3. **vidIQ keyword research** — Run `vidiq_keyword_research` on every candidate topic (e.g., "Claude Cowork tutorial", "AI agent for business", "no code AI workflow"). Capture search volume + competition score for each. Reject topics with low search volume; flag low-competition + high-volume topics as priority opportunities.
 4. **vidIQ outlier mining** — `vidiq_outliers` on each known competitor channel to identify their recent breakouts. These are validated angles worth riffing on.
 5. **vidIQ trending discovery** — `vidiq_trending_videos` and `vidiq_breakout_channels` to surface emerging formats and creators.
-6. **Twitter/X watchlist scan** — All tiers (P1 through P4) scanned with same methodology as Daily Scan Phase 1, plus keyword scan for pain points and emerging topics. Use `minimumFavorites: 100` on keyword scan to surface only high-signal tweets. Focus on tweets showing demos, workflows, and setups getting outsized engagement.
+6. **Twitter/X watchlist scan:** Scan all tiers with the Daily Scan method. Use `minimumFavorites: 100` on an existing route or `engagement.minLikes: 100` on Xquik. Focus on high-signal demos, workflows, and setups.
 7. Agent identifies high-performing videos worth analyzing → `getTranscripts` for angle inspiration
 8. Apply strategy test from Domain Knowledge section
 9. **Categorize every idea into one of the 3 video formats:** Big Feature Launch, Bundled Small Updates, or How-To for Business
@@ -305,14 +316,18 @@ Structured Twitter/X deep analysis for YouTube content opportunities. Scans the 
 **Execution — run ALL in parallel:**
 
 1. **Official Anthropic sources** — `WebFetch` the three Tier 1 sources (see `references/anthropic-official-sources.md`): Claude Code GitHub releases atom feed, Platform Changelog, Anthropic News Blog RSS. Identify any releases or announcements from the last 48 hours that may be triggering Twitter trends.
-2. **P1 handle scan** — `twitterHandles` with all P1 handles (see `references/twitter-watchlist.md`), `maxItems: 50`, 48-hour `start` window, `sort: "Latest + Top"`. No engagement filter.
-3. **P2 handle scan** — `twitterHandles` with all P2 handles, `maxItems: 50`, 48-hour `start` window, `minimumFavorites: 10`
-4. **P3 handle scan** — `twitterHandles` with all P3 handles (split into 2-3 batches), `maxItems: 30` per batch, 48-hour `start` window, `minimumFavorites: 50`
-5. **P4 handle scan** — `twitterHandles` with all P4 handles, `maxItems: 30`, 48-hour `start` window, `minimumFavorites: 100`
-6. **Keyword scan (ecosystem)** — `searchTerms: ["Claude Cowork", "Claude Desktop", "Anthropic launch", "Claude update", "Claude MCP", "Claude skills", "Claude agents"]`, `maxItems: 30`, 48-hour `start` window, `sort: "Top"`
-7. **Keyword scan (competitive)** — `searchTerms: ["AI tools", "Codex vs Claude", "Cursor vs Claude", "best AI tool", "AI workflow", "AI automation"]`, `maxItems: 30`, 48-hour `start` window, `sort: "Top"`, `minimumFavorites: 100`
+2. **P1 handle scan:** Use `twitterHandles` with all P1 handles, `maxItems: 50`, a 48-hour `start` window, and `sort: "Latest + Top"`.
+3. **P2 handle scan:** Use all P2 handles with `maxItems: 50` and `minimumFavorites: 10`.
+4. **P3 handle scan:** Split P3 into bounded batches. Use `maxItems: 30` and `minimumFavorites: 50`.
+5. **P4 handle scan:** Use all P4 handles with `maxItems: 30` and `minimumFavorites: 100`.
+6. **Keyword scan (ecosystem):** Use bounded ecosystem `searchTerms`, the 48-hour `start` window, and `sort: "Top"`.
+7. **Keyword scan (competitive):** Search AI comparison terms with `maxItems: 30` and `minimumFavorites: 100`.
 8. **vidIQ trending + outliers** — `vidiq_trending_videos` for current trending list, `vidiq_breakout_channels` for fast-rising channels in the AI niche, `vidiq_outliers` on each known competitor to detect their viral hits. Cross-reference vidIQ trends with Twitter signals — overlap = strongest video opportunities.
 9. **vidIQ keyword validation** — Run `vidiq_keyword_research` on the top 5-8 trending topics surfaced by Twitter to quantify search demand and competition before recommending video concepts.
+
+When Xquik is selected, convert handles to `from:<handle>` terms. Translate
+`start` to `time.sinceTime`, `minimumFavorites` to `engagement.minLikes`, and
+`sort` to `queryType`. Keep every cap unchanged.
 
 **Analysis and ranking:**
 

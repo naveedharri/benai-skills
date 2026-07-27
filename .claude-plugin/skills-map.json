@@ -25,6 +25,9 @@
       }
     },
     "benai-marketing": {
+      "connectors": [
+        "apify"
+      ],
       "skills": {
         "topic-research": {
           "displayName": "Topic Research",
@@ -85,6 +88,14 @@
         "instant-ui": {
           "displayName": "Instant UI",
           "summary": "Build a BenAI-branded HTML page in the neo-brutalist instant-ui design language (cream bg, hard borders and shadows, blue/green/amber stripe, system font, weight-900 headings) from a fixed token set and 20-component library; for landing, offer, pricing, and onboarding pages that must match the Champion Offer assets 1:1"
+        },
+        "x-tweet-scraper": {
+          "displayName": "X Tweet Scraper",
+          "summary": "Collect bounded public X post datasets through the Xquik Apify Actor"
+        },
+        "x-follower-scraper": {
+          "displayName": "X Follower Scraper",
+          "summary": "Export bounded public X audiences through the Xquik Apify Actor"
         }
       }
     },
@@ -507,6 +518,14 @@
           "displayName": "Win/Loss Analysis",
           "summary": "Analyze won vs lost deal patterns across CRM data"
         },
+        "x-tweet-scraper": {
+          "displayName": "X Tweet Scraper",
+          "summary": "Collect bounded public X post datasets through the Xquik Apify Actor"
+        },
+        "x-follower-scraper": {
+          "displayName": "X Follower Scraper",
+          "summary": "Export bounded public X audiences through the Xquik Apify Actor"
+        },
         "youtube-brief": {
           "displayName": "YouTube Brief",
           "summary": "Create detailed video briefs through a structured, collaborative process"
@@ -659,6 +678,14 @@
         "course-creator": {
           "displayName": "Course Creator",
           "summary": "Interactive 7-phase course creation — from idea or YouTube video to launch-ready package with curriculum, scripts, sales page, emails, and launch plan"
+        },
+        "x-tweet-scraper": {
+          "displayName": "X Tweet Scraper",
+          "summary": "Collect bounded public X post datasets through the Xquik Apify Actor"
+        },
+        "x-follower-scraper": {
+          "displayName": "X Follower Scraper",
+          "summary": "Export bounded public X audiences through the Xquik Apify Actor"
         }
       }
     },
@@ -1115,6 +1142,9 @@
       }
     },
     "benai-sales": {
+      "connectors": [
+        "apify"
+      ],
       "skills": {
         "lead-generation": {
           "displayName": "Lead Generation",
@@ -1171,6 +1201,14 @@
         "win-loss-analysis": {
           "displayName": "Win/Loss Analysis",
           "summary": "Analyze won vs lost deal patterns across CRM data"
+        },
+        "x-tweet-scraper": {
+          "displayName": "X Tweet Scraper",
+          "summary": "Collect bounded public X post datasets through the Xquik Apify Actor"
+        },
+        "x-follower-scraper": {
+          "displayName": "X Follower Scraper",
+          "summary": "Export bounded public X audiences through the Xquik Apify Actor"
         }
       },
       "agents": [

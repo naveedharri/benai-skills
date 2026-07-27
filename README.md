@@ -34,7 +34,8 @@ Or copy from this repo's `.env.example` and fill in your keys.
 
 | Plugin | Required Keys | Get Keys | Used By |
 |--------|---------------|----------|---------|
-| **Marketing** | `GEMINI_API_KEY`<br>`APIFY_TOKEN` | [Gemini](https://aistudio.google.com/apikey)<br>[Apify](https://console.apify.com) | `/infographic`<br>`/seo-audit`, `/programmatic-seo` |
+| **Marketing** | `GEMINI_API_KEY`<br>`APIFY_TOKEN` | [Gemini](https://aistudio.google.com/apikey)<br>[Apify](https://console.apify.com) | `/infographic`<br>`/seo-audit`, `/programmatic-seo`<br>`/x-tweet-scraper`, `/x-follower-scraper` |
+| **BenAI Sales** | `APIFY_TOKEN` | [Apify](https://console.apify.com) | `/x-tweet-scraper`, `/x-follower-scraper` |
 | **Creative** | `GEMINI_API_KEY` | [Gemini](https://aistudio.google.com/apikey) | `/infographic` |
 | **Operations** | `N8N_API_URL`<br>`N8N_API_KEY` | Your n8n instance | `/n8n` |
 
@@ -42,7 +43,7 @@ Or copy from this repo's `.env.example` and fill in your keys.
 
 ## Available Departments
 
-### Marketing (11 skills)
+### Marketing (15 skills)
 | Skill | Command | Purpose |
 |-------|---------|---------|
 | Programmatic SEO | `/programmatic-seo` | SEO-optimized pages at scale |
@@ -56,10 +57,14 @@ Or copy from this repo's `.env.example` and fill in your keys.
 | Title Generation | `/title-generation` | Optimized YouTube video titles |
 | GIF Creator | `/gif-creator` | GIFs from video clips |
 | Excalidraw | `/excalidraw` | Presentations & diagrams |
+| Website Launch Kit | `/website-launch-kit` | Custom landing pages through conversation |
+| Course Creator | `/course-creator` | Courses from idea to launch-ready package |
+| X Tweet Scraper | `/x-tweet-scraper` | Collect bounded public X post datasets through Apify |
+| X Follower Scraper | `/x-follower-scraper` | Export bounded public X audiences through Apify |
 
 **Commands:** `/marketing` (skill overview), `/repurpose` (content repurposing workflow)
 
-### BenAI Sales (14 skills)
+### BenAI Sales (16 skills)
 | Skill | Command | Purpose |
 |-------|---------|---------|
 | Lead Generation | `/lead-generation` | Source, qualify, enrich, and research B2B leads end to end |
@@ -76,6 +81,8 @@ Or copy from this repo's `.env.example` and fill in your keys.
 | Lead Intelligence | `/lead-intelligence` | Deep-research leads via web & LinkedIn |
 | Lead Qualification | `/lead-qualification` | Qualify & score leads against ICP |
 | Win/Loss Analysis | `/win-loss-analysis` | Analyze won vs lost deal patterns |
+| X Tweet Scraper | `/x-tweet-scraper` | Collect bounded public X post datasets through Apify |
+| X Follower Scraper | `/x-follower-scraper` | Export bounded public X audiences through Apify |
 
 **Agents:** `lead-qualifier`, `lead-researcher`, `icebreaker-writer`, `linkedin-scraper`
 

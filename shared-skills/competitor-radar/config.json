@@ -17,7 +17,8 @@
     "twitter": "apidojo/tweet-scraper"
   },
   "apify_notes": {
-    "call": "POST https://api.apify.com/v2/acts/<actor-with-~>/run-sync-get-dataset-items?token=$APIFY_TOKEN",
+    "call": "POST https://api.apify.com/v2/actors/<actor-with-~>/runs with Authorization: Bearer <token>; poll the run, then fetch its default dataset",
+    "approval": "Inspect the live schema and pricing. Show the exact input and result cap. Wait for approval before every run or paid retry.",
     "linkedin_input": "{\"queries\":[\"<linkedin_url>\"],\"profileScraperMode\":\"Profile details no email ($4 per 1k)\"} ; follower count field is followerCount. This actor works on the FREE plan (dev_fusion does not).",
     "handles_rule": "Use the exact handles below. They were human-verified against each creator's own site/links to avoid squatters. Where a field is null the creator has no official/verified account on that platform; skip it, do not substitute a guess."
   },

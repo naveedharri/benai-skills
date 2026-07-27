@@ -6,7 +6,7 @@ A marketplace of expert automation plugins for Claude Code, organized by departm
 
 ## Available Departments
 
-### Marketing (12 skills)
+### Marketing (15 skills)
 | Skill | Command | Purpose |
 |-------|---------|---------|
 | programmatic-seo | `/programmatic-seo` | SEO-optimized pages at scale |
@@ -21,10 +21,13 @@ A marketplace of expert automation plugins for Claude Code, organized by departm
 | gif-creator | `/gif-creator` | GIFs from video clips |
 | excalidraw | `/excalidraw` | Presentations & diagrams |
 | website-launch-kit | `/website-launch-kit` | Custom landing pages through conversation |
+| course-creator | `/course-creator` | Courses from idea to launch-ready package |
+| x-tweet-scraper | `/x-tweet-scraper` | Collect bounded public X post datasets through Apify |
+| x-follower-scraper | `/x-follower-scraper` | Export bounded public X audiences through Apify |
 
 **Commands:** `/marketing` (skill overview), `/repurpose` (content repurposing workflow)
 
-### BenAI Sales (14 skills)
+### BenAI Sales (16 skills)
 | Skill | Command | Purpose |
 |-------|---------|---------|
 | lead-generation | `/lead-generation` | Source, qualify, enrich, and research B2B leads end to end |
@@ -41,6 +44,8 @@ A marketplace of expert automation plugins for Claude Code, organized by departm
 | lead-intelligence | `/lead-intelligence` | Deep-research leads via web & LinkedIn |
 | lead-qualification | `/lead-qualification` | Qualify & score leads against ICP |
 | win-loss-analysis | `/win-loss-analysis` | Analyze won vs lost deal patterns |
+| x-tweet-scraper | `/x-tweet-scraper` | Collect bounded public X post datasets through Apify |
+| x-follower-scraper | `/x-follower-scraper` | Export bounded public X audiences through Apify |
 
 **Agents:** `lead-qualifier`, `lead-researcher`, `icebreaker-writer`, `linkedin-scraper`
 

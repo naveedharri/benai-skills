@@ -1,0 +1,6 @@
+{
+  "apify": {
+    "type": "http",
+    "url": "https://mcp.apify.com"
+  }
+}

@@ -6,15 +6,15 @@
   },
   "metadata": {
     "description": "Expert automation plugins that turn Claude into a specialist for your team. Install by department to get skills for marketing, sales, operations, creative, and product workflows.",
-    "version": "1.15.1"
+    "version": "1.16.0"
   },
   "plugins": [
     {
       "name": "benai-marketing",
       "displayName": "BenAI Marketing",
       "source": "./plugins/benai-marketing",
-      "description": "The BenAI marketing OS as skills: research, copywriting in Ben's voice, design systems, carousels, thumbnails, video editing, and analytics. competitor-radar and analytics-dashboard are schedule-ready.",
-      "version": "1.5.2",
+      "description": "The BenAI marketing OS as skills: research, public X collection, copywriting in Ben's voice, design systems, carousels, thumbnails, video editing, and analytics. competitor-radar and analytics-dashboard are schedule-ready.",
+      "version": "1.6.0",
       "author": {
         "name": "BenAI"
       },
@@ -31,15 +31,18 @@
         "carousel",
         "thumbnail",
         "video-editor",
-        "analytics-dashboard"
+        "analytics-dashboard",
+        "apify",
+        "x",
+        "twitter"
       ]
     },
     {
       "name": "benai-sales",
       "displayName": "BenAI Sales",
       "source": "./plugins/benai-sales",
-      "description": "The BenAI sales OS as skills: lead generation, qualification and research, CRM mining, LinkedIn engagers, email personalization, call prep, one-pagers, pipeline reviews, post-disco proposals, rep grading, win/loss analysis, and sales assets.",
-      "version": "1.1.0",
+      "description": "The BenAI sales OS supports research, X collection, outreach, calls, proposals, and analysis. It includes CRM mining, sales assets, and rep grading.",
+      "version": "1.2.0",
       "author": {
         "name": "BenAI",
         "url": "https://benai.co"
@@ -51,15 +54,18 @@
         "crm",
         "call-prep",
         "pipeline",
-        "proposals"
+        "proposals",
+        "apify",
+        "x",
+        "twitter"
       ]
     },
     {
       "name": "all-skills",
       "displayName": "All Skills",
       "source": "./plugins/all-skills",
-      "description": "Every BenAI skill in one install. All 113 skills across marketing, sales, SEO, ads, design, YouTube, creative, operations, second-brain OS, Marketing OS, and general productivity. Add this one plugin to get the complete library.",
-      "version": "1.11.0",
+      "description": "Every BenAI skill in one install. All 115 skills across marketing, sales, SEO, ads, design, YouTube, creative, operations, second-brain OS, Marketing OS, and general productivity. Add this one plugin to get the complete library.",
+      "version": "1.12.0",
       "author": {
         "name": "BenAI"
       },
@@ -102,8 +108,8 @@
     {
       "name": "marketing",
       "source": "./plugins/marketing",
-      "description": "Rank higher and grow organic traffic with programmatic SEO, technical audits, and Search Console optimization. Create email sequences that convert, build compelling case studies, and generate professional infographics. Repurpose YouTube content into LinkedIn posts, newsletters, GIFs, and visual diagrams.",
-      "version": "1.0.2",
+      "description": "Grow organic traffic with programmatic SEO, technical audits, and Search Console optimization. Collect public X posts and audiences through Apify. Create email sequences, case studies, infographics, and repurposed content.",
+      "version": "1.1.0",
       "author": {
         "name": "BenAI"
       },
@@ -118,7 +124,10 @@
         "linkedin",
         "newsletter",
         "repurpose",
-        "gif"
+        "gif",
+        "apify",
+        "x",
+        "twitter"
       ]
     },
     {
