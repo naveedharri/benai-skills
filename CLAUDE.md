@@ -161,22 +161,23 @@ A marketplace of expert automation plugins for Claude Code, organized by departm
 
 **Source:** Bundled from `higgsfield-ai/skills` v0.3.0 (MIT). Auth required, run the Higgsfield CLI setup before first use.
 
-### Marketing OS (7 skills)
+### Marketing OS (8 skills)
 | Skill | Command | Purpose |
 |-------|---------|---------|
-| marketing-os-setup | `/marketing-os-setup` | Build the Marketing OS: ten folders, the `Context/` layer every marketing skill reads, one folder per channel, twelve routines, the control center. Five pillars in order: connectors, Context, structure, routines, dashboard. Idempotent. |
+| marketing-os-setup | `/marketing-os-setup` | Build the Marketing OS: ten folders, the `Context/` layer every marketing skill reads, one folder per channel, the routines (delegated to `/marketing-os-routines`), the control center. Five pillars in order: connectors, Context, structure, routines, dashboard. Idempotent. |
 | marketing-os-routines | `/marketing-os-routines` | Probe connectors, register only the routines that can produce real signal, and audit registered ones for silent failure |
 | marketing-os-dashboard | `/marketing-os-dashboard` | Rebuild and deploy the self-contained six-tab control center from the OS. Renders gaps as "not pulled", flags routines that went quiet |
 | os-optimizer | `/os-optimizer` | Shared with Obsidian. Framework audit, and the tool that defines the OS quality bar |
 | os-operator | `/os-operator` | Shared with Obsidian. Recurring Operator prompt |
 | os-mcp | `/os-mcp` | Shared with Obsidian. Relay MCP on Railway, so the OS is reachable from claude.ai and mobile |
 | team-os | `/team-os` | Shared with Obsidian. BenAI Relay fork for a Marketing OS shared across a team |
+| instant-ui | `/instant-ui` | Shared with benai-marketing. Renders the OS and its reports as BenAI-branded HTML |
 
 **Why it exists:** every marketing skill currently carries its own private copy of the ICP, offer, and voice. `icp-ideal-customer-profile.md` and `what-we-do-offer.md` exist as five separate physical copies across the marketing plugins, plus three more inside the newsletter writers. Update one and seven go stale. This plugin makes `Context/` authoritative so every skill inherits a change.
 
 **Deliberately excluded:** the marketing *workflow* skills. Those live in `benai-marketing`, `marketing`, `content`, `youtube`, `seo`, and `ads`. This plugin is the OS layer only. `os-setup` is also excluded on purpose, because it scaffolds a generic Context/Projects/Intelligence vault rather than the Marketing OS shape, and shipping both would leave users unsure which to run.
 
-**Reference implementation:** `/Users/macbook/Documents/Marketing OS` is a fully built example, and the setup skill bundles its twelve routine prompts and dashboard shell as assets.
+**Reference implementation:** `/Users/macbook/Documents/Marketing OS` is a fully built example. `marketing-os-routines` bundles the ten routine prompts as assets (one copy, one owner) and `marketing-os-dashboard` bundles the dashboard shell.
 
 ### Obsidian (6 skills)
 | Skill | Command | Purpose |

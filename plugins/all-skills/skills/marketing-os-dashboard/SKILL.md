@@ -39,26 +39,56 @@ A genuine layout change is deliberate and ordered, never a side effect of a rebu
 
 A drifting shell means nobody can tell whether a rendering oddity is a data problem or a layout problem. This is the only place that procedure is written down.
 
-## First build: interview before you render
+## First build: read the OS, propose the pages, then render
 
-**Only on a first build.** A rebuild skips it. If `spec.md` already exists because setup wrote it, read it first and ask only what it leaves open, then write your answers back into it.
+**Only on a first build.** A rebuild skips all of this. If `spec.md` already exists because setup wrote it, read it first and ask only what it leaves open, then write your answers back into it.
 
-Eleven pages ship in the shell. Not every business earns all eleven, and a page that renders an empty state forever teaches the operator to ignore the dashboard. Ask these, then record the answers in `spec.md` so no rebuild has to ask again.
+### Read before you ask
+
+**Never open with a questionnaire against an OS you have not looked at.** Half the answers are already on disk, and asking for them tells the user you did not check.
+
+Walk the tree and inventory it: which of the seven folders exist, which channels are in `Channels/`, which one is `role: primary-original`, how many offers and whether any price has a future effective date, whether `Campaigns/` holds anything live, whether `Team/` exists and how many people, whether any snapshot exists in `Analytics/snapshots/`, whether `Intelligence/competitors/` and the quote bank hold anything real.
+
+### Then propose the pages
+
+Eleven ship in the shell. **Not every OS earns all eleven**, and a page that renders an empty state forever teaches the operator to ignore the whole dashboard.
+
+Put all eleven on the table with a verdict each, drawn from what you just read, and let the user correct you:
+
+| Verdict | When |
+| --- | --- |
+| **Build it** | The files it reads exist and hold something real |
+| **Build thin** | The files exist but are nearly empty. Say what fills it and roughly when |
+| **Empty state** | Nothing for it yet, but the folder exists and a routine will write it |
+| **Skip** | The OS has no such folder. Name what is missing |
+
+Then say plainly which will be thin and why. A user who knows the Learnings page fills up over a month will not read its empty state as a broken dashboard. A user who was not told will.
+
+**If the OS has something the eleven do not cover**, name it and offer a page for it. A podcast channel, a second community, a partner funnel. Judge it the way the OS judges a folder: it earns a page if a named routine writes the files it would read. If nothing does, say so and leave it out.
+
+### The questions worth asking anyway
+
+These are the ones the tree cannot answer. Ask them, then record every answer in `spec.md` so no rebuild has to ask again.
+
+**Three real questions.** Everything else on the old checklist is already on disk, so confirm it from the inventory rather than asking for it.
 
 | Ask | Why it changes the build |
 | --- | --- |
 | **1. What is the one question you open this to answer?** | That page becomes the default tab. Do not assume it is the Core |
-| **2. Solo, or a team with owners?** | Solo drops the Team page to an empty state and the Core carries the task list alone |
-| **3. How many offers, and does any price change on a schedule?** | A scheduled price step becomes the Funnel page's lead card. One offer at a fixed price makes Funnel a thin page, and that is fine |
-| **4. Which channels do you actively produce for, and which one originates?** | Calendar and Content are built per channel. The originating channel is the only one that gets an idea backlog |
-| **5. Is anything time-boxed running right now?** | Campaigns renders live, or renders its empty state honestly |
-| **6. Do you track competitors, and do you talk to customers on the record?** | Intelligence and Audience each need a real source. No source means an honest empty state, never invented quotes |
-| **7. Light or dark, and will you share screenshots?** | Sets the default palette. The core renders correctly in both, but a screenshot going into brand material usually wants the light one |
-| **8. Where does it deploy, and does it need a password?** | Decides the deploy step and whether the URL is safe to record in `config.md` |
+| **2. Light or dark, and will you share screenshots?** | Sets the default palette. The core renders correctly in both, but a screenshot going into brand material usually wants the light one |
+| **3. Where does it deploy, and does it need a password?** | Decides the deploy step and whether the URL is safe to record in `config.md` |
 
-**Offer options, do not ask open questions.** For each of the eight, put five to ten concrete answers on the table drawn from what you can already see in the OS, and let the user pick or correct. "Which of these is the one question you open this to answer?" with seven real candidates beats "what is the one question?" every time, and it is what makes the interview fast rather than a questionnaire.
+**Confirm these, do not ask them.** State what you found and let the user correct it in one pass:
 
-**Then say plainly which pages will be thin and why.** A user who knows the Learnings page fills up over a month will not read its empty state as a broken dashboard. A user who was not told will.
+| You already know | From |
+| --- | --- |
+| Solo or a team, and who owns what | whether `Team/` exists, and the folders inside it |
+| How many offers, and whether a price steps on a date | `Offers/*/offer.md` and the ladder in `Context/config.md` |
+| Which channels are produced for, and which one originates | `Channels/`, and `role: primary-original` |
+| Whether anything time-boxed is running | `status:` across `Campaigns/*/brief.md` |
+| Whether competitors are tracked and customers quoted | `Intelligence/competitors/` and the quote bank |
+
+**Offer options rather than open questions.** On each of the three, put five to ten concrete candidates on the table drawn from what the OS already shows, and let the user pick or correct. "Which of these is the one question you open this to answer?" with seven real candidates beats "what is the one question?" every time, and it is what keeps this from feeling like a form.
 
 ## Do not build against an empty OS
 

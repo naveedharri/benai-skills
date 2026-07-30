@@ -93,7 +93,7 @@ Rules: quote, do not paraphrase, and **every quote carries the named source file
 
 ## Routines/CLAUDE.md
 
-Ships as `assets/routines/_register.md`. Copy it in verbatim as `Routines/CLAUDE.md`.
+Written by `marketing-os-routines`, which ships it as `_register.md`. Setup does not create this file.
 
 It is both the folder index and the capability register: the B/A/H tagging table, the ten routines in two groups with cadence and write targets, the placeholder map the setup skill substitutes, the independence rule, and the rules for writing a new routine.
 

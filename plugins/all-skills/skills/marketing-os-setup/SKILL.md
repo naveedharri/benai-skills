@@ -1,6 +1,6 @@
 ---
 name: marketing-os-setup
-description: "Set up a Marketing OS: a markdown second brain that becomes the single source of truth every marketing skill reads, plus the routines that keep it current and a control-center dashboard on top. Interview-driven and idempotent, safe to re-run. Builds seven knowledge folders (Context, Channels, Campaigns, Offers, Analytics, Team, Intelligence) plus Routines, writes the Context layer that ends skills carrying their own stale copies of the ICP and offer and voice, scaffolds one folder per publishing surface, installs ten independent routine prompts, then offers to schedule them via marketing-os-routines and to build the eleven-page control center via marketing-os-dashboard. Walks five pillars in order: connectors, Context, structure, routines, dashboard. Use when the user says 'set up a marketing OS', 'build my marketing second brain', 'marketing os setup', 'install the marketing OS', 'I want a marketing operating system', 'give my marketing skills real context', or runs /marketing-os-setup."
+description: "Set up a Marketing OS: a markdown second brain that becomes the single source of truth every marketing skill reads, plus the routines that keep it current and a control-center dashboard on top. Interview-driven and idempotent, safe to re-run. Builds seven knowledge folders (Context, Channels, Campaigns, Offers, Analytics, Team, Intelligence) plus Routines, writes the Context layer that ends skills carrying their own stale copies of the ICP and offer and voice, scaffolds one folder per publishing surface, then offers to set up the routines via marketing-os-routines and to build the control center via marketing-os-dashboard. Walks five pillars in order: connectors, Context, structure, routines, dashboard. Use when the user says 'set up a marketing OS', 'build my marketing second brain', 'marketing os setup', 'install the marketing OS', 'I want a marketing operating system', 'give my marketing skills real context', or runs /marketing-os-setup."
 disable-model-invocation: true
 ---
 
@@ -23,7 +23,7 @@ Order matters. Do not skip ahead, and do not build the dashboard before there is
 | 1. Connectors | Probe what is actually authenticated. Never present a checklist | `references/connectors.md` |
 | 2. Context | Interview and write the constitution. **The highest-value step** | `references/interview.md`, `references/context-templates.md` |
 | 3. Structure | Scaffold seven knowledge folders plus `Routines/`, and every folder index | `references/structure.md`, `references/folder-indexes.md` |
-| 4. Routines | Install ten independent prompts, then offer to schedule them | `assets/routines/`, then `marketing-os-routines` |
+| 4. Routines | Offer to set them up | `marketing-os-routines` owns the templates and the scheduling |
 | 5. Dashboard | Write the spec, then offer to build it | `marketing-os-dashboard` owns the build |
 
 Read `references/conventions.md` before writing a single file. It carries the invariants, and breaking one means the result is not this OS.
@@ -140,30 +140,18 @@ Do **not** create `Analytics/dashboard/control-center.html`. That file belongs t
 
 ## Pillar 4: routines
 
-Copy all ten files from `assets/routines/` into `Routines/`, flat, and `_register.md` as `Routines/CLAUDE.md`.
+**You do not author or schedule the routines. `marketing-os-routines` owns them end to end**, and it ships the ten templates, so there is one copy of each and one place a routine can be written.
 
-**Ten routines in two groups, all first-class.** Five operating routines keep the OS current and true. Five intelligence and review routines keep it smart, and they are why `Intelligence/` earns its place, since no operating routine writes it. There is no parked tier and no subfolder: a routine either belongs in the OS or it does not ship.
+Your job is one thing: **ask whether they want the routines now.**
 
-**A routine is a schedule.** Each file opens with a **Set it up** block giving the schedule and the connectors, then a divider. Everything below the divider is the routine's prompt. Installing the files does not make anything run; scheduling them does, and that is `marketing-os-routines`' job.
+> The OS is built. Want me to set up the routines that keep it current, or leave that for later?
 
-**Substitute every placeholder.** The files ship business-agnostic with `<angle bracket>` markers: `<operator timezone>`, `<primary channel platform>`, `<email platform>`, `<primary>` in a path, and so on. Fill them from the Pillar 1 probe and `Context/config.md`. The mapping is in `_register.md`.
+- **Now** → **invoke `marketing-os-routines` via the `Skill` tool.** It reads the OS you just built, proposes the set that fits it, writes the files, and creates the scheduled tasks. Do not install files yourself, do not substitute placeholders, and do not duplicate its connector probe.
+- **Later** → say so plainly and give them the one command: `/marketing-os-routines`.
 
-> **Then grep `Routines/` for `<`. A placeholder left unsubstituted is a setup bug**, and it will end up in a live scheduled task without anyone noticing.
+**Recommend "now."** An OS with no routines goes stale immediately and the whole design test rests on something writing to each folder. This is the one handoff worth pushing.
 
-**Every routine is independent.** Each scheduled task points at the OS root and runs one routine. No routine may reference another as a prerequisite. If you find yourself adding "after the sweep runs", that is a bug: run alone, that routine produces an empty result and no error.
-
-### Then ask whether to schedule them now
-
-The files are installed and all ten carry `status: authored-not-registered`. Nothing runs until something fires them on a clock.
-
-**Ask:**
-
-> The ten routine files are in. Want me to schedule them now, or leave them for later?
-
-- **Now** → **invoke `marketing-os-routines` via the `Skill` tool.** It owns scheduling: it probes the connectors first, tells you which routines can produce real signal today, creates the scheduled tasks, and verifies each one took. Do not create schedules yourself and do not duplicate its connector probe.
-- **Later** → leave them as files, say so plainly, and give them the one command: `/marketing-os-routines`.
-
-Recommend scheduling only what the Pillar 1 probe showed can work. A routine whose every pull fails writes a day of `not available` rows and teaches the operator to ignore the output, which is worse than an unscheduled file.
+Tell it what you learned in the interview so it does not re-ask: the primary channel, the other channels, the timezone, which connectors came back live in Pillar 1, and whether `Team/` exists.
 
 ## Pillar 5: dashboard
 
@@ -219,6 +207,6 @@ This skill is never finished. Improve it as you use it.
 - When the user corrects how a pillar was run, update the relevant reference file (`references/connectors.md`, `references/interview.md`, `references/context-templates.md`, `references/structure.md`, `references/folder-indexes.md`, `references/channel-templates.md`, `references/conventions.md`) so the correction sticks. Do not just fix it for this run.
 - When a correction is a hard rule ("always X", "never Y"), add it as a permanent rule here.
 - When an interview answer reveals a business shape the tree does not cover, add a row to the adaptation table in `references/structure.md` rather than improvising the same fix next time.
-- When a routine needs a value that is not a key in `Context/config.md`, that is a bug in the routine. Record it in `assets/routines/_register.md` instead of hardcoding the value.
+- When a routine needs a value that is not a key in `Context/config.md`, that is a bug in the routine. Report it to `marketing-os-routines` rather than hardcoding the value.
 - When the user says a built OS was genuinely good, save its `Context/config.md` shape and folder tree to `references/examples/` as a model for future runs.
 - Keep the skill small: when you add something, run the deletion test and cut anything that no longer changes behavior.
