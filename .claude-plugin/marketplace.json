@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Expert automation plugins that turn Claude into a specialist for your team. Install by department to get skills for marketing, sales, operations, creative, and product workflows.",
-    "version": "1.10.1"
+    "version": "1.11.0"
   },
   "plugins": [
     {
@@ -58,8 +58,8 @@
       "name": "all-skills",
       "displayName": "All Skills",
       "source": "./plugins/all-skills",
-      "description": "Every BenAI skill in one install. All 108 skills across marketing, sales, SEO, ads, design, YouTube, creative, operations, second-brain OS, Marketing OS, and general productivity. Add this one plugin to get the complete library.",
-      "version": "1.6.2",
+      "description": "Every BenAI skill in one install. All 112 skills across marketing, sales, SEO, ads, design, YouTube, creative, operations, second-brain OS, Marketing OS, and general productivity. Add this one plugin to get the complete library.",
+      "version": "1.7.0",
       "author": {
         "name": "BenAI"
       },
@@ -408,8 +408,8 @@
       "name": "marketing-os",
       "displayName": "Marketing OS",
       "source": "./plugins/marketing-os",
-      "description": "Set up and operate a Marketing OS: a markdown second brain that becomes the single source of truth every marketing skill reads, so the ICP, offer, and voice live in one place. Setup builds it and then offers to schedule the ten routines and build the dashboard. Every routine ends by rendering a clean one-page run report.",
-      "version": "1.1.0",
+      "description": "Set up and operate a Marketing OS: a markdown second brain that is the single source of truth every marketing skill reads, so the ICP, offer and voice live in one place. Four OS-native skills sit on top: newsletter, carousel, market intel and research.",
+      "version": "1.2.0",
       "author": {
         "name": "BenAI"
       },

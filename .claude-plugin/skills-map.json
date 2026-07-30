@@ -578,6 +578,22 @@
         "marketing-os-dashboard": {
           "displayName": "Marketing OS Dashboard",
           "summary": "Interview, then render and deploy the eleven-page control center from the OS files, with a Funnel page for the offer ladder and a page per team member"
+        },
+        "marketing-os-newsletter": {
+          "displayName": "Marketing OS Newsletter",
+          "summary": "Write a newsletter edition from the OS through seven gates with options at each, then file it as a real asset, append the shipped subject line to the swipe file and update the parent's repurpose tree"
+        },
+        "marketing-os-carousel": {
+          "displayName": "Marketing OS Carousel",
+          "summary": "Turn an asset already filed in the OS into a branded image-first carousel PDF, with every colour, face and logo pointer resolved from the brand kit, then record the child asset back in the OS"
+        },
+        "marketing-os-market-intel": {
+          "displayName": "Marketing OS Market Intel",
+          "summary": "Run an on-demand market brief using the watchlist, roster and signal test from the OS, then score every find against the idea framework and seed only what clears the bar"
+        },
+        "marketing-os-research": {
+          "displayName": "Marketing OS Research",
+          "summary": "Answer an open question the OS already wrote down, fact-check every hard claim with a verdict, then write the research file and promote that question to a finding"
         }
       }
     },
@@ -1189,6 +1205,22 @@
         "team-os": {
           "displayName": "Team OS",
           "summary": "Install the BenAI Relay fork as the foundation for a Marketing OS shared across a team"
+        },
+        "marketing-os-newsletter": {
+          "displayName": "Marketing OS Newsletter",
+          "summary": "Write a newsletter edition from the OS through seven gates with options at each, then file it as a real asset, append the shipped subject line to the swipe file and update the parent's repurpose tree"
+        },
+        "marketing-os-carousel": {
+          "displayName": "Marketing OS Carousel",
+          "summary": "Turn an asset already filed in the OS into a branded image-first carousel PDF, with every colour, face and logo pointer resolved from the brand kit, then record the child asset back in the OS"
+        },
+        "marketing-os-market-intel": {
+          "displayName": "Marketing OS Market Intel",
+          "summary": "Run an on-demand market brief using the watchlist, roster and signal test from the OS, then score every find against the idea framework and seed only what clears the bar"
+        },
+        "marketing-os-research": {
+          "displayName": "Marketing OS Research",
+          "summary": "Answer an open question the OS already wrote down, fact-check every hard claim with a verdict, then write the research file and promote that question to a finding"
         },
         "instant-ui": {
           "displayName": "Instant UI",

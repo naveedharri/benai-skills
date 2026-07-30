@@ -32,3 +32,11 @@ node_modules/
 
 # Build artifacts
 dist/
+
+# Cloud-sync duplicate artifacts
+.git [0-9]/
+*[0-9].git/
+
+# Python bytecode
+__pycache__/
+*.pyc
