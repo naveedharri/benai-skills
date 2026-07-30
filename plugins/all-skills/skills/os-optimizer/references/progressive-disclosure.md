@@ -340,7 +340,7 @@ When this skill runs Pass 8 (skill-vault audit) and Pass 1 (size for SKILL.md):
 - **Magic numbers in scripts without `# why` comments** → warn (heuristic).
 - **Time-sensitive language** ("After 2025", "Before Q3") outside `<details>` → warn.
 - **Inconsistent terminology** — same concept referred to with multiple terms in one SKILL.md → warn (heuristic).
-- **Skill `references/` folder** containing files that match vault `Context/` filenames (icp, brand, voice, services) → fail (Pass 8 — point at vault instead).
+- **Skill `references/` folder** containing files whose subject matches a role the vault already holds (icp, brand, voice, services) → fail (Pass 8 — point at the resolved vault path instead).
 
 ## Sources
 

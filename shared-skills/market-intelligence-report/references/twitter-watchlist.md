@@ -1,15 +1,21 @@
 # Twitter/X Watchlist — 330+ Scored Handles
 
-Source: `/Users/macbook/Documents/Projects/benai/BenAI-Main-OS/Intelligence/market/claude-ecosystem-twitter-watchlist.md`
-Last synced: 2026-04-15
+Last compiled: 2026-04-15
 
-Compiled from 700+ tweets scraped April 13-14, 2026. Every handle was active in the past 48 hours posting about Claude, Anthropic, Claude Code, Cowork, MCP, Skills, Dispatch, Managed Agents, Opus, Sonnet, or Mythos. Scored and tiered by strategic value to BenAI.
+> [!important] This is a seed list for one niche, not a universal watchlist
+> Every handle here was compiled and scored against **one specific business in the Claude and Anthropic ecosystem**. The tiers encode that business's relevance judgements, not yours.
+>
+> If you are running this skill for a different business, treat the list as a worked example of the scoring method and **replace the handles with your own niche's.** Keep the method, drop the roster. A report built on somebody else's watchlist is somebody else's report.
+>
+> Where the OS being scanned has an `Intelligence/competitors/_roster.md` or a `competitors:` block in `Context/config.md`, those are the authoritative names. Prefer them over anything in this file.
+
+Compiled from 700+ tweets scraped April 13-14, 2026. Every handle was active in the past 48 hours posting about Claude, Anthropic, Claude Code, Cowork, MCP, Skills, Dispatch, Managed Agents, Opus, Sonnet, or Mythos.
 
 ## Scoring Criteria
 
 Every handle scored on three dimensions (1-5 each). **Priority Score = R + L + S** (max 15).
 
-- **R (Relevance):** How relevant to BenAI's ICP (non-technical professionals using AI tools for real work). 5 = directly covers Cowork/non-technical use cases. 1 = developer-only or off-topic.
+- **R (Relevance):** How relevant to the ICP of the business being scanned, as stated in its `Context/icp/`. 5 = directly covers that ICP's use cases. 1 = off-topic for them.
 - **L (Legitimacy):** Proven, consistent, real identity, original content. 5 = verified identity, consistent poster, high engagement rate. 1 = anonymous, one-hit, possible bot.
 - **S (Signal Value):** How likely to break news, share insider info, or surface trends before mainstream. 5 = insider/leaker/first-to-know. 1 = just reshares others.
 
@@ -56,7 +62,7 @@ These are the handles where if they post, you need to see it same-day. Official 
 | @bcherny | 14 (4/5/5) | Claude Code engineering, feature details | Claude Code engineering lead. Same person as @trq212. |
 | @akshay_pachaar | 14 (5/5/4) | Opus Advisor, Code vs Cowork explainer, non-technical guides | Best explainer of Code vs Cowork distinction. Directly relevant to non-technical audience. |
 | @kevinroose | 13 (3/5/5) | Mythos, Glasswing, AI industry stories | NYT journalist. Broke Mythos/Glasswing story (5.3K likes, 2K bookmarks). |
-| @rubenhassid | 13 (5/5/3) | Claude infographics, Code, Cowork, Opus | Visual explainers for non-technical users. Exact BenAI ICP. 1,284 engagement. |
+| @rubenhassid | 13 (5/5/3) | Claude infographics, Code, Cowork, Opus | Visual explainers for non-technical users. Exact ICP match. 1,284 engagement. |
 | @clairevo | 13 (5/5/3) | Cowork power user, podcast, non-technical focus | Cowork power user with podcast. Non-technical focus aligns perfectly with ICP. |
 | @om_patel5 | 13 (4/4/5) | UltraPlan leaks, token audits, deep analysis | Leaked UltraPlan for Claude Code. 754 likes. Insider-grade signal. |
 | @RobertJBye | 13 (4/5/4) | Anthropic product, iOS widget, feature rollouts | Anthropic product team. iOS widget customization: 1.8K likes. |
@@ -77,7 +83,7 @@ These are the handles where if they post, you need to see it same-day. Official 
 
 | Handle | Engagement | Topics | Why Track |
 |--------|------------|--------|-----------|
-| @coreyganim | 1,915 | Cowork, Managed Agents, non-technical | Managed Agents for non-technical people. Cowork setup guide. EXACT BenAI ICP. |
+| @coreyganim | 1,915 | Cowork, Managed Agents, non-technical | Managed Agents for non-technical people. Cowork setup guide. EXACT ICP match. |
 | @heygurisingh | 17,570 | Career-ops, Claude Code, open source | Open-sourced job search system. 4.4K likes, 12.5K bookmarks. |
 | @techNmak | 5,973 | Claude Code, CLAUDE.md, Karpathy | Karpathy's CLAUDE.md breakdown. Best explainer thread. 4.2K bookmarks. |
 | @kunchenguid | 6,054 | Claude Code config, performance | Settings fix for nerfed Claude. 2K likes, 3.8K bookmarks. |
@@ -126,7 +132,7 @@ Famous tech voices, viral builders, news accounts, consistent Cowork/Code poster
 | @birdabo | 10 (2/4/4) | /buddy system discovery, Claude Code | Discovered Claude Code /buddy system. 905 likes. |
 | @EcZachly | 10 (4/4/2) | Cowork | Cowork coverage. 124 engagement. |
 | @paulund | 10 (4/3/3) | "Cowork could outgrow Code" narrative | Cowork growth narrative. Business-focused perspective. |
-| @noahvnct | 10 (5/3/2) | Claude Code + Obsidian daily use | Claude Code + Obsidian daily user. Direct overlap with BenAI stack. |
+| @noahvnct | 10 (5/3/2) | Claude Code + Obsidian daily use | Claude Code + Obsidian daily user. Direct overlap with the tracked stack. |
 | @eng_khairallah1 | 10 (4/4/2) | Claude prompts/guides, Skills | Practical Claude prompts and guides. Skills coverage. |
 | @affaanmustafa | 10 (4/3/3) | Dispatch, Cowork power user | Dispatch/Cowork power user. Business workflows. |
 | @arceyul | 10 (3/4/3) | Spanish-language Anthropic leak coverage | Spanish-language Anthropic leak coverage. 844 likes. International reach. |
@@ -188,7 +194,7 @@ Active voices with moderate engagement. Good for spotting trends, sentiment shif
 
 ### Cowork / Non-Technical
 
-Closest to BenAI's ICP. These handles post about Cowork, non-technical workflows, or Claude for business users.
+Closest to the tracked ICP. These handles post about Cowork, non-technical workflows, or Claude for business users.
 
 | # | Handle | Score | Context |
 |---|--------|-------|---------|
@@ -355,7 +361,7 @@ Important for understanding the broader narrative around Anthropic, AI safety di
 |--------|------------|--------|-----------|
 | @Baconbrix | 941 | Expo, Claude Code skills | Expo Agent skills. Official integration. +46% native UI improvement. |
 | @AdhamDannaway | 995 | Design skills | 63 free design skills for Claude Code. 383 likes, 559 bookmarks. |
-| @KanikaBK | 349 | Obsidian, Claude Code | Claudian: Obsidian + Claude Code plugin. DIRECT BenAI overlap. |
+| @KanikaBK | 349 | Obsidian, Claude Code | Claudian: Obsidian + Claude Code plugin. DIRECT stack overlap. |
 | @RodmanAi | 2,454 | GitHub repos, Claude Code | Best GitHub repos for Claude Code list. 759 likes, 1.5K bookmarks. |
 | @dr_cintas | 1,279 | Codebase visualization | Open-sourced visual codebase map for Claude Code. 456 likes, 772 bookmarks. |
 | @kvnkld | 2,382 | UI design, Claude Code | UI designs built with Claude Code. 1K+ likes, 1.2K bookmarks. |

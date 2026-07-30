@@ -15,12 +15,12 @@ If any link in that chain is wrong, stale, or missing, the agent never finds the
 F9.0 handles structural needs in three tiers, by how strongly the agent recommends action:
 
 1. **Functional gaps** (severity: fail) — the optimizer's own job is at risk. Agent can't find any operator/identity context; root has no routing of any shape; custom role's layer is unclassifiable. Form-agnostic: identity in CLAUDE.md frontmatter is fine, routing as agent prose is fine.
-2. **Functional improvements** (severity: warn) — the agent has *judged that adopting a BenAI convention would meaningfully improve this specific vault* given current state, with reasoning specific to the case. ("You have 14 work-shaped notes scattered across 6 folders with no clear hub; centralizing them under a `Projects/` (or equivalent) folder would make project status discoverable in one hop.") If the user's existing structure already meets the function — say a custom `Lab/` folder already plays the projects role — no tier-2 finding fires.
-3. **Inspiration** (severity: info, default decline) — BenAI standard taxonomy presented as a single info-level reference. The user picks any that fit how they work; the rest persist as declined and don't re-prompt.
+2. **Functional improvements** (severity: warn) — the agent has *judged that adopting a reference convention would meaningfully improve this specific vault* given current state, with reasoning specific to the case. ("You have 14 work-shaped notes scattered across 6 folders with no clear hub; centralizing them under a `Projects/` (or equivalent) folder would make project status discoverable in one hop.") If the user's existing structure already meets the function — say a custom `Lab/` folder already plays the projects role — no tier-2 finding fires.
+3. **Inspiration** (severity: info, default decline) — the reference taxonomy presented as a single info-level reference. The user picks any that fit how they work; the rest persist as declined and don't re-prompt.
 
-The optimizer's stance on the BenAI taxonomy: tested, useful, optional. The agent applies it as a recognition lens (Step 1.5 standard roles) and as a recommendation source for tier-2 improvements *when concrete evidence shows it would help this vault*. Never as a target shape the user must conform to. Custom roles the user has are first-class — never ignored, never demoted.
+The optimizer's stance on the reference taxonomy: tested, useful, optional. The agent applies it as a recognition lens (Step 1.5 standard roles) and as a recommendation source for tier-2 improvements *when concrete evidence shows it would help this vault*. Never as a target shape the user must conform to. Custom roles the user has are first-class — never ignored, never demoted.
 
-Nothing the user has gets ignored just because it doesn't match a pattern. Nothing gets prescribed just because BenAI uses it.
+Nothing the user has gets ignored just because it doesn't match a pattern. Nothing gets prescribed just because the reference taxonomy contains it.
 
 ## What F9 catches that F1–F8 cannot
 

@@ -1,0 +1,10 @@
+{
+  "id": "benai-relay-fork",
+  "name": "BenAI Relay",
+  "version": "0.7.4-16-g89162e2",
+  "minAppVersion": "0.15.0",
+  "description": "Forked Relay with custom RBAC. Real-time collaboration with live cursors and user access management.",
+  "author": "BenAI",
+  "authorUrl": "https://system3.md",
+  "isDesktopOnly": false
+}

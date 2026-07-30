@@ -202,7 +202,7 @@ When this skill runs Pass 4 (token estimate) and Pass 9 (anti-pattern sweep) for
 - **Loaded context size**: sum of files that load at session start (root CLAUDE.md + walked-up CLAUDE.md + MEMORY.md if present). Flag if > soft budget (~3k tokens).
 - **Similar-topic file pairs**: filename heuristic — `voice.md` + `brand.md` + `tone.md` likely overlap and distract each other when both loaded.
 - **Top-of-file callout**: vault rule says every doc should have a `> [!type]` callout for visual structure. Specifically check that critical decisions have one near the top.
-- **Daily/conversation file size**: in `Daily/`, flag files growing past ~2k tokens — suggests bloat from copy-pasting conversation history rather than curating.
+- **Dated-log file size**: in any session-layer folder from the role registry, flag files growing past ~2k tokens — suggests bloat from copy-pasting conversation history rather than curating.
 
 ## Sources
 

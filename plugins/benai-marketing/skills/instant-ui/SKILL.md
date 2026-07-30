@@ -11,12 +11,14 @@ Build a single self-contained HTML page in the BenAI neo-brutalist design langua
 
 ## Steps
 
-1. **Confirm scope.** If `$ARGUMENTS` is empty or vague, ask for: page name, page type (landing / form / product / pricing / case study / doc), primary CTA, and the real copy. This brand is content-first: never write marketing filler. If copy is missing, stop and ask.
+1. **Confirm scope.** If `$ARGUMENTS` is empty or vague, ask for: page name, page type (landing / form / product / pricing / case study / doc / run report), primary CTA, and the real copy. This brand is content-first: never write marketing filler. If copy is missing, stop and ask.
+
+   **Unattended exception.** If the caller says it is running unattended, do not ask anything. Build from the content given, render any missing section as an explicit gap, and never invent copy to fill it. A scheduled routine calling this skill cannot answer a question, so a question means no page gets made at all.
 2. **Load the tokens.** Read `references/design-tokens.md` and paste the `:root` block plus typography rules verbatim. Never hand-type tokens.
 3. **Build the shell.** Read `references/page-shell.md` for the required page wrapper, the BenAI smiley SVG (header and footer), and the responsive breakpoints. Every page opens with the 4px blue/green/amber gradient stripe.
 4. **Assemble components.** Read `references/components.md` and copy the CSS and HTML for each block the page needs (20 components: pills, buttons, hero, stat strips, sections, cards, VS grids, timeline, testimonial, pricing, CTA, footer, forms). Copy verbatim, swap the copy, do not improvise.
 5. **Apply the rules.** Read `references/build-rules.md` for the voice rules, hard build constraints, error-handling routes, and the after-build checklist. Run the checklist before confirming the output.
-6. **Save and confirm.** Write to `~/Desktop/builds/benai/[page-name].html` (kebab-case) with the kicker comment `<!-- BenAI instant-ui v1 -->` at the top. Report the file path and open it for the user to review.
+6. **Save and confirm.** Write to the output path the caller gave you. If none was given, default to `~/Desktop/builds/[page-name].html` (kebab-case). Add the kicker comment `<!-- instant-ui v1 -->` at the top. Report the file path and open it for the user to review, unless running unattended, in which case just report the path.
 
 A minimal starter is at `templates/starter.html`. A full reference page using every token and component is at `references/examples/reference-page.html`.
 

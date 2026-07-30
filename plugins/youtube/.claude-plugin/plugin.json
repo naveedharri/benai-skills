@@ -1,7 +1,7 @@
 {
   "name": "youtube",
   "description": "Plan, brief, and prepare YouTube videos from idea to filming-ready. Create video briefs, generate topic ideas, optimize titles and thumbnails, build structured outlines, write scripts, and design on-screen excalidraw visuals.",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "author": {
     "name": "BenAI"
   }

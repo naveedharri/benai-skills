@@ -302,15 +302,27 @@ Action: qualify the tool reference
 
 ## F6.11 — Skill-vault duplication
 
-**Framework rule:** skills should not bundle their own copies of content the vault already has in `Context/`.
+**Framework rule:** skills should not bundle their own copies of content the vault already holds in its curated layer, whatever that layer is called here.
 
-**Trigger heuristic:** filename matches across skill `references/` and vault `Context/`:
-- `icp*` / `ideal-customer*` / `customer-profile*` / `audience*` → `Context/icp.md`
-- `voice*` / `tone*` / `brand*` → `Context/brand.md`
-- `offers*` / `services*` / `what-we-do*` / `products*` → `Context/services.md`
-- `me.md` / `profile*` / `operator*` / `background*` → `Context/operator.md`
-- `strategy*` / `goals*` / `okrs*` → `Context/strategy.md`
-- `team*` / `org*` → `Context/team.md` or `Context/organization.md`
+**Trigger heuristic:** subject matches between a skill's `references/` and the vault's curated layer:
+Match on **subject**, then resolve the target through the role registry from Step 1.5. Never match on a literal path.
+
+| Skill reference file is about | Resolve against the role |
+| --- | --- |
+| `icp*` / `ideal-customer*` / `customer-profile*` / `audience*` | who-we-serve |
+| `pain*` / `objections*` | who-we-serve, which may hold pains inside it rather than beside it |
+| `voice*` / `tone*` | voice |
+| `brand*` / `visual*` / `colors*` / `design-tokens*` | brand-tokens |
+| `positioning*` / `category*` / `messaging*` | positioning, which may be merged into brand-tokens |
+| `offers*` / `services*` / `what-we-do*` / `products*` / `pricing*` | what-we-sell, which may be a folder per offer rather than one file |
+| `me*` / `profile*` / `operator*` / `background*` | operator |
+| `strategy*` / `goals*` / `okrs*` | strategy |
+| `stack*` / `tools*` / `connectors*` | infrastructure |
+| `team*` / `org*` | team, which may be a folder per person |
+
+**The vault's own shape is never the finding.** One vault keeps a single file per role; another splits a role across a folder, merges two roles into one file, or names them nothing like the words above. All of those are correct. The finding is only ever **a skill carrying its own copy of content the vault already holds**, whatever the vault chose to call it.
+
+If a role has no home in this vault, there is nothing to duplicate, so there is no F6.11 finding. Say that and move on.
 
 **Agent judgment:** for each candidate pair, **read both files**:
 - Do they actually duplicate, or does the skill ref provide skill-specific augmentation?
@@ -323,9 +335,10 @@ Action: qualify the tool reference
 ```
 Skill: {skill-name}
 Duplicate: {skill}/references/{file} ({bytes}B)
-Vault file: Context/{vault-file}
-Reasoning: {overlap evidence — quote 2-3 overlapping claims}
-Action: rewrite SKILL.md to read Context/{vault-file}; delete the duplicate ref file (after grepping the skill folder)
+Vault file: {resolved-path-from-role-registry}
+Role: {role the file serves}
+Reasoning: {overlap evidence, quote 2-3 overlapping claims}
+Action: rewrite SKILL.md to read {resolved-path}; delete the duplicate ref file (after grepping the skill folder)
 ```
 
 **Auto-fix:** **fixable** — agent rewrites SKILL.md to point at vault path, then greps the skill folder; if the ref isn't referenced elsewhere, deletes it. If still referenced → surfaces conflict, skips deletion.

@@ -32,9 +32,9 @@ The user runs `/os-optimizer` to *optimize* the vault. Every F8 finding therefor
 
 1. **Contradictions** — two notes disagree on the same fact.
 2. **Merge candidates** — N notes covering the same concept that should collapse into one canonical entry.
-3. **Stale entries** — `Context/` assumptions superseded by recent decisions or meeting outcomes.
+3. **Stale entries** — curated-layer assumptions superseded by recent decisions or meeting outcomes.
 4. **Emergent themes** — ≥3 notes in last 30d on a topic with no canonical Context entry or MOC.
-5. **Promotions** — durable knowledge buried in ephemeral daily/meeting logs that belongs in `Context/` or `Resources/`.
+5. **Promotions** — durable knowledge buried in session-layer logs that belongs in a curated-layer folder. Resolve which one through the role registry; never assume a name.
 
 ## Operating principles
 

@@ -64,7 +64,7 @@ When a new transcript / community post / chat message arrives, edit the relevant
 - *"Eighth pass extends the 14:00Z quiet-pattern by another hour"*
 - *"Holds at 5 items unchanged"* repeated across 8 callouts
 
-These are run-status messages. They belong in the Operator Report at `{{OPERATOR_REPORT_PATH_PATTERN}}`, not in the daily briefing at `/Daily/{YYYY-MM-DD}.md` or per-profile dailies.
+These are run-status messages. They belong in the Operator Report at `{{OPERATOR_REPORT_PATH_PATTERN}}`, not in the daily briefing at `{{BRIEFING_PATH_PATTERN}}` and not in the per-profile dailies.
 
 If you're about to write a callout starting with `Monday/Tuesday/{Day} {HH}:{MM}Z {N}th pass`, stop. That goes in the Operator Report, not the daily.
 
@@ -119,7 +119,7 @@ Correct examples:
 - Root-level file `CLAUDE.md` → `folder: "{{ROOT_FOLDER_NAME}}"`, `path: "/CLAUDE.md"`.
 - Root-level `MEMORY.md` (if present) → `folder: "{{ROOT_FOLDER_NAME}}"`, `path: "/MEMORY.md"`.
 - `{{OPERATOR_TASK_LIST_PATH}}` → `folder: "{{OPERATOR_TASK_LIST_FOLDER}}"`, `path: "{{OPERATOR_TASK_LIST_SUBPATH}}"`.
-- `Daily/{YYYY-MM-DD}.md` → `folder: "Daily"`, `path: "/{YYYY-MM-DD}.md"`.
+- `{{BRIEFING_PATH_PATTERN}}` → `folder: "{{BRIEFING_FOLDER}}"`, `path: "{{BRIEFING_SUBPATH_PATTERN}}"`.
 - `{{PROFILE_DAILY_PATH_EXAMPLE}}` → `folder: "{{PROFILE_DAILY_FOLDER}}"`, `path: "{{PROFILE_DAILY_SUBPATH_EXAMPLE}}"`.
 
 Wrong (will fail or silently no-op):
@@ -146,7 +146,7 @@ Cache CLAUDE.md conventions. Never re-read, never modify.
 
 {{ENABLED_CONNECTORS_LINE}}
 
-- **Short** — today's `/Daily/{YYYY-MM-DD}.md` exists with current content (verified, not just present) AND today's per-profile daily exists for every active member with current content AND 0 new transcripts in the last 48h AND 0 new {{COMMUNITY_PRODUCT_NAME}} posts requiring action AND 0 new {{CHAT_PRODUCT_NAME}} activity worth logging AND housekeeping queue is empty: do not touch any daily file (no signature refresh, no "still quiet" callout), action any overdue items in the task list only, run final lint pass on previously-modified files, write the run report (noting no-op), update `Last run:` in the task file, stop silently.
+- **Short** — today's `{{BRIEFING_PATH_PATTERN}}` exists with current content (verified, not just present) AND today's per-profile daily exists for every active member with current content AND 0 new transcripts in the last 48h AND 0 new {{COMMUNITY_PRODUCT_NAME}} posts requiring action AND 0 new {{CHAT_PRODUCT_NAME}} activity worth logging AND housekeeping queue is empty: do not touch any daily file (no signature refresh, no "still quiet" callout), action any overdue items in the task list only, run final lint pass on previously-modified files, write the run report (noting no-op), update `Last run:` in the task file, stop silently.
 - **Full** — otherwise, continue. New content this run merges into existing daily sections in place per "Daily Update Style". Never append per-run callouts.
 
 ## Full Path
@@ -165,7 +165,7 @@ Cache CLAUDE.md conventions. Never re-read, never modify.
 
 ### 3. Format reference load (parallel, before any daily writes)
 
-- `vault_read` the most recent existing `/Daily/{YYYY-MM-DD}.md` (root briefing template).
+- `vault_read` the most recent existing `{{BRIEFING_PATH_PATTERN}}` (briefing template).
 - `vault_read` the most recent existing `{{PROFILE_DAILY_PATH_PATTERN}}{YYYY-MM-DD}.md` for each active member. If the profile has no prior daily, fall back to the root daily template.
 - Cache: frontmatter keys and order, heading structure, callout types used, wikilink style, signature placement.
 - New dailies MUST match the cached reference exactly: same frontmatter fields, same section order, same callout syntax, wikilinks woven into sentences (never bulleted lists of `[[links]]`), no em-dashes, signature line present.
@@ -190,7 +190,7 @@ When you do write:
 
 ### 5. Root daily briefing
 
-Write `/Daily/{YYYY-MM-DD}.md` — org-level summary across all members. Call via `folder: "Daily"`, `path: "/{YYYY-MM-DD}.md"`. This is the **one sanctioned exception** to CLAUDE.md Rule 2 ("Never root Daily/").
+Write `{{BRIEFING_PATH_PATTERN}}` — org-level summary across all members. Call via `folder: "{{BRIEFING_FOLDER}}"`, `path: "{{BRIEFING_SUBPATH_PATTERN}}"`. This is the **one sanctioned exception** to CLAUDE.md Rule 2 ("Never root Daily/").
 
 Apply the three behaviors from "Daily Update Style" above:
 
@@ -238,7 +238,7 @@ Checks:
 - No em-dashes (rule 14).
 - No `# Title` heading duplicating filename.
 - Operator signature present and current on files this run touched.
-- Voice matches `Context/brand.md` (no buzzwords, no hedging, specific over generic).
+- Voice matches the vault's own voice register, at `{{VOICE_FILE}}` (no buzzwords, no hedging, specific over generic).
 - No `{{placeholder}}` strings left in any modified file.
 - No items in today's daily with dates older than 24h (freshness rule).
 - No `> [!info] {Day} {HH}:{MM}Z {N}th pass` callouts in any daily file (run-log noise belongs in the Operator Report, not the daily).
@@ -287,8 +287,8 @@ Append to every file created or modified, on its own line after a blank line, re
 - **Stale escalations are not re-escalated.** Posts older than 24h get queued once in housekeeping, never re-DMed.
 - **Never idle.** MCP calls time out on idle sessions. Pre-stage the next independent call before the previous one returns. No artificial waits or sleeps. Parallel batches are the default.
 - Use the correct folder + leading-slash path form for every `vault_*` call. Bare filenames or wrong `folder` will fail or silently no-op. Root files live in `folder: "{{ROOT_FOLDER_NAME}}"` — there is no `"/"` folder.
-- After writing to any root-level folder (`/Daily/`, etc.), verify with `vault_read` AND confirm content presence. On missing or mismatched content, retry once. Still failing → log to Errors.
-- Never modify any `CLAUDE.md`, any `_guide.md`, `Context/brand.md`, `Context/organization.md`, `Context/strategy.md`.
+- After writing to `{{BRIEFING_FOLDER}}` or any root-level folder, verify with `vault_read` AND confirm content presence. On missing or mismatched content, retry once. Still failing → log to Errors.
+- Never modify any `CLAUDE.md`, any `_guide.md`, or any file in the curated layer at `{{CONTEXT_ROOT}}`. That layer is human-owned.
 - Never delete files unless a task explicitly says so.
 - Never ask, pause, or summarize before acting.
 - Minimal edits only. Merge, don't overwrite.

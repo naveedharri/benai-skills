@@ -97,21 +97,21 @@ The agent cannot do its job without these. The user must pick a path forward in 
 
 ### Tier 2 — Functional improvements (agent judges this would meaningfully help)
 
-These are BenAI conventions the agent has decided would *concretely improve this specific vault* given the current state. Not pushed by default — the agent must justify each one with reasoning specific to the user's vault. Examples:
+These are reference conventions the agent has decided would *concretely improve this specific vault* given the current state. Not pushed by default — the agent must justify each one with reasoning specific to the user's vault. Examples:
 
 - "Adding a `Projects/` (or equivalent) folder would help: you have 14 work-shaped notes scattered across 6 folders with no clear hub, and root CLAUDE.md doesn't route to any of them. Centralizing them would make project status discoverable in one hop."
 - "Adopting a folder-index convention would help: 23 of your 31 folders have no index file; the discoverability walk failed for 47 files. Picking a name (README.md by default) and generating indexes resolves all 47 in one pass."
 - "Adding a `Decisions/` folder (or equivalent) would help: I found 8 decision-shaped notes in your daily logs — `decided to`, `going with`, `pivoting from` — that are durable knowledge buried in ephemeral logs. A dedicated decisions folder makes them findable."
 
-**Each tier-2 finding is a judgment call**, with reasoning specific to the case. The agent must *not* propose tier-2 findings on the basis of "BenAI uses this." It proposes them when current vault state demonstrates the convention would resolve a real problem.
+**Each tier-2 finding is a judgment call**, with reasoning specific to the case. The agent must *not* propose tier-2 findings on the basis of "the reference taxonomy does it this way." It proposes them when current vault state demonstrates the convention would resolve a real problem.
 
 If the user's existing structure already meets the functional need (e.g., a custom `Lab/` folder is functionally serving as projects), no tier-2 finding fires for `projects` — the function is already met under another name.
 
 **Severity:** warn. Fix proposed by default in walk; user can apply (create the folder + starter index, optionally migrate existing files), modify (rename, pick a different parent), or decline (recorded, persists to `.claude/vault-roles.json` so it doesn't re-prompt).
 
-### Tier 3 — Inspiration (BenAI uses these — adopt any that fit how you work)
+### Tier 3 — Inspiration (common in the reference taxonomy — adopt any that fit how you work)
 
-For standard roles the agent didn't recommend in tier 2 but the user might still want to know about. Surfaced as a single info-level finding listing the BenAI standard taxonomy with one-liners — not as separate findings per missing role. Default decline; user opts in if any of them resonate.
+For standard roles the agent didn't recommend in tier 2 but the user might still want to know about. Surfaced as a single info-level finding listing the reference taxonomy with one-liners — not as separate findings per missing role. Default decline; user opts in if any of them resonate.
 
 **Severity:** info. Fix is offered (adopt one) but defaults to "no thanks."
 
@@ -119,11 +119,11 @@ For standard roles the agent didn't recommend in tier 2 but the user might still
 
 - **Already covered by another role (multi-role assignment)** → if the user has a custom folder functionally playing a standard role's part (e.g., `Knowledge/` covers both context and resources), drop the missing finding and record the merge in the registry as a confirmed multi-role assignment. No tier-2 or tier-3 finding fires for the satisfied function.
 - **Persistence** → every "decline" is persisted to `.claude/vault-roles.json` so future runs don't re-prompt the same suggestion.
-- **No tier may justify itself with "BenAI uses this."** Tier 1 cites a functional break; tier 2 cites specific evidence in this vault; tier 3 is openly framed as inspiration the user can take or leave.
+- **No tier may justify itself with "the reference taxonomy does it this way."** Tier 1 cites a functional break; tier 2 cites specific evidence in this vault; tier 3 is openly framed as inspiration the user can take or leave.
 
 **Fixable:** true. Walk-only across all three tiers.
 
-This is what makes the optimizer transferable. The agent doesn't impose a schema — it observes the user's actual structure, identifies real problems with reasoning grounded in *their* vault, and applies the BenAI taxonomy as a tested-but-optional reference for cases where it would concretely help.
+This is what makes the optimizer transferable. The agent doesn't impose a schema — it observes the user's actual structure, identifies real problems with reasoning grounded in *their* vault, and applies the reference taxonomy as a tested-but-optional reference for cases where it would concretely help.
 
 ---
 
@@ -262,7 +262,7 @@ This is what makes the optimizer transferable. The agent doesn't impose a schema
 - Take top 3.
 
 **Agent judgment:**
-- For each cluster, draft a migration plan: what moves where, what gets renamed, what gets merged, what {INDEX}s need rewriting. Reasoning **must cite the user's own stated purposes** — what the folders' own index files say they hold, what `roles.identity` / `roles.context` says about the user's work. The reasoning text must never justify the proposal with "BenAI does X" or any reference to a target taxonomy. Reorg proposals exist to resolve inconsistencies the user themselves implied (their stated folder purposes don't match contents; two folders they wrote purposes for are doing the same job; a file they wrote is unreachable from the root they wrote).
+- For each cluster, draft a migration plan: what moves where, what gets renamed, what gets merged, what {INDEX}s need rewriting. Reasoning **must cite the user's own stated purposes** — what the folders' own index files say they hold, what `roles.identity` / `roles.context` says about the user's work. The reasoning text must never justify the proposal with "the reference taxonomy does X" or any appeal to a target taxonomy. Reorg proposals exist to resolve inconsistencies the user themselves implied (their stated folder purposes don't match contents; two folders they wrote purposes for are doing the same job; a file they wrote is unreachable from the root they wrote).
 - If the cluster's underlying problem can be resolved by clarifying purposes rather than moving files, propose the clarification first — moving files is the larger blast radius.
 
 **Fix proposal — two modes (user picks per proposal):**

@@ -117,6 +117,23 @@ Or copy from this repo's `.env.example` and fill in your keys.
 
 **Commands:** `/youtube` (skill overview)
 
+### Marketing OS (7 skills)
+| Skill | Command | Purpose |
+|-------|---------|---------|
+| Marketing OS Setup | `/marketing-os-setup` | Build the Marketing OS end to end |
+| Marketing OS Routines | `/marketing-os-routines` | Register the routines, audit for silent failure |
+| Marketing OS Dashboard | `/marketing-os-dashboard` | Rebuild and deploy the control center |
+| OS Optimizer | `/os-optimizer` | Framework audit of the vault |
+| OS Operator | `/os-operator` | Recurring Operator prompt |
+| OS MCP | `/os-mcp` | Relay MCP on your own Railway account |
+| Team OS | `/team-os` | BenAI Relay fork for a shared OS |
+
+The OS layer, not the marketing skills. Those live in the Marketing, Content, YouTube, SEO, and Ads plugins.
+
+`/marketing-os-setup` builds a markdown second brain that becomes the single source of truth every marketing skill reads. The problem it solves is concrete and measurable in this repo: `icp-ideal-customer-profile.md` and `what-we-do-offer.md` exist as five separate physical copies across the marketing plugins, plus three more inside the newsletter writers. Update one and seven go stale.
+
+Ten folders (Context, Channels, Content, Campaigns, Intelligence, Analytics, Resources, Daily, Dashboard, Routines), twelve routine prompts that keep it current, and a self-contained six-tab dashboard. Setup walks five pillars in order: connectors, Context, structure, routines, dashboard. It is idempotent and safe to re-run.
+
 ---
 
 ### n8n Automation

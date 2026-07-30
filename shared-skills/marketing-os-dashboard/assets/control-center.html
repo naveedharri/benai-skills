@@ -1,0 +1,3365 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marketing OS Control Center</title>
+<style>
+  /* ============================================================
+     Marketing OS control center.
+     Chassis: business neo-brutalist tokens from the instant-ui skill.
+     3px hard borders, zero-blur offset shadows, mono numerals, 900 headings.
+     Five palettes. Void is the default because the core has to feel alive.
+     Every colour is a token. Nothing is hardcoded outside these blocks.
+     ============================================================ */
+  :root{
+    /* semantic accents, fixed across every palette */
+    --blue:#3b82f6; --blue2:#60a5fa;
+    --green:#22c55e; --green-d:#16a34a;
+    --amber:#f59e0b; --amber-ink:#fbbf24;
+    --red:#ef4444; --red-d:#f87171;
+    --teal:#2dd4bf;
+    --on-blue:#fff;
+    --stripe:linear-gradient(90deg,#3b82f6,#22c55e,#f59e0b);
+    /* the logo is never themed. sampled from the supplied file */
+    --logo-ink:#14152B; --logo-bg:#FFFFFF;
+    /* type, from the brand tokens. no webfonts */
+    --ui:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --dsp:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:"SF Mono","Fira Code",Menlo,ui-monospace,monospace;
+    /* geometry: brutalist. zero radius, hard offsets */
+    --r:0px; --r-sm:0px;
+    --s1:8px; --s2:16px; --s3:24px; --s4:32px;
+    --bw:3px;
+    --sh:6px 6px 0 var(--shade);
+    --sh-sm:4px 4px 0 var(--shade);
+    --sh-xs:3px 3px 0 var(--shade);
+    --sh-lg:9px 9px 0 var(--shade);
+  }
+  /* ---------- VOID: default. deep space, fuchsia energy ---------- */
+  [data-theme="void"]{
+    --bg:#070510; --side:#0b0818; --card:#110d20; --card2:#171132;
+    --ink:#f4f0ff; --ink2:#a99fc4; --ink3:#6f6690;
+    --line:#2e2150; --track:#1d1636; --shade:#3d1466;
+    --e1:#e879f9; --e2:#a855f7; --e3:#22d3ee;
+    --grid:rgba(232,121,249,.10); --glow:rgba(232,121,249,.55);
+      --e4:#22D3EE;
+  }
+  /* ---------- CREAM: the brand palette, verbatim ---------- */
+  [data-theme="cream"]{
+    --bg:#fffef8; --side:#f8fafc; --card:#ffffff; --card2:#f8fafc;
+    --ink:#111; --ink2:#444; --ink3:#999;
+    --line:#111; --track:#e5e7eb; --shade:#111;
+    --e1:#2563eb; --e2:#16a34a; --e3:#d97706;
+    --grid:rgba(17,17,17,.06); --glow:rgba(37,99,235,.28);
+    --blue:#2563eb; --green:#16a34a; --amber:#d97706; --red:#dc2626;
+      --e4:#7C3AED;
+  }
+  /* ---------- CARBON: neutral dark. the counterpart to Cream ---------- */
+  [data-theme="carbon"]{
+    --bg:#0B0C0E; --side:#111316; --card:#15181C; --card2:#1C2026;
+    --ink:#F4F6F8; --ink2:#A2AAB4; --ink3:#6B7480;
+    --line:#2A2F36; --track:#1E232A; --shade:#000000;
+    --e1:#3B82F6; --e2:#22C55E; --e3:#F59E0B;
+    --grid:rgba(148,163,184,.09); --glow:rgba(59,130,246,.4);
+      --e4:#A78BFA;
+  }
+  /* ---------- REACTOR: cold cyan ---------- */
+  [data-theme="reactor"]{
+    --bg:#03080d; --side:#061118; --card:#09161f; --card2:#0d2130;
+    --ink:#eafcff; --ink2:#8fb4c2; --ink3:#587a88;
+    --line:#123c4d; --track:#0e2733; --shade:#0b4256;
+    --e1:#22d3ee; --e2:#14b8a6; --e3:#60a5fa;
+    --grid:rgba(34,211,238,.10); --glow:rgba(34,211,238,.5);
+      --e4:#A78BFA;
+  }
+  /* ---------- EMBER: furnace ---------- */
+  [data-theme="ember"]{
+    --bg:#0b0504; --side:#150a06; --card:#1b0d08; --card2:#2a1410;
+    --ink:#fff3e9; --ink2:#c9a695; --ink3:#8c6c5c;
+    --line:#48211a; --track:#2c1712; --shade:#5c250b;
+    --e1:#f59e0b; --e2:#ef4444; --e3:#fbbf24;
+    --grid:rgba(245,158,11,.10); --glow:rgba(245,158,11,.5);
+      --e4:#F472B6;
+  }
+  /* ---------- FLUX: bio green ---------- */
+  [data-theme="flux"]{
+    --bg:#040a06; --side:#07130a; --card:#0a1a0e; --card2:#102a17;
+    --ink:#edfff0; --ink2:#9bc4a6; --ink3:#5f8a6c;
+    --line:#194a26; --track:#102b18; --shade:#0f5226;
+    --e1:#4ade80; --e2:#22d3ee; --e3:#a3e635;
+    --grid:rgba(74,222,128,.10); --glow:rgba(74,222,128,.5);
+      --e4:#F472B6;
+  }
+  /* tints derive from the palette so no theme needs hand tuning */
+  :root{
+    --blue-t:color-mix(in srgb,var(--blue) 18%,var(--card));
+    --green-t:color-mix(in srgb,var(--green) 18%,var(--card));
+    --red-t:color-mix(in srgb,var(--red) 18%,var(--card));
+    --amber-t:color-mix(in srgb,var(--amber) 18%,var(--card));
+    --teal-t:color-mix(in srgb,var(--teal) 18%,var(--card));
+    --e1-t:color-mix(in srgb,var(--e1) 16%,var(--card));
+    /* globe node tones. no red and no grey: reserve those for state, not for identity */
+    --node-dim:color-mix(in srgb,var(--e1) 52%,var(--card));
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--ui);font-size:14px;
+    line-height:1.6;-webkit-font-smoothing:antialiased;display:flex;min-height:100vh;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),
+      linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:44px 44px}
+  /* the signature stripe, every page */
+  #stripe{position:fixed;top:0;left:0;right:0;height:4px;z-index:60;background:var(--stripe);
+    background-size:200% 100%;animation:slide 9s linear infinite}
+  @keyframes slide{to{background-position:200% 0}}
+
+  h1,h2,h3{font-weight:900;letter-spacing:-.03em;line-height:1.05}
+
+  /* ================= sidebar ================= */
+  .side{width:252px;flex:0 0 252px;background:var(--side);padding:22px 16px;
+    display:flex;flex-direction:column;gap:var(--s3);position:sticky;top:0;height:100vh;
+    border-right:var(--bw) solid var(--line);z-index:20}
+  .brand{display:flex;align-items:center;gap:12px;padding:0 4px}
+  .brand .mark{width:44px;height:44px;flex:0 0 44px;border:var(--bw) solid var(--line);
+    background:var(--logo-bg);display:grid;place-items:center;box-shadow:var(--sh-xs);
+    color:var(--logo-ink)}
+  .brand .mark svg{width:26px;height:26px;display:block}
+  .brand h1{font-size:17px;font-weight:900;letter-spacing:.02em;text-transform:uppercase}
+  .brand span{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.16em;
+    color:var(--ink3);font-weight:700;text-transform:uppercase;margin-top:3px}
+
+  .side nav{display:flex;flex-direction:column;gap:3px;flex:1;overflow-y:auto}
+  .side nav .navsec{font:600 9px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink3);padding:14px 10px 6px;margin-top:2px}
+  .side nav .navsec:first-child{margin-top:0}
+  .side nav button{display:flex;align-items:center;gap:12px;width:100%;text-align:left;
+    font:inherit;font-size:12px;font-weight:800;cursor:pointer;border:2px solid transparent;
+    background:transparent;color:var(--ink2);padding:10px 11px;text-transform:uppercase;
+    letter-spacing:.09em;font-family:var(--mono);transition:none}
+  .side nav button svg{width:17px;height:17px;flex:0 0 17px;stroke:currentColor;fill:none;
+    stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .side nav button:hover{color:var(--ink);border-color:var(--line);background:var(--card)}
+  .side nav button[aria-selected="true"]{background:var(--e1);color:var(--bg);
+    border-color:var(--line);box-shadow:var(--sh-xs)}
+  .side nav button .n{margin-left:auto;font-size:10px;opacity:.75}
+
+  .sidefoot{background:var(--card);border:var(--bw) solid var(--line);padding:14px;
+    box-shadow:var(--sh-xs)}
+  .sidefoot .l{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.14em;
+    color:var(--ink3);font-weight:700;margin-bottom:6px}
+  .sidefoot .k{font-family:var(--mono);font-size:26px;font-weight:900;line-height:1;
+    letter-spacing:-.04em;color:var(--e1)}
+  .sidefoot .n{font-size:11px;color:var(--ink2);margin-top:7px;line-height:1.45}
+
+  /* ================= main ================= */
+  .main{flex:1;min-width:0;display:flex;flex-direction:column;padding-top:4px}
+  .topbar{display:flex;align-items:center;gap:12px;padding:12px 24px;
+    border-bottom:var(--bw) solid var(--line);background:var(--side);position:sticky;top:4px;z-index:30}
+  .search{flex:1;max-width:360px;position:relative}
+  .search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);
+    width:15px;height:15px;stroke:var(--ink3);fill:none;stroke-width:2.4}
+  .search input{width:100%;font:inherit;font-family:var(--mono);font-size:12px;
+    border:2px solid var(--line);background:var(--bg);color:var(--ink);
+    padding:9px 12px 9px 34px;outline:0}
+  .search input:focus{border-color:var(--e1);box-shadow:var(--sh-xs)}
+  .search input::placeholder{color:var(--ink3);text-transform:uppercase;letter-spacing:.08em}
+
+  .livedot{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:9.5px;
+    font-weight:900;text-transform:uppercase;letter-spacing:.14em;color:var(--ink2)}
+  .livedot i{width:8px;height:8px;border-radius:50%;background:var(--green);
+    box-shadow:0 0 0 0 var(--green);animation:pulse 2.2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--green) 70%,transparent)}
+    70%{box-shadow:0 0 0 9px transparent}100%{box-shadow:0 0 0 0 transparent}}
+
+  .topright{margin-left:auto;display:flex;align-items:center;gap:10px}
+  select.theme{font:inherit;font-family:var(--mono);font-size:10.5px;font-weight:800;
+    text-transform:uppercase;letter-spacing:.1em;padding:8px 10px;background:var(--card);
+    color:var(--ink);border:2px solid var(--line);cursor:pointer;outline:0}
+  select.theme:focus{box-shadow:var(--sh-xs)}
+  .avatar{width:38px;height:38px;border:var(--bw) solid var(--line);overflow:hidden;
+    background:var(--e1);display:grid;place-items:center;color:var(--bg);font-weight:900;
+    font-size:12px;font-family:var(--mono);box-shadow:var(--sh-xs);padding:0}
+  .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+
+  /* ticker */
+  .ticker{border-bottom:var(--bw) solid var(--line);background:var(--card);overflow:hidden;
+    display:flex;align-items:center;height:34px;position:relative}
+  .ticker .tag{flex:0 0 auto;background:var(--e1);color:var(--bg);font-family:var(--mono);
+    font-size:9.5px;font-weight:900;letter-spacing:.14em;padding:0 12px;height:100%;
+    display:grid;place-items:center;border-right:var(--bw) solid var(--line);z-index:2}
+  .tickwrap{overflow:hidden;flex:1}
+  .tickrun{display:inline-flex;gap:34px;white-space:nowrap;animation:run 64s linear infinite;
+    padding-left:20px;will-change:transform}
+  .tickrun:hover{animation-play-state:paused}
+  @keyframes run{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .tickrun span{font-family:var(--mono);font-size:11px;color:var(--ink2);letter-spacing:.03em}
+  .tickrun span b{color:var(--ink);font-weight:900}
+  .tickrun span i{font-style:normal;width:7px;height:7px;display:inline-block;margin-right:8px;
+    border-radius:50%;background:var(--green)}
+  .tickrun span i.bad{background:var(--red)} .tickrun span i.warn{background:var(--amber)}
+
+  .content{padding:var(--s3) var(--s4) 64px;max-width:1640px;width:100%}
+  .pagehead{display:flex;align-items:flex-start;gap:var(--s2);flex-wrap:wrap;margin-bottom:var(--s3)}
+  .pagehead h2{font-size:40px;font-weight:900;letter-spacing:-.045em;text-transform:uppercase}
+  .pagehead p{color:var(--ink2);font-size:14.5px;margin-top:7px;max-width:70ch}
+  .pageact{margin-left:auto;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+  .btn{font:inherit;font-family:var(--mono);font-size:10.5px;font-weight:900;cursor:pointer;
+    padding:10px 14px;display:inline-flex;align-items:center;gap:7px;border:2px solid var(--line);
+    text-transform:uppercase;letter-spacing:.1em;background:var(--card);color:var(--ink2)}
+  .btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.4;
+    stroke-linecap:round;stroke-linejoin:round}
+  .btn.ghost{color:var(--ink2)}
+  .btn.primary{background:var(--e1);color:var(--bg);box-shadow:var(--sh-sm)}
+  .btn.primary:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--shade)}
+  .btn.primary.done{background:var(--green)}
+
+  /* ================= grid + cards ================= */
+  .g12{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--s2)}
+  .c3{grid-column:span 3} .c4{grid-column:span 4} .c5{grid-column:span 5}
+  .c6{grid-column:span 6} .c7{grid-column:span 7} .c8{grid-column:span 8} .c12{grid-column:span 12}
+  .panel{display:none} .panel.on{display:block}
+  .panel.on>*,.panel.on .g12>*{animation:rise .34s cubic-bezier(.2,.8,.2,1) backwards}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  .card{background:var(--card);border:var(--bw) solid var(--line);padding:20px;
+    box-shadow:var(--sh);margin-bottom:0}
+  .card.pad0{padding:0}
+  .ctitle{font-size:17px;font-weight:900;letter-spacing:-.02em;text-transform:uppercase}
+  .csub{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.13em;
+    color:var(--ink3);font-weight:700;margin-top:5px}
+  .chead{display:flex;align-items:flex-start;gap:var(--s2);margin-bottom:var(--s2);
+    padding-bottom:12px;border-bottom:2px solid var(--track)}
+  .chead .right{margin-left:auto;display:flex;align-items:center;gap:12px}
+
+  /* KPI */
+  .kpi .row1{display:flex;align-items:center;margin-bottom:16px}
+  .tile{width:40px;height:40px;border:2px solid var(--line);display:grid;place-items:center}
+  .tile svg{width:19px;height:19px;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+  .tile.blue{background:var(--blue-t)} .tile.blue svg{stroke:var(--blue)}
+  .tile.green{background:var(--green-t)} .tile.green svg{stroke:var(--green)}
+  .tile.red{background:var(--red-t)} .tile.red svg{stroke:var(--red)}
+  .tile.teal{background:var(--teal-t)} .tile.teal svg{stroke:var(--teal)}
+  .tile.amber{background:var(--amber-t)} .tile.amber svg{stroke:var(--amber)}
+  .pill{margin-left:auto;display:inline-flex;align-items:center;gap:4px;border:2px solid var(--line);
+    padding:3px 8px;font-family:var(--mono);font-size:10px;font-weight:900;letter-spacing:.06em}
+  .pill svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:3}
+  .pill.ok{background:var(--green-t);color:var(--green)}
+  .pill.bad{background:var(--red-t);color:var(--red)}
+  .pill.neutral{background:var(--track);color:var(--ink2)}
+  .klabel{font-family:var(--mono);font-size:10px;color:var(--ink3);margin-bottom:7px;
+    text-transform:uppercase;letter-spacing:.11em;font-weight:700}
+  .kval{font-family:var(--mono);font-size:34px;font-weight:900;letter-spacing:-.05em;line-height:1}
+  .kval small{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink3);
+    letter-spacing:.06em;margin-left:6px;text-transform:uppercase}
+  .kmeta{font-size:11.5px;color:var(--ink3);margin-top:9px;line-height:1.5}
+
+  .legend{display:flex;gap:14px;font-family:var(--mono);font-size:10px;color:var(--ink2);
+    font-weight:700;text-transform:uppercase;letter-spacing:.08em;flex-wrap:wrap}
+  .legend i{width:9px;height:9px;display:inline-block;margin-right:6px;vertical-align:middle;
+    border:1px solid var(--line)}
+
+  /* bar list */
+  .blist{display:flex;flex-direction:column;gap:15px}
+  .blist .t{display:flex;align-items:baseline;margin-bottom:7px;gap:10px}
+  .blist .t span{font-size:12.5px;font-weight:600}
+  .blist .t b{margin-left:auto;font-family:var(--mono);font-size:12.5px;color:var(--e1);font-weight:900}
+  .blist .t b.dim{color:var(--ink3)}
+  .btrack{height:12px;background:var(--track);border:2px solid var(--line);overflow:hidden}
+  .bfill{height:100%;background:var(--e1);transition:width .8s cubic-bezier(.2,.8,.2,1)}
+  .bfill.red{background:var(--red)} .bfill.green{background:var(--green)}
+
+  /* tables */
+  table{width:100%;border-collapse:collapse;font-size:12.5px}
+  thead th{text-align:left;padding:10px 14px;font-family:var(--mono);font-size:9.5px;
+    text-transform:uppercase;letter-spacing:.12em;color:var(--ink3);font-weight:900;
+    border-bottom:var(--bw) solid var(--line);background:var(--card2)}
+  tbody td{padding:12px 14px;border-bottom:1px solid var(--track);vertical-align:top}
+  tbody tr:last-child td{border-bottom:0}
+  tbody tr:hover{background:var(--card2)}
+  .num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:12px}
+  .measured{font-family:var(--mono);font-weight:900;font-variant-numeric:tabular-nums;color:var(--ink)}
+  .carried{font-family:var(--mono);font-weight:600;color:var(--ink3);font-variant-numeric:tabular-nums}
+  .carried::after{content:"carried";font-family:var(--mono);margin-left:6px;border:1px solid var(--line);
+    padding:1px 5px;font-size:8.5px;font-weight:900;letter-spacing:.08em;background:var(--track);
+    color:var(--ink3);text-transform:uppercase}
+
+  .tag{display:inline-block;border:2px solid var(--line);padding:2px 7px;font-family:var(--mono);
+    font-size:9.5px;font-weight:900;text-transform:uppercase;letter-spacing:.07em;white-space:nowrap}
+  .tag.ok{background:var(--green-t);color:var(--green)}
+  .tag.no{background:var(--red-t);color:var(--red)}
+  .tag.a{background:var(--blue-t);color:var(--blue)}
+  .tag.w{background:var(--amber-t);color:var(--amber)}
+  .tag.n{background:var(--track);color:var(--ink2)}
+
+  .src{font-family:var(--mono);font-size:10px;color:var(--ink3);text-decoration:none;
+    letter-spacing:.02em}
+  a.src:hover{color:var(--e1);text-decoration:underline}
+
+  .alertbox{background:var(--red-t);border:2px solid var(--red);border-left-width:6px;
+    padding:13px 15px;margin-bottom:11px;font-size:13px;line-height:1.55}
+  .alertbox .h{font-family:var(--mono);color:var(--red);font-weight:900;font-size:9.5px;
+    text-transform:uppercase;letter-spacing:.13em;margin-bottom:7px}
+
+  .act{font:inherit;font-family:var(--mono);font-size:9.5px;font-weight:900;cursor:pointer;
+    border:2px solid var(--e1);background:transparent;color:var(--e1);padding:4px 9px;
+    margin-left:8px;white-space:nowrap;text-transform:uppercase;letter-spacing:.09em}
+  .act:hover{background:var(--e1);color:var(--bg)}
+  .act.done{background:var(--green);border-color:var(--green);color:var(--bg)}
+
+  .empty{font-size:12.5px;color:var(--ink2);background:var(--card2);border:2px solid var(--track);
+    border-left:6px solid var(--e2);padding:13px 15px;margin-top:var(--s2);line-height:1.65}
+
+  /* ================= THE CORE ================= */
+  .core{border:var(--bw) solid var(--line);background:
+    radial-gradient(120% 90% at 50% 60%,var(--card2) 0%,var(--bg) 68%);
+    box-shadow:var(--sh);overflow:hidden}
+  .coreviz{position:relative;height:min(52vh,520px);overflow:hidden}
+  #corec{display:block;width:100%;height:100%}
+  .corehud{position:absolute;inset:0;pointer-events:none;padding:18px 20px;
+    display:flex;flex-direction:column}
+  .corehud .top{display:flex;gap:18px;align-items:flex-start}
+  .corehud .name{font-family:var(--mono);font-size:11px;font-weight:900;letter-spacing:.5em;
+    text-transform:uppercase;color:var(--ink)}
+  .corehud .sub{font-family:var(--mono);font-size:9px;letter-spacing:.22em;color:var(--ink3);
+    margin-top:5px;text-transform:uppercase}
+  .corehud .states{margin-left:auto;display:flex;gap:14px;flex-wrap:wrap;justify-content:flex-end}
+  .corehud .st{font-family:var(--mono);font-size:9px;font-weight:900;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink3)}
+  .corehud .st b{color:var(--ink)}
+  .corehud .st i{width:6px;height:6px;display:inline-block;margin-right:6px;border-radius:50%}
+  .readout{padding:16px 20px;border-top:2px solid var(--line);background:var(--card2);
+    display:grid;grid-template-columns:minmax(280px,38%) 1fr;gap:22px;align-items:center}
+  .readout .big{text-align:left}
+  @media(max-width:900px){ .readout{grid-template-columns:1fr} .readout .big{text-align:center} }
+  .readout .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.3em;color:var(--ink3);
+    text-transform:uppercase}
+  .readout .v{font-family:var(--mono);font-size:clamp(38px,4.6vw,64px);font-weight:900;
+    letter-spacing:-.055em;line-height:1;color:var(--ink);margin:5px 0 4px;
+    text-shadow:0 0 38px var(--glow)}
+  .readout .s{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--ink2);
+    text-transform:uppercase;margin-top:8px}
+  .corefoot{display:flex;flex-wrap:wrap;gap:6px;align-content:center}
+  .corefoot div{border:2px solid var(--line);background:var(--card);padding:5px 9px;
+    font-family:var(--mono);font-size:9px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink3);display:flex;align-items:baseline;gap:7px}
+  .corefoot div b{font-size:13px;color:var(--ink);letter-spacing:-.02em}
+  .corehint{position:absolute;left:20px;bottom:14px;font-family:var(--mono);font-size:8.5px;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);pointer-events:none;opacity:.75}
+  #coretip{position:absolute;pointer-events:none;opacity:0;transition:opacity .12s;
+    background:var(--card);border:2px solid var(--e1);padding:9px 11px;max-width:300px;z-index:5;
+    box-shadow:var(--sh-xs)}
+  #coretip .k{font-family:var(--mono);font-size:8.5px;font-weight:900;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--e1);margin-bottom:4px}
+  #coretip .t{font-size:12.5px;font-weight:700;line-height:1.35;margin-bottom:4px}
+  #coretip .f{font-size:11px;color:var(--ink2);line-height:1.45}
+
+  /* ================= media ================= */
+  .vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+  .vgrid.tight{grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:11px}
+  .vgrid.wall{grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:9px}
+  .vc{border:2px solid var(--line);background:var(--card2);text-decoration:none;color:inherit;
+    display:block;position:relative}
+  .vc:hover{transform:translate(-3px,-3px);box-shadow:var(--sh-sm);border-color:var(--e1)}
+  .thumb{position:relative;aspect-ratio:16/9;background:var(--track);overflow:hidden;display:block}
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .thumb .dur{position:absolute;right:5px;bottom:5px;background:#000;color:#fff;
+    font-family:var(--mono);font-size:9.5px;font-weight:900;padding:2px 5px;letter-spacing:.04em}
+  .thumb .play{position:absolute;inset:0;display:grid;place-items:center;opacity:0}
+  .vc:hover .thumb .play{opacity:1}
+  .thumb .play span{width:44px;height:44px;background:var(--e1);border:var(--bw) solid var(--line);
+    display:grid;place-items:center;box-shadow:var(--sh-xs)}
+  .thumb .play svg{width:17px;height:17px;fill:var(--bg);stroke:none;margin-left:2px}
+  .thumb .flag{position:absolute;left:5px;top:5px;background:var(--red);color:#fff;font-size:8.5px;
+    font-weight:900;text-transform:uppercase;letter-spacing:.09em;padding:2px 6px;
+    font-family:var(--mono);border:1px solid var(--line)}
+  .thumb .flag.b{background:var(--blue)} .thumb .flag.g{background:var(--green)}
+  .thumb .rank{position:absolute;left:5px;top:5px;background:#000;color:#fff;
+    font-family:var(--mono);font-size:10px;font-weight:900;padding:1px 6px;border:1px solid var(--line)}
+  .thumb.miss{display:grid;place-items:center;background:var(--red-t);
+    border-bottom:2px dashed var(--red)}
+  .thumb.miss span{font-family:var(--mono);font-size:9.5px;color:var(--red);font-weight:900;
+    text-align:center;padding:0 10px;text-transform:uppercase;letter-spacing:.08em}
+  .vmeta{padding:10px}
+  .vmeta .vt{font-size:12px;font-weight:700;line-height:1.35;margin-bottom:7px;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .vstat{display:flex;gap:9px;font-family:var(--mono);font-size:9.5px;color:var(--ink3);
+    flex-wrap:wrap;letter-spacing:.03em}
+  .vstat b{color:var(--e1);font-weight:900}
+  .vgrid.wall .vmeta{padding:7px}
+  .vgrid.wall .vmeta .vt{font-size:10.5px;-webkit-line-clamp:2;margin-bottom:5px}
+
+  .hero{display:grid;grid-template-columns:minmax(240px,340px) 1fr;gap:var(--s3);align-items:start}
+  @media(max-width:900px){.hero{grid-template-columns:1fr}}
+
+  .av{width:40px;height:40px;object-fit:cover;flex:0 0 40px;border:2px solid var(--line)}
+  .av.sm{width:28px;height:28px;flex:0 0 28px}
+  .av.lg{width:54px;height:54px;flex:0 0 54px}
+  .crow{display:flex;align-items:center;gap:12px}
+  .cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:14px}
+  .ccomp{border:2px solid var(--line);padding:14px;background:var(--card2)}
+  .ccomp.on{border-color:var(--green);background:var(--green-t)}
+
+  /* lightbox: nothing loads until a click */
+  #lb{position:fixed;inset:0;background:color-mix(in srgb,var(--bg) 88%,#000);z-index:80;
+    display:none;place-items:center;padding:24px}
+  #lb.on{display:grid}
+  #lb .box{width:min(1080px,96vw);border:var(--bw) solid var(--line);background:var(--card);
+    box-shadow:var(--sh-lg)}
+  #lb .bar{display:flex;align-items:center;gap:12px;padding:11px 14px;
+    border-bottom:var(--bw) solid var(--line);background:var(--card2)}
+  #lb .bar .t{font-size:13px;font-weight:900;line-height:1.3}
+  #lb .bar .x{margin-left:auto;font:inherit;font-family:var(--mono);font-size:11px;font-weight:900;
+    cursor:pointer;background:var(--red);color:#fff;border:2px solid var(--line);padding:5px 11px}
+  #lb .frame{aspect-ratio:16/9;background:#000}
+  #lb iframe{width:100%;height:100%;border:0;display:block}
+  #lb .warn{padding:10px 14px;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;
+    color:var(--ink3);text-transform:uppercase;border-top:2px solid var(--track)}
+
+  /* month grid */
+  .month{display:grid;grid-template-columns:repeat(7,minmax(92px,1fr));gap:5px;min-width:700px}
+  .month .hd{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.13em;
+    font-weight:900;color:var(--ink3);text-align:center;padding:4px 0}
+  .mcell{border:2px solid var(--track);min-height:76px;padding:6px;background:var(--card2);
+    font-size:10px}
+  .mcell.void2{border:0;background:transparent;min-height:0}
+  .mcell.inband{background:var(--e1-t);border-color:var(--e2)}
+  .mcell.today{border-color:var(--e1);box-shadow:var(--sh-xs)}
+  .mcell .dn{font-family:var(--mono);font-size:10px;color:var(--ink3);font-weight:900;
+    display:block;margin-bottom:4px}
+  .mcell img{width:100%;height:auto;display:block;border:1px solid var(--line)}
+  .mcell a:hover img{outline:2px solid var(--e1)}
+  .ev{display:block;padding:2px 4px;margin-top:3px;line-height:1.3;font-weight:800;
+    font-family:var(--mono);font-size:8.5px;letter-spacing:.03em;text-transform:uppercase;
+    border:1px solid var(--line)}
+  .ev.pub{background:var(--green-t);color:var(--green)}
+  .ev.gap{background:var(--red-t);color:var(--red)}
+  .ev.mile{background:var(--amber-t);color:var(--amber)}
+  .ev.os{background:var(--e1-t);color:var(--e1)}
+
+  /* week calendar */
+  .cal{display:grid;grid-template-columns:96px repeat(7,minmax(92px,1fr));gap:5px;min-width:820px}
+  .cal .hd{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.12em;
+    font-weight:900;color:var(--ink3);padding:4px 2px;text-align:center}
+  .cal .hd.today{color:var(--e1)}
+  .cal .rowlab{font-family:var(--mono);font-size:10.5px;font-weight:900;align-self:center;
+    text-transform:uppercase;letter-spacing:.06em}
+  .cell{border:2px solid var(--track);min-height:58px;padding:7px;font-size:10px;background:var(--card2)}
+  .cell.slot{border-color:var(--red);background:var(--red-t)}
+  .cell.slot strong{color:var(--red)}
+  .cell.filled{border-color:var(--green);background:var(--green-t)}
+  .cell.off{opacity:.35;border-style:dashed}
+  .cell strong{display:block;font-family:var(--mono);font-size:9.5px;margin-bottom:4px;
+    text-transform:uppercase;letter-spacing:.06em}
+
+  .tree{font-size:12.5px}
+  .tree .pillar{font-weight:900;border-left:6px solid var(--e1);padding-left:11px}
+  .tree ul{list-style:none;margin:9px 0 0 14px;border-left:2px solid var(--track);padding-left:14px}
+  .tree li{position:relative;margin-bottom:8px}
+  .tree li::before{content:"";position:absolute;left:-14px;top:.7em;width:10px;height:2px;
+    background:var(--track)}
+
+  .chart{width:100%;height:auto;display:block}
+  .chart text{font-family:var(--mono);font-size:10px;fill:var(--ink3);letter-spacing:.06em}
+  .chart .grid{stroke:var(--track);stroke-width:1}
+  .chart .ln{fill:none;stroke:var(--e1);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+  .chart .ref{stroke:var(--red);stroke-width:2;stroke-dasharray:6 5;fill:none}
+  .scroll{overflow-x:auto}
+  .hide{display:none !important}
+
+  /* kpi tree */
+  .kt{display:flex;flex-direction:column;gap:9px}
+  .ktn{border:2px solid var(--line);padding:13px 15px;background:var(--card2)}
+  .ktn.north{background:var(--e1);color:var(--bg);box-shadow:var(--sh-sm)}
+  .ktn .row{display:flex;align-items:baseline;gap:12px}
+  .ktn .m{font-weight:800;font-size:13px}
+  .ktn .v{margin-left:auto;font-family:var(--mono);font-weight:900;white-space:nowrap}
+  .ktn .v i{font-style:normal;font-weight:700;opacity:.6}
+  .ktn .w{font-size:11.5px;color:var(--ink2);margin-top:7px;line-height:1.5}
+  .ktn.north .w{color:var(--bg);opacity:.86}
+  .ktn.north .btrack{background:color-mix(in srgb,var(--bg) 35%,transparent);border-color:var(--bg)}
+  .ktn.north .bfill{background:var(--bg)}
+  .ktkids{margin-left:20px;border-left:2px solid var(--track);padding-left:14px;margin-top:9px;
+    display:flex;flex-direction:column;gap:7px}
+
+  .who{display:inline-flex;align-items:center;gap:6px;background:var(--card2);
+    border:2px solid var(--line);padding:2px 9px 2px 2px;font-family:var(--mono);font-size:10px;
+    font-weight:900;text-transform:uppercase;letter-spacing:.05em}
+  .who i{width:22px;height:22px;display:grid;place-items:center;font-style:normal;font-size:9px;
+    font-weight:900;color:var(--bg)}
+  .who i.i0{background:var(--e1)} .who i.i1{background:var(--e2)}
+  .who i.i2{background:var(--amber)} .who i.i3{background:var(--green)}
+
+  .quote{border-left:6px solid var(--e1);background:var(--card2);padding:15px 17px;
+    margin-bottom:11px;border-top:2px solid var(--track);border-right:2px solid var(--track);
+    border-bottom:2px solid var(--track)}
+  .quote q{display:block;font-size:16px;font-weight:800;line-height:1.45;margin-bottom:10px;
+    letter-spacing:-.01em}
+  .quote .att{font-family:var(--mono);font-size:10px;color:var(--ink3);line-height:1.8;
+    letter-spacing:.02em}
+
+  .ccard{background:var(--card);border:var(--bw) solid var(--line);box-shadow:var(--sh);
+    margin-bottom:var(--s2)}
+  .ccard .top{padding:18px 20px;border-bottom:var(--bw) solid var(--line);background:var(--card2)}
+  .ccard .top h3{font-family:var(--mono);font-size:14px;font-weight:900;display:inline-block;
+    margin-right:9px;letter-spacing:.02em}
+  .ccard .goal{font-size:17px;font-weight:900;line-height:1.35;margin:12px 0 8px;letter-spacing:-.02em}
+  .ccard .body{padding:18px 20px;display:grid;grid-template-columns:1fr 1fr;gap:var(--s3)}
+  .ccard .full{padding:0 20px 18px}
+  .lbl{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.13em;
+    color:var(--ink3);font-weight:900;margin-bottom:8px}
+  .kv{font-size:12.5px;color:var(--ink2);line-height:1.6;margin-bottom:15px}
+  .thr{display:flex;gap:9px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--track)}
+  .thr:last-child{border-bottom:0}
+  .thr .tx{font-size:12.5px;line-height:1.45}
+  .thr .tx em{font-style:normal;display:block;font-family:var(--mono);font-size:10px;
+    color:var(--ink3);margin-top:3px}
+  @media(max-width:1100px){ .ccard .body{grid-template-columns:1fr} }
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:14px}
+  .acard{border:2px solid var(--line);padding:15px;background:var(--card2)}
+  .acard .h{font-weight:900;font-size:13.5px;margin-bottom:9px;line-height:1.35}
+  .acard .meta{font-family:var(--mono);font-size:10px;color:var(--ink3);margin-top:10px;
+    line-height:1.75}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+
+  .stack{display:flex;flex-direction:column;gap:var(--s2)}
+
+  @media(max-width:1180px){ .c3,.c4,.c5,.c6,.c7,.c8{grid-column:span 12} }
+  @media(max-width:900px){
+    body{flex-direction:column} .side{width:100%;flex:none;height:auto;position:static;
+      flex-direction:row;align-items:center;gap:var(--s2);overflow-x:auto;
+      border-right:0;border-bottom:var(--bw) solid var(--line)}
+    .side nav{flex-direction:row} .sidefoot{display:none} .brand span{display:none}
+    .content{padding:var(--s2)} .pagehead h2{font-size:28px} #corec{height:420px}
+    .topbar{position:static}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important}
+  }
+
+  /* ---------- team profile cards and the person detail page ---------- */
+  .pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:var(--s2)}
+  .pcard{border:3px solid var(--line);background:var(--card);box-shadow:6px 6px 0 var(--shade);
+    padding:16px;cursor:pointer;transition:transform .12s,box-shadow .12s;text-align:left;
+    display:flex;flex-direction:column;gap:12px}
+  .pcard:hover{transform:translate(-3px,-3px);box-shadow:9px 9px 0 var(--shade)}
+  .pcard .ptop{display:flex;align-items:center;gap:12px}
+  .pcard .pav{width:46px;height:46px;flex:0 0 46px;border:3px solid var(--line);
+    display:grid;place-items:center;font:800 15px/1 var(--mono);background:var(--e1);color:var(--bg)}
+  .pcard .pn{font:800 15px/1.2 var(--sans);color:var(--ink)}
+  .pcard .pr{font:500 11px/1.3 var(--mono);color:var(--ink3);text-transform:uppercase;
+    letter-spacing:.06em;margin-top:3px}
+  .pcard .pow{font:400 12.5px/1.55 var(--sans);color:var(--ink2);
+    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .pcard .pfoot{display:flex;align-items:center;gap:8px;margin-top:auto;
+    border-top:1px solid var(--track);padding-top:10px}
+  .pcard .popen{font:800 22px/1 var(--mono);color:var(--ink)}
+  .pcard .plbl{font:500 10px/1.3 var(--mono);color:var(--ink3);text-transform:uppercase}
+  .pcard .pgo{margin-left:auto;font:600 11px/1 var(--mono);color:var(--e1)}
+  .pback{display:inline-flex;align-items:center;gap:7px;border:3px solid var(--line);
+    background:var(--card);box-shadow:4px 4px 0 var(--shade);padding:8px 13px;cursor:pointer;
+    font:700 11px/1 var(--mono);color:var(--ink);text-transform:uppercase;letter-spacing:.06em;
+    margin-bottom:var(--s2)}
+  .pback:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--shade)}
+  .phead{display:flex;align-items:center;gap:16px;margin-bottom:var(--s2)}
+  .phead .pav{width:62px;height:62px;flex:0 0 62px;border:3px solid var(--line);
+    display:grid;place-items:center;font:800 20px/1 var(--mono);background:var(--e1);color:var(--bg)}
+  .phead h3{font:800 26px/1.1 var(--sans);color:var(--ink);margin:0}
+  .phead .pr{font:500 12px/1.3 var(--mono);color:var(--ink3);text-transform:uppercase;
+    letter-spacing:.07em;margin-top:5px}
+</style>
+</head>
+<body>
+
+<div id="stripe"></div>
+
+<aside class="side">
+  <div class="brand">
+    <div class="mark" title="the business"><svg viewBox="0 0 48 48" aria-label="the business">
+      <circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="4.6"/>
+      <path d="M15.5 22.5 A 8.6 8.6 0 0 0 32.5 22.5" fill="none" stroke="currentColor"
+        stroke-width="4.6" stroke-linecap="round"/>
+    </svg></div>
+    <div><h1>Marketing OS</h1><span>the business &middot; Control</span></div>
+  </div>
+
+  <nav id="tabs">
+    <div class="navsec">Today</div>
+    <button aria-selected="true" data-p="today"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3c3 3.5 3 14.5 0 18M3 12h18M5 6.5c4.5 2 9.5 2 14 0M5 17.5c4.5-2 9.5-2 14 0"/></svg>Core</button>
+    <div class="navsec">Make</div>
+    <button aria-selected="false" data-p="cal"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Calendar</button>
+    <button aria-selected="false" data-p="content"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16"/><path d="M10 9l5 3-5 3z"/></svg>Content</button>
+    <button aria-selected="false" data-p="camp"><svg viewBox="0 0 24 24"><path d="M3 11l18-7-7 18-2.5-8.5z"/><path d="M11.5 13.5L8 21"/></svg>Campaigns</button>
+    <div class="navsec">Sell</div>
+    <button aria-selected="false" data-p="funnel"><svg viewBox="0 0 24 24"><path d="M3 4h18l-7 8v7l-4 2v-9z"/></svg>Funnel</button>
+    <div class="navsec">Measure</div>
+    <button aria-selected="false" data-p="perf"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Performance</button>
+    <button aria-selected="false" data-p="learn"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V18h8v-3.3A7 7 0 0 0 12 2z"/></svg>Learnings</button>
+    <div class="navsec">Know</div>
+    <button aria-selected="false" data-p="aud"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg>Audience</button>
+    <button aria-selected="false" data-p="intel"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v3l2 2"/></svg>Intelligence</button>
+    <div class="navsec">Run</div>
+    <button aria-selected="false" data-p="team"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 5.5a3 3 0 0 1 0 5M18 20a6 6 0 0 0-3-5.2"/></svg>Team</button>
+    <button aria-selected="false" data-p="system"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M19 5l-3 3M8 16l-3 3"/></svg>System</button>
+  </nav>
+
+  <div class="sidefoot">
+    <div class="l">Connectors live</div>
+    <div class="k" id="sf-k"></div>
+    <div class="n" id="sf-n"></div>
+  </div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div class="search">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input id="q" type="search" placeholder="Filter rows" autocomplete="off">
+    </div>
+    <span class="livedot"><i></i>Live</span>
+    <div class="topright">
+      <span class="btn ghost"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span id="gen"></span></span>
+      <span class="btn ghost" id="mode"></span>
+      <select class="theme" id="theme" title="Palette">
+        <optgroup label="Dark">
+          <option value="carbon">Carbon</option>
+          <option value="void">Void</option>
+          <option value="reactor">Reactor</option>
+          <option value="ember">Ember</option>
+          <option value="flux">Flux</option>
+        </optgroup>
+        <optgroup label="Light">
+          <option value="cream">Cream</option>
+        </optgroup>
+      </select>
+      <button class="btn primary" id="brief"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 19h16"/></svg>Brief</button>
+      <div class="avatar" id="me">BV</div>
+    </div>
+  </div>
+
+  <div class="ticker">
+    <div class="tag">SIGNAL</div>
+    <div class="tickwrap"><div class="tickrun" id="tick"></div></div>
+  </div>
+
+  <div class="content">
+    <div class="pagehead">
+      <div>
+        <h2 id="ph-t"></h2>
+        <p id="ph-s"></p>
+      </div>
+    </div>
+
+    <div class="panel on" id="p-today"></div>
+    <div class="panel" id="p-cal"></div>
+    <div class="panel" id="p-content"></div>
+    <div class="panel" id="p-camp"></div>
+    <div class="panel" id="p-funnel"></div>
+    <div class="panel" id="p-perf"></div>
+    <div class="panel" id="p-learn"></div>
+    <div class="panel" id="p-aud"></div>
+    <div class="panel" id="p-intel"></div>
+    <div class="panel" id="p-team"></div>
+    <div class="panel" id="p-system"></div>
+  </div>
+</div>
+
+<div id="lb"><div class="box">
+  <div class="bar"><div class="t" id="lb-t"></div><button class="x" id="lb-x">Close</button></div>
+  <div class="frame" id="lb-f"></div>
+  <div class="warn">This player is the only thing on the page that touches the network, and only because you clicked it.</div>
+</div></div>
+
+<script type="application/json" id="os-data">
+{
+ "generated": "<generated>",
+ "mode": "<mode>",
+ "vault": "<vault>",
+ "funnel": {
+  "asof": "<asof>",
+  "rungs": [
+   {
+    "r": "<r>",
+    "n": "<n>",
+    "price": "<price>",
+    "priceNote": "<priceNote>",
+    "sales": "<sales>",
+    "proof": 0,
+    "proofNote": "<proofNote>",
+    "owner": "<owner>",
+    "feeds": "<feeds>",
+    "icp": "<icp>",
+    "land": "<land>",
+    "src": "<src>",
+    "count": "<count>"
+   }
+  ],
+  "ladder": [
+   {
+    "d": "<d>",
+    "v": "<v>",
+    "st": "<st>",
+    "note": "<note>"
+   }
+  ],
+  "src": "<src>"
+ },
+ "team": {
+  "asof": "<asof>",
+  "people": [
+   {
+    "slug": "<slug>",
+    "n": "<n>",
+    "ini": "<ini>",
+    "role": "<role>",
+    "owns": "<owns>",
+    "decides": "<decides>",
+    "open": 0,
+    "high": 0,
+    "profile": "<profile>",
+    "tfile": "<tfile>",
+    "tasks": [
+     {
+      "t": "<t>",
+      "p": "<p>",
+      "due": "<due>",
+      "f": "<f>"
+     }
+    ]
+   }
+  ],
+  "absent": [
+   {
+    "n": "<n>",
+    "why": "<why>"
+   }
+  ]
+ },
+ "pages": {
+  "today": {
+   "t": "The Core",
+   "s": "Every live piece of this OS in one place, and what needs you today."
+  },
+  "funnel": {
+   "t": "Funnel",
+   "s": "The offer ladder, what feeds each rung, and whether it can be proved."
+  },
+  "team": {
+   "t": "Team",
+   "s": "Who owns what in marketing, and what is actually on their plate."
+  },
+  "cal": {
+   "t": "Calendar",
+   "s": "What is coming, and where the holes are."
+  },
+  "content": {
+   "t": "Content",
+   "s": "The asset lifecycle from idea to published."
+  },
+  "camp": {
+   "t": "Campaigns",
+   "s": "What each push promised, against what it can actually prove."
+  },
+  "perf": {
+   "t": "Performance",
+   "s": "How we are doing, funnel first."
+  },
+  "learn": {
+   "t": "Learnings",
+   "s": "What the OS has learned, and where each lesson was written."
+  },
+  "aud": {
+   "t": "Audience",
+   "s": "Who we serve, in their words rather than ours."
+  },
+  "intel": {
+   "t": "Intelligence",
+   "s": "What happened out there this week."
+  },
+  "system": {
+   "t": "System",
+   "s": "Is this thing still telling the truth."
+  }
+ },
+ "kpis": [
+  {
+   "label": "<label>",
+   "v": "<v>",
+   "unit": "<unit>",
+   "icon": "<icon>",
+   "tile": "<tile>",
+   "badge": "<badge>",
+   "badgeTone": "<badgeTone>",
+   "meta": "<meta>"
+  }
+ ],
+ "charts": {
+  "subs": {
+   "title": "<title>",
+   "sub": "<sub>",
+   "legend": [
+    {
+     "c": "<c>",
+     "l": "<l>"
+    }
+   ],
+   "series": [
+    0
+   ],
+   "labels": [
+    "<value>"
+   ],
+   "ref": 0,
+   "refLabel": "<refLabel>"
+  },
+  "day7": {
+   "title": "<title>",
+   "sub": "<sub>",
+   "legend": [
+    {
+     "c": "<c>",
+     "l": "<l>"
+    }
+   ],
+   "series": [
+    0
+   ],
+   "labels": [
+    "<value>"
+   ],
+   "ref": 0,
+   "refLabel": "<refLabel>"
+  }
+ },
+ "today": {
+  "oneThing": {
+   "t": "<t>",
+   "why": "<why>",
+   "src": "<src>",
+   "prompt": "<prompt>"
+  },
+  "needsYou": [
+   {
+    "t": "<t>",
+    "src": "<src>",
+    "prompt": "<prompt>"
+   }
+  ],
+  "blocked": [
+   {
+    "t": "<t>",
+    "by": "<by>"
+   }
+  ],
+  "lastRun": "<lastRun>"
+ },
+ "calendar": {
+  "weekOf": "<weekOf>",
+  "todayIdx": 0,
+  "days": [
+   "<value>"
+  ],
+  "rows": [
+   {
+    "ch": "<ch>",
+    "target": [
+     0
+    ],
+    "cells": [
+     "<value>"
+    ]
+   }
+  ],
+  "unscheduled": [
+   {
+    "t": "<t>",
+    "ch": "<ch>",
+    "stage": "<stage>",
+    "src": "<src>"
+   }
+  ],
+  "cadence": {
+   "actual": 0,
+   "target": 0,
+   "window": "<window>",
+   "asof": "<asof>",
+   "note": "<note>"
+  },
+  "month": {
+   "label": "<label>",
+   "firstDow": 0,
+   "days": 0,
+   "today": 0,
+   "events": [
+    {
+     "d": 0,
+     "t": "<t>",
+     "k": "<k>",
+     "id": "<id>",
+     "note": "<note>"
+    }
+   ],
+   "bands": [
+    {
+     "n": "<n>",
+     "from": 0,
+     "to": 0,
+     "state": "<state>",
+     "note": "<note>"
+    }
+   ],
+   "note": "<note>"
+  },
+  "campaigns": [
+   {
+    "n": "<n>",
+    "state": "<state>",
+    "note": "<note>"
+   }
+  ]
+ },
+ "content": {
+  "pipeline": [
+   {
+    "stage": "<stage>",
+    "n": 0
+   }
+  ],
+  "backlogMin": 0,
+  "staleDays": 0,
+  "cards": [
+   {
+    "t": "<t>",
+    "ch": "<ch>",
+    "stage": "<stage>",
+    "owner": "<owner>",
+    "d": "<d>",
+    "age": 0,
+    "pillar": "<pillar>",
+    "pain": "<pain>",
+    "parent": "<parent>",
+    "src": "<src>",
+    "note": "<note>"
+   }
+  ],
+  "trees": [
+   {
+    "pillar": "<pillar>",
+    "id": "<id>",
+    "date": "<date>",
+    "src": "<src>",
+    "children": [
+     {
+      "t": "<t>",
+      "ch": "<ch>",
+      "state": "<state>"
+     }
+    ],
+    "expected": 0
+   }
+  ],
+  "published": [
+   {
+    "d": "<d>",
+    "t": "<t>",
+    "age": "<age>",
+    "views": 0,
+    "likes": 0,
+    "comments": 0,
+    "src": "<src>"
+   }
+  ],
+  "untracked": [
+   {
+    "d": "<d>",
+    "t": "<t>",
+    "views": 0
+   }
+  ]
+ },
+ "library": {
+  "pull": "<pull>",
+  "src": "<src>",
+  "channelId": "<channelId>",
+  "recent": [
+   {
+    "day7": 0,
+    "benchmark": 0,
+    "windowClosed": false,
+    "id": "<id>",
+    "t": "<t>",
+    "d": "<d>",
+    "age": "<age>",
+    "v": 0,
+    "l": 0,
+    "c": 0,
+    "dur": "<dur>",
+    "b": "<b>",
+    "rec": "<rec>",
+    "pillar": "<pillar>"
+   }
+  ],
+  "top": [
+   {
+    "id": "<id>",
+    "t": "<t>",
+    "d": "<d>",
+    "v": 0,
+    "b": "<b>"
+   }
+  ],
+  "cutoff": "<cutoff>",
+  "note": "<note>",
+  "catalog": [
+   {
+    "id": "<id>",
+    "t": "<t>",
+    "d": "<d>",
+    "v": 0,
+    "l": 0,
+    "c": 0,
+    "dur": "<dur>",
+    "b": 0,
+    "rank": 0,
+    "band": "<band>"
+   }
+  ],
+  "rivalName": "<rivalName>",
+  "rival": [
+   {
+    "id": "<id>",
+    "t": "<t>",
+    "d": "<d>",
+    "v": 0,
+    "l": 0,
+    "c": 0,
+    "dur": "<dur>",
+    "b": 0
+   }
+  ],
+  "stats": {
+   "n": 0,
+   "lifetime": 0,
+   "sum": 0,
+   "med": 0,
+   "top5": 0,
+   "top5pct": 0,
+   "channelViews": 0,
+   "bands": [
+    {
+     "k": "<k>",
+     "label": "<label>",
+     "n": 0,
+     "v": 0
+    }
+   ]
+  },
+  "headToHead": {
+   "us": {
+    "id": "<id>",
+    "t": "<t>",
+    "d": "<d>",
+    "v": 0,
+    "l": 0,
+    "c": 0,
+    "dur": "<dur>",
+    "b": 0
+   },
+   "them": {
+    "id": "<id>",
+    "t": "<t>",
+    "d": "<d>",
+    "v": 0,
+    "l": 0,
+    "c": 0,
+    "dur": "<dur>",
+    "b": 0
+   },
+   "note": "<note>"
+  },
+  "only": "<only>"
+ },
+ "campaigns": {
+  "asof": "<asof>",
+  "items": [
+   {
+    "n": "<n>",
+    "state": "<state>",
+    "owner": "<owner>",
+    "window": "<window>",
+    "offer": "<offer>",
+    "channels": "<channels>",
+    "goal": "<goal>",
+    "hasNumber": true,
+    "why": "<why>",
+    "hypothesis": "<hypothesis>",
+    "falsifier": "<falsifier>",
+    "ask": "<ask>",
+    "thresholds": [
+     {
+      "k": "<k>",
+      "t": "<t>",
+      "state": "<state>",
+      "by": "<by>"
+     }
+    ],
+    "results": [
+     {
+      "m": "<m>",
+      "target": "<target>",
+      "v": "<v>",
+      "asof": "<asof>",
+      "meas": false
+     }
+    ],
+    "retro": {
+     "state": "<state>",
+     "when": "<when>",
+     "src": "<src>",
+     "note": "<note>"
+    },
+    "flag": "<flag>",
+    "src": "<src>",
+    "prompt": "<prompt>",
+    "window2": {
+     "from": "<from>",
+     "to": "<to>"
+    },
+    "inWindow": []
+   }
+  ]
+ },
+ "performance": {
+  "oneNumber": {
+   "label": "<label>",
+   "v": "<v>",
+   "target": "<target>",
+   "asof": "<asof>",
+   "pct": 0,
+   "why": "<why>"
+  },
+  "funnel": [
+   {
+    "stage": "<stage>",
+    "metric": "<metric>",
+    "v": "<v>",
+    "asof": "<asof>",
+    "target": "<target>",
+    "pct": 0,
+    "m": true,
+    "delta": "<delta>"
+   }
+  ],
+  "channels": [
+   {
+    "ch": "<ch>",
+    "role": "<role>",
+    "key": "<key>",
+    "second": "<second>",
+    "asof": "<asof>",
+    "m": true,
+    "last": "<last>",
+    "demand": "<demand>"
+   }
+  ],
+  "tree": {
+   "north": {
+    "m": "<m>",
+    "v": "<v>",
+    "target": "<target>",
+    "pct": 0,
+    "asof": "<asof>"
+   },
+   "drivers": [
+    {
+     "m": "<m>",
+     "v": "<v>",
+     "target": "<target>",
+     "pct": 0,
+     "asof": "<asof>",
+     "meas": true,
+     "why": "<why>",
+     "children": [
+      {
+       "m": "<m>",
+       "v": "<v>",
+       "target": "<target>",
+       "pct": 0,
+       "asof": "<asof>",
+       "meas": true,
+       "why": "<why>"
+      }
+     ]
+    }
+   ],
+   "note": "<note>"
+  },
+  "demand": {
+   "create": {
+    "label": "<label>",
+    "channels": "<channels>",
+    "measured": 0,
+    "total": 0
+   },
+   "capture": {
+    "label": "<label>",
+    "channels": "<channels>",
+    "measured": 0,
+    "total": 0
+   },
+   "note": "<note>"
+  },
+  "evidence": [
+   {
+    "t": "<t>",
+    "d": "<d>",
+    "v": 0,
+    "b": "<b>"
+   }
+  ]
+ },
+ "learnings": {
+  "rule": "<rule>",
+  "counts": {
+   "confirmed": 0,
+   "candidates": 0,
+   "antipatterns": 0,
+   "graduated": 0
+  },
+  "confirmed": [],
+  "confirmedNote": "<confirmedNote>",
+  "graduated": [
+   {
+    "finding": "<finding>",
+    "from": "<from>",
+    "wroteTo": "<wroteTo>",
+    "state": "<state>",
+    "kind": "<kind>",
+    "note": "<note>"
+   }
+  ],
+  "candidates": [
+   {
+    "c": "<c>",
+    "why": "<why>",
+    "state": "<state>",
+    "kind": "<kind>"
+   }
+  ],
+  "antipatterns": [
+   {
+    "a": "<a>",
+    "ev": "<ev>",
+    "kind": "<kind>"
+   }
+  ],
+  "pending": [
+   {
+    "camp": "<camp>",
+    "fixed": "<fixed>",
+    "due": "<due>",
+    "src": "<src>",
+    "qs": [
+     "<value>"
+    ],
+    "banned": [
+     "<value>"
+    ]
+   }
+  ],
+  "prompt": "<prompt>",
+  "evidence": [
+   {
+    "id": "<id>",
+    "t": "<t>",
+    "d": "<d>",
+    "v": 0,
+    "l": 0,
+    "c": 0,
+    "dur": "<dur>",
+    "b": 0,
+    "rank": 0,
+    "band": "<band>"
+   }
+  ]
+ },
+ "audience": {
+  "asof": "<asof>",
+  "promise": "<promise>",
+  "segments": [
+   {
+    "s": "<s>",
+    "who": "<who>",
+    "want": "<want>",
+    "journey": "<journey>"
+   }
+  ],
+  "notFor": [
+   "<value>"
+  ],
+  "pains": [
+   {
+    "n": 0,
+    "p": "<p>",
+    "emo": "<emo>",
+    "aware": "<aware>",
+    "lead": "<lead>"
+   }
+  ],
+  "objections": [
+   {
+    "o": "<o>",
+    "n": 0,
+    "missingAsset": "<missingAsset>",
+    "missingSrc": "<missingSrc>",
+    "named": "<named>",
+    "when": "<when>",
+    "answer": "<answer>",
+    "gap": "<gap>",
+    "src": "<src>"
+   }
+  ],
+  "quotes": [
+   {
+    "q": "<q>",
+    "who": "<who>",
+    "where": "<where>",
+    "when": "<when>",
+    "pain": "<pain>",
+    "pub": "<pub>",
+    "verbatim": false,
+    "note": "<note>"
+   }
+  ],
+  "promote": [
+   {
+    "theme": "<theme>",
+    "n": 0,
+    "weeks": 0,
+    "need": 0,
+    "state": "<state>",
+    "who": "<who>",
+    "note": "<note>"
+   }
+  ],
+  "empty": {
+   "stuckPoints": "<stuckPoints>",
+   "wins": "<wins>",
+   "needs": "<needs>"
+  },
+  "prompt": "<prompt>",
+  "coverage": [
+   {
+    "n": 0,
+    "pain": "<pain>",
+    "aware": "<aware>",
+    "assets": [
+     {
+      "id": "<id>",
+      "t": "<t>",
+      "v": 0,
+      "d": "<d>",
+      "dur": "<dur>",
+      "stage": "<stage>"
+     }
+    ]
+   }
+  ],
+  "coverageNote": "<coverageNote>"
+ },
+ "intel": {
+  "market": {
+   "date": "<date>",
+   "src": "<src>",
+   "headline": "<headline>",
+   "degraded": "<degraded>",
+   "shipped": [
+    {
+     "w": "<w>",
+     "when": "<when>",
+     "why": "<why>",
+     "k": "<k>"
+    }
+   ],
+   "outliers": [
+    {
+     "id": "<id>",
+     "t": "<t>",
+     "ch": "<ch>",
+     "subs": 0,
+     "v": 0,
+     "vph": 0,
+     "b": "<b>",
+     "d": "<d>",
+     "dur": "<dur>",
+     "read": "<read>"
+    }
+   ],
+   "gap": {
+    "t": "<t>",
+    "body": "<body>",
+    "seeded": "<seeded>",
+    "src": "<src>"
+   },
+   "noise": [
+    "<value>"
+   ],
+   "notCovered": [
+    {
+     "s": "<s>",
+     "state": "<state>"
+    }
+   ]
+  },
+  "customers": [
+   {
+    "theme": "<theme>",
+    "n": 0,
+    "weeks": 0,
+    "quote": "<quote>",
+    "action": "<action>",
+    "src": "<src>"
+   }
+  ],
+  "promoteAt": 0,
+  "competitors": {
+   "asof": "<asof>",
+   "tracked": [
+    {
+     "n": "<n>",
+     "subs": 0,
+     "views": 0,
+     "vids": 0,
+     "img": "<img>",
+     "id": "<id>",
+     "cc": "<cc>",
+     "born": "<born>",
+     "note": "<note>"
+    }
+   ],
+   "roster": [
+    "<value>"
+   ],
+   "overlap": [
+    "<value>"
+   ]
+  }
+ },
+ "system": {
+  "probedAt": "<probedAt>",
+  "connectors": [
+   {
+    "c": "<c>",
+    "needs": "<needs>",
+    "state": "<state>"
+   }
+  ],
+  "routines": [
+   {
+    "n": "<n>",
+    "tag": "<tag>",
+    "cad": "<cad>",
+    "last": "<last>",
+    "ready": false,
+    "blocker": "<blocker>"
+   }
+  ],
+  "freshness": [
+   {
+    "row": "<row>",
+    "asof": "<asof>",
+    "age": 0,
+    "src": "<src>",
+    "note": "<note>"
+   }
+  ],
+  "contradictions": [
+   {
+    "claim": "<claim>",
+    "counter": "<counter>",
+    "src": "<src>",
+    "who": "<who>",
+    "sev": "<sev>"
+   }
+  ],
+  "osVideo": {
+   "t": "<t>",
+   "stage": "<stage>",
+   "src": "<src>",
+   "note": "<note>"
+  },
+  "uncaptured": [
+   {
+    "id": "<id>",
+    "t": "<t>",
+    "d": "<d>",
+    "age": "<age>",
+    "v": 0,
+    "l": 0,
+    "c": 0,
+    "dur": "<dur>",
+    "b": "<b>",
+    "rec": "<rec>",
+    "pillar": "<pillar>"
+   }
+  ]
+ },
+ "core": {
+  "nodes": [
+   {
+    "kind": "<kind>",
+    "label": "<label>",
+    "fact": "<fact>",
+    "tone": "<tone>",
+    "src": "<src>",
+    "link": "<link>",
+    "w": 0
+   }
+  ],
+  "counts": {
+   "video": 0,
+   "asset": 0,
+   "campaign": 0,
+   "channel": 0,
+   "routine": 0,
+   "connector": 0,
+   "flag": 0,
+   "lesson": 0,
+   "voice": 0,
+   "analytics": 0,
+   "root": 0,
+   "campaign-doc": 0,
+   "channel-doc": 0,
+   "content-doc": 0,
+   "context": 0,
+   "daily": 0,
+   "dashboard": 0,
+   "intel": 0,
+   "resource": 0,
+   "routine-doc": 0,
+   "competitor": 0,
+   "rival-video": 0,
+   "signal": 0
+  },
+  "readout": [
+   {
+    "k": "<k>",
+    "v": "<v>",
+    "sub": "<sub>"
+   }
+  ],
+  "note": "<note>",
+  "fileCount": 0,
+  "total": 0,
+  "sizeNote": "<sizeNote>",
+  "outsideCount": 0
+ },
+ "feed": [
+  {
+   "t": "<t>",
+   "d": "<d>",
+   "k": "<k>",
+   "n": "<n>"
+  }
+ ]
+}
+</script>
+
+<script type="application/json" id="os-img">
+{}
+</script>
+
+<script>
+(function(){
+  var D = JSON.parse(document.getElementById('os-data').textContent);
+  var esc=function(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');};
+  var num=function(n){return n==null?'not pulled':Number(n).toLocaleString('en-US');};
+
+  var ICON={
+    users:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9"/>',
+    eye:'<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/>',
+    calendar:'<rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+    spark:'<path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/>',
+    up:'<path d="M18 15l-6-6-6 6"/>', down:'<path d="M6 9l6 6 6-6"/>'
+  };
+  /* an unknown ICON key must render nothing, never the literal string "undefined" */
+  var svg=function(p,cls){ if(!p) return '';
+    return '<svg viewBox="0 0 24 24" class="'+(cls||'')+'">'+p+'</svg>';};
+
+  /* ---------- media helpers. every image is a build-time data URI ---------- */
+  var IMG=JSON.parse(document.getElementById('os-img').textContent);
+  var yt=function(id){ return 'https://www.youtube.com/watch?v='+id; };
+  var pic=function(k,cls,alt){ var d=IMG[k]; if(!d) return '';
+    return '<img'+(cls?' class="'+cls+'"':'')+' src="'+d+'" alt="'+esc(alt||'')+'" loading="lazy">'; };
+  var PLAY='<span class="play"><span><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></span>';
+  var vthumb=function(v,badge){
+    if(!IMG[v.id]) return '<span class="thumb miss"><span>thumbnail not pulled</span></span>';
+    return '<span class="thumb">'+pic(v.id,null,v.t)+
+      (v.dur?'<span class="dur">'+esc(v.dur)+'</span>':'')+(badge||'')+PLAY+'</span>';
+  };
+  var vcard=function(v,badge,stats){
+    return '<div class="vc" role="button" tabindex="0" data-vid="'+esc(v.id)+'" data-vt="'+esc(v.t)+
+      '">'+vthumb(v,badge)+'<div class="vmeta"><div class="vt">'+esc(v.t)+'</div>'+
+      '<div class="vstat">'+stats+'</div></div></div>';
+  };
+
+  var src=function(f){ if(!f) return '';
+    return '<a class="src" href="obsidian://open?vault='+encodeURIComponent(D.vault)+
+      '&file='+encodeURIComponent(f)+'">'+esc(f)+'</a>'; };
+
+  var PROMPTS=[];
+  var act=function(l,p){ if(!p) return '';
+    return '<button class="act" data-prompt="'+(PROMPTS.push(p)-1)+'">'+esc(l)+'</button>'; };
+
+  var val=function(v,m){ if(v==null||v==='not pulled') return '<span class="tag no">not pulled</span>';
+    return '<span class="'+(m?'measured':'carried')+'">'+esc(v)+'</span>'; };
+
+  var card=function(title,sub,body,right){
+    return '<div class="card"><div class="chead"><div><div class="ctitle">'+esc(title)+'</div>'+
+      (sub?'<div class="csub">'+esc(sub)+'</div>':'')+'</div>'+
+      (right?'<div class="right">'+right+'</div>':'')+'</div>'+body+'</div>';
+  };
+  var tbl=function(head,rows){
+    return '<div class="scroll"><table><thead><tr>'+head.map(function(x){return '<th>'+esc(x)+'</th>';}).join('')+
+      '</tr></thead><tbody>'+rows+'</tbody></table></div>';
+  };
+
+  /* ---------- smooth area chart, inline SVG, no library ---------- */
+  var CN=0;
+  function smooth(pts){
+    if(pts.length<2) return 'M'+pts[0][0]+' '+pts[0][1];
+    var d='M'+pts[0][0].toFixed(1)+' '+pts[0][1].toFixed(1), t=0.19;
+    for(var i=0;i<pts.length-1;i++){
+      var p0=pts[i-1]||pts[i], p1=pts[i], p2=pts[i+1], p3=pts[i+2]||p2;
+      d+=' C'+(p1[0]+(p2[0]-p0[0])*t).toFixed(1)+' '+(p1[1]+(p2[1]-p0[1])*t).toFixed(1)+
+         ','+(p2[0]-(p3[0]-p1[0])*t).toFixed(1)+' '+(p2[1]-(p3[1]-p1[1])*t).toFixed(1)+
+         ','+p2[0].toFixed(1)+' '+p2[1].toFixed(1);
+    }
+    return d;
+  }
+  function chart(cfg){
+    var s=cfg.series,W=860,H=290,pL=54,pR=16,pT=16,pB=30;
+    var iw=W-pL-pR, ih=H-pT-pB;
+    var hi=Math.max.apply(null,s.concat(cfg.ref!=null?[cfg.ref]:[])), lo=Math.min.apply(null,s);
+    var sp=(hi-lo)||1; hi+=sp*.10; lo=Math.max(0,lo-sp*.10); sp=(hi-lo)||1;
+    var X=function(i){return pL+(s.length<2?0:(i/(s.length-1))*iw);};
+    var Y=function(v){return pT+ih-((v-lo)/sp)*ih;};
+    var pts=s.map(function(v,i){return [X(i),Y(v)];});
+    var id='g'+(CN++);
+    var ln=smooth(pts);
+    var ar=ln+' L'+X(s.length-1).toFixed(1)+' '+(pT+ih)+' L'+X(0).toFixed(1)+' '+(pT+ih)+' Z';
+
+    var o='<svg class="chart" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMid meet" role="img">';
+    o+='<defs><linearGradient id="'+id+'" x1="0" y1="0" x2="0" y2="1">'+
+       '<stop offset="0%" stop-color="var(--blue)" stop-opacity=".22"/>'+
+       '<stop offset="100%" stop-color="var(--blue)" stop-opacity="0"/></linearGradient></defs>';
+    for(var g=0;g<=3;g++){
+      var gy=pT+(g/3)*ih, gv=hi-(g/3)*sp;
+      o+='<line class="grid" x1="'+pL+'" y1="'+gy.toFixed(1)+'" x2="'+(W-pR)+'" y2="'+gy.toFixed(1)+'"/>'+
+         '<text x="'+(pL-10)+'" y="'+(gy+3.5).toFixed(1)+'" text-anchor="end">'+
+         (gv>=1000?(gv/1000).toFixed(gv>=10000?0:1)+'K':Math.round(gv))+'</text>';
+    }
+    o+='<path d="'+ar+'" fill="url(#'+id+')"/><path class="ln" d="'+ln+'"/>';
+    o+='<circle cx="'+X(s.length-1).toFixed(1)+'" cy="'+Y(s[s.length-1]).toFixed(1)+
+       '" r="5.5" fill="var(--card)" stroke="var(--blue)" stroke-width="3"/>';
+    if(cfg.ref!=null&&cfg.ref<=hi){
+      var ry=Y(cfg.ref);
+      o+='<line class="ref" x1="'+pL+'" y1="'+ry.toFixed(1)+'" x2="'+(W-pR)+'" y2="'+ry.toFixed(1)+'"/>';
+    }
+    (cfg.labels||[]).forEach(function(lb,i,a){
+      var px=pL+(a.length<2?0:(i/(a.length-1))*iw);
+      o+='<text x="'+px.toFixed(1)+'" y="'+(H-8)+'" text-anchor="'+
+         (i===0?'start':(i===a.length-1?'end':'middle'))+'">'+esc(lb)+'</text>';
+    });
+    return o+'</svg>';
+  }
+  /* ---------- donut, inline SVG ---------- */
+  var donut=function(pct,big,small,tone){
+    var R=52,C=2*Math.PI*R,off=C*(1-pct/100);
+    return '<svg viewBox="0 0 140 140" class="chart" style="max-width:168px;margin:0 auto">'+
+      '<circle cx="70" cy="70" r="'+R+'" fill="none" stroke="var(--track)" stroke-width="15"/>'+
+      '<circle cx="70" cy="70" r="'+R+'" fill="none" stroke="var(--'+(tone||'blue')+')" stroke-width="15"'+
+      ' stroke-linecap="round" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+off.toFixed(1)+'"'+
+      ' transform="rotate(-90 70 70)"/>'+
+      '<text x="70" y="68" text-anchor="middle" style="font-size:26px;font-weight:700;fill:var(--ink);'+
+      'font-family:var(--dsp)">'+esc(big)+'</text>'+
+      '<text x="70" y="86" text-anchor="middle" style="font-size:10px;fill:var(--ink3);'+
+      'letter-spacing:1px">'+esc(small)+'</text></svg>';
+  };
+  var initials=function(name){
+    return name.trim().split(/\s+/).slice(0,2).map(function(w){return w[0];}).join('').toUpperCase();
+  };
+  var legend=function(items){
+    return '<div class="legend">'+items.map(function(x){
+      return '<span><i style="background:'+x.c+'"></i>'+esc(x.l)+'</span>'; }).join('')+'</div>';
+  };
+  var barlist=function(items){
+    var mx=Math.max.apply(null,items.map(function(x){return x.n;}).concat([1]));
+    return '<div class="blist">'+items.map(function(x){
+      var w=Math.max(Math.round(x.n/mx*100),2);
+      return '<div><div class="t"><span>'+esc(x.l)+'</span><b class="'+(x.n?'':'dim')+'">'+
+        esc(x.v!=null?x.v:x.n)+'</b></div><div class="btrack"><div class="bfill'+
+        (x.tone?' '+x.tone:'')+'" style="width:'+w+'%"></div></div></div>';
+    }).join('')+'</div>';
+  };
+
+  document.getElementById('gen').textContent=D.generated.slice(0,10);
+  document.getElementById('mode').textContent=D.mode;
+  if(IMG.avatar) document.getElementById('me').innerHTML=
+    pic('avatar',null,'channel avatar');
+
+  /* ================= Today ================= */
+  var t=D.today, h='';
+  var CO=D.core, kc=CO.counts;
+  var kinds=Object.keys(kc).sort(function(a,b){return kc[b]-kc[a];});
+  h+='<div class="core">'+
+     '<div class="coreviz">'+
+     '<canvas id="corec"></canvas>'+
+     '<div class="corehud"><div class="top"><div>'+
+     '<div class="name">The Core</div>'+
+     '<div class="sub">'+CO.total+' nodes &middot; '+(CO.total-CO.fileCount)+' with state &middot; '+
+     CO.fileCount+' files &middot; '+(CO.outsideCount||0)+' outside</div></div>'+
+     '<div class="states">'+
+     [['live','--green','healthy'],['hit','--e1','above 100k views'],
+      ['warn','--e3','needs a decision'],['bad','--e4','broken or missing'],
+      ['dim','--node-dim','no state']].map(function(s){
+        var c=CO.nodes.filter(function(x){return x.tone===s[0];}).length;
+        return '<span class="st"><i style="background:var('+s[1]+')"></i><b>'+c+'</b> '+s[2]+'</span>';
+      }).join('')+
+     '</div>'+
+     '</div>'+
+     '</div>'+
+     '<div class="corehint">scroll to zoom &middot; drag to orbit &middot; double click to reset</div>'+
+     '<div id="coretip"></div>'+
+     '</div>'+
+     '<div class="readout">'+
+     '<div class="big"><div class="k" id="ro-k"></div><div class="v" id="ro-v"></div>'+
+     '<div class="s" id="ro-s"></div></div>'+
+     '<div class="corefoot">'+
+     kinds.map(function(k){
+       return '<div>'+esc(k.replace(/-/g," "))+'<b>'+kc[k]+'</b></div>';
+     }).join('')+'</div>'+
+     '</div>'+
+     '</div>';
+  h+='<div class="empty" style="margin-bottom:var(--s2)">'+esc(CO.note)+' '+
+     esc(CO.sizeNote||'')+' Nodes cluster by kind, so a dense patch is a folder that is '+
+     'carrying weight and a sparse one is a folder that is not. Hover any node to read it, '+
+     'click it to open the file or the video.</div>';
+  h+='<div class="g12" style="margin-bottom:var(--s2)">';
+  D.kpis.forEach(function(k){
+    h+='<div class="c3"><div class="card kpi"><div class="row1">'+
+       '<div class="tile '+k.tile+'">'+svg(ICON[k.icon])+'</div>'+
+       '<span class="pill '+k.badgeTone+'">'+svg(ICON[k.badgeTone==='ok'?'up':'down'])+esc(k.badge)+'</span>'+
+       '</div><div class="klabel">'+esc(k.label)+'</div>'+
+       '<div class="kval">'+esc(k.v)+' <small>'+esc(k.unit)+'</small></div>'+
+       '<div class="kmeta">'+esc(k.meta)+'</div></div></div>';
+  });
+  h+='</div>';
+
+  h+='<div class="g12" style="margin-bottom:var(--s2)">';
+  h+='<div class="c8">'+card(D.charts.subs.title,D.charts.subs.sub,chart(D.charts.subs),
+        legend(D.charts.subs.legend))+'</div>';
+  h+='<div class="c4">'+card('Pipeline by stage','Channels/*/pipeline/',
+        barlist(D.content.pipeline.map(function(p){return {l:p.stage,n:p.n,v:p.n,tone:p.n?'':'red'};}))+
+        '<div class="empty">Idea backlog is '+D.content.pipeline[0].n+' against a minimum of '+
+        D.content.backlogMin+'. A thin backlog is why cadence slips, about two weeks later.</div>')+'</div>';
+  h+='</div>';
+
+  var LB=D.library, lv=LB.recent[0], bm=LB.recent[1];
+  h+=card('Latest published','Channel '+LB.channelId+', pulled '+LB.pull,
+     '<div class="hero"><div class="vc" role="button" tabindex="0" data-vid="'+esc(lv.id)+
+     '" data-vt="'+esc(lv.t)+'">'+vthumb(lv)+'</div><div>'+
+     '<div style="font-size:20px;font-weight:700;line-height:1.3;letter-spacing:-.3px">'+esc(lv.t)+'</div>'+
+     '<div class="vstat" style="margin:12px 0 14px;font-size:12.5px">'+
+     '<span><b>'+num(lv.v)+'</b> views</span><span><b>'+num(lv.l)+'</b> likes</span>'+
+     '<span><b>'+num(lv.c)+'</b> comments</span><span>'+esc(lv.dur)+'</span>'+
+     '<span>published '+esc(lv.d)+', '+esc(lv.age)+' ago</span></div>'+
+     '<div style="color:var(--ink2);line-height:1.65">'+esc(lv.age)+' old and at '+num(lv.v)+' views. '+
+     (lv.windowClosed
+      ?'Its seven day window has closed, so this figure is comparable against the benchmark.'
+      :'Its seven day window is not closed yet, so this figure is not yet comparable against the '+
+       'benchmark. A handful of closed windows do not make a trend.')+'</div>'+
+     '<div style="margin-top:14px">'+src(lv.rec)+'</div>'+
+     '</div></div>')+'<div style="height:var(--s2)"></div>';
+
+  h+='<div class="g12">';
+  h+='<div class="c8">'+card('The one thing','Highest-priority open item',
+        '<div style="font-size:17px;font-weight:600;margin-bottom:8px">'+esc(t.oneThing.t)+'</div>'+
+        '<div style="color:var(--ink2);line-height:1.6">'+esc(t.oneThing.why)+'</div>'+
+        '<div style="margin-top:14px">'+src(t.oneThing.src)+act('Copy prompt',t.oneThing.prompt)+'</div>')+
+      '<div style="height:var(--s2)"></div>'+
+      card('Needs you','Decisions a routine cannot make',
+        t.needsYou.map(function(n){
+          return '<div class="alertbox"><div class="h">Decision</div>'+esc(n.t)+
+            '<div style="margin-top:9px">'+src(n.src)+act('Copy',n.prompt)+'</div></div>';
+        }).join(''))+'</div>';
+  h+='<div class="c4">'+card('Blocked','What is waiting, and on what',
+        t.blocked.map(function(b){
+          return '<div style="padding:11px 0;border-bottom:1px solid var(--line)">'+
+            '<div style="font-weight:600;margin-bottom:4px">'+esc(b.t)+'</div>'+
+            '<span class="tag no">'+esc(b.by)+'</span></div>';
+        }).join('')+'<div class="empty">'+esc(t.lastRun)+'</div>')+'</div>';
+  h+='</div>';
+  document.getElementById('p-today').innerHTML=h;
+
+  /* ================= Calendar ================= */
+  var C=D.calendar; h=''; var hTopC='';
+  var cd=C.cadence, cpct=cd.target?Math.round(cd.actual/cd.target*100):null, openSlots=0;
+  C.rows.forEach(function(r){for(var i=0;i<7;i++){if(r.target[i]&&!r.cells[i])openSlots++;}});
+
+  h+='<div class="g12" style="margin-bottom:var(--s2)">';
+  h+='<div class="c4"><div class="card kpi"><div class="row1"><div class="tile red">'+svg(ICON.calendar)+
+     '</div><span class="pill bad">'+svg(ICON.down)+(cpct==null?'no target':cpct+'%')+'</span></div>'+
+     '<div class="klabel">Cadence, '+esc(cd.window)+'</div><div class="kval">'+cd.actual+
+     '<small>/ week</small></div><div class="kmeta">Target '+cd.target+'.0. '+esc(cd.note)+'</div></div></div>';
+  h+='<div class="c4"><div class="card kpi"><div class="row1"><div class="tile amber">'+svg(ICON.spark)+
+     '</div><span class="pill bad">'+svg(ICON.down)+openSlots+' open</span></div>'+
+     '<div class="klabel">Open target slots this week</div><div class="kval">'+openSlots+
+     '<small>slots</small></div><div class="kmeta">'+(openSlots?'Nothing scheduled into them yet':'Every target slot is filled')+'</div></div></div>';
+  h+='<div class="c4"><div class="card kpi"><div class="row1"><div class="tile blue">'+svg(ICON.eye)+
+     '</div><span class="pill neutral">briefed</span></div>'+
+     '<div class="klabel">Assets waiting for a date</div><div class="kval">'+C.unscheduled.length+
+     '<small>assets</small></div><div class="kmeta">All briefed, none scheduled</div></div></div>';
+  h+='</div>';
+
+  h+='@@MONTH@@';
+  var calBody='<div class="scroll"><div class="cal"><div class="hd"></div>';
+  C.days.forEach(function(d,i){ calBody+='<div class="hd'+(i===C.todayIdx?' today':'')+'">'+esc(d)+'</div>'; });
+  C.rows.forEach(function(r){
+    calBody+='<div class="rowlab">'+esc(r.ch)+'</div>';
+    for(var i=0;i<7;i++){
+      var w=r.target[i],has=r.cells[i],cls='cell',b='';
+      if(has){cls+=' filled';b='<strong>'+esc(has.t)+'</strong><span class="tag ok">'+esc(has.stage)+'</span>';}
+      else if(w){cls+=' slot';b='<strong>open</strong><span class="src">target</span>';}
+      else{cls+=' off';}
+      calBody+='<div class="'+cls+'">'+b+'</div>';
+    }
+  });
+  calBody+='</div></div><div class="empty">'+openSlots+' target slots this week and nothing scheduled into '+
+    'any of them. That is the honest state, not a rendering failure.</div>';
+  h+=card('Week of '+C.weekOf,'Cadence calendar from the primary channel strategy.md',calBody);
+
+  h+='<div style="height:var(--s2)"></div>';
+  var M=C.month;
+  var mBody='<div class="scroll"><div class="month">';
+  ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(function(dn){ mBody+='<div class="hd">'+dn+'</div>'; });
+  for(var vd=0; vd<M.firstDow; vd++) mBody+='<div class="mcell void2"></div>';
+  for(var dd=1; dd<=M.days; dd++){
+    var inb=M.bands.some(function(b){return dd>=b.from&&dd<=b.to;});
+    var evs=M.events.filter(function(e){return e.d===dd;});
+    mBody+='<div class="mcell'+(inb?' inband':'')+(dd===M.today?' today':'')+'">'+
+      '<span class="dn">'+dd+'</span>'+
+      evs.map(function(e){
+        return (e.id&&IMG[e.id]?'<a href="'+yt(e.id)+'" target="_blank" rel="noreferrer" '+
+          'style="display:block;border-radius:5px;overflow:hidden;margin-bottom:4px;line-height:0">'+
+          pic(e.id,null,e.t)+'</a>':'')+
+        '<span class="ev '+e.k+'" title="'+esc(e.note)+'">'+esc(e.t)+'</span>'; }).join('')+
+      '</div>';
+  }
+  mBody+='</div></div>';
+  mBody+='<div style="margin-top:var(--s2)">'+
+    tbl(['Campaign window','Days in this month','State','Note'],M.bands.map(function(b){
+      var cls=b.state==='running'?'a':(b.state==='complete'?'ok':'w');
+      return '<tr><td class="num">'+esc(b.n)+'</td><td class="num">'+b.from+' to '+b.to+
+        '</td><td><span class="tag '+cls+'">'+esc(b.state)+'</span></td><td>'+esc(b.note)+'</td></tr>';
+    }).join(''))+'</div>';
+  mBody+='<div class="empty">'+esc(M.note)+'</div>';
+  hTopC+=card(M.label,'Published assets on their real dates, campaign windows shaded',mBody,
+    legend([{c:'var(--green)',l:'published'},{c:'var(--red)',l:'no asset record'},
+            {c:'var(--amber)',l:'milestone'},{c:'var(--blue)',l:'campaign window'}]));
+
+  h+='<div style="height:var(--s2)"></div>';
+  h+=card('Briefed but unscheduled','Channels/*/pipeline/',
+      tbl(['Asset','Channel','Stage','Source'],C.unscheduled.map(function(u){
+        return '<tr><td><strong>'+esc(u.t)+'</strong></td><td>'+esc(u.ch)+'</td>'+
+          '<td><span class="tag a">'+esc(u.stage)+'</span></td><td>'+src(u.src)+'</td></tr>';
+      }).join('')));
+  h+='<div style="height:var(--s2)"></div>';
+  h+=card('Campaigns in flight','Campaigns/',
+      tbl(['Campaign','State','Note'],C.campaigns.map(function(x){
+        var cls=x.state==='running'?'a':(x.state==='complete'?'ok':'w');
+        return '<tr><td class="num">'+esc(x.n)+'</td><td><span class="tag '+cls+'">'+esc(x.state)+
+          '</span></td><td>'+esc(x.note)+'</td></tr>';
+      }).join('')));
+  document.getElementById('p-cal').innerHTML=h.replace('@@MONTH@@',hTopC+'<div style="height:var(--s2)"></div>');
+
+  /* ================= Content ================= */
+  var c=D.content; h=''; var hTop='';
+  h+='<div class="g12" style="margin-bottom:var(--s2)">';
+  h+='<div class="c5">'+card('Pipeline by stage','Channels/*/pipeline/',
+      barlist(c.pipeline.map(function(p){return {l:p.stage,n:p.n,v:p.n,tone:p.n?'':'red'};})))+'</div>';
+  h+='<div class="c7">'+card('Repurpose trees','The defining motion of the OS',
+      c.trees.map(function(tr){
+        var miss=tr.expected-tr.children.length;
+        return '<div class="tree">'+
+          (IMG[tr.id]?'<a href="'+yt(tr.id)+'" target="_blank" rel="noreferrer" style="display:block;'+
+            'width:180px;margin-bottom:14px;text-decoration:none;border-radius:var(--r-sm);overflow:hidden;'+
+            'border:1px solid var(--line)">'+vthumb({id:tr.id,t:tr.pillar})+'</a>':'')+
+          '<div class="pillar">'+esc(tr.pillar)+
+          ' <span class="src">'+esc(tr.date)+'</span></div><ul>'+
+          tr.children.map(function(ch){return '<li>'+esc(ch.t)+' <span class="tag a">'+esc(ch.state)+
+            '</span> <span class="src">'+esc(ch.ch)+'</span></li>';}).join('')+
+          (miss>0?'<li><span class="tag no">'+miss+' children never created</span></li>':'')+
+          '</ul><div style="margin-top:10px">'+src(tr.src)+'</div></div>';
+      }).join('')+
+      '<div class="empty">One tree per asset published on the primary channel, with the repurposed '+
+      'children it produced. A published asset with no children means the cascade is not being captured.'+
+      act('Copy prompt','Run the Marketing OS content pipeline sync. Read and execute @Routines/content-pipeline-sync.md exactly as written. For every asset in the primary channel published folder with no repurposed children recorded, create the child briefs with named angles. Do not draft content.')+
+      '</div>')+'</div>';
+  h+='</div>';
+
+  h+=card('In flight','One card per asset in Channels/*/pipeline/, plus the idea backlog on the primary channel',
+      '<div class="cards">'+c.cards.map(function(a){
+        var stale=a.age>c.staleDays;
+        return '<div class="acard"><div class="h">'+esc(a.t)+'</div><div class="chips">'+
+          '<span class="tag '+(a.stage==='idea'?'n':'a')+'">'+esc(a.stage)+'</span>'+
+          '<span class="tag n">'+esc(a.ch)+'</span>'+
+          '<span class="tag '+(stale?'no':'ok')+'">'+a.age+'d old</span>'+
+          (a.parent?'<span class="tag w">repurposed child</span>':'')+
+          (a.owner==='unassigned'?'<span class="tag w">no owner</span>':'')+
+          '</div><div class="meta"><strong>Owner</strong> '+esc(a.owner)+'. <strong>Pillar</strong> '+
+          esc(a.pillar)+'. <strong>Pain</strong> '+esc(a.pain)+'<br>'+esc(a.note)+'<br>'+src(a.src)+
+          '</div></div>';
+      }).join('')+'</div>'+
+      '<div class="empty">The stale threshold is '+c.staleDays+' days from Context/config.md. Age only '+
+      'becomes a signal once records have existed longer than that, so a young OS showing nothing stale '+
+      'is correct rather than a rendering failure. An asset has exactly one home at a time: the backlog, '+
+      'the pipeline, or published. Appearing in two means a copy happened where the lifecycle calls for '+
+      'a move.'+
+      act('Copy prompt','Run the Marketing OS pipeline hygiene routine. Read and execute @Routines/pipeline-hygiene.md exactly as written. Start with any asset that appears in more than one stage, and tell me which record should be canonical before changing anything.')+
+      '</div>');
+  h+='<div style="height:var(--s2)"></div>';
+  var LBc=D.library;
+  hTop+=card('The library','Every video published in the last 34 days, pulled '+LBc.pull,
+      '<div class="vgrid">'+LBc.recent.map(function(v){
+        var badge=v.rec?'':'<span class="flag">no record</span>';
+        if(v.rec&&v.note) badge='<span class="flag b">pillar</span>';
+        return vcard(v,badge,
+          '<span><b>'+num(v.v)+'</b> views</span><span>'+num(v.l)+' likes</span>'+
+          '<span>'+num(v.c)+' comments</span><span>'+esc(v.d)+'</span>'+
+          (v.b?'<span>breakout '+esc(v.b)+'</span>':''));
+      }).join('')+'</div>'+
+      '<div class="empty">'+(c.untracked.length
+        ?'<strong>'+c.untracked.length+' card'+(c.untracked.length===1?'':'s')+' flagged red '+
+         (c.untracked.length===1?'has':'have')+' no asset record in the OS.</strong> '+
+         c.untracked.map(function(u){return esc(u.t)+' ('+esc(u.d)+')';}).join(', ')+
+         '. They published without going through the pipeline. Their IDs are recorded in the snapshot, '+
+         'so the sync can find them. '
+        :'Every published asset here has a record in the OS. ')+
+      'Packaging images are the real published thumbnails, inlined at build time, so the page still '+
+      'makes zero network requests.'+
+      act('Copy prompt','Run the Marketing OS content pipeline sync. Read and execute @Routines/content-pipeline-sync.md exactly as written. Create an asset record in the primary channel published folder for every published asset that has none, with real view counts and named repurpose angles. Do not draft content.')+
+      '</div>');
+  hTop+='<div style="height:var(--s2)"></div>';
+  hTop+=card('Published records','Channels/*/published/. Content never freezes, so these keep moving',
+      tbl(['Date','Asset','Age','Views','Likes','Comments','Record'],LBc.recent.map(function(v){
+        return '<tr><td class="num">'+esc(v.d)+'</td><td>'+esc(v.t)+'</td><td class="num">'+esc(v.age)+
+          '</td><td><span class="measured">'+num(v.v)+'</span></td><td class="num">'+num(v.l)+
+          '</td><td class="num">'+num(v.c)+'</td><td>'+
+          (v.rec?src(v.rec):'<span class="tag no">none</span>')+'</td></tr>';
+      }).join('')));
+  var ST=D.library.stats;
+  hTop+='<div style="height:var(--s2)"></div>';
+  hTop+=card('The whole catalog','Every asset this pull returns, ranked by views. Pulled '+D.library.pull,
+      '<div class="g12" style="margin-bottom:var(--s2)">'+
+      ST.bands.map(function(b){
+        return '<div class="c3"><div class="card kpi" style="box-shadow:none;margin:0">'+
+          '<div class="klabel">'+esc(b.label)+'</div>'+
+          '<div class="kval">'+b.n+' <small>videos</small></div>'+
+          '<div class="kmeta">'+num(b.v)+' views'+(ST.sum?', '+Math.round(b.v/ST.sum*100)+'% of the catalog':'')+'</div>'+
+          '</div></div>';
+      }).join('')+'</div>'+
+      '<div class="vgrid wall">'+D.library.catalog.map(function(v){
+        var f=v.band==='hit'?'<span class="flag g">'+v.rank+'</span>':
+              '<span class="rank">'+v.rank+'</span>';
+        return vcard(v,f,'<span><b>'+num(v.v)+'</b></span><span>'+esc(v.d)+'</span>');
+      }).join('')+'</div>'+
+      '<div class="empty"><strong>The catalog is a power law and that is the finding.</strong> '+
+      num(ST.sum)+' views across '+ST.n+' videos, a median of '+num(ST.med)+', and the top five carrying '+
+      num(ST.top5)+' views, which is '+ST.top5pct+'% of everything. Half the catalog sits under '+
+      num(ST.med)+'. This is not a steady channel with a high average, it is a few very large hits '+
+      'carrying a long tail, and the open question is whether the tail is worth making. Caveat: this '+
+      'pull returns '+ST.n+' assets against '+ST.lifetime+' lifetime, so it covers '+
+      (ST.channelViews?Math.round(ST.sum/ST.channelViews*100)+'% of the '+num(ST.channelViews)+
+       ' lifetime views on record.':'an unknown share of the lifetime views on record.')+'</div>');
+  document.getElementById('p-content').innerHTML=hTop+'<div style="height:var(--s2)"></div>'+h;
+
+  /* ================= Campaigns ================= */
+  var CA=D.campaigns; h='';
+  var evalable=0, thrTotal=0;
+  CA.items.forEach(function(x){ x.thresholds.forEach(function(t){
+    thrTotal++; if(t.state==='breached'||t.state==='met') evalable++; }); });
+
+  h+='<div class="g12" style="margin-bottom:var(--s2)">';
+  h+='<div class="c3"><div class="card kpi"><div class="row1"><div class="tile blue">'+svg(ICON.spark)+
+     '</div><span class="pill neutral">'+CA.items.length+' on file</span></div>'+
+     '<div class="klabel">Campaigns</div><div class="kval">1<small>running</small></div>'+
+     '<div class="kmeta">One planned, one complete. Pulled '+esc(CA.asof)+'</div></div></div>';
+  h+='<div class="c3"><div class="card kpi"><div class="row1"><div class="tile red">'+svg(ICON.eye)+
+     '</div><span class="pill bad">'+svg(ICON.down)+(thrTotal-evalable)+' blind</span></div>'+
+     '<div class="klabel">Thresholds evaluable</div><div class="kval">'+evalable+' <small>of '+thrTotal+
+     '</small></div><div class="kmeta">The one that can be evaluated is breached</div></div></div>';
+  h+='<div class="c3"><div class="card kpi"><div class="row1"><div class="tile amber">'+svg(ICON.calendar)+
+     '</div><span class="pill neutral">1 of 3</span></div><div class="klabel">Retros written</div>'+
+     '<div class="kval">1<small>of 3</small></div>'+
+     '<div class="kmeta">Two have questions fixed and no answers yet</div></div></div>';
+  h+='<div class="c3"><div class="card kpi"><div class="row1"><div class="tile red">'+svg(ICON.down)+
+     '</div><span class="pill bad">zero</span></div><div class="klabel">Numbers captured by the closed campaign</div>'+
+     '<div class="kval">0<small>of 5</small></div>'+
+     '<div class="kmeta">Five metric rows, five gaps</div></div></div>';
+  h+='</div>';
+
+  CA.items.forEach(function(x){
+    var scls=x.state==='running'?'a':(x.state==='complete'?'ok':'w');
+    var o='<div class="ccard"><div class="top">'+
+      '<h3>'+esc(x.n)+'</h3><span class="tag '+scls+'">'+esc(x.state)+'</span>'+
+      (x.hasNumber?'':' <span class="tag no">goal has no number</span>')+
+      '<div class="goal">'+esc(x.goal)+'</div>'+
+      '<div style="font-size:12.5px;color:var(--ink3)">'+esc(x.owner)+' &middot; '+esc(x.window)+
+      ' &middot; '+esc(x.channels)+' &middot; '+esc(x.offer)+'</div>'+
+      (x.flag?'<div class="alertbox" style="margin:14px 0 0"><div class="h">Flag</div>'+esc(x.flag)+'</div>':'')+
+      '</div>';
+
+    o+='<div class="body"><div>'+
+      (x.asset?'<div class="lbl">The asset it ran on</div>'+
+        '<div class="vc" role="button" tabindex="0" data-vid="'+esc(x.asset.id)+'" data-vt="'+
+        esc(x.asset.t)+'" style="max-width:300px;margin-bottom:16px">'+vthumb(x.asset)+
+        '<div class="vmeta"><div class="vt">'+esc(x.asset.t)+'</div><div class="vstat">'+
+        '<span><b>'+num(x.asset.v)+'</b> views</span><span>'+esc(x.asset.d)+'</span></div></div></div>'+
+        '<div class="kv">'+esc(x.asset.why)+'</div>':'')+
+      '<div class="lbl">Why that number</div><div class="kv">'+esc(x.why)+'</div>'+
+      '<div class="lbl">Hypothesis</div><div class="kv">'+esc(x.hypothesis)+'</div>'+
+      '<div class="lbl">What would have to be false</div><div class="kv">'+esc(x.falsifier)+'</div>'+
+      '<div class="lbl">The ask</div><div class="kv" style="margin-bottom:0">'+esc(x.ask)+'</div>'+
+      '</div><div>'+
+      '<div class="lbl">Thresholds, set before launch</div><div style="margin-bottom:16px">'+
+      x.thresholds.map(function(t){
+        var tc=t.state==='breached'?'no':(t.state==='met'?'ok':'w');
+        return '<div class="thr"><span class="tag '+(t.k==='Kill'?'no':'a')+'">'+esc(t.k)+'</span>'+
+          '<div class="tx">'+esc(t.t)+'<em>'+esc(t.by)+'</em></div>'+
+          '<span class="tag '+tc+'" style="margin-left:auto;white-space:nowrap">'+esc(t.state)+'</span></div>';
+      }).join('')+'</div>'+
+      '<div class="lbl">Target against outcome</div>'+
+      tbl(['Metric','Target','Actual','As of'],x.results.map(function(r){
+        return '<tr><td>'+esc(r.m)+'</td><td class="src">'+esc(r.target)+'</td><td>'+
+          (r.v==='not pulled'||r.v==='never captured'?'<span class="tag no">'+esc(r.v)+'</span>':val(r.v,r.meas))+
+          '</td><td class="num">'+esc(r.asof||'n/a')+'</td></tr>';
+      }).join(''))+
+      '</div></div>';
+
+    o+='<div class="full">'+
+      (x.inWindow&&x.inWindow.length?'<div class="lbl">Published inside the window</div>'+
+        '<div class="vgrid tight" style="margin-bottom:16px">'+x.inWindow.map(function(v){
+          return vcard(v,'<span class="flag g">in window</span>',
+            '<span><b>'+num(v.v)+'</b> views</span><span>'+esc(v.d)+'</span>');
+        }).join('')+'</div>':
+        (x.window2&&x.window2.from?'<div class="lbl">Published inside the window</div>'+
+        '<div class="empty" style="margin-top:0;margin-bottom:16px">Nothing published between '+
+        esc(x.window2.from)+' and '+esc(x.window2.to)+'. A campaign with no asset inside its own window '+
+        'is running on channels it is not feeding.</div>':''))+
+      '</div>';
+    o+='<div class="full"><div class="lbl">Retro</div>'+
+      '<div class="kv" style="margin-bottom:8px"><span class="tag '+
+      (x.retro.state==='written'?'ok':'w')+'">'+esc(x.retro.state)+'</span> '+esc(x.retro.when)+
+      '. '+esc(x.retro.note)+'</div>'+
+      (x.outcome?'<div class="alertbox" style="background:var(--blue-t);border-left-color:var(--blue)">'+
+        '<div class="h" style="color:var(--blue)">The one sentence</div>'+esc(x.outcome)+'</div>':'')+
+      '<div>'+src(x.src)+' '+src(x.retro.src)+(x.prompt?act('Copy prompt',x.prompt):'')+'</div>'+
+      '</div></div>';
+    h+=o;
+  });
+  h+='<div class="empty">Campaigns/CLAUDE.md requires a campaign missing its evaluation inputs to be '+
+     'reported as the finding rather than as healthy, which is what the threshold column above does. '+
+     'A campaign whose goal has no number is unevaluable, not healthy.</div>';
+  document.getElementById('p-camp').innerHTML=h;
+
+  /* ================= Performance ================= */
+  var p=D.performance,o=p.oneNumber; h=''; var hMid='';
+  h+='<div class="g12" style="margin-bottom:var(--s2)">';
+  h+='<div class="c4"><div class="card kpi"><div class="row1"><div class="tile red">'+svg(ICON.eye)+
+     '</div><span class="pill bad">'+svg(ICON.down)+o.pct+'%</span></div>'+
+     '<div class="klabel">'+esc(o.label)+'</div><div class="kval">'+esc(o.v)+' <small>views</small></div>'+
+     '<div class="kmeta">Benchmark '+esc(o.target)+', measured '+esc(o.asof)+'</div></div></div>';
+  h+='<div class="c8">'+card('Why it leads','The one number',
+     '<div style="color:var(--ink2);line-height:1.65">'+esc(o.why)+'</div>')+'</div>';
+  h+='</div>';
+
+  var K=p.tree;
+  function ktn(x,north){
+    return '<div class="ktn'+(north?' north':'')+'"><div class="row"><span class="m">'+esc(x.m)+'</span>'+
+      '<span class="v">'+esc(x.v)+(x.target&&x.target!=='n/a'?(x.target==='0'?
+        ' <i>vs a 0 ceiling</i>':' <i>of '+esc(x.target)+'</i>'):'')+'</span></div>'+
+      (x.pct!=null?'<div class="btrack" style="margin-top:10px"><div class="bfill'+
+        (north?'':(x.pct>=90?' green':(x.pct<60?' red':'')))+'" style="width:'+Math.max(x.pct,2)+'%"></div></div>':'')+
+      (x.why?'<div class="w">'+esc(x.why)+'</div>':'')+'</div>';
+  }
+  h+=card('KPI tree','The north star, and the inputs that decide it',
+     '<div class="kt">'+ktn(K.north,true)+
+     K.drivers.map(function(d){
+       return ktn(d)+(d.children.length?'<div class="ktkids">'+
+         d.children.map(function(cc){return ktn(cc);}).join('')+'</div>':'');
+     }).join('')+'</div>'+
+     '<div class="empty">'+esc(K.note)+' A miss on the north star traces upward through this tree, '+
+     'driver by driver, until it reaches the one input that is actually short.</div>');
+  h+='<div style="height:var(--s2)"></div>';
+  h+='@@MEDIA@@';
+
+  h+='<div class="g12" style="margin-bottom:var(--s2)">';
+  h+='<div class="c8">'+card(D.charts.day7.title,D.charts.day7.sub,chart(D.charts.day7)+
+     '<div class="empty">Most of a day-7 total lands in the opening 72 hours, so the benchmark is '+
+     'effectively decided by the first three days.</div>',legend(D.charts.day7.legend))+'</div>';
+  var bmv=D.library.recent[1]||D.library.recent[0]||{};
+  h+='<div class="c4">'+card('The asset being measured','The only closed 7 day window in the series',
+     '<div class="vc" role="button" tabindex="0" data-vid="'+esc(bmv.id)+'" data-vt="'+esc(bmv.t)+'">'+vthumb(bmv)+
+     '<div class="vmeta"><div class="vt">'+esc(bmv.t)+'</div><div class="vstat">'+
+     '<span><b>'+(bmv.day7==null?'not pulled':num(bmv.day7))+'</b> at day 7</span>'+
+     '<span>'+(bmv.benchmark==null?'no benchmark set':num(bmv.benchmark)+' benchmark')+'</span>'+
+     '<span>'+esc(bmv.d)+'</span></div>'+
+     '</div></div>'+
+     '<div style="height:var(--s2)"></div>'+
+     barlist(p.funnel.filter(function(f){return f.pct!=null;}).map(function(f){
+       return {l:f.metric,n:f.pct,v:f.pct+'%',tone:f.pct>=90?'green':(f.pct>=60?'':'red')};
+     })))+'</div>';
+  h+='</div>';
+
+  h+=card('Funnel','Attention, conversion, revenue, retention',
+     tbl(['Stage','Metric','Value','As of','Target','Delta'],p.funnel.map(function(f){
+       return '<tr><td>'+esc(f.stage)+'</td><td>'+esc(f.metric)+'</td><td>'+val(f.v,f.m)+
+         '</td><td class="num">'+esc(f.asof||'n/a')+'</td><td class="num">'+esc(f.target)+
+         '</td><td class="src">'+esc(f.delta)+'</td></tr>';
+     }).join('')));
+  h+='<div style="height:var(--s2)"></div>';
+  h+=card('By channel','Channels/*/performance.md',
+     tbl(['Channel','Role','Headline','Second','As of','Last recorded activity'],p.channels.map(function(x){
+       return '<tr><td><strong>'+esc(x.ch)+'</strong></td><td class="src">'+esc(x.role)+'</td><td>'+
+         val(x.key,x.m)+'</td><td>'+esc(x.second)+'</td><td class="num">'+esc(x.asof||'n/a')+
+         '</td><td class="src">'+esc(x.last)+'</td></tr>';
+     }).join(''))+
+     '<div class="empty">A channel with a headline number but no asset-level activity is a surface the '+
+     'OS is counting rather than producing for. The content pipeline sync is the routine that fills the '+
+     'last column.</div>');
+  h+='<div style="height:var(--s2)"></div>';
+  var DM=p.demand;
+  h+='<div class="g12" style="margin-bottom:var(--s2)">'+
+     '<div class="c4"><div class="card kpi"><div class="row1"><div class="tile green">'+svg(ICON.spark)+
+     '</div><span class="pill ok">'+svg(ICON.up)+'measured</span></div><div class="klabel">'+
+     esc(DM.create.label)+'</div><div class="kval">'+DM.create.measured+' <small>of '+DM.create.total+
+     ' channels</small></div><div class="kmeta">'+esc(DM.create.channels)+'</div></div></div>'+
+     '<div class="c4"><div class="card kpi"><div class="row1"><div class="tile red">'+svg(ICON.down)+
+     '</div><span class="pill bad">nothing</span></div><div class="klabel">'+esc(DM.capture.label)+
+     '</div><div class="kval">'+DM.capture.measured+' <small>of '+DM.capture.total+
+     ' channels</small></div><div class="kmeta">'+esc(DM.capture.channels)+'</div></div></div>'+
+     '<div class="c4">'+card('The split','Demand creation against capture',
+       '<div style="color:var(--ink2);line-height:1.65;font-size:13px">'+esc(DM.note)+'</div>')+'</div>';
+  h+='</div>';
+  var LBp=D.library;
+  hMid+=card('Evidence base','Twelve lifetime top performers, ranked. Raw material for what-works',
+     '<div class="vgrid tight">'+LBp.top.map(function(v,i){
+       var late=v.d>=LBp.cutoff;
+       return vcard(v,'<span class="rank">'+(i+1)+'</span>'+
+         (late?'<span class="flag b" style="left:auto;right:6px;top:6px">post May</span>':''),
+         '<span><b>'+num(v.v)+'</b> views</span><span>breakout '+esc(v.b)+'</span><span>'+esc(v.d)+'</span>');
+     }).join('')+'</div>'+
+     '<div class="empty">Zero confirmed patterns stays honest until a review cycle has run. Assets '+
+     'marked <strong>recent</strong> published after '+esc(LBp.cutoff)+'; everything older has had longer '+
+     'to accumulate, so read a lower recent ceiling as less time rather than as a collapse. A ranked list '+
+     'is not a controlled comparison. '+esc(LBp.note)+
+     act('Copy prompt','Run the Marketing OS monthly report. Read and execute @Routines/monthly-report.md exactly as written, using the measured performers in the latest Analytics/snapshots/ file as evidence. Only promote a pattern to confirmed in Analytics/what-works.md if three independent instances support it, and name the assets.')+
+     '</div>');
+  var HH=D.library.headToHead;
+  hMid+='<div style="height:var(--s2)"></div>';
+  hMid+=card('Head to head','Our best against the best of the one competitor whose videos were pulled',
+     '<div class="g12">'+
+     '<div class="c6"><div class="lbl">the business, best of '+D.library.stats.n+'</div>'+
+     vcard(HH.us,'<span class="flag b">ours</span>',
+       '<span><b>'+num(HH.us.v)+'</b> views</span><span>'+esc(HH.us.d)+'</span>'+
+       '<span>breakout '+esc(HH.us.b)+'</span>')+'</div>'+
+     '<div class="c6"><div class="lbl">'+esc(D.library.rivalName||'Top competitor')+', best pulled</div>'+
+     vcard(HH.them,'<span class="flag">theirs</span>',
+       '<span><b>'+num(HH.them.v)+'</b> views</span><span>'+esc(HH.them.d)+'</span>'+
+       '<span>breakout '+esc(HH.them.b)+'</span>')+'</div>'+
+     '</div>'+
+     '<div class="alertbox" style="margin-top:var(--s2)"><div class="h">Losing on the top end</div>'+
+     esc(HH.note)+'</div>');
+  document.getElementById('p-perf').innerHTML=h.replace('@@MEDIA@@',hMid+'<div style="height:var(--s2)"></div>');
+
+  /* ================= Learnings ================= */
+  var L=D.learnings; h='';
+  var landed=L.graduated.filter(function(g){return g.state==='landed';}).length;
+  h+='<div class="g12" style="margin-bottom:var(--s2)">';
+  h+='<div class="c3"><div class="card kpi"><div class="row1"><div class="tile blue">'+svg(ICON.spark)+
+     '</div><span class="pill neutral">needs 3 each</span></div><div class="klabel">Confirmed patterns</div>'+
+     '<div class="kval" style="color:var(--ink3)">'+L.counts.confirmed+'</div>'+
+     '<div class="kmeta">Zero is the honest number. No review cycle has run</div></div></div>';
+  h+='<div class="c3"><div class="card kpi"><div class="row1"><div class="tile amber">'+svg(ICON.eye)+
+     '</div><span class="pill neutral">untested</span></div><div class="klabel">Candidates waiting</div>'+
+     '<div class="kval" style="color:var(--blue)">'+L.counts.candidates+'</div>'+
+     '<div class="kmeta">Hypotheses, never quotable as findings</div></div></div>';
+  h+='<div class="c3"><div class="card kpi"><div class="row1"><div class="tile red">'+svg(ICON.down)+
+     '</div><span class="pill bad">retired</span></div><div class="klabel">Anti-patterns</div>'+
+     '<div class="kval" style="color:var(--red)">'+L.counts.antipatterns+'</div>'+
+     '<div class="kmeta">Tried, dropped, recorded so it stays dropped</div></div></div>';
+  h+='<div class="c3"><div class="card kpi"><div class="row1"><div class="tile green">'+svg(ICON.up)+
+     '</div><span class="pill ok">'+landed+' landed</span></div><div class="klabel">Findings graduated from retros</div>'+
+     '<div class="kval" style="color:var(--green)">'+L.counts.graduated+'</div>'+
+     '<div class="kmeta">Each one written into a named file</div></div></div>';
+  h+='</div>';
+
+  var lsrc=D.campaigns.items.filter(function(x){return x.asset;})[0];
+  h+=card('The register','Every finding graduated out of a retro, and where it was written',
+     (lsrc?'<div class="hero" style="grid-template-columns:260px 1fr;margin-bottom:var(--s3)">'+
+       '<div class="vc" role="button" tabindex="0" data-vid="'+esc(lsrc.asset.id)+'" data-vt="'+
+       esc(lsrc.asset.t)+'">'+vthumb(lsrc.asset)+
+       '<div class="vmeta"><div class="vt">'+esc(lsrc.asset.t)+'</div><div class="vstat">'+
+       '<span><b>'+num(lsrc.asset.v)+'</b> views</span><span>'+esc(lsrc.asset.d)+'</span></div></div></div>'+
+       '<div><div class="lbl">Where all four findings came from</div>'+
+       '<div style="color:var(--ink2);line-height:1.65">Every row below graduated out of one campaign, '+
+       '<strong>'+esc(lsrc.n)+'</strong>, which ran on this asset and measured nothing. A campaign that '+
+       'produced zero numbers still produced four rules, and that is the argument for writing a retro even '+
+       'when there is no result to report.</div>'+
+       '<div style="margin-top:12px">'+src(lsrc.retro.src)+'</div></div></div>':'')+
+     tbl(['Finding','From campaign','Written into','Kind','State'],L.graduated.map(function(g){
+       var gc=g.state==='landed'?'ok':(g.state==='proposed'?'w':'a');
+       return '<tr><td><strong>'+esc(g.finding)+'</strong><div class="src" style="margin-top:5px;'+
+         'font-family:var(--ui);color:var(--ink2);font-size:12.5px;line-height:1.55">'+esc(g.note)+
+         '</div></td><td class="num">'+esc(g.from)+'</td><td>'+src(g.wroteTo)+'</td><td class="src">'+
+         esc(g.kind)+'</td><td><span class="tag '+gc+'">'+esc(g.state)+'</span></td></tr>';
+     }).join(''))+
+     '<div class="empty">This is the loop, and it is why campaign N plus one starts smarter than N. '+
+     'Every row traces a lesson from the campaign that taught it to the file that now enforces it. '+
+     'A finding that never reaches a file is a finding that gets relearned.</div>');
+
+  h+='<div style="height:var(--s2)"></div>';
+  h+=card('The evidence a review will read','The six highest performers in the catalog',
+     '<div class="vgrid tight">'+L.evidence.map(function(v){
+       return vcard(v,'<span class="rank">'+v.rank+'</span>',
+         '<span><b>'+num(v.v)+'</b> views</span><span>breakout '+esc(v.b)+'</span>');
+     }).join('')+'</div>'+
+     '<div class="empty">These are the assets a review would read to confirm a pattern. Three '+
+     'independent instances is the bar, and candidates sit here unmeasured against each other until '+
+     'that review runs.</div>');
+  h+='<div style="height:var(--s2)"></div>';
+  h+=card('Confirmed patterns','Analytics/what-works.md',
+     '<div class="empty" style="margin-top:0">'+esc(L.confirmedNote)+
+     act('Run content review',L.prompt)+'</div>');
+
+  h+='<div style="height:var(--s2)"></div>';
+  h+=card('Candidates','Observations that look like patterns and have not been measured',
+     tbl(['Candidate','Reasoning','Kind','Status'],L.candidates.map(function(x){
+       return '<tr><td><strong>'+esc(x.c)+'</strong></td><td class="src" style="font-family:var(--ui);'+
+         'font-size:12.5px;color:var(--ink2)">'+esc(x.why)+'</td><td class="src">'+esc(x.kind)+
+         '</td><td><span class="tag w">'+esc(x.state)+'</span></td></tr>';
+     }).join(''))+
+     '<div class="empty">'+esc(L.rule)+' Never let a candidate be quoted as though it were confirmed.</div>');
+
+  h+='<div style="height:var(--s2)"></div>';
+  h+=card('Anti-patterns','As valuable as the confirmed table, and usually neglected',
+     tbl(['Anti-pattern','Evidence','Kind'],L.antipatterns.map(function(x){
+       return '<tr><td><strong>'+esc(x.a)+'</strong></td><td>'+esc(x.ev)+'</td><td class="src">'+
+         esc(x.kind)+'</td></tr>';
+     }).join('')));
+
+  h+='<div style="height:var(--s2)"></div>';
+  h+=card('Retro questions fixed in advance','Decided before the result exists, which is what stops a retro becoming a justification',
+     L.pending.map(function(pd){
+       return '<div style="margin-bottom:var(--s3)"><div class="lbl">'+esc(pd.camp)+
+         ' &middot; fixed '+esc(pd.fixed)+' &middot; '+esc(pd.due)+'</div>'+
+         '<ol style="margin:0 0 12px 20px;font-size:13.5px;line-height:1.7">'+
+         pd.qs.map(function(q){return '<li>'+esc(q)+'</li>';}).join('')+'</ol>'+
+         '<div class="lbl">Must not appear</div><div class="chips">'+
+         pd.banned.map(function(b){return '<span class="tag no">'+esc(b)+'</span>';}).join('')+'</div>'+
+         '<div style="margin-top:10px">'+src(pd.src)+'</div></div>';
+     }).join(''));
+  document.getElementById('p-learn').innerHTML=h;
+
+  /* ================= Audience ================= */
+  var A=D.audience; h=''; var hTopA='';
+  var quotable=A.quotes.filter(function(q){return q.pub==='yes';}).length;
+  h+='<div class="g12" style="margin-bottom:var(--s2)">';
+  h+='<div class="c3"><div class="card kpi"><div class="row1"><div class="tile blue">'+svg(ICON.users)+
+     '</div><span class="pill neutral">one promise</span></div><div class="klabel">ICP segments</div>'+
+     '<div class="kval">'+A.segments.length+' <small>groups</small></div>'+
+     '<div class="kmeta">Segment the proof, not the promise</div></div></div>';
+  h+='<div class="c3"><div class="card kpi"><div class="row1"><div class="tile amber">'+svg(ICON.eye)+
+     '</div><span class="pill neutral">canonical</span></div><div class="klabel">Named pains</div>'+
+     '<div class="kval">'+A.pains.length+' <small>plus 1 objection</small></div>'+
+     '<div class="kmeta">Awareness decides problem-led or solution-led</div></div></div>';
+  h+='<div class="c3"><div class="card kpi"><div class="row1"><div class="tile green">'+svg(ICON.up)+
+     '</div><span class="pill ok">7 named</span></div><div class="klabel">Top objection instances</div>'+
+     '<div class="kval">7<small>in one month</small></div>'+
+     '<div class="kmeta">June 2026. The strongest demand signal in the OS</div></div></div>';
+  h+='<div class="c3"><div class="card kpi"><div class="row1"><div class="tile red">'+svg(ICON.down)+
+     '</div><span class="pill bad">'+quotable+' usable</span></div><div class="klabel">Quote bank</div>'+
+     '<div class="kval" style="color:var(--red)">'+A.quotes.length+' <small>entries</small></div>'+
+     '<div class="kmeta">Nothing has been cleared for public use</div></div></div>';
+  h+='</div>';
+
+  var STILE=['blue','green','teal','amber'];
+  h+='@@COV@@';
+  h+=card('The promise','Context/icp/, one file per segment',
+     '<div style="font-size:16px;font-weight:600;line-height:1.5;margin-bottom:var(--s3)">'+
+     esc(A.promise)+'</div>'+
+     '<div class="cards">'+A.segments.map(function(s,i){
+       return '<div class="acard"><div class="crow" style="margin-bottom:12px">'+
+         '<div class="tile '+STILE[i%4]+'">'+svg(ICON.users)+'</div>'+
+         '<div style="font-weight:700;font-size:14px;line-height:1.3">'+esc(s.s)+'</div></div>'+
+         '<div style="font-size:12.5px;color:var(--ink3);margin-bottom:10px">'+esc(s.who)+'</div>'+
+         '<div style="font-size:13.5px;font-weight:600;line-height:1.45">'+esc(s.want)+'</div>'+
+         '<div class="meta">'+esc(s.journey)+'</div></div>';
+     }).join('')+'</div>'+
+     '<div class="empty"><strong>Not for:</strong> '+A.notFor.map(esc).join('. ')+'.</div>');
+
+  h+='<div style="height:var(--s2)"></div>';
+  h+=card('The pains','From the pain block inside each Context/icp/ segment file. Awareness decides whether to lead with the problem or the solution',
+     tbl(['','Pain','Emotional impact','Aware?','How to lead'],A.pains.map(function(x){
+       var ac=x.aware==='No'?'no':(x.aware==='Partly'?'w':'ok');
+       return '<tr><td class="num">'+x.n+'</td><td><strong>'+esc(x.p)+'</strong></td><td class="src" '+
+         'style="font-family:var(--ui);font-size:12.5px;color:var(--ink2)">'+esc(x.emo)+
+         '</td><td><span class="tag '+ac+'">'+esc(x.aware)+'</span></td><td>'+esc(x.lead)+'</td></tr>';
+     }).join('')));
+
+  h+='<div style="height:var(--s2)"></div>';
+  h+=card('Objections, ranked by named instances','The rank is instance count, not opinion',
+     A.objections.map(function(x){
+       return '<div class="alertbox" style="background:var(--bg);border-left-color:'+
+         (x.n?'var(--blue)':'var(--track)')+'">'+
+         '<div class="h" style="color:'+(x.n?'var(--blue)':'var(--ink3)')+'">'+
+         (x.n?x.n+' named instances, '+esc(x.when):'no instances on record')+'</div>'+
+         '<div style="font-size:15px;font-weight:600;margin-bottom:8px">'+esc(x.o)+'</div>'+
+         (x.n&&x.named.indexOf(',')>-1?'<div class="chips" style="margin-bottom:11px">'+
+           x.named.split(',').map(function(nm,ni){
+             return '<span class="who" title="'+esc(nm.trim())+'"><i class="i'+(ni%4)+'">'+
+               esc(initials(nm))+'</i>'+esc(nm.trim())+'</span>';
+           }).join('')+'</div>':
+          (x.n?'<div class="src" style="font-family:var(--ui);margin-bottom:8px">'+esc(x.named)+'</div>':''))+
+         '<div style="margin-bottom:6px"><strong>The answer.</strong> '+esc(x.answer)+'</div>'+
+         '<div style="color:var(--ink2)"><strong>The gap.</strong> '+esc(x.gap)+'</div>'+
+         (x.missingAsset?'<div style="margin-top:14px;max-width:238px"><div class="vc" '+
+           'style="cursor:default">'+
+           '<span class="thumb miss"><span>no video exists yet</span></span>'+
+           '<div class="vmeta"><div class="vt">'+esc(x.missingAsset)+'</div><div class="vstat">'+
+           '<span>idea, scored high</span><span>7 named receipts</span></div></div></div>'+
+           '<div class="src" style="display:block;margin-top:7px">'+src(x.missingSrc)+'</div></div>':'')+
+         '<div style="margin-top:9px">'+src(x.src)+'</div></div>';
+     }).join(''));
+
+  h+='<div style="height:var(--s2)"></div>';
+  h+=card('Verbatim quote bank','Intelligence/customers/voice-of-customer.md. Append-only, attribution always',
+     A.quotes.map(function(q){
+       return '<div class="quote"><q>'+esc(q.q)+'</q><div class="att">'+
+         '<strong>Who</strong> '+esc(q.who)+'<br>'+
+         '<strong>Where</strong> '+esc(q.where)+' &middot; <strong>When</strong> '+esc(q.when)+'<br>'+
+         '<strong>Pain</strong> '+esc(q.pain)+'</div>'+
+         '<div class="chips" style="margin-top:10px">'+
+         '<span class="tag '+(q.verbatim?'ok':'w')+'">'+(q.verbatim?'verbatim':'paraphrase')+'</span>'+
+         '<span class="tag '+(q.pub==='yes'?'ok':'no')+'">usable publicly: '+esc(q.pub)+'</span></div>'+
+         '<div class="att" style="margin-top:9px">'+esc(q.note)+'</div></div>';
+     }).join('')+
+     '<div class="empty">A thin quote bank is the honest state until the customer intelligence routine '+
+     'has run a few times. This is the highest-value file in the OS for hook writing, because a hook '+
+     'built from a real customer sentence outperforms one built from an assumption, and the difference '+
+     'is not close. Every entry carries whether it is verbatim or a paraphrase.'+
+     act('Run customer intel',A.prompt)+'</div>');
+
+  h+='<div style="height:var(--s2)"></div>';
+  h+='<div class="g12">';
+  h+='<div class="c6">'+card('Promotion tracker','A theme enters the pain block inside a Context/icp/ segment file as a numbered pain',
+     A.promote.map(function(x){
+       return '<div style="padding:4px 0"><div style="font-weight:600;margin-bottom:8px">'+esc(x.theme)+
+         '</div><div class="chips"><span class="tag ok">'+x.n+' instances</span>'+
+         '<span class="tag '+(x.weeks>=x.need?'ok':'w')+'">'+x.weeks+' of '+x.need+' weeks</span>'+
+         '<span class="tag w">'+esc(x.state)+'</span><span class="tag n">resolves: '+esc(x.who)+
+         '</span></div><div class="empty">'+esc(x.note)+'</div></div>';
+     }).join(''))+'</div>';
+  h+='<div class="c6">'+card('What is missing','Every empty section names what fills it',
+     '<div class="lbl">Technical stuck points</div><div class="kv">'+esc(A.empty.stuckPoints)+'</div>'+
+     '<div class="lbl">Wins and testimonials</div><div class="kv">'+esc(A.empty.wins)+'</div>'+
+     '<div class="lbl">What the first real run needs</div><div class="kv" style="margin-bottom:0">'+
+     esc(A.empty.needs)+'</div>')+'</div>';
+  h+='</div>';
+  hTopA+=card('Coverage by pain','Which asset speaks to which pain, joined from the pain: field in each asset record',
+     A.coverage.map(function(cv){
+       return '<div style="margin-bottom:var(--s3)">'+
+         '<div class="crow" style="margin-bottom:11px">'+
+         '<div class="tile '+(cv.assets.length?'green':'red')+'" style="font-family:var(--mono);'+
+         'font-weight:900;font-size:15px;color:var(--ink)">'+cv.n+'</div>'+
+         '<div><div style="font-weight:900;font-size:14.5px">'+esc(cv.pain)+'</div>'+
+         '<div class="src">aware: '+esc(cv.aware)+' &middot; '+
+         (cv.assets.length?cv.assets.length+' assets':'no asset, published or planned')+'</div></div>'+
+         (cv.assets.length?'':'<span class="tag no" style="margin-left:auto">zero coverage</span>')+
+         '</div>'+
+         (cv.assets.length?'<div class="vgrid tight">'+cv.assets.map(function(a){
+           if(a.id) return vcard(a,'<span class="flag g">live</span>',
+             '<span><b>'+num(a.v)+'</b> views</span><span>'+esc(a.d)+'</span>');
+           return '<div class="vc" style="cursor:default"><span class="thumb miss"><span>'+
+             esc(a.stage)+', not published</span></span><div class="vmeta"><div class="vt">'+esc(a.t)+
+             '</div><div class="vstat"><span>'+esc(a.stage)+'</span></div></div></div>';
+         }).join('')+'</div>':
+          '<div class="alertbox"><div class="h">Gap</div>Nothing addresses this pain. Not published, '+
+          'not briefed, not even an idea in the backlog.</div>')+
+         '</div>';
+     }).join('')+
+     '<div class="empty">'+esc(A.coverageNote)+'</div>');
+  document.getElementById('p-aud').innerHTML=h.replace('@@COV@@',hTopA+'<div style="height:var(--s2)"></div>');
+
+  /* ================= Intelligence ================= */
+  var i=D.intel,cp=i.competitors; h='';
+  var MK=i.market;
+  h+=card('Market scan '+MK.date,'The first scan this OS has run. '+MK.src,
+     '<div style="font-size:17px;font-weight:900;letter-spacing:-.02em;margin-bottom:14px">'+
+     esc(MK.headline)+'</div>'+
+     '<div class="lbl">The finding</div>'+
+     (function(){
+       var th=MK.outliers.filter(function(o){return o.threat;})[0];
+       if(!th) return '';
+       return '<div class="alertbox" style="border-color:var(--red)"><div class="h">Positioning event</div>'+
+         '<div class="hero" style="grid-template-columns:240px 1fr;align-items:center">'+
+         vcard(th,'<span class="flag">threat</span>',
+           '<span><b>'+num(th.v)+'</b> views</span><span>'+esc(th.d)+'</span>')+
+         '<div><div class="crow" style="margin-bottom:10px">'+pic(th.av,'av',th.ch)+
+         '<div><div style="font-weight:900;font-size:15px">'+esc(th.ch)+'</div>'+
+         '<div class="src">'+num(th.subs)+' subscribers</div></div></div>'+
+         esc(th.read)+'</div></div></div>';
+     })()+
+     '<div class="lbl" style="margin-top:var(--s3)">What shipped in the window</div>'+
+     tbl(['','What','When','Why it matters here'],MK.shipped.map(function(s){
+       return '<tr><td><span class="tag '+(s.k==='live'?'ok':'w')+'">'+
+         (s.k==='live'?'shipped':'noted')+'</span></td><td><strong>'+esc(s.w)+'</strong></td>'+
+         '<td class="num">'+esc(s.when)+'</td><td>'+esc(s.why)+'</td></tr>';
+     }).join(''))+
+     '<div class="lbl" style="margin-top:var(--s3)">What the practitioners published this week</div>'+
+     '<div class="vgrid">'+MK.outliers.map(function(o){
+       return vcard(o,o.threat?'<span class="flag">threat</span>':
+           '<span class="flag b">'+o.b+'x</span>',
+         '<span><b>'+num(o.v)+'</b> views</span><span>'+num(o.vph)+' vph</span>'+
+         '<span>'+esc(o.ch)+'</span><span>'+num(o.subs)+' subs</span>');
+     }).join('')+'</div>'+
+     '<div style="margin-top:var(--s2)">'+
+     tbl(['Video','Channel','Breakout','The read'],MK.outliers.map(function(o){
+       return '<tr><td><strong>'+esc(o.t)+'</strong></td><td class="src">'+esc(o.ch)+' &middot; '+
+         num(o.subs)+'</td><td class="measured">'+esc(o.b)+'</td><td>'+esc(o.read)+'</td></tr>';
+     }).join(''))+'</div>'+
+     '<div class="lbl" style="margin-top:var(--s3)">The translation gap</div>'+
+     '<div class="alertbox" style="background:var(--e1-t);border-color:var(--e1)">'+
+     '<div class="h" style="color:var(--e1)">'+esc(MK.gap.t)+'</div>'+esc(MK.gap.body)+
+     '<div style="margin-top:10px"><span class="tag a">seeded</span> '+src(MK.gap.src)+'</div></div>'+
+     '<div class="lbl" style="margin-top:var(--s3)">Noise, named so it does not resurface</div>'+
+     '<ul style="margin:0 0 0 18px;font-size:12.5px;line-height:1.7;color:var(--ink2)">'+
+     MK.noise.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>'+
+     '<div class="empty"><strong>What this scan did not cover.</strong> '+
+     MK.notCovered.map(function(x){return esc(x.s)+': '+esc(x.state);}).join('. ')+'. '+
+     esc(MK.degraded)+
+     act('Run the full scan',MK.prompt||'Run the Marketing OS market scan. Read and execute @Routines/market-scan.md exactly as written, covering every source listed in Context/infrastructure.md including the ones the last run skipped.')+
+     '</div>');
+  h+='<div style="height:var(--s2)"></div>';
+  h+='<div class="g12" style="margin-bottom:var(--s2)">';
+  h+='<div class="c12">'+card('Competitor scale','The tracked list, by audience size',
+     barlist(cp.tracked.map(function(x){
+       return {l:x.n,n:x.subs,v:num(x.subs),tone:cp.overlap.indexOf(x.n)>-1?'green':''};
+     })))+'</div>';
+  h+='</div>';
+
+  h+=card('The tracked roster','Channel IDs and avatars pulled '+cp.asof+'. Green means it is also on the OS roster',
+     '<div class="cgrid">'+cp.tracked.map(function(x){
+       var on=cp.overlap.indexOf(x.n)>-1;
+       return '<div class="ccomp'+(on?' on':'')+'">'+
+         '<div class="crow" style="margin-bottom:12px">'+pic(x.img,'av lg',x.n)+
+         '<div><div style="font-weight:700;font-size:15px">'+esc(x.n)+'</div>'+
+         '<div class="src">'+esc(x.cc)+' &middot; since '+esc(x.born)+'</div></div></div>'+
+         '<div class="vstat" style="margin-bottom:10px;font-size:11.5px">'+
+         '<span><b>'+num(x.subs)+'</b> subs</span><span>'+num(x.views)+' views</span>'+
+         '<span>'+num(x.vids)+' videos</span></div>'+
+         '<div style="font-size:12.5px;color:var(--ink2);line-height:1.55">'+esc(x.note)+'</div>'+
+         '<div style="margin-top:10px"><span class="tag '+(on?'ok':'no')+'">'+
+         (on?'on both lists':'tracked list only')+'</span></div></div>';
+     }).join('')+'</div>'+
+     '<div class="empty">Publishing rate against subscriber count is the comparison that matters here: '+
+     'a competitor uploading several times our cadence is running a different machine, not just a '+
+     'bigger one. A name on only one of the two lists is a roster dispute to settle, not a finding. '+
+     'Channel identifiers are recorded in the snapshot, which is what competitor-radar needs to watch '+
+     'the right accounts.</div>');
+  h+='<div style="height:var(--s2)"></div>';
+
+  h+=card('Customer themes','A theme promotes into its segment pain block after '+i.promoteAt+' weeks',
+     tbl(['Theme','Instances','Weeks','Evidence','Action'],i.customers.map(function(x){
+       return '<tr><td><strong>'+esc(x.theme)+'</strong></td><td><span class="tag ok">'+x.n+
+         '</span></td><td><span class="tag '+(x.weeks>=i.promoteAt?'ok':'w')+'">'+x.weeks+' of '+
+         i.promoteAt+'</span></td><td>'+esc(x.quote)+'</td><td>'+esc(x.action)+'<div>'+src(x.src)+
+         '</div></td></tr>';
+     }).join(''))+
+     '<div class="empty">A theme earns a numbered place in the pain block of its segment file only '+
+     'after it has recurred for the number of weeks set in Context/config.md. That promotion is a human '+
+     'decision, because Context/ is human-owned.'+
+     act('Run customer intel','Run the Marketing OS customer intel routine. Read and execute @Routines/customer-intel.md exactly as written. Do not edit the pain block inside any Context/icp/ segment file without flagging it for my approval first.')+
+     '</div>');
+  h+='<div style="height:var(--s2)"></div>';
+  h+=card('Competitors','The tracked list, pulled '+cp.asof,
+     tbl(['Channel','Subscribers','Total views','Videos','On OS roster'],cp.tracked.map(function(x){
+       var on=cp.overlap.indexOf(x.n)>-1;
+       return '<tr><td><strong>'+esc(x.n)+'</strong></td><td><span class="measured">'+num(x.subs)+
+         '</span></td><td class="num">'+num(x.views)+'</td><td class="num">'+num(x.vids)+
+         '</td><td><span class="tag '+(on?'ok':'no')+'">'+(on?'yes':'no')+'</span></td></tr>';
+     }).join(''))+
+     (cp.overlap.length<cp.roster.length||cp.overlap.length<cp.tracked.length
+      ?'<div class="alertbox" style="margin-top:var(--s2)"><div class="h">Contradiction</div>'+
+       '<strong>These two lists do not agree.</strong> Context/config.md names '+cp.roster.length+
+       ': '+esc(cp.roster.join(', '))+'. The tracking tool watches '+cp.tracked.length+'. '+
+       (cp.overlap.length?'Only '+esc(cp.overlap.join(', '))+' appear'+
+         (cp.overlap.length===1?'s':'')+' on both.':'Nothing appears on both.')+
+       ' competitor-radar reads config.md, so a wrong roster means it watches the wrong accounts '+
+       'indefinitely. Settle the roster before trusting anything above it, and check any name on only '+
+       'one list for a misspelling rather than assuming it is a different account.</div>'
+      :''));
+  h+='<div style="height:var(--s2)"></div>';
+  h+=card((D.library.rivalName||'Top competitor')+', best performers by views',
+     'The packaging that is beating ours. Pulled '+D.library.pull,
+     '<div class="vgrid tight">'+D.library.rival.map(function(v,i){
+       return vcard(v,'<span class="rank">'+(i+1)+'</span>',
+         '<span><b>'+num(v.v)+'</b> views</span><span>'+esc(v.d)+'</span>'+
+         '<span>breakout '+esc(v.b)+'</span>');
+     }).join('')+'</div>'+
+     '<div class="empty">'+esc(D.library.only)+' Packaging patterns are visible here in a way a '+
+     'subscriber count cannot show: read the thumbnails and the titles side by side against ours, and '+
+     'note which window these landed in.</div>');
+  document.getElementById('p-intel').innerHTML=h;
+
+  /* ================= System ================= */
+  var s=D.system; h='';
+  var conn=s.connectors.filter(function(x){return x.state==='connected';}).length;
+  var rdy=s.routines.filter(function(r){return r.ready;}).length;
+  var open=s.contradictions.filter(function(x){return x.sev!=='resolved';}).length;
+
+  document.getElementById('sf-k').textContent=conn+' / '+s.connectors.length;
+  document.getElementById('sf-n').textContent=rdy+' of '+s.routines.length+
+    ' routines could run today. None are registered.';
+
+  h+='<div class="g12" style="margin-bottom:var(--s2)">';
+  h+='<div class="c4"><div class="card kpi"><div class="row1"><div class="tile green">'+svg(ICON.spark)+
+     '</div><span class="pill ok">'+svg(ICON.up)+'probed</span></div><div class="klabel">Connectors live</div>'+
+     '<div class="kval">'+conn+' <small>of '+s.connectors.length+'</small></div>'+
+     '<div class="kmeta">Verified by direct probe '+esc(s.probedAt||'date not recorded')+'</div></div></div>';
+  h+='<div class="c4"><div class="card kpi"><div class="row1"><div class="tile blue">'+svg(ICON.calendar)+
+     '</div><span class="pill neutral">0 registered</span></div><div class="klabel">Routines runnable</div>'+
+     '<div class="kval">'+rdy+' <small>of '+s.routines.length+'</small></div>'+
+     '<div class="kmeta">On connectors already authenticated</div></div></div>';
+  h+='<div class="c4"><div class="card kpi"><div class="row1"><div class="tile red">'+svg(ICON.eye)+
+     '</div><span class="pill bad">'+svg(ICON.down)+'open</span></div>'+
+     '<div class="klabel">Open contradictions</div><div class="kval">'+open+' <small>unresolved</small></div>'+
+     '<div class="kmeta">'+(s.contradictions.length-open)+' resolved by this pull</div></div></div>';
+  h+='</div>';
+
+  h+='<div class="g12" style="margin-bottom:var(--s2)">';
+  h+='<div class="c4">'+card('Connector health','Verified by direct probe',
+     donut(Math.round(conn/s.connectors.length*100),conn+'/'+s.connectors.length,'CONNECTED','blue')+
+     '<div class="chips" style="justify-content:center;margin-top:var(--s2)">'+
+     s.connectors.map(function(x){
+       return '<span class="tag '+(x.state==='connected'?'ok':'no')+'">'+esc(x.c)+'</span>';
+     }).join('')+'</div>')+'</div>';
+  h+='<div class="c4">'+card('Routines runnable','On connectors already authenticated',
+     donut(Math.round(rdy/s.routines.length*100),rdy+'/'+s.routines.length,'CAN RUN','green')+
+     '<div class="chips" style="justify-content:center;margin-top:var(--s2)">'+
+     s.routines.map(function(r){
+       return '<span class="tag '+(r.ready?(r.blocker?'w':'ok'):'no')+'">'+
+         esc(r.n.replace('marketingos-',''))+'</span>';
+     }).join('')+'</div>')+'</div>';
+  h+='<div class="c4">'+card('Contradictions','Open against resolved',
+     donut(Math.round(open/s.contradictions.length*100),open+'/'+s.contradictions.length,'OPEN','red')+
+     '<div class="empty" style="margin-top:var(--s2)">Each open entry names one human who resolves it. '+
+     'Context/ is human-owned, so none of them resolve themselves.</div>')+'</div>';
+  h+='</div>';
+
+  h+=card('Connectors','A missing connector names the routine it breaks',
+     tbl(['Connector','State','Needed by'],s.connectors.map(function(x){
+       return '<tr><td><strong>'+esc(x.c)+'</strong></td><td><span class="tag '+
+         (x.state==='connected'?'ok':'no')+'">'+esc(x.state)+'</span></td><td class="src">'+
+         esc(x.needs)+'</td></tr>';
+     }).join('')));
+  h+='<div style="height:var(--s2)"></div>';
+  h+=card('Routines','B logs to Intelligence/logs/, A does not',
+     tbl(['Routine','Tag','Cadence','Last run','Can run now'],s.routines.map(function(r){
+       var rd=r.ready?(r.blocker?'<span class="tag w">'+esc(r.blocker)+'</span>':'<span class="tag ok">yes</span>')
+                     :'<span class="tag no">'+esc(r.blocker)+'</span>';
+       return '<tr><td class="num">'+esc(r.n)+'</td><td><span class="tag '+(r.tag==='A'?'a':'n')+'">'+
+         esc(r.tag)+'</span></td><td class="num">'+esc(r.cad)+'</td><td>'+
+         (r.last?'<span class="tag ok">'+esc(r.last)+'</span>':'<span class="tag no">never</span>')+
+         '</td><td>'+rd+'</td></tr>';
+     }).join(''))+
+     '<div class="empty">A silently dead routine is the most dangerous failure mode in this OS, because '+
+     'everything downstream keeps looking correct while going stale. This table is the check.'+
+     act('Register routines','Run /marketing-os-routines. Probe every connector in Context/infrastructure.md, then register only the routines that can actually produce signal today. Report which ones you skipped and why.')+
+     '</div>');
+  h+='<div style="height:var(--s2)"></div>';
+  h+=card('Freshness','Oldest first. Every number carries a pulled date by rule',
+     tbl(['Row','As of','Age','Note','Source'],s.freshness.slice().sort(function(a,z){return z.age-a.age;})
+       .map(function(f){
+         return '<tr><td>'+esc(f.row)+'</td><td class="num">'+esc(f.asof)+'</td><td><span class="tag '+
+           (f.age>=45?'no':(f.age>=14?'w':'ok'))+'">'+f.age+'d</span></td><td>'+esc(f.note)+'</td><td>'+
+           src(f.src)+'</td></tr>';
+       }).join(''))+
+     '<div class="empty">Oldest first, so the top row is the number most likely to be wrong. A row '+
+     'that cannot be refreshed names the connector it is waiting on rather than carrying a stale value '+
+     'forward as though it were current.</div>');
+  h+='<div style="height:var(--s2)"></div>';
+  h+=card('Contradictions','Where the OS disagrees with itself',
+     tbl(['','The OS claims','Measurement says','Resolves'],s.contradictions.map(function(x){
+       var cls=x.sev==='resolved'?'ok':(x.sev==='high'?'no':'w');
+       return '<tr><td><span class="tag '+cls+'">'+esc(x.sev)+'</span></td><td>'+esc(x.claim)+
+         '<div>'+src(x.src)+'</div></td><td>'+esc(x.counter)+'</td><td class="src">'+esc(x.who)+
+         '</td></tr>';
+     }).join(''))+
+     '<div class="empty">A conventional dashboard cannot have this panel because it holds no beliefs to '+
+     'contradict. None of these resolve themselves. Context/ is human-owned, so a contradiction stays '+
+     'visible until someone decides.</div>');
+  h+='<div style="height:var(--s2)"></div>';
+  h+=card('Published without a record','What the content pipeline sync would have caught',
+     '<div class="vgrid tight">'+s.uncaptured.map(function(v){
+       return vcard(v,'<span class="flag">no record</span>',
+         '<span><b>'+num(v.v)+'</b> views</span><span>'+esc(v.d)+'</span>');
+     }).join('')+'</div>'+
+     '<div class="empty">Published straight past the pipeline, so the OS has no record and no '+
+     'repurpose cascade for them. Their identifiers are recorded in the snapshot, so the sync can find '+
+     'them on its next run.</div>');
+  h+='<div style="height:var(--s2)"></div>';
+  h+=card('The video about this system','Channels/*/pipeline/',
+     '<div class="hero" style="grid-template-columns:260px 1fr">'+
+     '<div class="vc" style="cursor:default"><span class="thumb miss"><span>briefed, not filmed</span></span>'+
+     '<div class="vmeta"><div class="vt">'+esc(s.osVideo.t)+'</div>'+
+     '<div class="vstat"><span>'+esc(s.osVideo.stage)+'</span><span>youtube</span></div></div></div>'+
+     '<div><div class="lbl">The recursion</div>'+
+     '<div style="color:var(--ink2);line-height:1.65">'+esc(s.osVideo.note)+' This dashboard, the twelve '+
+     'routines, the eleven pages and every measured number on them exist. The video that would show them to '+
+     'the audience is a brief with no date, which is the same cadence problem the Core is showing '+
+     'in red on the Calendar page.</div>'+
+     '<div style="margin-top:12px">'+src(s.osVideo.src)+'</div></div></div>');
+  document.getElementById('p-system').innerHTML=h;
+
+  /* ============================================================
+     THE CORE. A rotating sphere of this OS.
+     Every bright node is one real entity from the data block.
+     Colour is state. The dust is decoration and carries no data.
+     Hand written canvas, no library, so the no-network rule holds.
+     ============================================================ */
+  function buildCore(){
+    var cv=document.getElementById('corec'); if(!cv) return;
+    var tip=document.getElementById('coretip');
+    var ctx=cv.getContext('2d');
+    var N=D.core.nodes, n=N.length;
+    /* colour is still state. red and grey are out by operator instruction, so
+       broken reads as the fourth accent and no-state as a muted accent tint. */
+    var TONE={live:'--green',hit:'--e1',warn:'--e3',bad:'--e4',dim:'--node-dim'};
+    var KIND={video:2.3,campaign:3.0,channel:2.8,routine:2.0,connector:2.0,flag:2.8,
+              lesson:1.9,voice:2.4,asset:2.0,competitor:3.0,'rival-video':2.1,signal:2.6};
+
+    /* ONE ball, not a shell with a hollow middle. radius is importance, so the
+       things this business runs sit in the gravity well and the periphery drifts
+       out. angle still clusters by kind, so a folder stays recognisable. */
+    var kindList=[]; N.forEach(function(nd){ if(kindList.indexOf(nd.kind)<0) kindList.push(nd.kind); });
+    var ANG={video:0.85,resource:0.80,context:0.55,'channel-doc':0.60,'campaign-doc':0.50,
+      'routine-doc':0.48,'content-doc':0.54,analytics:0.50,daily:0.42,intel:0.58,dashboard:0.26,
+      root:0.24,routine:0.46,connector:0.44,flag:0.66,lesson:0.48,voice:0.40,campaign:0.30,
+      channel:0.64,asset:0.42,competitor:0.70,'rival-video':0.85,signal:0.78};
+    var OUTSIDE={competitor:1,'rival-video':1,signal:1};
+    var centre={};
+    kindList.forEach(function(k,i){
+      var y=1-((i+0.5)/kindList.length)*2, r=Math.sqrt(Math.max(0,1-y*y)), th=i*2.399963229728653;
+      centre[k]=[Math.cos(th)*r,y,Math.sin(th)*r];
+    });
+    /* mulberry32: deterministic across opens, and uncorrelated unlike a sin hash */
+    var seed=1337>>>0;
+    var rnd=function(){ seed=seed+0x6D2B79F5>>>0;
+      var t=Math.imul(seed^seed>>>15,1|seed);
+      t=t+Math.imul(t^t>>>7,61|t)^t;
+      return ((t^t>>>14)>>>0)/4294967296; };
+    var pts=N.map(function(nd,i){
+      var c=centre[nd.kind]||[0,1,0];
+      var ang=ANG[nd.kind]!=null?ANG[nd.kind]:0.6;
+      var w=nd.w!=null?nd.w:0.4;
+      /* direction: the kind centre, nudged */
+      var u=rnd()*2-1, v=rnd()*Math.PI*2, m=(rnd()+rnd())*0.5*ang;
+      var s2=Math.sqrt(Math.max(0,1-u*u));
+      var dx=c[0]+Math.cos(v)*s2*m, dy=c[1]+u*m, dz=c[2]+Math.sin(v)*s2*m;
+      var dl=Math.sqrt(dx*dx+dy*dy+dz*dz)||1;
+      /* radius: heavier things fall inwards. the world orbits outside everything */
+      var rad2 = OUTSIDE[nd.kind] ? (1.04+rnd()*0.20)
+                                  : (0.12+Math.pow(1-w,1.25)*0.84*(0.82+rnd()*0.36));
+      return {x:dx/dl*rad2, y:dy/dl*rad2, z:dz/dl*rad2, nd:nd, r0:rad2,
+              rad:(KIND[nd.kind]||1.8)*(nd.w!=null?nd.w:0.55)*2.6, ph:rnd()*6.283};
+    });
+    /* links: nearest neighbours, capped per node. an uncapped same-kind rule
+       turns a 50 member cluster into a solid mat instead of a constellation. */
+    var cand=[];
+    for(var i=0;i<n;i++){
+      for(var j=i+1;j<n;j++){
+        var a=pts[i],b=pts[j];
+        var d=(a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y)+(a.z-b.z)*(a.z-b.z);
+        if(d<0.10) cand.push([d,i,j]);
+      }
+    }
+    cand.sort(function(p1,p2){return p1[0]-p2[0];});
+    var links=[], deg=new Array(n).fill(0);
+    for(var ci=0;ci<cand.length;ci++){
+      var c1=cand[ci][1], c2=cand[ci][2];
+      if(deg[c1]>=3||deg[c2]>=3) continue;
+      links.push([c1,c2]); deg[c1]++; deg[c2]++;
+    }
+    /* decoration, and it says so in the panel. a haze plus a finer particle web,
+       both denser towards the centre, which is what makes the core read as a core. */
+    var dust=[];
+    var layer=function(count,rMin,rMax,pow2,aMin,aRange){
+      for(var k=0;k<count;k++){
+        var u=Math.random()*2-1, t2=Math.random()*Math.PI*2;
+        var rr=rMin+(rMax-rMin)*Math.pow(Math.random(),pow2);
+        var s=Math.sqrt(Math.max(0,1-u*u));
+        dust.push({x:Math.cos(t2)*s*rr,y:u*rr,z:Math.sin(t2)*s*rr,
+          a:aMin+Math.random()*aRange,
+          col:rr<0.26?'ink':(rr<0.62?'e1':'e2'),
+          sz:Math.random()<.12?2.1:(Math.random()<.5?1.5:1)});
+      }
+    };
+    layer(2200,0.03,0.92,1.10,0.10,0.40);  /* interior haze, still dense at the centre */
+    layer(900,0.90,1.06,0.7,0.12,0.32);    /* the shell */
+    layer(500,1.06,1.75,1.0,0.06,0.16);    /* the halo */
+
+    /* the mesh outside the core. many points, each joined to several neighbours, so it
+       reads as a connected structure rather than a dust cloud. still decoration. */
+    var field=[], FN=3600;
+    for(var f2=0;f2<FN;f2++){
+      var fu=Math.random()*2-1, ft=Math.random()*Math.PI*2;
+      /* biased outward, because the core already carries its own density */
+      var fr=0.20+Math.pow(Math.random(),0.62)*0.88;
+      var fs=Math.sqrt(Math.max(0,1-fu*fu));
+      var q0=Math.random();
+      field.push({x:Math.cos(ft)*fs*fr,y:fu*fr,z:Math.sin(ft)*fs*fr,r0:fr,
+        a:0.14+Math.random()*0.50,
+        sz:q0<0.06?2.6:(q0<0.22?2.0:(q0<0.58?1.5:1.1))});
+    }
+    /* neighbours through a spatial grid, so 3600 points cost one pass rather than
+       6.5 million distance checks */
+    var CELL=0.09, grid={};
+    field.forEach(function(pt,idx){
+      var k=Math.floor(pt.x/CELL)+'|'+Math.floor(pt.y/CELL)+'|'+Math.floor(pt.z/CELL);
+      (grid[k]=grid[k]||[]).push(idx);
+    });
+    var fedge=[], seenE={}, LINK=2, MAXD=0.0125;
+    field.forEach(function(pt,idx){
+      var cx0=Math.floor(pt.x/CELL), cy0=Math.floor(pt.y/CELL), cz0=Math.floor(pt.z/CELL);
+      var near=[];
+      for(var ax=-1;ax<=1;ax++) for(var ay=-1;ay<=1;ay++) for(var az=-1;az<=1;az++){
+        var bucket=grid[(cx0+ax)+'|'+(cy0+ay)+'|'+(cz0+az)];
+        if(!bucket) continue;
+        for(var bi=0;bi<bucket.length;bi++){
+          var j2=bucket[bi]; if(j2===idx) continue;
+          var o=field[j2];
+          var dd3=(pt.x-o.x)*(pt.x-o.x)+(pt.y-o.y)*(pt.y-o.y)+(pt.z-o.z)*(pt.z-o.z);
+          if(dd3<MAXD) near.push([dd3,j2]);
+        }
+      }
+      near.sort(function(a,b){return a[0]-b[0];});
+      for(var m2=0;m2<Math.min(LINK,near.length);m2++){
+        var j3=near[m2][1];
+        var ek=idx<j3?idx+'_'+j3:j3+'_'+idx;
+        if(seenE[ek]) continue;
+        seenE[ek]=1; fedge.push([idx,j3]);
+      }
+    });
+
+    var css=function(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();};
+    var C={};
+    function readTheme(){
+      C={e1:css('--e1'),e2:css('--e2'),e3:css('--e3'),ink:css('--ink'),ink3:css('--ink3'),
+         green:css('--green'),amber:css('--amber'),red:css('--red'),line:css('--line'),
+         grid:css('--grid')};
+      /* Is the surface light? The core is built for additive glow on near-black, so on a
+         light palette every node and edge washes out. Detect it from the background's own
+         luminance rather than from the palette name, so a future light palette works too. */
+      var bg=css('--bg')||'#000', hx=bg.replace('#','');
+      if(hx.length===3) hx=hx[0]+hx[0]+hx[1]+hx[1]+hx[2]+hx[2];
+      var br=parseInt(hx.slice(0,2),16)||0, bgn=parseInt(hx.slice(2,4),16)||0, bb=parseInt(hx.slice(4,6),16)||0;
+      C.light=(0.2126*br+0.7152*bgn+0.0722*bb)/255 > 0.5;
+      /* --logo-ink is a fixed dark brand token in every palette, so the plate is on-brand
+         rather than an invented colour. */
+      C.plate=css('--logo-ink')||'#14152B';
+      /* ---- TWO RENDERING MODELS, not one with a patch ----
+         The core is drawn with additive blending: 'lighter' means add light. On a near-black
+         field adding light makes a node glow. On a near-white field the channels are already
+         at 255, so adding light does literally nothing. That single fact is why all five dark
+         palettes were correct and Cream was invisible. It is a blend-mode problem, not a
+         colour problem, so recolouring nodes or dropping a dark plate behind them both fight
+         the theme instead of fixing it.
+
+         Light mode therefore inverts the physics: subtractive ink on paper rather than
+         additive light in a void. 'multiply' darkens what is under it, which is exactly how
+         ink behaves. The geometry, the node states and the layout are untouched. */
+      C.blend = C.light ? 'multiply' : 'lighter';
+      /* the dense centre. glowing white on dark, dense ink on light */
+      C.hot = C.light ? C.plate : C.ink;
+      /* Cream's --node-dim is a tint toward its WHITE card, so the 166 no-state nodes were
+         white-on-cream. On paper a faint mark is a light grey, not a lighter white. */
+      C.dim = C.light ? 'rgba(20,21,43,0.50)' : css('--node-dim');
+      /* read once per theme change, never inside the frame loop. getComputedStyle in a
+         239-node paint at 60fps is 14,000 style resolutions a second. */
+      C.card = css('--card')||'#fff';
+      /* edges and the mesh ride on --e2 (a green). That reads on black and disappears on
+         cream, where a structural line should be neutral ink rather than a hue. */
+      C.web = C.light ? 'rgba(20,21,43,0.70)' : C.e2;
+      Object.keys(TONE).forEach(function(t){
+        C[t]=css(TONE[t]);
+      });
+    }
+    readTheme();
+    window.__coreTheme=function(){ requestAnimationFrame(readTheme); };
+    /* the palette lives on the html element. watch it rather than trust a callback */
+    if(window.MutationObserver){
+      new MutationObserver(function(){ requestAnimationFrame(readTheme); })
+        .observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+    }
+
+    var W=0,H=0,DPR=Math.min(window.devicePixelRatio||1,2);
+    function size(){
+      W=cv.clientWidth; H=cv.clientHeight;
+      cv.width=Math.round(W*DPR); cv.height=Math.round(H*DPR);
+      ctx.setTransform(DPR,0,0,DPR,0,0);
+    }
+    size(); window.addEventListener('resize',size);
+
+    var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var rot=reduce?0.6:0, t=0, hov=-1, mx=-999, my=-999, spin=1;
+    /* camera. CAM is the eye distance in sphere radii, so a smaller number is a
+       wider lens and a stronger sense of depth. zoom scales the screen radius. */
+    var CAM=2.15, zoom=1.32, zoomT=1.32, ZMIN=0.7, ZMAX=3.6;
+    var yaw=0, yawT=0, tilt=0.30, tiltT=0.30;   /* orbit offsets driven by the cursor */
+    var drag=false, dragX=0, dragY=0, dragYaw=0, dragTilt=0;
+
+    cv.addEventListener('mousemove',function(e){
+      var r=cv.getBoundingClientRect();
+      mx=e.clientX-r.left; my=e.clientY-r.top;
+      if(drag){
+        yawT=dragYaw+(e.clientX-dragX)*0.006;
+        tiltT=Math.max(-1.15,Math.min(1.15,dragTilt+(e.clientY-dragY)*0.005));
+        return;
+      }
+      /* parallax: the sphere leans towards the cursor */
+      var nx=(mx/Math.max(1,W))*2-1, ny=(my/Math.max(1,H))*2-1;
+      yawT=nx*0.55; tiltT=0.30+ny*0.42;
+    });
+    cv.addEventListener('mouseleave',function(){
+      mx=my=-999; spin=1; if(!drag){ yawT=0; tiltT=0.30; }
+    });
+    cv.addEventListener('mouseenter',function(){ spin=.30; });
+    cv.addEventListener('mousedown',function(e){
+      drag=true; dragX=e.clientX; dragY=e.clientY; dragYaw=yawT; dragTilt=tiltT;
+      cv.style.cursor='grabbing';
+    });
+    window.addEventListener('mouseup',function(){
+      if(drag){ drag=false; cv.style.cursor='default'; }
+    });
+    cv.addEventListener('wheel',function(e){
+      var k=Math.pow(1.0016,-e.deltaY);
+      var next=Math.max(ZMIN,Math.min(ZMAX,zoomT*k));
+      /* at a zoom limit, hand the gesture back to the page rather than trapping
+         the cursor inside the canvas */
+      if(Math.abs(next-zoomT)<0.0005) return;
+      e.preventDefault();
+      zoomT=next;
+    },{passive:false});
+    cv.addEventListener('dblclick',function(){ zoomT=1.32; yawT=0; tiltT=0.30; });
+    cv.addEventListener('click',function(){
+      if(hov<0) return;
+      var nd=N[hov];
+      if(nd.link) window.open(nd.link,'_blank','noreferrer');
+      else if(nd.src) window.location.href='obsidian://open?vault='+encodeURIComponent(D.vault)+
+        '&file='+encodeURIComponent(nd.src);
+    });
+
+    var proj=new Array(n);
+    function frame(){
+      t+=0.016; rot+=0.0019*spin;
+      ctx.clearRect(0,0,W,H);
+      zoom+=(zoomT-zoom)*0.12;
+      yaw+=(yawT-yaw)*0.09; tilt+=(tiltT-tilt)*0.09;
+      var cx=W/2, cy=H*0.50, R=Math.min(W,H)*0.46*zoom;
+
+      var cosR=Math.cos(rot+yaw), sinR=Math.sin(rot+yaw);
+      var cosT=Math.cos(tilt), sinT=Math.sin(tilt);
+
+      /* perspective. front of the sphere reads noticeably larger than the back */
+      var persp=function(z){ return CAM/Math.max(0.35,CAM-z); };
+
+      /* floor grid, the horizon from the reference */
+      ctx.save();
+      ctx.strokeStyle=C.grid; ctx.lineWidth=1;
+      var fy=cy+R*1.06;
+      for(var g=0;g<9;g++){
+        var yy=fy+g*g*3.1;
+        if(yy>H) break;
+        ctx.globalAlpha=Math.max(0,.5-g*.05);
+        ctx.beginPath(); ctx.moveTo(0,yy); ctx.lineTo(W,yy); ctx.stroke();
+      }
+      for(var v2=-9;v2<=9;v2++){
+        ctx.globalAlpha=.22;
+        ctx.beginPath(); ctx.moveTo(cx+v2*22,fy); ctx.lineTo(cx+v2*260,H); ctx.stroke();
+      }
+      ctx.restore();
+
+      function rotate(p){
+        var x=p.x*cosR-p.z*sinR, z=p.x*sinR+p.z*cosR;
+        var y=p.y*cosT-z*sinT, z2=p.y*sinT+z*cosT;
+        return [x,y,z2];
+      }
+
+      /* the gravity well. a wide bloom plus a hot centre, so the middle reads as
+         a core rather than as the middle of a hollow ball */
+      var gr=ctx.createRadialGradient(cx,cy,0,cx,cy,R*1.25);
+      gr.addColorStop(0,C.e1); gr.addColorStop(.30,C.e2); gr.addColorStop(1,'transparent');
+      /* on light this gradient is two accent hues and it read as a green cloud sitting over
+         everything. The ink vignette below already carries centre density, so here it is
+         almost off. */
+      ctx.globalAlpha=C.light?.03:.26; ctx.fillStyle=gr;
+      ctx.beginPath(); ctx.arc(cx,cy,R*1.25,0,6.2832); ctx.fill();
+      /* the dense centre. on dark it is a hot bloom, on light it is a soft ink vignette,
+         and both say the same thing: this is where the weight of the OS sits. */
+      ctx.globalCompositeOperation=C.blend;
+      var hot=ctx.createRadialGradient(cx,cy,0,cx,cy,R*0.42);
+      hot.addColorStop(0,C.hot); hot.addColorStop(.28,C.light?C.plate:C.e1);
+      hot.addColorStop(.7,C.light?'rgba(20,21,43,0.35)':C.e2); hot.addColorStop(1,'transparent');
+      ctx.globalAlpha=C.light?.16:.30; ctx.fillStyle=hot;
+      ctx.beginPath(); ctx.arc(cx,cy,R*0.42,0,6.2832); ctx.fill();
+      ctx.globalCompositeOperation='source-over';
+      ctx.globalAlpha=1;
+
+      /* dust. decoration, not data */
+      ctx.globalCompositeOperation=C.blend;
+      for(var d2=0;d2<dust.length;d2++){
+        var du=dust[d2], q=rotate(du);
+        var sc=1/(1.9-q[2]*0.6);
+        var px=cx+q[0]*R*sc*1.02, py=cy+q[1]*R*sc*1.02;
+        ctx.globalAlpha=du.a*(q[2]>0?(C.light?.42:.9):(C.light?.16:.34))*(0.6+0.4*Math.sin(t*1.4+d2));
+        ctx.fillStyle=C[du.col]||C.e2;
+        var z2=du.sz*(0.7+0.5*sc);
+        ctx.fillRect(px,py,z2,z2);
+      }
+      ctx.globalCompositeOperation='source-over';
+
+      /* the particle web: two batched strokes, then the points */
+      var fp=new Array(FN);
+      for(var fi=0;fi<FN;fi++){
+        var fq=rotate(field[fi]); var fsc=persp(fq[2]);
+        fp[fi]={x:cx+fq[0]*R*fsc, y:cy+fq[1]*R*fsc, z:fq[2], s:fsc};
+      }
+      for(var pass=0;pass<2;pass++){
+        ctx.beginPath();
+        for(var fe=0;fe<fedge.length;fe++){
+          var FA=fp[fedge[fe][0]], FB=fp[fedge[fe][1]];
+          if(((FA.z+FB.z)/2>0)!==(pass===1)) continue;
+          ctx.moveTo(FA.x,FA.y); ctx.lineTo(FB.x,FB.y);
+        }
+        ctx.globalAlpha=pass===1?(C.light?0.085:0.16):(C.light?0.03:0.06);
+        ctx.strokeStyle=C.web; ctx.lineWidth=1; ctx.stroke();
+      }
+      ctx.globalCompositeOperation=C.blend;
+      for(var fj=0;fj<FN;fj++){
+        var FP=fp[fj], fw=field[fj];
+        ctx.globalAlpha=fw.a*(FP.z>0?(C.light?0.40:0.85):(C.light?0.15:0.32));
+        ctx.fillStyle=fw.r0<0.34?C.hot:(fw.r0<0.72?C.e1:C.e2);
+        var fsz=fw.sz*(0.62+FP.s*0.62);
+        if(fsz>1.9){ ctx.beginPath(); ctx.arc(FP.x,FP.y,fsz*0.6,0,6.2832); ctx.fill(); }
+        else ctx.fillRect(FP.x,FP.y,fsz,fsz);
+      }
+      ctx.globalCompositeOperation='source-over';
+
+      /* project the real nodes */
+      for(var i2=0;i2<n;i2++){
+        var q2=rotate(pts[i2]);
+        var sc2=persp(q2[2]);
+        proj[i2]={x:cx+q2[0]*R*sc2, y:cy+q2[1]*R*sc2, z:q2[2], s:sc2};
+      }
+
+      /* links */
+      ctx.lineWidth=1.25;
+      for(var l=0;l<links.length;l++){
+        var A=proj[links[l][0]], B=proj[links[l][1]];
+        var dx2=A.x-B.x, dy2=A.y-B.y;
+        if(dx2*dx2+dy2*dy2<64) continue;   /* a 8px link is a knot, not a relationship */
+        var zz=(A.z+B.z)/2;
+        ctx.globalAlpha=(zz>0?(C.light?.30:.34):(C.light?.11:.10))*(0.7+0.3*Math.sin(t*.9+l*.3));
+        ctx.strokeStyle=C.web;
+        ctx.beginPath(); ctx.moveTo(A.x,A.y); ctx.lineTo(B.x,B.y); ctx.stroke();
+      }
+
+      /* nodes, painted back to front */
+      var order=[]; for(var o=0;o<n;o++) order.push(o);
+      order.sort(function(a,b){return proj[a].z-proj[b].z;});
+      var best=-1, bestD=Math.pow(15+6*zoom,2);
+      for(var oi=0;oi<order.length;oi++){
+        var idx=order[oi], P=proj[idx], nd2=N[idx];
+        var pulse=0.72+0.28*Math.sin(t*1.7+pts[idx].ph);
+        var rad=Math.max(2.2,pts[idx].rad)*P.s*pulse;
+        var col=(nd2.tone==='dim'&&C.light)?C.dim:(C[nd2.tone]||C.ink3);
+        var dx=P.x-mx, dy=P.y-my, dd=dx*dx+dy*dy;
+        if(dd<bestD && P.z>-0.25){ bestD=dd; best=idx; }
+        /* on light the back hemisphere at 0.34 was a ghost. A dark mark on paper does not lose
+           presence with depth the way a dim glow does, so the floor comes up. */
+        ctx.globalAlpha=(P.z>0?0.95:(C.light?0.55:0.34))*(pts[idx].r0<0.5?1:0.9);
+        ctx.fillStyle=col;
+        ctx.beginPath(); ctx.arc(P.x,P.y,rad,0,6.2832); ctx.fill();
+        /* THE KNOCKOUT RING. The single thing that makes the data lead the decoration on a light
+           surface: a thin ring in the page colour, drawn between each node and the mesh behind it.
+           Standard practice for scatter marks on a busy field, and it is why the nodes now read as
+           objects sitting in front of a structure rather than as part of it. Dark mode does not
+           need it, because there a glow already separates a node from its surroundings. */
+        if(C.light && rad>1.9){
+          ctx.save();
+          ctx.globalAlpha=(P.z>0?0.92:0.5);
+          ctx.strokeStyle=C.card;
+          ctx.lineWidth=rad>4?1.6:1.1;
+          ctx.beginPath(); ctx.arc(P.x,P.y,rad+ctx.lineWidth*0.5,0,6.2832); ctx.stroke();
+          ctx.restore();
+        }
+        /* a halo only on the nodes that carry weight, and never additive, because
+           additive glow in a dense cluster blooms into a smear */
+        if(P.z>0.05&&rad>3.2){
+          ctx.globalAlpha=0.13*pulse;
+          ctx.beginPath(); ctx.arc(P.x,P.y,Math.min(rad*2.3,15),0,6.2832); ctx.fill();
+        }
+      }
+      /* hover ring */
+      if(best>=0){
+        var HP=proj[best];
+        ctx.globalAlpha=1; ctx.strokeStyle=C.ink; ctx.lineWidth=2;
+        ctx.beginPath(); ctx.arc(HP.x,HP.y,10,0,6.2832); ctx.stroke();
+        ctx.globalAlpha=.5;
+        ctx.beginPath(); ctx.arc(HP.x,HP.y,16,0,6.2832); ctx.stroke();
+      }
+      if(best!==hov){
+        hov=best;
+        if(hov<0){ tip.style.opacity=0; cv.style.cursor='default'; }
+        else{
+          var h=N[hov];
+          tip.innerHTML='<div class="k">'+esc(h.kind)+'</div><div class="t">'+esc(h.label)+
+            '</div><div class="f">'+esc(h.fact)+'</div>';
+          tip.style.opacity=1; cv.style.cursor='pointer';
+        }
+      }
+      if(hov>=0){
+        var P2=proj[hov];
+        var tw=tip.offsetWidth||220, th2=tip.offsetHeight||70;
+        tip.style.left=Math.max(8,Math.min(W-tw-8,P2.x+16))+'px';
+        tip.style.top=Math.max(8,Math.min(H-th2-8,P2.y-th2-12))+'px';
+      }
+      ctx.globalAlpha=1;
+      if(!reduce) requestAnimationFrame(frame);
+    }
+    /* always paint at least once, so reduced motion still gets a still sphere */
+    frame();
+
+    /* the readout cycles through real measured numbers */
+    var ro=D.core.readout, ri=0;
+    var rk=document.getElementById('ro-k'), rv=document.getElementById('ro-v'), rs=document.getElementById('ro-s');
+    function tickReadout(){
+      var r=ro[ri%ro.length]; ri++;
+      rk.textContent=r.k; rv.textContent=r.v; rs.textContent=r.sub;
+      rv.style.animation='none'; void rv.offsetWidth; rv.style.animation='rise .5s';
+    }
+    tickReadout(); setInterval(tickReadout,3800);
+  }
+
+  /* ---------- signal ticker, real events ---------- */
+  (function(){
+    var el=document.getElementById('tick');
+    var one=D.feed.map(function(f){
+      return '<span><i class="'+esc(f.k)+'"></i><b>'+esc(f.t)+'</b> &middot; '+esc(f.d)+
+        ' &middot; '+esc(f.n)+'</span>';
+    }).join('');
+    el.innerHTML=one+one;
+  })();
+
+  /* ---------- palette ---------- */
+  (function(){
+    var sel=document.getElementById('theme'), root=document.documentElement;
+    var saved=null;
+    try{ saved=localStorage.getItem('mos-theme'); }catch(e){}
+    var start=saved||'carbon';
+    root.setAttribute('data-theme',start); sel.value=start;
+    sel.addEventListener('change',function(){
+      root.setAttribute('data-theme',sel.value);
+      try{ localStorage.setItem('mos-theme',sel.value); }catch(e){}
+      if(window.__coreTheme) window.__coreTheme();
+    });
+  })();
+
+  /* ---------- the player. nothing loads until a click ---------- */
+  (function(){
+    var lb=document.getElementById('lb'), fr=document.getElementById('lb-f'),
+        ti=document.getElementById('lb-t');
+    function close(){ lb.classList.remove('on'); fr.innerHTML=''; }
+    document.getElementById('lb-x').addEventListener('click',close);
+    lb.addEventListener('click',function(e){ if(e.target===lb) close(); });
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+    document.addEventListener('click',function(e){
+      var c=e.target.closest('.vc[data-vid]'); if(!c) return;
+      var id=c.dataset.vid;
+      ti.innerHTML=esc(c.dataset.vt)+' <a class="src" href="'+yt(id)+
+        '" target="_blank" rel="noreferrer">open on youtube</a>';
+      fr.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+encodeURIComponent(id)+
+        '?autoplay=1&rel=0" allow="accelerometer;autoplay;encrypted-media;picture-in-picture" '+
+        'allowfullscreen title="'+esc(c.dataset.vt)+'"></iframe>';
+      lb.classList.add('on');
+    });
+    document.addEventListener('keydown',function(e){
+      if(e.key!=='Enter') return;
+      var c=document.activeElement; if(c&&c.classList&&c.classList.contains('vc')) c.click();
+    });
+  })();
+
+  /* ---------- numbers count up once, so the page reads as alive ---------- */
+  function countUp(scope){
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    scope.querySelectorAll('.kval').forEach(function(el){
+      if(el.dataset.done) return;
+      /* animate the first text node only, so the unit element survives */
+      var node=el.firstChild;
+      if(!node||node.nodeType!==3) return;
+      var m=node.nodeValue.match(/^([^0-9]*)([0-9][0-9,\.]*)(.*)$/);
+      if(!m) return;
+      el.dataset.done=1;
+      var target=parseFloat(m[2].replace(/,/g,'')); if(!isFinite(target)||target<=0) return;
+      var dec=(m[2].split('.')[1]||'').length, t0=performance.now(), dur=760;
+      var pre=m[1], post=m[3];
+      (function step(now){
+        var k=Math.min(1,(now-t0)/dur), e=1-Math.pow(1-k,3), val=target*e;
+        node.nodeValue=pre+(dec?val.toFixed(dec):Math.round(val).toLocaleString('en-US'))+post;
+        if(k<1) requestAnimationFrame(step);
+      })(t0);
+    });
+  }
+
+  buildCore();
+  countUp(document.getElementById('p-today'));
+
+
+  /* ================= Funnel: the offer ladder ================= */
+  (function(){
+    var F=D.funnel, h='';
+    var due=F.ladder.filter(function(x){return x.st==='due';})[0];
+    if(due) h+='<div class="card" style="border-color:var(--amber)"><div class="chead"><div>'+
+      '<div class="ctitle">The price steps to '+esc(due.v)+' on '+esc(due.d)+'</div>'+
+      '<div class="csub">'+esc(due.note)+'</div></div>'+
+      '<div class="right"><span class="tag w">action</span></div></div>'+
+      '<div class="empty">A scheduled increase is real urgency rather than manufactured urgency, '+
+      'because the deadline exists whether or not anyone markets it. It only converts if something '+
+      'tells people it is coming. '+src(F.src)+
+      act('Brief the increase','Read the offer file for the rung whose price is changing, and the decision record in Intelligence/decisions/ that set the ladder. Draft a campaign brief in a new Campaigns/YYYY-MM-<slug>/ folder that links the offer, the ICP segments and the channels. Reference, never copy. No invented numbers.')+
+      '</div></div><div style="height:var(--s2)"></div>';
+
+    h+=card('The ladder','Rung by rung, free through paid. Prices live in Context/config.md and Offers/ only',
+      tbl(['Rung','Offer','Price','Sales step','Proof','Owner','Fed by'],F.rungs.map(function(r){
+        var pf = r.proof>0 ? '<span class="tag ok">'+r.proof+' asset</span>'
+               : (r.r==='0' ? '<span class="tag n">n/a</span>' : '<span class="tag no">none</span>');
+        return '<tr><td class="num">'+esc(r.r)+'</td>'+
+          '<td><b>'+esc(r.n)+'</b><div class="csub">'+esc(r.count)+'</div>'+src(r.src)+'</td>'+
+          '<td class="num">'+esc(r.price)+'<div class="csub">'+esc(r.priceNote)+'</div></td>'+
+          '<td><span class="tag '+(r.sales==='yes'?'w':'ok')+'">'+esc(r.sales)+'</span></td>'+
+          '<td>'+pf+'<div class="csub">'+esc(r.proofNote)+'</div></td>'+
+          '<td class="src">'+esc(r.owner)+'</td>'+
+          '<td>'+esc(r.feeds)+'<div class="csub">'+esc(r.icp)+'</div></td></tr>';
+      }).join(''))+
+      '<div class="empty">The rung where a human first enters is the rung where the funnel starts '+
+      'costing time. Everything below it is self-serve, which is what makes the highest self-serve rung '+
+      'the default destination for the whole top of the funnel: it converts without consuming anyone.</div>');
+    h+='<div style="height:var(--s2)"></div>';
+
+    h+=card('The published price ladder','Every step, with the date it takes effect',
+      tbl(['Effective','Monthly','State','Note'],F.ladder.map(function(x){
+        var c = x.st==='live'?'ok':(x.st==='due'?'w':(x.st==='grandfathered'?'a':'n'));
+        return '<tr><td class="num">'+esc(x.d)+'</td><td class="num"><b>'+esc(x.v)+'</b></td>'+
+          '<td><span class="tag '+c+'">'+esc(x.st)+'</span></td><td>'+esc(x.note)+'</td></tr>';
+      }).join(''))+
+      '<div class="empty">A grandfathered rate is not a current price, and every step carries the date '+
+      'it takes effect so the two can never be confused. A price copied into a context file goes stale '+
+      'the day the ladder moves, which is exactly the drift this OS exists to stop: prices live in '+
+      'Offers/ and Context/config.md only. Figures here are verified against billing only if the '+
+      'payments connector is authenticated.</div>');
+    h+='<div style="height:var(--s2)"></div>';
+
+    h+=card('Proof coverage','Where an offer can be sold on evidence, and where it cannot',
+      '<div class="kgrid">'+F.rungs.filter(function(r){return r.r!=='0'&&r.r!=='1b';}).map(function(r){
+        var ok=r.proof>0;
+        return '<div class="k"><div class="kv '+(ok?'':'bad')+'">'+r.proof+'</div>'+
+          '<div class="klabel">'+esc(r.n)+'</div>'+
+          '<div class="kmeta">'+(ok?'proof assets on file':'no case study, no testimonial')+'</div></div>';
+      }).join('')+'</div>'+
+      '<div class="empty">An offer with no proof cannot be sold on evidence. That is recorded honestly '+
+      'here rather than filled with plausible quotes, and it is usually the highest-leverage gap on this '+
+      'page: proof lives with the offer because that is where it gets deployed.'+
+      act('Collect proof','Read every Offers/*/proof/README.md. For each offer with no proof, list exactly which customers or results could be turned into a case study, naming the file where evidence already exists. Invent nothing.')+
+      '</div>');
+    document.getElementById('p-funnel').innerHTML=h;
+  })();
+
+
+  /* ================= Team: profile cards plus a page per person ================= */
+  (function(){
+    var T=D.team;
+    var total=T.people.reduce(function(a,x){return a+x.open;},0);
+    var pri=function(p){ return '<span class="tag '+(p==='high'?'no':(p==='med'?'w':'n'))+'">'+
+      (p==='high'?'high':(p==='med'?'med':'low'))+'</span>'; };
+
+    function roster(){
+      var h=card('Marketing owners','One card per person who owns marketing work. Click a card for their page. A solo operator skips this folder entirely',
+        '<div class="pgrid">'+T.people.map(function(x){
+          return '<div class="pcard" data-person="'+esc(x.slug)+'" role="button" tabindex="0">'+
+            '<div class="ptop"><div class="pav">'+esc(x.ini)+'</div>'+
+            '<div><div class="pn">'+esc(x.n)+'</div><div class="pr">'+esc(x.role)+'</div></div></div>'+
+            '<div class="pow">'+esc(x.owns)+'</div>'+
+            '<div class="pfoot"><div class="popen">'+x.open+'</div>'+
+            '<div class="plbl">open<br>items</div>'+
+            (x.high?'<span class="tag no">'+x.high+' high</span>':'')+
+            '<span class="pgo">Open page &rarr;</span></div></div>';
+        }).join('')+'</div>'+
+        '<div class="empty">'+total+' open marketing items across '+T.people.length+
+        (T.people.length===1?' person':' people')+'. Team sits outside Context/ on purpose: you '+
+        'should not have to read somebody\'s task list every time you load the brand context. '+
+        'The team is not the brand.</div>');
+      if(T.absent&&T.absent.length){
+        h+='<div style="height:var(--s2)"></div>';
+        h+=card('Owns a rung but has no folder here','Deliberate, and worth seeing',
+          tbl(['Person','Why not'],T.absent.map(function(x){
+            return '<tr><td><b>'+esc(x.n)+'</b></td><td>'+esc(x.why)+'</td></tr>';
+          }).join(''))+
+          '<div class="empty">Each owns revenue this OS markets toward. None belongs in it, because '+
+          'one home per fact beats a complete-looking roster.</div>');
+      }
+      document.getElementById('p-team').innerHTML=h;
+    }
+
+    function person(slug){
+      var x=null; T.people.forEach(function(y){ if(y.slug===slug) x=y; });
+      if(!x) return roster();
+      var h='<button class="pback" data-person="__back">&larr; All owners</button>';
+      h+='<div class="phead"><div class="pav">'+esc(x.ini)+'</div>'+
+         '<div><h3>'+esc(x.n)+'</h3><div class="pr">'+esc(x.role)+'</div></div></div>';
+      h+='<div class="kgrid"><div class="k"><div class="kv'+(x.open>=15?' bad':'')+'">'+x.open+'</div>'+
+         '<div class="klabel">Open items</div><div class="kmeta">in '+esc(x.tfile)+'</div></div>'+
+         '<div class="k"><div class="kv'+(x.high?' bad':'')+'">'+x.high+'</div>'+
+         '<div class="klabel">Flagged high</div><div class="kmeta">carry a due date and a blocker</div></div>'+
+         '<div class="k"><div class="kv">'+Math.round(x.open/total*100)+'<span class="unit">%</span></div>'+
+         '<div class="klabel">Share of the load</div><div class="kmeta">of '+total+' open marketing items</div></div></div>';
+      h+='<div style="height:var(--s2)"></div>';
+      h+=card('What '+esc(x.n.split(' ')[0])+' owns','From '+x.profile,
+        '<div style="color:var(--ink2);line-height:1.7">'+esc(x.owns)+'</div>'+
+        (x.decides?'<div class="lbl" style="margin-top:14px">Decides</div>'+
+          '<div style="color:var(--ink2);line-height:1.7">'+esc(x.decides)+'</div>':'')+
+        '<div style="margin-top:12px">'+src(x.profile)+'</div>');
+      h+='<div style="height:var(--s2)"></div>';
+      h+=card('Open items','Newest first as written. Filterable from the top bar',
+        tbl(['Priority','Due','Item','Touches'],x.tasks.slice().sort(function(a,z){
+            var r={high:0,med:1,low:2}; return r[a.p]-r[z.p];
+          }).map(function(t){
+            var late=t.due&&t.due<D.team.asof;
+            return '<tr><td>'+pri(t.p)+'</td>'+
+              '<td class="num">'+(t.due?(late?'<span class="tag no">'+esc(t.due)+'</span>':esc(t.due)):'<span class="tag n">none</span>')+'</td>'+
+              '<td>'+esc(t.t)+'</td><td>'+(t.f?src(t.f):'<span class="src">unlinked</span>')+'</td></tr>';
+          }).join(''))+
+        '<div class="empty">Every item traces to a named source file. Nothing here was invented, and an '+
+        'item with no clear owner was left with the most likely owner rather than dropped. '+
+        src(x.tfile)+'</div>');
+      document.getElementById('p-team').innerHTML=h;
+      countUp(document.getElementById('p-team'));
+    }
+
+    roster();
+    document.getElementById('p-team').addEventListener('click',function(e){
+      var b=e.target.closest('[data-person]'); if(!b) return;
+      if(b.dataset.person==='__back') roster(); else person(b.dataset.person);
+    });
+    document.getElementById('p-team').addEventListener('keydown',function(e){
+      if(e.key!=='Enter'&&e.key!==' ') return;
+      var b=e.target.closest('[data-person]'); if(!b) return;
+      e.preventDefault();
+      if(b.dataset.person==='__back') roster(); else person(b.dataset.person);
+    });
+  })();
+
+  /* ================= interactions ================= */
+  function setPage(k){
+    var pg=D.pages[k];
+    document.getElementById('ph-t').textContent=pg.t;
+    document.getElementById('ph-s').textContent=pg.s;
+  }
+  function openPage(k,push){
+    var tb=document.getElementById('tabs');
+    var b=tb.querySelector('button[data-p="'+k+'"]'); if(!b) return false;
+    Array.prototype.forEach.call(tb.querySelectorAll('button'),function(x){
+      x.setAttribute('aria-selected',String(x===b)); });
+    Array.prototype.forEach.call(document.querySelectorAll('.panel'),function(pn){
+      pn.classList.toggle('on',pn.id==='p-'+k); });
+    setPage(k);
+    document.getElementById('q').value=''; filter('');
+    var pn2=document.getElementById('p-'+k); if(pn2) countUp(pn2);
+    if(push && location.hash!=='#/'+k) history.replaceState(null,'','#/'+k);
+    return true;
+  }
+  var start=(location.hash||'').replace(/^#\//,'');
+  if(!start||!D.pages[start]) start='today';
+  setPage('today');
+  if(start!=='today') openPage(start,false);
+  window.addEventListener('hashchange',function(){
+    var k=(location.hash||'').replace(/^#\//,''); if(D.pages[k]) openPage(k,false);
+  });
+
+  var nav=document.getElementById('tabs');
+  nav.addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    openPage(b.dataset.p,true);
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+
+  function filter(q){
+    q=q.trim().toLowerCase();
+    var on=document.querySelector('.panel.on'); if(!on) return;
+    Array.prototype.forEach.call(on.querySelectorAll('tbody tr'),function(tr){
+      tr.classList.toggle('hide', q && tr.textContent.toLowerCase().indexOf(q)===-1);
+    });
+  }
+  document.getElementById('q').addEventListener('input',function(e){ filter(e.target.value); });
+
+  /* the old light and dark click toggle lived here. it set data-theme to values no
+     palette defines, which wiped the palette on every click of the select. removed. */
+
+  function copy(text,btn,label){
+    var done=function(){
+      var old=btn.textContent; btn.textContent='Copied'; btn.classList.add('done');
+      setTimeout(function(){ btn.textContent=old; btn.classList.remove('done'); },1600);
+    };
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done,function(){window.prompt(label,text);});
+    } else { window.prompt(label,text); }
+  }
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('.act'); if(!b) return;
+    var pr=PROMPTS[+b.dataset.prompt]; if(pr!=null) copy(pr,b,'Copy this prompt');
+  });
+  document.getElementById('brief').addEventListener('click',function(){
+    var lines=['Marketing OS brief, generated '+D.generated.slice(0,10)+'.','','Measured today:'];
+    D.kpis.forEach(function(k){ lines.push('- '+k.label+': '+k.v+' '+k.unit+' ('+k.badge+'). '+k.meta); });
+    lines.push('','Open contradictions:');
+    D.system.contradictions.filter(function(x){return x.sev!=='resolved';}).forEach(function(x){
+      lines.push('- '+x.claim+' BUT '+x.counter+' [resolves: '+x.who+']'); });
+    lines.push('','Needs a decision:');
+    D.today.needsYou.forEach(function(n){ lines.push('- '+n.t); });
+    lines.push('','Campaigns:');
+    D.campaigns.items.forEach(function(x){
+      lines.push('- '+x.n+' ['+x.state+']: '+x.goal+(x.flag?' FLAG: '+x.flag:'')); });
+    lines.push('','Learnings, findings graduated out of retros:');
+    D.learnings.graduated.forEach(function(g){
+      lines.push('- '+g.finding+' ('+g.state+', written into '+g.wroteTo+')'); });
+    lines.push('','Read the latest file in Analytics/snapshots/ for the full pull.');
+    copy(lines.join('\n'),this,'Copy the brief');
+  });
+})();
+</script>
+</body>
+</html>

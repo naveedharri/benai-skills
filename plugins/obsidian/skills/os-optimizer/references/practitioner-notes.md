@@ -248,7 +248,7 @@ When you stack the practitioner notes, several patterns recur:
 
 These supplement the framework-derived signals in the other reference files:
 
-- **Skill-vault duplication**: a skill bundles its own ICP/voice/offer when the vault has them in `Context/` (Pass 8). This is what the linkedin-writer-vault skill demonstrates.
+- **Skill-vault duplication**: a skill bundles its own ICP/voice/offer when the vault already holds those roles somewhere (Pass 8). This is what the linkedin-writer-vault skill demonstrates.
 - **Code style rules in CLAUDE.md**: detect `\b(use|prefer)\s+\d+\s+(space|tab)`, indent rules, quote rules. Suggest moving to linter config + `.claude/rules/`.
 - **`/init`-generated CLAUDE.md fingerprint**: detect long preamble paragraphs ("This project is...", "The codebase contains..."), file-by-file descriptions, generic platitudes. Suggest pruning or rewrite from scratch.
 - **Negative examples in skills/CLAUDE.md**: detect `\bdon't\b.*` rules without a corresponding positive example. Suggest converting to "do this" form.

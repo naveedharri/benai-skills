@@ -155,7 +155,7 @@ Citation: karpathy-llm-wiki.md → Missing cross-references
 
 **Framework rule:** two pages claiming to be the canonical record for the same entity is a lint failure.
 
-**Trigger heuristic:** filename clusters in `Context/` (voice/brand/tone, icp/customer-profile/audience, services/offers/products, me/profile/operator, strategy/goals/okrs, team/org). Plus pairs in any folder where Levenshtein ≤3 between basenames.
+**Trigger heuristic:** filename clusters inside any curated-layer folder from the role registry (voice/brand/tone, icp/customer-profile/audience, services/offers/products, me/profile/operator, strategy/goals/okrs, team/org). Plus pairs in any folder where Levenshtein ≤3 between basenames.
 
 **Agent judgment:** for each candidate pair, **read both files**.
 - Do they actually overlap, or do they cover different aspects (e.g., `voice.md` = how we sound, `brand.md` = visual identity + voice + values)?

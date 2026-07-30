@@ -30,23 +30,36 @@ The user invokes this skill **from inside their vault folder locally**. Everythi
 1. **Verify the cwd is a vault.** `claude.md` or `CLAUDE.md` must exist at the cwd root. If neither exists, ask the user to `cd` into their vault and re-run. Do not proceed.
 2. **List top-level folders.** `Glob` pattern `*/` at cwd. Cache the result as `{{VAULT_FOLDERS}}` (one folder name per line).
 3. **Read `CLAUDE.md`.** Pull conventions: signature style, em-dash rule, voice rules, folder routing, any explicit operator paths, `os-mode` (professional vs business).
-4. **Read every file in `Context/`.** Whichever exist:
-   - `Context/me.md` — operator profile (name, role, focus)
-   - `Context/operator.md` — same, business-mode equivalent
-   - `Context/business.md` / `Context/organization.md` — **org name**, mission, products, locations
-   - `Context/team.md` — **team member full names**, roles, who handles what
-   - `Context/brand.md` — voice, colors (look for hex codes that could seed the signature)
-   - `Context/strategy.md` — current focus, OKRs (informs which workstreams the operator emphasises)
-   - `Context/stakeholders.md` — external people the operator should be aware of (not in team scope, but referenced)
+4. **Find the curated layer, then read it by subject.** Do not assume it is called `Context/`.
+
+   Resolve it: the folder named in `CLAUDE.md`'s routing table as holding identity, brand or strategy; else a top-level folder from `{{VAULT_FOLDERS}}` named `Context`, `About`, `Me`, `Identity`, `Personal`, `Brand` or similar; else the folder whose files actually carry that content. Cache it as `{{CONTEXT_ROOT}}`.
+
+   Then `Glob` `{{CONTEXT_ROOT}}/**/*.md` and read what is there. **Match on subject, not on filename**, because the same content sits at a different path in every vault:
+
+   | Looking for | Common homes |
+   | --- | --- |
+   | Operator profile: name, role, focus | `me.md`, `operator.md`, `personal-brand/background.md` |
+   | Org name, mission, products, locations | `business.md`, `organization.md`, `company.md` |
+   | Team member full names, roles, who handles what | `team.md`, or one file per person under a `Team/` role folder |
+   | Voice, and any hex colors that could seed the signature | `brand.md`, `voice.md`, `personal-brand/voice.md`, `brand/brand-kit.md` |
+   | Current focus, OKRs, the funnel or workstream map | `strategy.md` |
+   | Who the audience is | `icp.md`, or one file per segment under `icp/` |
+   | External people to be aware of, outside team scope | `stakeholders.md` |
+
+   A row with no match is a gap, not an error: note it and carry on. A row matched by several files reads all of them. **Never write to this layer**, it is human-owned.
 5. **Cache inferred values:**
-   - `{{ORG_NAME}}` ← from `Context/business.md` or `organization.md` (title heading or `name:` frontmatter). If none, fall back to the cwd folder name.
-   - `{{TEAM_MEMBERS}}` ← comma-separated full names from `Context/team.md`. If solo (`os-mode: professional`), use the operator's own name from `Context/me.md`.
+   - `{{ORG_NAME}}` ← from whichever file matched the org row in step 4 (title heading or `name:` frontmatter). If none, fall back to the cwd folder name.
+   - `{{TEAM_MEMBERS}}` ← comma-separated full names from whatever matched the team row: one file, or one file per person. If solo (`os-mode: professional`), use the operator's own name from the operator-profile match.
    - `{{EXAMPLE_TEAM_MEMBER}}` ← first name in `{{TEAM_MEMBERS}}`.
    - `{{OPERATOR_NAME}}` (default) ← `{{ORG_NAME}} Vault Operator`.
    - `{{OPERATOR_HANDLE}}` ← slugified, e.g. `Vault-Operator`.
    - `{{OPERATOR_BASE_PATH}}` ← `/Team/{{ORG_NAME}}/Profiles/Vault-Operator/` if `Team/` is one of the discovered top-level folders, else `/{{ORG_NAME}}/Vault-Operator/`.
    - `{{PROFILE_BASE_PATH_PATTERN}}` ← `/Team/{{ORG_NAME}}/Profiles/{Name}/` if applicable.
-   - `{{SIGNATURE_BG_COLOR}}` ← any brand color hex found in `Context/brand.md`, else `#D2ECD0`.
+   - `{{BRIEFING_FOLDER}}` ← **the vault's own dated-log convention, discovered not assumed.** Resolve in order: a top-level folder from `{{VAULT_FOLDERS}}` already holding `YYYY-MM-DD.md` files; else the folder `CLAUDE.md`'s routing table names for daily logs or run logs; else a folder named `Daily`, `Journal`, `Logs` or similar. If none exists, ask the user where the briefing should go before writing anything, and never invent a new root folder: some vaults forbid one by rule.
+   - `{{BRIEFING_SUBPATH_PATTERN}}` ← the path within that folder, matching whatever date format the existing files use.
+   - `{{BRIEFING_PATH_PATTERN}}` ← the two joined, for display in the prompt.
+   - `{{VOICE_FILE}}` ← the path that matched the voice row in step 4. If several matched, the master register rather than a per-channel delta. If none, leave it as the vault's `CLAUDE.md` and say the voice rules came from there.
+   - `{{SIGNATURE_BG_COLOR}}` ← any brand color hex found in whatever matched the voice-and-colors row, else `#D2ECD0`.
    - `{{SIGNATURE_FG_COLOR}}` ← `#020309`.
 
 After Phase 0, summarise to the user in 4–6 short lines what you found. Format:
@@ -145,7 +158,7 @@ Save as `{{ROOT_FOLDER_NAME}}`.
 
 Default the picker to names in `{{TEAM_MEMBERS}}` so the user can pick rather than retype. Save as `{{DM_RECIPIENT_NAME}}`.
 
-If no chat connector is enabled, skip this question. Set `{{DM_RECIPIENT_NAME}}` to the operator's own name from `Context/me.md`/`operator.md` — the placeholder is referenced in a few sections that will be stripped during render anyway.
+If no chat connector is enabled, skip this question. Set `{{DM_RECIPIENT_NAME}}` to the operator's own name from the operator-profile match in step 4 — the placeholder is referenced in a few sections that will be stripped during render anyway.
 
 ### Q5 — Budgets
 
@@ -160,7 +173,7 @@ Save as `{{BUDGET_READS}}`, `{{BUDGET_WRITES}}`, `{{BUDGET_TRANSCRIPTS}}`, `{{BU
 
 ### Q6 — Signature color (only if Phase 0 didn't infer one)
 
-If `Context/brand.md` already gave a brand color, skip this. Otherwise:
+If step 4 already produced a brand color, skip this. Otherwise:
 
 > The Operator stamps every file it edits with a colored span. Pick a background color (default: `#D2ECD0`, soft mint green). Foreground default: `#020309`.
 

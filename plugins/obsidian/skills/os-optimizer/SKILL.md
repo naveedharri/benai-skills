@@ -12,7 +12,7 @@ Apply 9 frameworks to every markdown file in the vault. For each framework, read
 1. **Every finding ships a concrete fix.** No flag-only. No "warn and forget." No manual-review pile. When the user runs apply-mode, every finding becomes either an applied edit, a saved migration step in a dated reorg plan, or (only if the user explicitly declines this finding in walk) a recorded decline. Nothing lingers as an open warning across runs.
 2. **Severity is informational, not gating.** `fail` / `warn` / `info` describes how load-bearing the issue is; it does *not* gate whether a fix is offered. Every check produces fixes.
 3. **Walk per item, user picks the target.** Bulk-apply is reserved for purely mechanical fixes (em dashes, duplicate H1). Anything semantic — wikilink repointing, merges, routing rewrites, Plot.md generation, reorganizations — is walk-only with the user confirming the destination/winner/wording per item.
-4. **Two modes for every fix:** *apply now* (executes in this run) or *save to plan* (writes the change as a checklist step into `Intelligence/decisions/{date}-reorg.md` for staged execution). User picks per finding for high-blast-radius items. Smaller fixes default to apply-now.
+4. **Two modes for every fix:** *apply now* (executes in this run) or *save to plan* (writes the change as a checklist step into the **plan file**, whose path is resolved from the role registry in Step 4.3). User picks per finding for high-blast-radius items. Smaller fixes default to apply-now.
 5. **Visible progress, never silent.** Step 0.5 creates one TaskCreate entry per stage and per framework; tasks update `in_progress` → `completed` as the run unfolds. The user watches the audit walk through the vault rather than waiting for one big report at the end.
 6. **Read and reason, don't just match.** Every framework's triggers surface candidates; every finding requires the agent to read context, judge alignment with the user's stated world, and produce reasoning specific to the case. No paraphrased rule restatements as "reasoning."
 7. **Discover structure, never assume folder names.** Vaults vary. One user's curated layer is `Context/`; another's is `About/`, `Me/`, frontmatter on root, or scattered across topic folders. The optimizer runs Step 1.5 (role discovery) before any framework, and every framework references **roles** (context-equivalent, decisions-equivalent, daily-equivalent, folder-index convention…) discovered from content — never hardcoded names. If a role is missing, it surfaces as a finding with a proposed fix ("you have no decisions-equivalent folder; here's a recommendation"), not as a silent assumption. Static path references in pass files are always abstractions; the agent resolves them through the role registry at run time.
@@ -28,7 +28,7 @@ Apply 9 frameworks to every markdown file in the vault. For each framework, read
 | F5 | Anthropic Memory | `references/anthropic-managed-memory.md` | `references/passes-anthropic-memory.md` | every `.md` |
 | F6 | Progressive Disclosure | `references/progressive-disclosure.md` | `references/passes-progressive-disclosure.md` | every `SKILL.md` |
 | G7 | General Hygiene | (project rules + practitioner notes) | `references/passes-general-hygiene.md` | every `.md` |
-| F8 | Reflection (Anthropic Dreams) | `references/anthropic-dreams.md` | `references/passes-reflection.md` | curated layer (`Context/`, `Projects/`, `Intelligence/decisions/`, `Resources/`); reads recent `Daily/` + `Intelligence/meetings/` as evidence |
+| F8 | Reflection (Anthropic Dreams) | `references/anthropic-dreams.md` | `references/passes-reflection.md` | every folder where `layer == "curated"` in the Step 1.5 registry; reads the session-layer folders as evidence |
 | F9 | Architecture & Discoverability | `references/anthropic-architecture.md` | `references/passes-architecture.md` | whole vault — root CLAUDE.md, routing, every folder's `Plot.md`, the navigation chain end-to-end |
 
 When running a check, **read the pass-implementation file** and follow its regex / heuristic / finding format exactly. Don't paraphrase. Cite the framework reference in every finding.
@@ -289,7 +289,7 @@ Build this once, cache for the rest of the run, and persist to `.claude/vault-ro
 
 ### 1.5.5 — Show the discovery summary in chat (one block)
 
-Frame this as "here's the structure I see in your vault" — not "here's what's missing from a checklist." The user's structure is the source of truth; the BenAI standard taxonomy is just one of the lenses the agent uses to recognize patterns.
+Frame this as "here's the structure I see in your vault" — not "here's what's missing from a checklist." The user's structure is the source of truth; the reference taxonomy is just one of the lenses the agent uses to recognize patterns.
 
 ```markdown
 ## 🔍 Your vault structure — {N_folders} folders classified
@@ -308,7 +308,7 @@ Frame this as "here's the structure I see in your vault" — not "here's what's 
 
 **Folder-index convention I detected:** README.md (74% coverage)
 
-I'll audit this structure as it stands. F9.0 may suggest specific structural improvements where I see concrete evidence they'd help your vault (not just because BenAI uses them) — you'll review each suggestion in walk. Confirmed assignments persist to `.claude/vault-roles.json`.
+I'll audit this structure as it stands. F9.0 may suggest specific structural improvements where I see concrete evidence they'd help your vault (not just because the reference taxonomy contains them) — you'll review each suggestion in walk. Confirmed assignments persist to `.claude/vault-roles.json`.
 
 Running F1 now…
 ```
@@ -386,7 +386,7 @@ The `reasoning` field is mandatory. Every finding has it.
 
 The `fix_status` field is set by **Step 5** after the user walks each finding. Possible values:
 - `applied` → fix executed this run (green FIXED pill)
-- `saved_to_plan` → fix written into `Intelligence/decisions/{date}-reorg.md` for staged execution (blue SAVED pill)
+- `saved_to_plan` → fix written into the plan file for staged execution (blue SAVED pill)
 - `declined` → user explicitly chose not to fix this item in walk (grey DECLINED pill)
 - `failed` → fix attempted but failed safety check (red FAILED pill, with `failure_reason`)
 
@@ -573,7 +573,7 @@ If the agent skips a finding (forgets to fire its sub-prompt, batches multiple f
 
 Apply in this order (smallest blast radius first). For every finding, set `fix_status` to `applied`, `saved_to_plan`, `declined`, or `failed` based on what happened in Step 4 + this step. The HTML render uses `fix_status` directly.
 
-**Save-to-plan items** are written to `Intelligence/decisions/{date}-reorg.md` in Step 4.3 — this step (5) only handles the items the user picked "apply now" for. (In Bulk-apply mode there are no save-to-plan items.)
+**Save-to-plan items** are written to the plan file in Step 4.3 — this step (5) only handles the items the user picked "apply now" for. (In Bulk-apply mode there are no save-to-plan items.)
 
 ### 5.0 — Capture BEFORE metrics (mandatory, before any fix lands)
 
@@ -614,7 +614,7 @@ Cache these. Apply fixes (5.1–5.8). Then run 5.9.
 - Mark `fixed: true` per finding fixed; `fixed: false` for any skipped or low-confidence ones the user said no to.
 
 ### 5.4 — Skill-vault rewrites (F6.11)
-- Update SKILL.md to read the vault `Context/` path instead of the duplicate ref.
+- Update SKILL.md to read the resolved vault path instead of the duplicate ref.
 - Grep the rest of the skill folder for the duplicate ref filename.
 - If still referenced → surface conflict, skip deletion, set `fix_status: failed`.
 - Otherwise → `rm` the duplicate, set `fix_status: applied`.
@@ -635,7 +635,7 @@ Apply F8 fixes **last** (largest blast radius). Order within F8 is smallest-to-l
    - **Re-check size against F5 budget.** If merged file > 10KB → abort the merge, set `fix_status: failed`, surface as flag-only with the abort reason in `reasoning_post`.
    - Grep the vault for `[[SourceName]]` and `[[SourceName|alias]]` patterns; replace each with `[[CanonicalName|alias]]` (or `[[CanonicalName]]`).
    - Verify zero new dead wikilinks (run F2.2 trigger on every file touched). If any new dead link surfaced → roll back this finding's fix, set `fix_status: failed`.
-   - Move source files to `Intelligence/archive/{YYYY-MM-DD}-merged/`. Use `Bash mv`.
+   - Move source files to an archive folder under the archive-equivalent role, `{archive-equivalent}/{YYYY-MM-DD}-merged/`. If the vault has no archive-equivalent, ask where before moving anything. Use `Bash mv`.
    - Set `fix_status: applied`.
 4. **F8.4 emergent themes** — for each approved finding:
    - Create the new file at the user-chosen path (default `Context/{theme-slug}.md` or `Resources/{theme-slug}-MOC.md`).
@@ -643,7 +643,7 @@ Apply F8 fixes **last** (largest blast radius). Order within F8 is smallest-to-l
    - Body: 1-line definition, 3–5 key points, wikilinks back to every source note in the cluster.
    - Set `fix_status: applied`.
 5. **F8.5 promotions** — for each approved finding:
-   - Append the durable content to the chosen destination (`Context/`, `Resources/`, or `Intelligence/decisions/`).
+   - Append the durable content to the chosen destination, resolved from the role registry: a curated-layer folder, or the decisions-equivalent. Never a literal path assumed by name.
    - In the source file, replace the original lines with `See [[Target#section]]`.
    - Set `fix_status: applied`.
 
@@ -665,7 +665,7 @@ Apply F9 fixes after F8. Order: smallest blast radius first.
    - "Add to Plot.md" → `Edit` the parent Plot.md.
    - "Add routing entry" → `Edit` root CLAUDE.md routing.
    - "Move file" → `Bash mv`; redirect inbound wikilinks (same as F8.2 mechanic).
-   - "Archive" → `Bash mv` to `Intelligence/archive/`.
+   - "Archive" → `Bash mv` to the archive-equivalent from the role registry. If the vault has none, ask before moving.
 4. **F9.4 misplaced files** — `Bash mv` to user-chosen folder. Update source folder's Plot.md (remove child) and target folder's Plot.md (add child). Redirect inbound wikilinks.
 5. **F9.5 folder duplication** — for "merge into" findings: walk through file moves one at a time (each is its own `applied` micro-step). For "clarify Plot.md purposes" findings: `Edit` both Plot.mds.
 6. **F9.6 reorg proposals** — only here if the user picked "apply now"; save-to-plan ones are already in the dated reorg file. For apply-now: walk each migration step in the proposal as its own micro-finding (move X, rename Y, update routing entry Z), each confirmed individually before execution.
@@ -885,7 +885,7 @@ Stop. Do not propose follow-up actions.
 - **Never** assume a folder or file by name. Always resolve through the role registry built in Step 1.5. `Context/`, `Projects/`, `Daily/`, `Plot.md`, `me.md`, etc. are *examples* in the documentation; the runtime resolves abstract roles to whatever the user actually has.
 - **Never** ignore a folder because it doesn't fit a standard role. Every folder is classified — standard or custom — with a layer. Custom roles (`Building/`, `Garden/`, anything user-specific) are first-class participants in every framework that operates on their layer. Skipping them defeats the discovery pass.
 - **Never** treat the role registry as ephemeral. Persist confirmed assignments to `.claude/vault-roles.json` at end of Step 1.5 so future runs start from the user's confirmed view of their vault, not from a fresh re-classification that re-prompts everything.
-- **Never** propose a structural change purely because BenAI uses that convention. F9.0 tier-2 findings (functional improvements suggesting BenAI conventions) must cite specific evidence in *this* vault that the convention would resolve a real problem. F9.6 reorg proposals must cite the user's own stated folder purposes. "BenAI does X" is not a valid justification anywhere in the optimizer. The BenAI taxonomy is a recognition lens and an optional reference — never a target shape the user must conform to.
+- **Never** propose a structural change purely because the reference taxonomy contains that convention. F9.0 tier-2 findings (functional improvements suggesting reference conventions) must cite specific evidence in *this* vault that the convention would resolve a real problem. F9.6 reorg proposals must cite the user's own stated folder purposes. "the reference taxonomy does X" is not a valid justification anywhere in the optimizer. The reference taxonomy is a recognition lens and an optional reference — never a target shape the user must conform to.
 - **Never** drop a tier-2 finding when the user has a custom role already serving the function. If `Lab/` (custom curated) is already playing the projects role, no F9.0 tier-2 finding fires for "you should add a projects folder." Function over name.
 - **Never** unilaterally decide a finding is "test fixture," "user probably didn't want this," "judgment-required-per-section," or any other agent-invented reason to route a finding to anything other than `applied` / `failed` in bulk-apply mode. The user said apply everything; that means everything. If applying is mechanically dangerous, attempt the safest mechanical version (e.g., split a 222KB file at H2 boundaries with an automated-split marker, mark `applied_with_caveat: true`). The only valid escape is mechanical failure with a recorded `failure_reason`.
 - **Never** render the dashboard with the BEFORE score. Step 5.9 is mandatory: re-measure after fixes, recompute score, populate `{{SCORE_AFTER}}` and the per-role/per-framework after columns. A dashboard that shows only BEFORE-state numbers is a bug.

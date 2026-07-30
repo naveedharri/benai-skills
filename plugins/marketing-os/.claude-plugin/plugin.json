@@ -1,0 +1,9 @@
+{
+  "name": "marketing-os",
+  "description": "Set up and operate a Marketing OS: a markdown second brain that becomes the single source of truth every marketing skill reads, so the ICP, offer, and voice live in one place. Setup builds it and then offers to schedule the ten routines and build the dashboard. Every routine ends by rendering a clean one-page run report.",
+  "version": "1.1.0",
+  "author": {
+    "name": "BenAI"
+  },
+  "displayName": "Marketing OS"
+}
