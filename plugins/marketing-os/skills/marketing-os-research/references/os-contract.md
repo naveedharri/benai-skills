@@ -57,7 +57,7 @@ That third row is the most useful output this skill produces on some runs. A que
 
 ## Writes
 
-Four, and the fourth is required even on a run that concludes nothing.
+Five, and the last two are required even on a run that concludes nothing.
 
 ### 1. The research file
 
@@ -130,6 +130,18 @@ When the question lived in `Analytics/what-works.md` rather than in its own file
 Name the research file, any question file promoted with its old and new status, anything appended to the quote bank, and anything routed elsewhere with the file named. This is a hybrid, so it logs the knowledge change only, not the reading.
 
 **A run that concluded nothing still logs one line.** That line is how anyone can tell a genuinely inconclusive run from a silently dead skill.
+
+### 5. The rendered one-pager
+
+`Analytics/dashboard/runs/YYYY-MM-DD-research-<topic-slug>.html`
+
+Rendered by invoking the **`instant-ui`** skill, never hand-rolled. This is a required output, not an optional extra: the research file feeds the next skill, the page is what the operator actually reads.
+
+The markdown stays markdown because markdown is what the OS stores and what the next skill reads. The HTML is what a human opens. Both exist after every run, and each records the other's path.
+
+`Analytics/dashboard/runs/` is the same folder every routine writes its run report into, so one folder shows everything the OS did on a given day. Create it if it does not exist.
+
+**If `instant-ui` is unavailable**, say so plainly, note it in the log line, and never hand-roll a page. A hand-rolled page drifts from the design language immediately, which is the whole reason the render is delegated to one skill.
 
 ## What this skill never writes
 

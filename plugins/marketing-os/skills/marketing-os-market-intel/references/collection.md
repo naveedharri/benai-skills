@@ -61,9 +61,27 @@ The proprietary layer, worth reaching for only when it returns something the pub
 
 **Cross-check rather than trust.** Two sources on the same channel will disagree slightly because their snapshots lag differently. Record both numbers and both pull dates rather than picking the one you prefer. The OS convention is that a disagreement is data, not an error to resolve silently.
 
+## Per-stream floors
+
+**Meet these before you think about the cap.** The cap below is a ceiling on a run that has already done its job, not a licence to stop early.
+
+| Stream | Floor at Standard | What under-collecting looks like |
+| --- | --- | --- |
+| **Official sources** | Every vendor named in config, and the primary vendor's changelog read in full, not its summary | Reading a news article about a launch instead of the release notes |
+| **Practitioners** | The whole watchlist, batched into as few calls as the actor allows | Sampling ten accounts out of forty and writing as though the field was covered |
+| **The roster** | Every competitor in `_roster.md` | Checking the three obvious ones |
+| **Search demand** | One lookup per candidate that reaches scoring | Skipping it because the connector is slow |
+| **The wider web** | At least one full-text read per candidate | Quoting a search-result snippet as a source |
+
+**A search result is not a source.** It is a pointer to one. Record which sources were read in full and which were only seen in a result list, and never let the second group carry a finding.
+
+**Batch rather than sample.** Most actors take a list. Forty handles in two calls costs about what four handles in two calls costs, so sampling saves nothing and loses most of the signal. If a limit forces a subset, say which accounts were covered and which were not.
+
 ## Budget
 
 Take the cap from `Context/config.md` if it names one. Absent that, a scan stops at 25 external pulls, because this is the most connector-expensive thing the OS does.
+
+**The cap and the floors can genuinely conflict**, and when they do the floors win and the run says so. A brief that covered every competitor and blew the cap is useful. A brief that respected the cap by checking three competitors, and does not mention it, is not.
 
 **On breach:** write what was covered, name what was skipped, and end. Log the skip.
 

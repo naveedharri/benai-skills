@@ -41,7 +41,7 @@ Nothing here is copied into the skill. It is read live, every run.
 
 ## Writes
 
-Three writes, all required once the PDF exists.
+Four writes, all required once the PDF exists.
 
 ### 1. The channel asset
 
@@ -91,6 +91,18 @@ If the parent has no repurpose tree section, add one. If the parent is a pipelin
 `Intelligence/logs/YYYY-MM-DD.md`
 
 Name the file written and the specific change. A hybrid logs the knowledge change only, so log the filed asset and the tree update, not the rendering. A run that ends without a PDF still logs one line saying it ran and where it stopped.
+
+### 4. The rendered one-pager
+
+`Analytics/dashboard/runs/YYYY-MM-DD-carousel-<slug>.html`
+
+Rendered by invoking the **`instant-ui`** skill, never hand-rolled. This is a required output, not an optional extra: the PDF is the asset, the page is how the run gets checked.
+
+The markdown stays markdown because markdown is what the OS stores and what the next skill reads. The HTML is what a human opens. Both exist after every run, and each records the other's path.
+
+`Analytics/dashboard/runs/` is the same folder every routine writes its run report into, so one folder shows everything the OS did on a given day. Create it if it does not exist.
+
+**If `instant-ui` is unavailable**, say so plainly, note it in the log line, and never hand-roll a page. A hand-rolled page drifts from the design language immediately, which is the whole reason the render is delegated to one skill.
 
 ## What this skill never writes
 

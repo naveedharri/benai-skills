@@ -42,7 +42,7 @@ Nothing here is copied into the skill. It is read live, every run.
 
 ## Writes
 
-Four writes, all required on approval.
+Five writes, all required on approval.
 
 ### 1. The edition
 
@@ -93,6 +93,18 @@ When the source was a published pillar, add the edition to that asset's `## Repu
 `Intelligence/logs/YYYY-MM-DD.md`
 
 Name the file written and the specific change. A hybrid logs the knowledge change only, so log the filed edition, the swipe append and the tree update, not the drafting itself. A run that ends without an approved edition still logs one line saying it ran and stopped at which gate.
+
+### 5. The rendered one-pager
+
+`Analytics/dashboard/runs/YYYY-MM-DD-newsletter-<slug>.html`
+
+Rendered by invoking the **`instant-ui`** skill, never hand-rolled. This is a required output, not an optional extra: nobody should review an edition as raw markdown before it sends.
+
+The markdown stays markdown because markdown is what the OS stores and what the next skill reads. The HTML is what a human opens. Both exist after every run, and each records the other's path.
+
+`Analytics/dashboard/runs/` is the same folder every routine writes its run report into, so one folder shows everything the OS did on a given day. Create it if it does not exist.
+
+**If `instant-ui` is unavailable**, say so plainly, note it in the log line, and never hand-roll a page. A hand-rolled page drifts from the design language immediately, which is the whole reason the render is delegated to one skill.
 
 ## What this skill never writes
 

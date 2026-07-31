@@ -64,10 +64,21 @@ so return the data rather than a message about it.
 | Depth | Streams | Reading | Fact-check |
 | --- | --- | --- | --- |
 | **Quick** | two or three, chosen for the question | shallow | one pass over the top claims |
-| **Standard** | all four, downshifting where the literature is thin | about fifteen sources | full, one verifier per claim |
+| **Standard** | all four, downshifting where the literature is thin | 19 sources, floor | full, one verifier per claim |
 | **Deep** | all four, more agents per stream | wide | adversarial, multiple independent verifiers per claim |
 
-**Standard is the default.** Deep is for a question that will constrain a real decision, and it costs several times as much.
+**Standard is the default.** Deep is for a question that will constrain a real decision, and it costs several times as much. **Never drop to Quick because it is cheaper**, only because the question is genuinely narrow, and say which.
+
+Per-stream floors at Standard:
+
+| Stream | Floor | What under-collecting looks like |
+| --- | --- | --- |
+| **Evidence and papers** | 4 sources, or a stated downshift with its reason | Padding with tangential papers, or skipping silently |
+| **Forums and community** | 5 threads read, not 5 search results | Quoting a result snippet as though the thread was read |
+| **Web and vendor** | 6 sources, at least 3 read in full text | Six snippets and no full reads |
+| **Creators** | 4 creators, transcripts where available | Reading titles and descriptions instead of what was actually said |
+
+**A search result is not a source.** It is a pointer to one. Record which were read in full and which were only seen in a result list, and never let the second group carry a finding.
 
 **Log what the budget cut.** A run that stopped short reads identically to a complete one unless it says so.
 

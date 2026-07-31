@@ -1,6 +1,6 @@
 ---
 name: marketing-os-market-intel
-description: "Run an on-demand market intelligence brief against the Marketing OS, score every find, and turn the ones that clear the bar into scored ideas in the backlog. The watchlist, the competitor roster, the lookback window and the connectors all come from the OS rather than from a bundled list, and what counts as a signal comes from the positioning file, so the brief reports the translation gap rather than generic AI news. Reads the daily scan files that already exist and pulls live only for the window they do not cover. Writes a dated standing brief to Intelligence/market/, seeds scored ideas into the backlog, and logs. Calls instant-ui to render the report rather than carrying its own copy of the design language. Run from the Marketing OS root. Use when the user says 'run market intel', 'what shipped this week', 'market intelligence report', 'scan the market', 'what are competitors doing', 'trend scout', or runs /marketing-os-market-intel."
+description: "Run a market intelligence brief against the Marketing OS, score every find, and turn the ones that clear the bar into scored ideas in the backlog. The watchlist, competitor roster, lookback window and connectors all come from the OS, and what counts as a signal comes from the positioning file, so the brief reports the translation gap rather than generic AI news. Fans out one agent per stream in a single batch across official sources, practitioners, the competitor roster, search demand and the wider web, with an effort floor and distinct sources so a run cannot conclude from one search. Reads existing daily scan files and pulls live only for the window they miss. Writes a dated standing brief to Intelligence/market/, seeds scored ideas, logs, and always closes by rendering the brief with instant-ui into Analytics/dashboard/runs/. Run from the Marketing OS root. Use when the user says 'run market intel', 'what shipped this week', 'scan the market', or runs /marketing-os-market-intel."
 disable-model-invocation: true
 argument-hint: "[optional focus, e.g. 'agents', 'a competitor name', or a lookback like 'last 7 days']"
 ---
@@ -50,29 +50,66 @@ Two things writing one dated file is how an OS starts contradicting itself. Chec
 | `Context/brand/positioning.md` | **The signal test.** The category, the enemy, and the strategic edge. If positioning names a translation gap between one audience and another, the highest-value find is something the first audience has absorbed and the second has not seen |
 | `Intelligence/competitors/_roster.md` | Who is tracked and why, plus the correction log |
 | `Analytics/what-works.md` | What has measured well here. A finding may license a specific kind of find, for example being early on a newly launched surface |
-| `Intelligence/research/frameworks/idea-scoring.md` | The scoring framework every find gets judged against in Step 4 |
+| `Intelligence/research/frameworks/idea-scoring.md` | The scoring framework every find gets judged against in Step 6 |
 | `Intelligence/market/` recent files | What is already known, and the noise list so you do not resurface it |
 | `Channels/{primary}/ideas/` and `published/` | What already exists, for deduplication |
 
 **The noise list is the most underused thing in the folder.** A dated scan that recorded what was loud but irrelevant is telling you what to skip today. Read it.
 
-## Step 2: state the plan, then collect
+## Step 2: pick the depth
 
-Say which streams you will run given what is connected, and what each will cover. Then collect. Full connector detail, tool costs, fallback chains and quota budgets in `references/collection.md`.
+Ask for it once, then state which streams you will run given what is connected. **Read `references/collection.md` before you plan.** It carries the connectors, the tool costs, the fallback chains and the per-stream floors, and a plan made without it will under-collect.
 
-| Stream | Looking for |
+| Depth | Agents | Distinct sources, floor | Use for |
+| --- | --- | --- | --- |
+| **Quick** | 3 | 12 | A single narrow question, or a same-day top-up on a scan that already ran |
+| **Standard**, the default | 5, one per stream | 25 | Any normal run |
+| **Deep** | 8 or more, several per stream | 45 | A launch week, a positioning decision, or a question that will constrain a quarter |
+
+If the operator does not name a depth, **run Standard.** Never silently drop to Quick because it is cheaper.
+
+## Step 3: fan out. This is not optional
+
+**Launch one agent per stream, all in a single batch, before you read any result.** Do not run one stream, look at what came back, and then decide about the next. Sequential collection is the failure this step exists to prevent: it produces a brief built on whatever the first search happened to return.
+
+| Agent | Stream | Job | Floor |
+| --- | --- | --- | --- |
+| 1 | **Official sources** | What actually shipped in the window. Changelogs, release notes, launch posts. A capability launch is the strongest content trigger available | every vendor source named in config, and the primary vendor's changelog read in full |
+| 2 | **Practitioners** | Techniques in real use, and complaints that reveal an unmet need. Ignore engagement farming and pure speculation | the whole watchlist in config, batched. Not a sample of it |
+| 3 | **The roster** | What every tracked competitor published in the window. Topic and framing only | every competitor in `_roster.md`, not the first few |
+| 4 | **Search demand** | Volume and contest level for each candidate topic, where a connector exposes it | one lookup per candidate that reaches scoring |
+| 5 | **The wider web** | Only what the other four cannot reach, and the deep read on anything they surfaced thin | at least one full-text read per candidate, not a snippet |
+
+Each agent gets the question, the window, the signal test from positioning, and the noise list. Each returns findings with one source URL each, the hard claims it is passing up, and **what it deliberately skipped**. Each agent's final text is its return value, so it returns data rather than a message about returning data.
+
+**Agents have the connectors too.** Delegate the connector calls rather than making them all yourself. That is the point of fanning out: many connectors hit at once instead of one at a time.
+
+At Deep, split the heavy streams rather than adding shallow ones: two or three practitioner agents over different slices of the watchlist, a second roster agent, and a dedicated agent per candidate for the full-text read.
+
+**Then synthesize once, with every stream in view.** Never write a section of the brief while agents are still returning.
+
+## Step 4: the effort floor
+
+A run that does one search and writes a confident brief has failed, however well written the brief is. These are floors, not targets.
+
+| Floor | Standard depth |
 | --- | --- |
-| **Official sources** | What actually shipped in the window. A capability launch is the strongest content trigger available |
-| **Practitioners** | Techniques being used in practice, and complaints that reveal an unmet need. Ignore engagement farming and pure speculation |
-| **The roster** | What tracked competitors published, topic and framing only |
-| **Search demand** | Whether a topic has volume and how contested it is, where the connector exposes it |
-| **The wider web** | Only what the other streams cannot reach. The most expensive stream, keep it narrow |
+| Agents launched in the first batch | 5, or one per available stream if fewer are connected |
+| Distinct sources actually read | 25 |
+| Full-text reads, not snippets or search summaries | 5 |
+| Competitors checked | all of them |
+| Watchlist accounts covered | all of them, batched |
+| Candidates carried into scoring | every one that clears the signal test, with its evidence written out |
+
+**If a floor cannot be met, say which one and why**, in the brief and in your response. "Apify is unauthenticated so the practitioner stream was web search only, covering 6 of 40 watchlist accounts" is an honest run. Quietly reading four pages and writing a brief that reads like forty is not.
+
+**Never present a snippet as a read.** A search result summary is a pointer to a source, not the source. The `## Not available` section exists so a thin run can be labelled thin rather than dressed up.
 
 **Judge nothing on competitor activity alone.** The scoring framework treats a competitor covering something as the weakest form of evidence. A competitor shipping a video is a fact to record, not a reason to make one.
 
-**Respect the budget.** `references/collection.md` carries the per-connector costs and the cap. On breach, write what was covered, name what was skipped, and stop. Never truncate silently: an unstated cap reads as full coverage.
+**Ceilings come after floors.** `references/collection.md` carries the per-connector costs and the pull cap. Meet the floors first, then respect the cap. On breach, write what was covered, name what was skipped, and stop. Never truncate silently: an unstated cap reads as full coverage.
 
-## Step 3: write the brief
+## Step 5: write the brief
 
 `Intelligence/market/YYYY-MM-DD-<slug>.md`. Shape in `references/os-contract.md`.
 
@@ -89,7 +126,7 @@ Structure it around the signal test rather than around the sources:
 
 **Dated files are never rewritten.** Today's brief is what was known today, right or wrong. A correction is a new dated entry, never an edit.
 
-## Step 4: score, then seed
+## Step 6: score, then seed
 
 This is the step that separates this skill from a feed.
 
@@ -105,13 +142,58 @@ Then seed only what clears the bar, into `Channels/{primary}/ideas/<slug>.md` fr
 
 **Seed nothing rather than seed noise.** Most runs should produce zero or one idea. A run that seeds five has almost certainly lowered the bar. If nothing clears, write one line in the brief saying so, and that is a complete and successful run.
 
-## Step 5: log, then render
+## Step 7: log
 
 **Log.** `Intelligence/logs/YYYY-MM-DD.md`, naming the brief file, every idea seeded or the fact that none were, and every stream that failed. This is a hybrid: it changes what the OS knows and it also produces a report, so it logs the knowledge change only.
 
-**Render, if asked.** Call the **`instant-ui`** skill with the brief content and an output path. Do not build a page yourself, do not bundle a template, and never hardcode a colour: instant-ui owns the design language and its tokens trace to `Context/brand/brand-kit.md`. Tell it the run is unattended when it is, so it renders gaps rather than stopping to ask.
+## Step 8: render the one-pager. Always
 
-The markdown brief is the deliverable that matters, because the next skill in the chain reads it. The rendered page is for a human to read over coffee.
+**Every run closes by rendering an HTML page. Not "if asked", not "if the operator wants one".**
+
+This is the plugin's convention and it is the reason `instant-ui` sits in this plugin at all. The markdown brief is the machine artifact: the next skill in the chain reads it, the routines read it, and it stays markdown because markdown is what the OS stores. **A human should never have to read it.** What a human reads is the page.
+
+Invoke the **`instant-ui`** skill with the brief content and this output path:
+
+```
+Analytics/dashboard/runs/YYYY-MM-DD-market-intel-<slug>.html
+```
+
+That is the same folder every routine writes its run report into, so the whole OS's activity is readable in one place. Create the folder if it does not exist.
+
+The page carries, in this order:
+
+| Block | Holds |
+| --- | --- |
+| The run header | The window covered, the depth, the number of agents, the number of distinct sources, and the date |
+| What shipped | The facts, each linked |
+| The translation gap | Labelled as the reading rather than the fact |
+| Candidates | Each with its score, or marked unscored with the reason |
+| What was not available | Every failed stream with the connector named. **Render this even when it is empty**, saying so |
+| Where it was written | The brief path and the log path |
+
+**Never build the page yourself and never hardcode a colour.** instant-ui owns the design language and its tokens trace to `Context/brand/brand-kit.md`. Tell it the run is unattended when it is, so it renders gaps rather than stopping to ask.
+
+**Record the page path in the brief**, so the artifact and its render point at each other.
+
+**The run is not complete until the page exists.** If `instant-ui` is unavailable, say so plainly, note it in the log line, and **never hand-roll a page.** A hand-rolled page drifts from the design language within one run, which is the whole reason the render is delegated.
+
+## Write plainly. This is a brief, not a post
+
+**The brief and the rendered page report. They do not sell.** Hook writing is the job of the copy skills, and importing it here makes intelligence read like content, which is how a thin finding gets mistaken for a strong one.
+
+| Never | Instead |
+| --- | --- |
+| A headline that withholds, like "the real story is not X, it is Y" | State the finding: "practitioners are using the new effort control to cut token spend" |
+| A title built on a reversal or a twist | A descriptive title: what it is, and the date |
+| "The signal is", "here is what nobody is saying", "the shift nobody noticed" | Say what was observed and by whom |
+| Escalating triplets and rhetorical questions | One sentence, declarative |
+| Confidence the evidence does not carry | The verdict and the source count, stated |
+
+**The title of the brief is descriptive.** The topic and the window. Not an argument, not a hook.
+
+**A finding is worth what its evidence is worth, and the writing must not add to that.** If two sources support something, say two sources support it. Punchy framing over thin evidence is the single easiest way for this skill to mislead the person who trusts it most.
+
+Where the brief legitimately does have an argument, put it under `## The translation gap` and label it as the reading rather than the fact.
 
 ## Rules
 

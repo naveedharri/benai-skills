@@ -1,6 +1,6 @@
 ---
 name: marketing-os-newsletter
-description: "Write a newsletter edition from the Marketing OS, gated step by step, then file it into the OS as a real asset. Reads the ICP, the voice register, the offer and its live price, the measured patterns and the swipe file from the OS rather than from bundled copies, so nothing is ever quoted from a stale duplicate. Sources from a published pillar asset, the values and beliefs doc, a community post or a raw idea. Seven gates, options at every gate, and the edition is only written after the angle, insight, outcome, outline, subject line and hook are all confirmed. On approval it writes Channels/newsletter/broadcasts/YYYY-MM-DD-slug.md with real frontmatter, appends the shipped subject line to the swipe file, updates the parent pillar's repurpose tree and logs the run. Run from the Marketing OS root. Use when the user says 'write a newsletter', 'draft the daily email', 'turn this video into a newsletter', 'newsletter from the OS', 'repurpose this into an email', or runs /marketing-os-newsletter."
+description: "Write a newsletter edition from the Marketing OS, gated step by step, then file it as a real asset. Reads the ICP, voice register, offer and live price, measured patterns and swipe file from the OS, never from bundled copies. Sources from a pillar asset, the values doc, a community post or a raw idea. Fans out five parallel readers over the OS before the first gate, and verifies the draft with independent agents against the voice register and offer facts. Seven gates with options at each; the edition is written only after the angle, insight, outcome, outline, subject line and hook are confirmed. On approval it writes Channels/newsletter/broadcasts/YYYY-MM-DD-slug.md, appends the shipped subject line to the swipe file, updates the parent's repurpose tree, logs, and always closes by rendering the edition with instant-ui into Analytics/dashboard/runs/. Run from the Marketing OS root. Use when the user says 'write a newsletter', 'draft the daily email', or runs /marketing-os-newsletter."
 disable-model-invocation: true
 argument-hint: "[source, e.g. a published video slug, 'values doc', or a raw idea]"
 ---
@@ -54,6 +54,39 @@ Every gate below is one of these. They are the reason a gated process beats a on
 2. **Human in the loop, one gate at a time.** Never write the edition before the gates are cleared.
 3. **Options at every gate.** Three to five real choices beat one draft to correct. Correcting is slow, choosing is fast.
 4. **Ground it in real examples.** The `broadcasts/` folder is the ground truth and it grows every time this skill runs.
+
+## Before Gate 0: fan out to load the OS
+
+**Launch these readers in one batch, before you ask the operator anything.** Reading the OS serially, or skimming three files and starting the gates, is what produces generic options at Gate 0 and a draft that could have come from any skill. The gates are only as good as what is behind them.
+
+| Agent | Reads | Returns |
+| --- | --- | --- |
+| 1 | `Channels/{email channel}/broadcasts/`, the six most recent sends **in full** | The mechanics actually in use: paragraph length, the turn, the sign-off, the CTA shapes, and **which material is already spent** |
+| 2 | All of `Context/icp/*.md` | Every segment, its pain in the reader's own words, and which are content audiences versus buyer segments |
+| 3 | `Intelligence/research/swipe/` and `Channels/{email channel}/sop-subject-line-playbook.md` | The proven openers, subject lines and CTAs, and the rules governing them |
+| 4 | `Analytics/what-works.md` and `Analytics/metrics.md` | The measured findings and what each licenses, the untested beliefs labelled as such, and every number with its pull date |
+| 5 | `Offers/{offer}/offer.md` and `Offers/{offer}/proof/` | The promise, **the live price table with effective dates**, and the real proof with sources, or the fact that the folder is empty |
+
+Plus, once a source is chosen, a sixth agent that reads the source itself end to end: the published asset in full including its performance block and repurpose tree, or the values doc, or the community thread.
+
+**Each agent returns findings, not a summary of its reading.** Its final text is its return value.
+
+**Do not start the gates until every reader has returned.** An option built on a file nobody read is the failure this step prevents.
+
+## The effort floor
+
+Floors, not targets. A run that skimmed two files and wrote a competent-sounding draft has failed.
+
+| Floor | Every run |
+| --- | --- |
+| Readers launched before Gate 0 | 5, in one batch |
+| Recent sends read in full | 6, or all of them if fewer exist |
+| Segment files read | all of them |
+| Angles offered at Gate 0 | 3 to 5, each traced to real material, each checked against what is already spent |
+| Outlines offered at Gate 3 | exactly 3, each modelled on a named real send |
+| Offer facts in the draft | every one read this run, none carried from an old send |
+
+**If a floor cannot be met, say which and why** before the gates start. "The broadcasts folder holds two sends so the style ground truth is thin" is honest and useful. Quietly proceeding on two is not.
 
 ## The gates
 
@@ -125,9 +158,27 @@ A missing file is a finding, not a failure. The OS may be young or mid-edit and 
 
 Create only the files this skill owns: the broadcast, the swipe append, the parent's tree line, the log.
 
-## Render a review sheet, only if asked
+## Then render the one-pager. Always
 
-The edition itself is markdown and that is the deliverable. If the user wants something to read or circulate, call the **`instant-ui`** skill with the subject line, preview text, body and the gate decisions, and give it an output path. Do not build a page yourself and never hardcode a colour: instant-ui owns the design language and its tokens trace to `Context/brand/brand-kit.md`.
+**Every run closes by rendering an HTML page. Not "if asked".**
+
+This is the plugin's convention and it is the reason `instant-ui` sits in this plugin at all. The filed broadcast is the machine artifact: the carousel skill reads it, the routines read it, and it stays markdown because markdown is what the OS stores. **Nobody should have to read raw markdown to review an edition before it sends.**
+
+Invoke the **`instant-ui`** skill with the edition and this output path:
+
+```
+Analytics/dashboard/runs/YYYY-MM-DD-newsletter-<slug>.html
+```
+
+That is the same folder every routine writes its run report into. Create the folder if it does not exist.
+
+The page carries the subject line and preview text, the edition body laid out as it will read, the gate decisions in one compact block, the offer facts used with their sources, and the paths written. **Set the edition body in the reading width the register implies**, because the point of the page is to judge whether it reads well, and a full-bleed wall of text cannot be judged.
+
+**Never build the page yourself and never hardcode a colour.** instant-ui owns the design language and its tokens trace to `Context/brand/brand-kit.md`.
+
+**Record the page path in the broadcast file.**
+
+**The run is not complete until the page exists.** If `instant-ui` is unavailable, say so plainly, note it in the log line, and **never hand-roll a page.**
 
 ## Self-improvement
 

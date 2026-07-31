@@ -1,6 +1,6 @@
 ---
 name: marketing-os-research
-description: "Answer an open question the Marketing OS has already written down, then promote that question to a finding. Takes its input queue from the OS itself: files carrying status open-question in Intelligence/research/, the open questions and untested beliefs in Analytics/what-works.md, and ideas whose pain is not yet established. Fans out parallel research streams across papers, forums, the web and creators, fact-checks every hard claim with a verdict, then writes Intelligence/research/topic-slug.md and updates the question file in place with a dated status change. Routes findings about our own performance to Analytics rather than writing them here, and graduates recurring verbatim customer language to the segment files. Calls instant-ui to render the report rather than carrying its own template. Run from the Marketing OS root. Use when the user says 'research this', 'deep dive on', 'what does the evidence say', 'answer an open question', 'topic research', or runs /marketing-os-research."
+description: "Answer an open question the Marketing OS already wrote down, then promote it to a finding. Takes its queue from the OS itself: files with status open-question in Intelligence/research/, open questions and untested beliefs in Analytics/what-works.md, and ideas with no established pain. Fans out one agent per stream in a single batch across papers, forums, the web and creators, with an effort floor, distinct sources and full-text reads, fact-checks every hard claim with a verifier prompted to refute rather than confirm, then writes Intelligence/research/topic-slug.md and updates the question file in place with a dated status change. Routes findings about our own performance to Analytics, and graduates recurring customer language to the segment files. Always closes by rendering the report with instant-ui into Analytics/dashboard/runs/. Run from the Marketing OS root. Use when the user says 'research this', 'deep dive on', 'answer an open question', or runs /marketing-os-research."
 disable-model-invocation: true
 argument-hint: "[a topic, or an open-question file to close, or nothing to be shown the queue]"
 ---
@@ -59,22 +59,52 @@ Two things, before any research runs.
 
 **B. Probe the connectors.** Read `Context/config.md` for what exists, then verify. Say which streams you can run, offer to connect the high-value missing ones, and name the fallback each stream will use. Never hard-fail for a missing connector: degrade and label it. Detail in `references/streams.md`.
 
-## Step 3: fan out
+## Step 3: fan out. This is not optional
 
-Launch one agent per stream, concurrently, in a single batch. Each gets the question, the purpose and the angle as explicit directives. Each returns findings with one source URL each, a list of hard claims to verify, and anything vendor-sourced or anecdotal flagged as such.
+**Launch every stream agent in one batch, before you read any result.** Do not run a stream, look at what came back, and then decide about the next. Sequential collection produces a file built on whatever the first search happened to return, and it is the failure this step exists to prevent.
 
-| Stream | Job |
+**Read `references/streams.md` before you launch.** It carries the parameterized agent prompts, the connector ladders, the domain routing and the per-stream floors. Launching without it produces four vague agents instead of four specific ones.
+
+| Agent | Stream | Job | Floor at Standard |
+| --- | --- | --- | --- |
+| 1 | **Evidence and papers** | Credible studies and citations only, routed by domain | 4 sources, or an explicit downshift with the reason |
+| 2 | **Forums and community** | Real language, firsthand results, objections. Anecdotal by definition and stays labelled | 5 threads read, not 5 search results |
+| 3 | **Web and vendor** | Docs, industry data, reputable analysis, the landscape | 6 sources, at least 3 read full text |
+| 4 | **Creators** | What is being taught, the recurring tactics, the contrarian takes | 4 creators, transcripts where available |
+
+Each agent gets the question, the purpose, the audience and the angle as explicit directives. Each returns findings with one source URL each, the hard claims it is passing up, and **what it deliberately skipped.** Each agent's final text is its return value, so it returns data rather than a message about returning data.
+
+**Agents have the connectors too.** Delegate the connector and fetch calls rather than making them all yourself. Many sources at once is the whole point of fanning out.
+
+At Deep, split the heavy streams rather than adding shallow ones: two or three agents across different slices of one stream, plus a dedicated agent per contested claim.
+
+| Depth | Agents in the first batch | Distinct sources, floor | Verifiers per hard claim |
+| --- | --- | --- | --- |
+| **Quick** | 2 or 3, chosen for the question | 8 | 1 over the top claims only |
+| **Standard**, the default | 4, one per stream | 19 | 1 |
+| **Deep** | 8 or more | 40 | 3, killed on majority refute |
+
+If the operator does not name a depth, **run Standard.** Never silently drop to Quick because it is cheaper.
+
+**Then synthesize once, with every stream in view.** Never write a section of the file while agents are still returning.
+
+**Auto-downshift rather than padding.** Many marketing questions have almost no scholarly literature. Lighten or skip that stream and say so. Faking depth is worse than admitting a thin evidence base, because a reader cannot tell the difference and will act on it either way. A downshift is a stated decision with a reason, not a quietly smaller number.
+
+## Step 3b: the effort floor
+
+A run that does one search and writes a confident answer has failed, however well written the file is. These are floors, not targets.
+
+| Floor | Standard depth |
 | --- | --- |
-| **Evidence and papers** | Credible studies and citations only, routed by domain |
-| **Forums and community** | Real language, firsthand results, objections. Anecdotal by definition and stays labelled |
-| **Web and vendor** | Docs, industry data, the landscape |
-| **Creators** | What is being taught, the recurring tactics, and the contrarian takes |
+| Agents launched in the first batch | 4, or one per available stream if fewer are connected |
+| Distinct sources actually read | 19 |
+| Full-text reads, not snippets or search summaries | 6 |
+| Independent source types corroborating each finding | stated per finding, and 1 is written as 1 |
+| Hard claims passed through verification | all of them |
 
-Full prompts, connector ladders and the domain routing in `references/streams.md`.
+**Never present a snippet as a read.** A search result summary is a pointer to a source, not the source. Say which sources were read in full and which were only seen in a result list.
 
-**Auto-downshift rather than padding.** Many marketing questions have almost no scholarly literature. Lighten or skip that stream and say so. Faking depth is worse than admitting a thin evidence base, because a reader cannot tell the difference and will act on it either way.
-
-**Have every agent report what it deliberately skipped.** No silent truncation.
+**If a floor cannot be met, say which one and why**, in the file's evidence-base section and in your response. A thin run honestly labelled is usable. A thin run written like a thorough one gets quoted as settled and the error travels into everything written from it.
 
 ## Step 4: fact-check
 
@@ -109,13 +139,59 @@ Four writes. Shapes in `references/os-contract.md`.
 
 **Never ask permission to save.** Write and report.
 
-## Step 6: render, if asked
+## Step 6: render the one-pager. Always
 
-Call the **`instant-ui`** skill with the brief content and an output path. Do not build a page yourself, do not bundle a template, and never hardcode a colour: instant-ui owns the design language and its tokens trace to `Context/brand/brand-kit.md`.
+**Every run closes by rendering an HTML page. Not "if asked".**
+
+This is the plugin's convention and it is the reason `instant-ui` sits in this plugin at all. The research file is the machine artifact: a content skill reads it to draft the piece, the next research run reads it, and it stays markdown because markdown is what the OS stores. **A human should never have to read it.** What a human reads is the page.
+
+Invoke the **`instant-ui`** skill with the file's content and this output path:
+
+```
+Analytics/dashboard/runs/YYYY-MM-DD-research-<topic-slug>.html
+```
+
+That is the same folder every routine writes its run report into. Create the folder if it does not exist.
+
+The page carries, in this order:
+
+| Block | Holds |
+| --- | --- |
+| The run header | The question, the depth, the agents launched, the distinct sources read, the full-text reads, the date |
+| The answer | First, in a few lines |
+| The evidence base and its limits | Before the findings, because every finding inherits them |
+| Findings | Each with its verdict, its corroboration count, and its confidence |
+| The counter-case | At full strength, not softened |
+| The claims ledger | Every hard claim, its verdict, its source, its caveat. Corrections that were caught stay visible |
+| What this does not settle | And the measurement that would |
+| What was not available | Every failed stream with the connector named. **Render this even when it is empty**, saying so |
+| Where it was written | The research file path, any question file promoted, and the log path |
+
+**Never build the page yourself and never hardcode a colour.** instant-ui owns the design language and its tokens trace to `Context/brand/brand-kit.md`. Tell it the run is unattended when it is.
+
+**Record the page path in the research file.**
+
+**The run is not complete until the page exists.** If `instant-ui` is unavailable, say so plainly, note it in the log line, and **never hand-roll a page.**
 
 **Deploying publishes it, so confirm first.** Show the rendered report and the claims ledger and get an explicit go-ahead. Before asking, name anything on the page that would be sensitive published: an uncleared customer quote, a named individual, an unannounced position, a competitor assessment. If the page holds any of those, say so first, not after.
 
 Then say the one line that matters: this file feeds straight into a content skill to draft the piece.
+
+## Write plainly. This is a research file, not a post
+
+**The file and the rendered page report. They do not sell.** Hook writing belongs to the copy skills, and importing it here makes a thin evidence base read like a strong one.
+
+| Never | Instead |
+| --- | --- |
+| A headline that withholds, like "the real answer is not X, it is Y" | State the answer in the first line |
+| A title built on a reversal or a twist | A descriptive title: the question, and the date |
+| "The evidence is clear", "what nobody is saying", "the shift nobody noticed" | The verdict, the source count, and the confidence |
+| Escalating triplets and rhetorical questions | One sentence, declarative |
+| Confidence the evidence does not carry | Say how many independent source types corroborate it |
+
+**Every finding states its confidence and the confound it did not eliminate.** That is what makes the file usable a year later, and it is the first thing hook writing destroys.
+
+**One source is written as one source.** Not "research suggests", not "it is widely understood". If a claim rests on a single vendor blog post, the file says so on the line where the claim appears.
 
 ## Rules
 

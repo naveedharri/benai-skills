@@ -127,6 +127,16 @@ Write the full edition: subject line, preview text, body.
 
 **Precedence when sources conflict:** the real sends in `broadcasts/`, then the structure framework, then the subject line playbook, then the channel voice delta, then the master voice register. A living example outranks a rule written about it.
 
+**Before presenting, verify the draft with independent agents, launched in one batch.** Self-checking a draft you just wrote catches formatting and misses substance, because you already believe the draft.
+
+| Verifier | Given | Asked |
+| --- | --- | --- |
+| 1 | The draft, plus the voice register and the channel delta | Find every line that does not sound like the register. Default to flagging when uncertain |
+| 2 | The draft, plus `Offers/{offer}/offer.md` and `Analytics/metrics.md` | Check every fact, price, number, name and date against the source. Report anything unsupported, and treat a number with no pull date as unsupported |
+| 3 | The draft, plus the six recent sends | Say whether this reads like the same person wrote it, and name the specific lines that break the pattern |
+
+Then run the deterministic checks below yourself. The agents catch what a checklist cannot; the checklist catches what agents skim past.
+
 **Before presenting, run the checks:**
 
 | Check | Fail condition |

@@ -1,7 +1,6 @@
 ---
 name: marketing-os-carousel
-description: "Build an image-first social carousel from an asset already filed in the Marketing OS, export it as a PDF, and record it back in the OS as a real channel asset. Brand palette, typography, the logo pointer and the never-black-background rule all resolve from Context/brand/brand-kit.md, so the carousel cannot drift from the brand or from the source it repurposes. Source is a filed newsletter edition, a published pillar asset, or a pipeline brief, which means the carousel provably says the same thing the parent said. Renders every slide with Higgsfield, composites the footer in code so the mark and page numbers are always correct, assembles the PDF, then writes the repurposed-channel asset with the PDF as a pointer, updates the parent's repurpose tree and logs. Run from the Marketing OS root. Use when the user says 'build a carousel', 'turn this newsletter into a carousel', 'carousel from the OS', 'repurpose this into slides', or runs /marketing-os-carousel."
-allowed-tools: Read, Write, Edit, Bash, Grep, Glob
+description: "Build an image-first social carousel from an asset already filed in the Marketing OS, export it as a PDF, and record it back as a real channel asset. Brand palette, typography, the logo pointer and the never-black-background rule all resolve from Context/brand/brand-kit.md. Source is a filed newsletter edition, published pillar asset, or pipeline brief, so it provably says what the parent said. Fans out parallel readers over the OS before planning, renders every slide with Higgsfield, QAs every slide with one agent each, prompted to reject rather than pass, composites the footer in code, assembles the PDF, then writes the repurposed-channel asset pointing at the PDF, updates the parent's repurpose tree, logs, and always closes by rendering a run report with instant-ui into Analytics/dashboard/runs/. Run from the Marketing OS root. Use when the user says 'build a carousel', 'turn this newsletter into a carousel', 'repurpose this into slides', or runs /marketing-os-carousel."
 disable-model-invocation: true
 argument-hint: "[source, e.g. a broadcast slug, a published pillar slug, or 'latest newsletter']"
 ---
@@ -66,6 +65,20 @@ Read alongside the source:
 | `Offers/{offer}/offer.md` | The destination for the final slide, and its live facts |
 | `Analytics/what-works.md` | What has measured well. Honour what each finding licenses |
 
+## Step 2b: fan out the reads, in one batch
+
+Steps 1 and 2 name a lot of files. **Launch them as parallel readers rather than opening them one at a time**, then plan the slides once everything has returned.
+
+| Agent | Reads | Returns |
+| --- | --- | --- |
+| 1 | The source asset in full, plus its parent if it has one | The argument, the decisions already made, and **whether a carousel child is already recorded in the repurpose tree** |
+| 2 | `Context/brand/brand-kit.md` | Every token needed to build the style block, the background rule at the scope it is written, and the logo and portrait pointers |
+| 3 | `Context/personal-brand/voice.md` and `Channels/{target}/voice.md` | The register, the banned constructions, and the delta for this surface |
+| 4 | `Intelligence/research/swipe/hooks.md` and `ctas.md`, plus `Channels/{target}/strategy.md` | Opening shapes, CTA phrasings with their destinations, and the format contract |
+| 5 | `Offers/{offer}/offer.md` and `proof/`, plus `Analytics/what-works.md` | The CTA destination and its live facts, the real proof or the honest gap, and the measured patterns |
+
+**Do not plan slides until every reader has returned.** A slide built on a token you guessed is a slide that has to be re-rendered, and re-rendering costs credits.
+
 ## Step 3: find the one point, then plan the slides
 
 **The carousel must make its point on its own.** Assume the caption is one line and nobody clicks through. If the source only teases, reconstruct the real substance from it. If the source carries several ideas, pick the most useful one and say which you dropped.
@@ -110,7 +123,30 @@ python3 scripts/footer.py <in.png> <page> <total> <out.png>
 
 The script exits with a one-line reason rather than guessing when any of those is missing. That is deliberate: a wrong mark on every slide is worse than a failed run.
 
-**QA every slide before assembling.** Read each PNG back and confirm the text is spelled correctly and exactly one phrase is highlighted. Re-render anything garbled. Bullet slides fail most often.
+**QA every slide with a parallel agent, one per slide, launched in a single batch.** Serial QA on eight slides is eight round trips, and it is where a run quietly gives up and ships a garbled bullet slide.
+
+Each QA agent gets one rendered PNG and the copy plan for that slide, and answers four things:
+
+1. Is every word spelled exactly as the plan specified
+2. Is exactly one phrase highlighted, and is it the right one
+3. Is the bottom twelve percent empty, with no model-drawn footer, page number or watermark
+4. Is the type free of cursive or script anywhere
+
+**Prompt the QA agents to fail the slide, not to pass it.** "Find what is wrong with this slide, and default to rejecting when uncertain" catches what "check this slide" does not. A plausible-looking misspelling is exactly the failure that survives a friendly check and then ships.
+
+Re-render every rejected slide, then re-QA only those. Bullet slides fail most often.
+
+## Step 5b: the effort floor
+
+| Floor | Every run |
+| --- | --- |
+| Readers launched before planning | 5, in one batch |
+| QA agents | one per rendered slide, in one batch |
+| Slides shipped without a QA verdict | zero |
+| Re-render attempts per failing slide before asking the operator | 2 |
+| Tokens or colours typed by hand rather than read from the brand kit | zero |
+
+**A carousel that shipped without per-slide QA has failed even if it looks fine**, because the one slide nobody checked is the one that gets screenshotted.
 
 Assemble the PDF in order and save the slides and the PDF to a working folder outside the OS. Default `~/Downloads/<slug>-carousel-<YYYYMMDD-HHMM>/`, or wherever the caller says.
 
@@ -153,9 +189,27 @@ Assemble the PDF in order and save the slides and the PDF to a working folder ou
 
 Create only the files this skill owns: the channel asset, the parent's tree line, the log.
 
-## Render a review sheet, only if asked
+## Step 7: render the one-pager. Always
 
-If the operator wants the copy plan or the finished carousel as a page to circulate, call the **`instant-ui`** skill with the content and an output path. Do not build a page yourself.
+**Every run closes by rendering an HTML page. Not "if asked".**
+
+The PDF is the asset that gets posted. The page is how anyone sees what the run actually did without opening a PDF and a markdown file side by side. This is the plugin's convention and it is the reason `instant-ui` sits in this plugin at all.
+
+Invoke the **`instant-ui`** skill with this output path:
+
+```
+Analytics/dashboard/runs/YYYY-MM-DD-carousel-<slug>.html
+```
+
+That is the same folder every routine writes its run report into. Create the folder if it does not exist.
+
+The page carries the one point, the slide-by-slide copy table, **every slide image embedded as a data URI** so the page is self-contained and shows what actually rendered, each slide's QA verdict, the caption, the CTA and where it routes, the PDF path, and the OS paths written. A run report that names eight slides without showing them cannot be checked, and checking is the whole reason it exists.
+
+**Never build the page yourself and never hardcode a colour.** instant-ui owns the design language and its tokens trace to `Context/brand/brand-kit.md`. Note that the run report is a data surface rather than an audience surface, so if the brand kit carries two token sets, this page takes the data-surface one while the slides take the audience-facing one.
+
+**Record the page path in the channel asset**, alongside the PDF pointer.
+
+**The run is not complete until the page exists.** If `instant-ui` is unavailable, say so plainly, note it in the log line, and **never hand-roll a page.**
 
 ## Self-improvement
 

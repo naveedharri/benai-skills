@@ -37,7 +37,7 @@ Nothing here is copied into the skill. It is read live, every run.
 
 ## Writes
 
-Three writes. The third is required even on a run that finds nothing.
+Four writes. The third and fourth are required even on a run that finds nothing.
 
 ### 1. The standing brief
 
@@ -106,6 +106,18 @@ The body states the angle, what evidence supports it, and how it scored on each 
 Name the brief file, every idea seeded or the explicit fact that none were, and every stream that failed. This is a hybrid: it changes what the OS knows and also renders a report, so it logs the knowledge change only.
 
 **A run that changes nothing still logs one line saying it ran.** That line is how anyone can tell the difference between a quiet day and a silently dead skill.
+
+### 4. The rendered one-pager
+
+`Analytics/dashboard/runs/YYYY-MM-DD-market-intel-<slug>.html`
+
+Rendered by invoking the **`instant-ui`** skill, never hand-rolled. This is a required output, not an optional extra: the brief is the machine artifact and the page is the human one.
+
+The markdown stays markdown because markdown is what the OS stores and what the next skill reads. The HTML is what a human opens. Both exist after every run, and each records the other's path.
+
+`Analytics/dashboard/runs/` is the same folder every routine writes its run report into, so one folder shows everything the OS did on a given day. Create it if it does not exist.
+
+**If `instant-ui` is unavailable**, say so plainly, note it in the log line, and never hand-roll a page. A hand-rolled page drifts from the design language immediately, which is the whole reason the render is delegated to one skill.
 
 ## What this skill never writes
 
