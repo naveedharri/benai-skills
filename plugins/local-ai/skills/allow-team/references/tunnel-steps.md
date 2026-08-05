@@ -12,23 +12,35 @@ Run in order. Every command here was verified on macOS with ngrok 3.38.0 and Ope
 
 ## 1. Preflight
 
-Find Open WebUI rather than assuming its port.
+This skill tunnels either browser harness: **Open WebUI** or **Odysseus**. Detect which is running rather than assuming a port.
 
 ```bash
-# what is Open WebUI actually listening on?
-PORT=$(lsof -nP -iTCP -sTCP:LISTEN 2>/dev/null | grep -i -E 'open.?webui|python' | grep -oE ':[0-9]+ \(LISTEN\)' | grep -oE '[0-9]+' | sort -u | while read p; do
-  curl -s --max-time 3 "http://localhost:$p/health" 2>/dev/null | grep -q '"status":true' && echo "$p" && break
-done)
-echo "open-webui port: ${PORT:-NOT FOUND}"
+HARNESS=""; PORT=""
 
-ps aux | grep -E 'open.?webui' | grep -v grep | head -3
+# Open WebUI: /health returns {"status":true}
+for p in 8080 3000 8081; do
+  curl -s --max-time 3 "http://localhost:$p/health" 2>/dev/null | grep -q '"status":true' \
+    && { HARNESS="Open WebUI"; PORT=$p; break; }
+done
+
+# Odysseus: / redirects to /login, and /api/version answers
+if [ -z "$PORT" ]; then
+  for p in 7860 7000; do
+    curl -s --max-time 3 "http://127.0.0.1:$p/api/version" 2>/dev/null | grep -q '"version"' \
+      && { HARNESS="Odysseus"; PORT=$p; break; }
+  done
+fi
+
+echo "harness: ${HARNESS:-NONE FOUND}  port: ${PORT:-none}"
 command -v ngrok || echo "ngrok MISSING"
 pgrep -fl ngrok || echo "no ngrok agent running"
 ```
 
-If `PORT` is empty, Open WebUI is not serving. Stop and route the user to `/install-openwebui`. Do not install it from here.
+If nothing is found, neither harness is serving. Stop and route the user to `/install-openwebui`, or to `/local-ai-setup` if they have not chosen one yet. Do not install anything from here.
 
-Everything below uses `$PORT`. Set it once and reuse it.
+If **both** are running, ask which one to share. Do not guess and do not open two tunnels.
+
+Everything below uses `$PORT` and `$HARNESS`. Set them once and reuse them.
 
 ## 2. Get ngrok ready
 
@@ -94,14 +106,16 @@ Note for later: ngrok 3.38 removed the old `--basic-auth` and `--oauth` flags. I
 Two requests. Both must match, or the instance is open to whoever finds the URL.
 
 ```bash
-echo "sign in page:      $(curl -s -o /dev/null -w '%{http_code}' --max-time 15 "$URL/")"
+echo "front page:        $(curl -s -o /dev/null -w '%{http_code}' --max-time 15 "$URL/")"
 echo "api, no session:   $(curl -s -o /dev/null -w '%{http_code}' --max-time 15 "$URL/api/models")"
 ```
 
 | Request | Required | A different code means |
 |---------|----------|------------------------|
-| `/` | `200` | `502` means the tunnel is up but pointed at the wrong port. |
+| `/` | `200` on Open WebUI, `302` to `/login` on Odysseus | `502` means the tunnel is up but pointed at the wrong port. |
 | `/api/models` | `401` | **`200` means the instance is open.** Stop the tunnel immediately with `pkill -f "ngrok http"`, then go to `safety-gate.md`. |
+
+`/api/models` returns `401` on both harnesses when the login is enforced, so this check does not need to change with `$HARNESS`. The front page differs only because Odysseus redirects and Open WebUI serves its app shell.
 
 These requests leave the machine and come back through ngrok's edge, so a passing result proves the whole path, not just the local process.
 

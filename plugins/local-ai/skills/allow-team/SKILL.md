@@ -1,19 +1,19 @@
 ---
 name: allow-team
-description: Puts a running Open WebUI on a shareable public URL through an ngrok tunnel, so a teammate can sign in and use the local models without installing anything. Use when the user says "share Open WebUI with my team", "let my colleague use my local AI", "expose Open WebUI", "share localhost:8080", "give someone access to my models", "set up an ngrok tunnel", "make my local AI reachable from another machine", or asks how to let someone else try their setup. Checks Open WebUI's own login is on and enforced before it opens anything, installs ngrok if missing, then proves the URL works from outside. Requires Claude Code with shell access on the user's own machine; refuses to run in a sandbox.
+description: Puts a running Open WebUI or Odysseus on a shareable public URL through an ngrok tunnel, so a teammate can sign in and use the local models without installing anything. Use when the user says "share Open WebUI with my team", "share Odysseus with my team", "let my colleague use my local AI", "expose Open WebUI", "share localhost:8080", "share localhost:7860", "give someone access to my models", "set up an ngrok tunnel", "make my local AI reachable from another machine", or asks how to let someone else try their setup. Checks the harness's own login is on and enforced before it opens anything, installs ngrok if missing, then proves the URL works from outside. Requires Claude Code with shell access on the user's own machine; refuses to run in a sandbox.
 ---
 
 # Allow Team
 
-Takes a local Open WebUI and makes it reachable by other people, without asking them to install anything. The tunnel is the easy part. Confirming the login is actually enforced before the URL exists is the job.
+Takes a local Open WebUI or Odysseus and makes it reachable by other people, without asking them to install anything. The tunnel is the easy part. Confirming the login is actually enforced before the URL exists is the job.
 
 ## Before you start
 
-Run the check in `references/environment-check.md` first. This skill needs a shell on the user's own machine, because the thing being shared is running on it. If the environment is a sandbox or container, stop and tell the user to run this in Claude Code on the computer hosting Open WebUI.
+Run the check in `references/environment-check.md` first. This skill needs a shell on the user's own machine, because the thing being shared is running on it. If the environment is a sandbox or container, stop and tell the user to run this in Claude Code on the computer hosting the harness.
 
 ## What this skill is doing
 
-It puts a door on the public internet that leads into the user's laptop. Open WebUI's own login is the lock on that door, and it is the only lock. That is the right design, because a second password in front of it just confuses the teammate about which credential to use. It also means the safety gate is not optional: if the login is off, misconfigured, or bypassable, there is nothing else standing between a stranger and the user's chat history.
+It puts a door on the public internet that leads into the user's laptop. The harness's own login is the lock on that door, and it is the only lock. That is the right design, because a second password in front of it just confuses the teammate about which credential to use. It also means the safety gate is not optional: if the login is off, misconfigured, or bypassable, there is nothing else standing between a stranger and the user's chat history.
 
 Gate first. Tunnel second.
 
@@ -23,7 +23,7 @@ Track progress:
 
 ```
 Task Progress:
-- [ ] 1. Confirm Open WebUI is running
+- [ ] 1. Confirm a harness is running
 - [ ] 2. Run the safety gate
 - [ ] 3. Get ngrok ready
 - [ ] 4. Get consent, with the exposure spelled out
@@ -32,13 +32,13 @@ Task Progress:
 - [ ] 7. Render the handover report
 ```
 
-### 1. Confirm Open WebUI is running
-Run the preflight block in `references/tunnel-steps.md`. Establish the port it is on and that `/health` answers. Do not assume 8080; read it from what is actually listening.
+### 1. Confirm a harness is running
+Run the preflight block in `references/tunnel-steps.md`. It detects **Open WebUI** (8080, `/health`) or **Odysseus** (7860, `/api/version`) and sets `$HARNESS` and `$PORT`. Do not assume a port; read it from what is actually listening.
 
-If nothing is running, stop and offer `/install-openwebui` instead. Do not install Open WebUI from inside this skill.
+If nothing is running, stop and offer `/install-openwebui`, or `/local-ai-setup` if they have not picked a harness yet. Do not install anything from inside this skill. If both are running, ask which one to share rather than opening two tunnels.
 
 ### 2. Run the safety gate
-Go to `references/safety-gate.md` and run it in full. It reads Open WebUI's real auth settings and decides whether this instance is safe to expose.
+Go to `references/safety-gate.md` and run it in full. It reads the harness's real auth posture, Open WebUI or Odysseus, and decides whether this instance is safe to expose.
 
 This gate can refuse. If it refuses, say why in one sentence, fix the cause, then re-run it. Do not tunnel past a refusal. With no second password in front, the gate is the whole of the protection.
 
@@ -50,7 +50,7 @@ Getting an authtoken needs a free ngrok account. The user has to create it thems
 ### 4. Get consent, with the exposure spelled out
 Before starting the tunnel, tell the user in one message:
 
-- what becomes reachable from the public internet: their Open WebUI sign in page, and behind it their models, chat history, and any documents loaded into that instance
+- what becomes reachable from the public internet: their sign in page, and behind it their models, chat history, and any documents loaded into that instance
 - that the login is what keeps people out, so anyone with an account on this instance can get in from anywhere
 - that it stays open until they stop it or the machine sleeps
 - who they intend to share it with
@@ -61,7 +61,7 @@ Then stop and wait for a yes. This is not a formality. A tunnel is the one step 
 Follow `references/tunnel-steps.md` section 3. Start the agent detached, then read the public URL from the local ngrok API rather than scraping the log.
 
 ### 6. Prove the lock holds from outside
-An agent that says "started" is not proof, and neither is the page loading. The teammate's browser is not the only thing that will find this URL. Section 4 of `references/tunnel-steps.md` has the two-request check: the sign in page must load with `200`, and an API call with no session must come back `401`. A `200` on the second request means the instance is open and you close the tunnel immediately.
+An agent that says "started" is not proof, and neither is the page loading. The teammate's browser is not the only thing that will find this URL. Section 4 of `references/tunnel-steps.md` has the two-request check: the front page must load (`200` on Open WebUI, `302` to `/login` on Odysseus), and an API call with no session must come back `401` on either. A `200` on the second request means the instance is open and you close the tunnel immediately.
 
 Report both real codes. If either is wrong, go to `references/troubleshooting.md` before improvising.
 
@@ -70,13 +70,13 @@ Deliver the handover as a rendered HTML page, not as chat text. Build it from `r
 
 ## Human checkpoints
 - **Before opening the tunnel** (step 4): state what becomes reachable, then wait for explicit approval.
-- **Before turning on Open WebUI signup** so a teammate can register: ask, and expect to talk them out of it. Open signup plus a public URL means anyone with the link creates their own account, and with no second lock the link is the only thing they need. Creating the account for them takes a minute and closes the hole.
-- **Before changing any existing Open WebUI auth setting**: show the current value and the proposed value, then ask.
+- **Before turning on signup** on either harness so a teammate can register: ask, and expect to talk them out of it. Open signup plus a public URL means anyone with the link creates their own account, and with no second lock the link is the only thing they need. Creating the account for them takes a minute and closes the hole.
+- **Before changing any existing auth setting on either harness**: show the current value and the proposed value, then ask.
 
 Never run `kill` on a process the user did not ask you to stop. The one exception is a tunnel this skill started in this session, and only when the user asks to stop sharing or when the step 6 check fails.
 
 ## How the teammate gets in
-They need an account on the user's Open WebUI. The clean route is the user creating it for them in Settings, Admin Panel, Users, then sending the URL and those credentials separately. Say this at handover, because a teammate who opens the URL and finds a login screen with no account will assume the link is broken.
+They need an account on the user's harness. The clean route is the user creating it for them, on Open WebUI in Settings, Admin Panel, Users, and on Odysseus from the admin account with signup left off, then sending the URL and those credentials separately. Say this at handover, because a teammate who opens the URL and finds a login screen with no account will assume the link is broken.
 
 ## When to close it
 Say this at handover, and mean it: a tunnel is for a session, not a deployment. If the user wants a permanent shared instance, this is the wrong tool and they should host it properly. Tell them that rather than leaving an ngrok agent running for weeks.

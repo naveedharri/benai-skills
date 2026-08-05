@@ -1,6 +1,6 @@
 ---
 name: pick-my-harness
-description: Asks a few plain questions about the work, then names the one desktop app to run local AI models in, from LM Studio, Goose, Open WebUI, AnythingLLM or OpenWork. Use when the user asks "which app should I use for local AI", "LM Studio or Ollama", "what is the best local AI interface", "do I need Open WebUI", "which one supports MCP", "which supports skills", "pick a harness for me", or is comparing local AI desktop apps. Names one tool and states what it cannot do. Never installs anything. Requires Claude Code with shell access on the user's own machine; refuses to run in a sandbox.
+description: Asks a few plain questions about the work, then names the one desktop app to run local AI models in, from LM Studio, Goose, Open WebUI, AnythingLLM, OpenWork or Odysseus. Use when the user asks "which app should I use for local AI", "LM Studio or Ollama", "what is the best local AI interface", "do I need Open WebUI", "Open WebUI or Odysseus", "which one supports MCP", "which supports skills", "pick a harness for me", or is comparing local AI desktop apps. Names one tool and states what it cannot do. Never installs anything. Requires Claude Code with shell access on the user's own machine; refuses to run in a sandbox.
 ---
 
 # Pick My Harness
@@ -34,7 +34,7 @@ Ask all four at once, as a short numbered list, in plain language. Never ask abo
 If the user already answered some in their request, do not re-ask. Use what they gave.
 
 ### 2. Match against the matrix
-Apply the decision rules in `references/harness-matrix.md`. That file holds the five tools, their real capability flags, and the tie-breakers.
+Apply the decision rules in `references/harness-matrix.md`. That file holds the six tools, their real capability flags, and the tie-breakers.
 
 ### 3. Name one tool and its limits
 Output exactly one recommendation, never a shortlist. Give: the tool, one sentence on why it won for their answers, its three capability flags, and one line on what it cannot do. Then give the single command or download link to get it.
@@ -45,7 +45,7 @@ If their answers make a second tool genuinely necessary alongside the first (mos
 Deliver the recommendation as a rendered HTML page, not as chat text. Build it from `references/report-template.md` using the `pick-my-harness` layout in section 4, save it to the Desktop, and open it. Keep the chat reply to two lines plus the file path.
 
 ## Human checkpoints
-Stop after step 3 and ask whether to proceed with installing it. Do not install anything from this skill. If they say yes, route to `/local-ai-setup`, or to `/install-openwebui` when Open WebUI is the pick.
+Stop after step 3 and ask whether to proceed with installing it. Do not install anything from this skill. If they say yes, route to `/local-ai-setup`, or to `/install-openwebui` when Open WebUI is the pick. Open WebUI and Odysseus are the two browser harnesses and `/local-ai-setup` asks which one before installing, so route there rather than deciding for them.
 
 ## Self-improvement
 

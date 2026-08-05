@@ -1240,7 +1240,7 @@
         },
         "pick-my-harness": {
           "displayName": "Pick My Harness",
-          "summary": "Four plain questions, then one named desktop app from LM Studio, Goose, Open WebUI, AnythingLLM or OpenWork"
+          "summary": "Four plain questions, then one named desktop app from LM Studio, Goose, Open WebUI, AnythingLLM, OpenWork or Odysseus"
         },
         "install-openwebui": {
           "displayName": "Install Open WebUI",
@@ -1248,7 +1248,7 @@
         },
         "allow-team": {
           "displayName": "Allow Team",
-          "summary": "Puts a running Open WebUI on a password protected ngrok URL so a teammate can use it without installing anything"
+          "summary": "Puts a running Open WebUI or Odysseus on a password protected ngrok URL so a teammate can use it without installing anything"
         }
       }
     }
