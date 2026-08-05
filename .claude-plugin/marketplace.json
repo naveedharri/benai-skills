@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Expert automation plugins that turn Claude into a specialist for your team. Install by department to get skills for marketing, sales, operations, creative, and product workflows.",
-    "version": "1.11.0"
+    "version": "1.12.0"
   },
   "plugins": [
     {
@@ -426,6 +426,36 @@
         "single-source-of-truth",
         "repurposing",
         "analytics"
+      ]
+    },
+    {
+      "name": "local-ai",
+      "displayName": "Local AI",
+      "source": "./plugins/local-ai",
+      "description": "From nothing to a working local AI setup. Scans the machine for models that fit, picks the right desktop app, installs and wires it up with consent at every download, then shares it with a teammate over a password protected tunnel. Needs Claude Code for shell access.",
+      "version": "1.1.0",
+      "author": {
+        "name": "BenAI"
+      },
+      "keywords": [
+        "local-ai",
+        "local-llm",
+        "ollama",
+        "open-webui",
+        "lm-studio",
+        "goose",
+        "anythingllm",
+        "mcp",
+        "skills",
+        "hardware-scan",
+        "vram",
+        "privacy",
+        "offline-ai",
+        "claude-code",
+        "ngrok",
+        "tunnel",
+        "share-local-ai",
+        "team-access"
       ]
     }
   ]

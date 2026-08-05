@@ -1227,6 +1227,30 @@
           "summary": "The brand's HTML design language. Every routine calls it to render its run report as a clean one-pager, and it builds any other on-brand page"
         }
       }
+    },
+    "local-ai": {
+      "skills": {
+        "local-ai-setup": {
+          "displayName": "Local AI Setup",
+          "summary": "The front door: scan, ask what it is for, recommend a model and app, then install it with approval"
+        },
+        "scan-my-machine": {
+          "displayName": "Scan My Machine",
+          "summary": "Reads real memory and GPU, then names the local models that fit with expected speed"
+        },
+        "pick-my-harness": {
+          "displayName": "Pick My Harness",
+          "summary": "Four plain questions, then one named desktop app from LM Studio, Goose, Open WebUI, AnythingLLM or OpenWork"
+        },
+        "install-openwebui": {
+          "displayName": "Install Open WebUI",
+          "summary": "Installs Ollama and Open WebUI end to end, wires the connection, and proves it with a real reply"
+        },
+        "allow-team": {
+          "displayName": "Allow Team",
+          "summary": "Puts a running Open WebUI on a password protected ngrok URL so a teammate can use it without installing anything"
+        }
+      }
     }
   }
 }
