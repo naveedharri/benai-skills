@@ -432,7 +432,7 @@
       "name": "local-ai",
       "displayName": "Local AI",
       "source": "./plugins/local-ai",
-      "description": "From nothing to a working local AI setup. Scans the machine for models that fit, picks the right desktop app, installs and wires it up with consent at every download, then shares it with a teammate over a password protected tunnel. Needs Claude Code for shell access.",
+      "description": "From nothing to a working AI setup you own. Scans the machine for models that fit, installs and wires up the right app with consent at every download, shares it over a private URL, and rents a cloud GPU when a model is too big. Needs shell access.",
       "version": "1.3.0",
       "author": {
         "name": "BenAI"
