@@ -1,0 +1,145 @@
+# Model Picker
+
+The five questions, the exact option text, the region list, and the fallback model matrix.
+
+**Model options should be built live from `model-sources.md`.** The matrix in section 4 is what to use when that fails.
+
+Question 1 routes everything. Ask it first and never skip it, because it decides whether RunPod is the right provider at all.
+
+Prices are RunPod **Secure Cloud** rates verified 5 August 2026. Community Cloud is cheaper and is refused on the privacy path; see section 5. Re-check before quoting, since GPU pricing moves monthly.
+
+## Contents
+1. Question 1, the router
+2. Questions 2 to 5
+3. The region list
+4. The model matrix (fallback only)
+5. How the answers resolve
+6. What to refuse
+
+## 1. Question 1, the router
+
+Ask this alone, before the other four, because a wrong answer here wastes the rest.
+
+### Q1. Why are you doing this?
+Header: `Driver`
+
+- **Privacy or compliance** — you need to say where the data lives and who can reach it. Uses Secure Cloud, a pinned region, and a single-tenant Pod.
+- **Cost and control** — you want a model nobody deprecates, cheaply. Uses Serverless and community hardware.
+- **Both, and I will pay for privacy** — treat as privacy.
+
+**If the answer is privacy, ask one follow-up before continuing:**
+
+> Does the requirement name the CLOUD Act, SecNumCloud, BSI C5, or EU ownership specifically?
+
+If yes, **stop and say RunPod is the wrong provider.** Runpod Inc. is US-incorporated, and no configuration changes that. Point at OVHcloud, Scaleway, Outscale or Cloud Temple, and offer to note the requirement so they can come back. Read `trust-boundary.md` section 1 before having this conversation.
+
+If no, continue. RunPod handles data residency well; it does not handle jurisdictional immunity.
+
+## 2. Questions 2 to 5
+
+One `AskUserQuestion` with the remaining four.
+
+### Q2. Where should it run?
+Header: `Region`
+
+**Ask this. Never pick a region for the user.** It is the whole point of the privacy path, and the right answer depends on a contract you cannot see.
+
+Offer the four most useful, with "Other" catching the rest of section 3:
+
+- **EU, France (`EU-FR-1`)** — for French or EU customers. Pairs with an EU-focused story.
+- **EU, Netherlands (`EU-NL-1`)** — the general EU default, good connectivity.
+- **EU, Sweden (`EU-SE-1`)** — Nordic, and typically the greenest power.
+- **US** — if the customer is American, the CLOUD Act is not a threat to them and this is the low-latency choice.
+
+Say the one thing that matters: **pinning a region shrinks the GPU pool.** Multi-GPU configurations in a single region are the most likely to hit capacity limits.
+
+### Q3. How good does the model need to be?
+Header: `Quality`
+
+**Build these options live.** Before asking, run the discovery in `model-sources.md` sections 2, 4, 6 and 8: what exists on Hugging Face, how it scores on Artificial Analysis, whether it has a vLLM recipe, and whether the GPU is rentable in the region they chose in Q2. Drop anything that fails the last check rather than offering it and failing at provision.
+
+The three rungs below are the **fallback** when discovery is unavailable, and their prices were verified 5 August 2026. Say which source you used either way.
+
+- **Very good, one GPU (Recommended)** — gpt-oss-120b. Fits a single 80 GB card at its native MXFP4. **$2.89/hr, about $2,110/month always on.**
+- **Best coding model that fits** — Qwen3-Coder-Next 80B-A3B. Scores 70.6% on SWE-bench Verified and fits one card. **$0.99/hr on an L40S, about $723/month.**
+- **Third best open model in the world** — DeepSeek-V4-Flash-0731, Artificial Analysis 50 against Claude Opus 5 at 60.7. MIT licensed. Needs 4 GPUs. **$17.56/hr, about $12,825/month.**
+
+### Q4. Who will use it?
+Header: `Users`
+
+- **Just me** — one admin account, signup off.
+- **A named team** — you create their accounts. Signup stays off.
+- **Wider** — needs Postgres rather than SQLite, and a bigger volume.
+
+### Q5. How much history will it hold?
+Header: `Storage`
+
+Sets the network volume, which is where every chat and uploaded document lives permanently.
+
+- **Chat only** — 20 GB beyond the model cache.
+- **Chat plus documents (RAG)** — 100 GB or more. Embeddings grow faster than people expect.
+
+Volume size must also cover the model weights. **Compute that from the quant you will actually serve**, using `model-sources.md` section 3. Do not estimate it from the fallback matrix, which carries no footprints by design.
+
+## 3. The region list
+
+All six EU regions support Global Networking, and all are Secure Cloud capable:
+
+| Region | Country |
+|---|---|
+| `EU-FR-1` | France |
+| `EU-NL-1` | Netherlands |
+| `EU-SE-1` | Sweden |
+| `EU-RO-1` | Romania |
+| `EU-CZ-1` | Czech Republic |
+| `EUR-IS-2` | Iceland |
+
+Plus US, Canada, and Asia-Pacific regions across 31+ locations globally.
+
+**Whatever the user picks, write it into every cell of the data flow table in `trust-boundary.md` section 4.** That table is the deliverable, and a region chosen but not documented is a region that will be questioned later.
+
+## 4. The model matrix, fallback only
+
+**Query `model-sources.md` first.** This table is what to use when discovery fails, and it starts going stale the day it was written. Secure Cloud rates. Community rates in `git log` history are for the cost path only.
+
+| Model | AA score | GPUs | Secure $/hr | Always-on /mo |
+|---|---|---|---|---|
+| Qwen3-Coder-Next 80B-A3B | SWE-V 70.6% | 1×L40S | $0.99 | ~$723 |
+| gpt-oss-120b | not scored here | 1×H100 | $2.89 | ~$2,110 |
+| DeepSeek-V4-Flash-0731 | 50 | 4×H200 | $17.56 | ~$12,825 |
+| GLM-5.2 | 51 | 4×H200 | $17.56 | ~$12,825 |
+| Kimi K3 | 57 | not rentable as one machine | n/a | n/a |
+
+**There is deliberately no footprint column.** Footprints go stale faster than anything else here, because the number that matters is the *quant you actually serve*, not the base repo. Compute it live from `model-sources.md` section 3 every time.
+
+The GPU column is what this table is for: it tells you what to rent and what it costs. If discovery is unavailable, rent what the GPU column says and record the footprint as **unverified** rather than inventing one.
+
+Notes that change decisions:
+
+- **gpt-oss-120b crosses 80 GB at long context.** Measured at **83.17 GB with 131K context**, well above its resting footprint. This is measured runtime behaviour, not a repo spec, so discovery will not tell you: for long context at this tier, move to a 96 GB RTX PRO 6000 rather than watching it fall over.
+- **Qwen3-Coder-Next scores higher than the 480B it came from**, 70.6 against 69.6, on a single card. Best quality per gigabyte here.
+- **DeepSeek-V4-Flash ships a DSpark speculative decoding module** in the checkpoint. Free speed, enabled with `--speculative-config '{"method":"mtp","num_speculative_tokens":3}'`.
+- **Do not use `nvidia/DeepSeek-V4-Flash-NVFP4` on H100 or H200.** NVFP4 tensor cores are Blackwell only.
+- **GLM-5.2 costs the same as DeepSeek for one more index point** and needs far more memory at every quant. Only pick it when the customer specifically requires an OSI-standard licence.
+- **Kimi K3 is the best open model and is not rentable as one machine**, needing over a terabyte of aggregate GPU memory across 64 or more accelerators. If asked for by name, say that in one line and offer DeepSeek.
+- **Qwen3.8-Max**: 2.4 trillion parameters, about 1.2 TB at 4-bit, weights still not public as of 5 August 2026. Offer **Qwen3.8-27B** once it lands.
+
+## 5. How the answers resolve
+
+| Q1 | Shape | Tier | Endpoint |
+|---|---|---|---|
+| Privacy | **Pod**, single pod build | **Secure Cloud only** | `127.0.0.1:8000`, loopback |
+| Cost | Serverless | Community allowed | `https://api.runpod.ai/v2/<ID>/openai/v1` |
+
+Q3 sets the model, Q2 sets the region, Q4 sets the signup policy and database, Q5 sets the volume.
+
+**The frontier tier on the cost path is a conflict.** A frontier-sized model cold-starting on every scale-to-zero feels broken. Name it and offer either an always-on Pod or gpt-oss-120b on Serverless.
+
+## 6. What to refuse
+
+- **Community Cloud on the privacy path.** Third-party hosts, and RunPod's attestations do not cover that boundary. Not for business data at any price.
+- **Serverless on the privacy path.** Even region-pinned, the ephemeral fleet and the control-plane hop make the data flow paragraph unwriteable.
+- **Any model that does not fit the GPUs the user agreed to pay for.** State the footprint, offer the nearest fit. A model that fails to load still bills.
+- **Claiming residency RunPod has not promised.** The DPA commits to "reasonable efforts" and a "geographically proximate" server, not a guarantee. See `trust-boundary.md` section 3, gap 1. Never tell a user their data is contractually pinned to a region without a written commitment.
+- **Quoting a footprint from the fallback matrix.** It does not carry one, deliberately. Compute it live from `model-sources.md` section 3, or record it as unverified. Never infer a footprint from a parameter count without checking the dtype, because packed 4-bit reads as `U8` and naive arithmetic overstates it by roughly double.
+- **Quoting a price you did not read today.** If the RunPod skills report live rates, prefer those and say which you used.

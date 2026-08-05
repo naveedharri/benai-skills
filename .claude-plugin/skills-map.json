@@ -594,6 +594,10 @@
         "marketing-os-research": {
           "displayName": "Marketing OS Research",
           "summary": "Answer an open question the OS already wrote down, fact-check every hard claim with a verdict, then write the research file and promote that question to a finding"
+        },
+        "rent-my-gpu": {
+          "displayName": "Rent My GPU",
+          "summary": "Rents a RunPod GPU, serves an open model on vLLM, deploys Open WebUI to Railway and wires them into one private chat URL"
         }
       }
     },
@@ -1249,6 +1253,10 @@
         "allow-team": {
           "displayName": "Allow Team",
           "summary": "Puts a running Open WebUI or Odysseus on a password protected ngrok URL so a teammate can use it without installing anything"
+        },
+        "rent-my-gpu": {
+          "displayName": "Rent My GPU",
+          "summary": "Rents a RunPod GPU, serves an open model on vLLM, deploys Open WebUI to Railway and wires them into one private chat URL"
         }
       }
     }
