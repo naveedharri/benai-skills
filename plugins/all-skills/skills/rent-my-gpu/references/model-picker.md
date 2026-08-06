@@ -14,20 +14,37 @@ Prices are RunPod **Secure Cloud** rates verified 5 August 2026. Community Cloud
 4. How the answers resolve
 5. What to refuse
 
-## 0. The fork question
+## 0. The three questions
 
-One `AskUserQuestion`, after the inversion statement in SKILL.md has been made. The jurisdiction detail stays a statement, not a question; this question is about usage shape and what "private" means, which only the user knows.
+One `AskUserQuestion`, asked before any provider is named. Skip whatever the user's own words already answered.
 
-Skip it entirely when the user's own words already route them: "pay per use" or spiky usage is Route A; "one URL for my team", a model missing from the OVH catalog, or a single-tenancy requirement is Route B.
+### Q1. What should the model be best at?
+Header: `Model`
 
-Header: `Which build`
+Show the source with the question so they can explore: **https://onyx.app/open-llm-leaderboard** — the open-model leaderboard, ranked overall and by coding, math, chat and reasoning.
 
-- **EU endpoint, pay per token (Route A)** — spiky or light usage, messages on and off through the day. French processor, data not stored. A heavy month is single-digit dollars. Solo, or a team URL via one shared Open WebUI on a small OVH VPS (~€5/mo).
-- **US single-tenant pod, always on (Route B)** — heavy sustained use, a model only vLLM can serve, or a single-tenancy requirement. Inference server unreachable from any network. Hundreds to thousands of dollars a month, billing whether used or not.
-- **Both EU-owned and single-tenant, contractually** — this skill refuses rather than fudges: that build exists at Hetzner (up to 96 GB VRAM, monthly), Verda or Scaleway (hourly H100s), and is not automated here yet.
-- **Not sure** — show the two builds side by side with today's real numbers for the model they want, then re-ask.
+- **All-round (Recommended) — Qwen3.6-27B.** A-tier overall at only 27B. The default of this skill: cheap on both providers, in the OVH catalog, runs on one GPU. Offer it first, always.
+- **Coding** — the Qwen3-Coder family: 30B-A3B per-token on OVH, Coder-Next 80B-A3B on a pod.
+- **Frontier quality** — GLM-4.7 (355B), DeepSeek class, Qwen3.5-397B. S/A-tier and big: per-token only if today's OVH catalog carries one, otherwise a multi-GPU pod.
+- **I have a specific model in mind** — they name it (Gemma 4, GLM, anything). Check it against the OVH catalog and vLLM recipes before pricing it, and say plainly which route can serve it.
 
-Fill the cost anchors in the first two options with real numbers read today: the OVH catalog price for the nearest model, and the RunPod rate for the pod that would serve it.
+Whatever is picked, verify it live before the recommendation: the OVH catalog for Route A, `model-sources.md` for Route B. The leaderboard says what is good; it does not say what is servable or at what price today.
+
+### Q2. Who will use it?
+Header: `Users`
+
+- **Just me** — solo apps on Route A, or one admin account on a pod.
+- **A named team** — one shared URL: the pod, or Open WebUI on a small OVH VPS.
+
+### Q3. Usage rhythm?
+Header: `Rhythm`
+
+- **On and off through the day** — spiky. Per-token wins by two orders of magnitude.
+- **Heavy and sustained, most of the day** — always-on pod economics can make sense.
+
+## 0b. The recommendation that follows
+
+Show the two named providers side by side with costs computed from these three answers; full message shape in SKILL.md section 3. The double requirement, EU-owned and single-tenant at once, exits to Hetzner (up to 96 GB VRAM, monthly), Verda or Scaleway, hourly H100s, not automated here yet.
 
 ## 1. The four questions (Route B)
 
@@ -47,25 +64,9 @@ Offer the four most useful, with "Other" catching the rest of section 3:
 
 Say the one thing that matters: **pinning a region shrinks the GPU pool.** Multi-GPU configurations in a single region are the most likely to hit capacity limits.
 
-### Q2. How good does the model need to be?
-Header: `Quality`
+The model came from section 0, Q1; the default is **Qwen3.6-27B**. Before the gate, confirm with `model-sources.md` sections 2, 6 and 8 that it has servable weights, a vLLM path, and a rentable GPU in the region chosen above; if not, say so now, not at provision. If Q3 in section 0 answered "wider than a named team", that means Postgres rather than SQLite and a bigger volume.
 
-**Build these options live.** Before asking, run the discovery in `model-sources.md` sections 2, 4, 6 and 8: what exists on Hugging Face, how it scores on Artificial Analysis, whether it has a vLLM recipe, and whether the GPU is rentable in the region they chose in Q1. Drop anything that fails the last check rather than offering it and failing at provision.
-
-The three rungs below are the **fallback** when discovery is unavailable, and their prices were verified 5 August 2026. Say which source you used either way.
-
-- **Very good, one GPU (Recommended)** — gpt-oss-120b. Fits a single 80 GB card at its native MXFP4. **$2.89/hr, about $2,110/month always on.**
-- **Best coding model that fits** — Qwen3-Coder-Next 80B-A3B. Scores 70.6% on SWE-bench Verified and fits one card. **$0.99/hr on an L40S, about $723/month.**
-- **Third best open model in the world** — DeepSeek-V4-Flash-0731, Artificial Analysis 50 against Claude Opus 5 at 60.7. MIT licensed. Needs 4 GPUs. **$17.56/hr, about $12,825/month.**
-
-### Q3. Who will use it?
-Header: `Users`
-
-- **Just me** — one admin account, signup off.
-- **A named team** — you create their accounts. Signup stays off.
-- **Wider** — needs Postgres rather than SQLite, and a bigger volume.
-
-### Q4. How much history will it hold?
+### Q2. How much history will it hold?
 Header: `Storage`
 
 Sets the network volume, which is where every chat and uploaded document lives permanently.
@@ -98,6 +99,7 @@ Plus US, Canada, and Asia-Pacific regions across 31+ locations globally.
 
 | Model | AA score | GPUs | Secure $/hr | Always-on /mo |
 |---|---|---|---|---|
+| **Qwen3.6-27B (the default)** | Onyx A-tier overall | 1×L40S | $0.99 | ~$723 |
 | Qwen3-Coder-Next 80B-A3B | SWE-V 70.6% | 1×L40S | $0.99 | ~$723 |
 | gpt-oss-120b | not scored here | 1×H100 | $2.89 | ~$2,110 |
 | DeepSeek-V4-Flash-0731 | 50 | 4×H200 | $17.56 | ~$12,825 |

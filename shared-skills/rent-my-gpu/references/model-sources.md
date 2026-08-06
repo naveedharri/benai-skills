@@ -29,6 +29,8 @@ The static matrix in `model-picker.md` section 4 is a **fallback**, not the sour
 
 Source 0 is also the fork input: a model present in the OVH catalog can be had per-token on Route A; a model absent from it is a Route B build. Because the catalog carries its own prices, Route A never quotes from a static table at all.
 
+**For the model question itself**, the categories shown to the user come from the Onyx open-model leaderboard, **https://onyx.app/open-llm-leaderboard**: overall, coding, math, chat, reasoning, with size tiers. No API; read the page. It ranks quality only — always cross-check servability and price against the sources above. The skill's recommended default is **Qwen3.6-27B**, A-tier overall at 27B.
+
 Steps 1, 3 and 4 need no extra credential and should always run. Step 2 needs a key the user may not have; degrade gracefully.
 
 ## 2. Hugging Face Hub API

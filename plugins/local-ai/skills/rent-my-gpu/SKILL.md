@@ -24,7 +24,7 @@ If a local model would do the job, they should be in `local-ai-setup` instead. S
 
 One `AskUserQuestion`, three questions, no provider named yet. Full option text in `references/model-picker.md` section 0.
 
-1. **How good does the model need to be.** Build the options live: the OVH catalog (`ovh-endpoints.md` section 2) for what Route A serves and at what price, `model-sources.md` for what Route B serves.
+1. **What should the model be best at.** Show the categories from the open-model leaderboard at **https://onyx.app/open-llm-leaderboard** — overall, coding, math, chat, reasoning — plus a "name a specific model" option. **The recommended default is Qwen3.6-27B**: A-tier overall at only 27B, cheap on both providers. Verify whatever they pick live: the OVH catalog (`ovh-endpoints.md` section 2) for Route A, `model-sources.md` for Route B.
 2. **Who will use it.** Solo, or a team on one shared URL.
 3. **Usage rhythm.** Spiky and on-and-off, or heavy and sustained. This decides the whole cost story, which is why it is asked before any price is shown.
 
@@ -34,9 +34,9 @@ If the user already said any of this, pass it through instead of re-asking. Regi
 
 Read live prices from both providers first: the OVH catalog price for the chosen model or nearest fit, and the RunPod Secure rate for the GPU that model needs. Then show **two named options side by side**, with links so the user can explore the companies, costs computed from their three answers, and the trust inversion stated plainly:
 
-> **OVHcloud AI Endpoints** — ovhcloud.com/en/public-cloud/ai-endpoints. French company, runs in Gravelines, France. Pay per token: for your usage, roughly $<X> a month<, plus about €5 a month for the shared team interface>. OVH states data is not stored. Multi-tenant.
+> **OVHcloud AI Endpoints** — https://www.ovhcloud.com/en/public-cloud/ai-endpoints/ · model catalog: https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/. French company, runs in Gravelines, France. Pay per token: for your usage, roughly $<X> a month<, plus about €5 a month for the shared team interface>. OVH states data is not stored. Multi-tenant.
 >
-> **RunPod** — runpod.io. US company, single-tenant GPU in a region you pick, inference server unreachable from any network. $<Y> per hour, about $<Z> a month always on, billing whether anyone chats or not.
+> **RunPod** — https://runpod.io. US company, single-tenant GPU in a region you pick, inference server unreachable from any network. $<Y> per hour, about $<Z> a month always on, billing whether anyone chats or not.
 >
 > Neither is simply more private. OVH is EU-owned but shared; RunPod is single-tenant but US-owned, and the CLOUD Act follows the company, not the datacenter.
 
@@ -50,10 +50,12 @@ Three exits at this step:
 
 ## 4. The token
 
-Guide them to the credential for the provider they picked, and only that one:
+Guide them to the credential for the provider they picked, and only that one. **Give the exact URL as a clickable link, never just the click path.** Both verified 6 August 2026:
 
-- **OVH**: OVHcloud Manager → Public Cloud → AI & Machine Learning → AI Endpoints → API keys. The keyless trial at 2 requests/min can prove the route before they create anything; raw curl only, since Open WebUI cannot use it. `ovh-endpoints.md` section 3.
-- **RunPod**: console → Settings → API Keys. `deploy-steps.md` section 1.
+- **OVH**: https://www.ovh.com/manager/ (redirects to their regional manager) → Public Cloud → AI & Machine Learning → AI Endpoints → API keys. The keyless trial at 2 requests/min can prove the route before they create anything; raw curl only, since Open WebUI cannot use it. `ovh-endpoints.md` section 3.
+- **RunPod**: https://console.runpod.io/user/settings → API Keys, needs read/write since it creates a pod. `deploy-steps.md` section 1.
+
+**Never show the user shell commands or `export` lines. These are non-technical people.** Say: "paste the key here and I will handle the rest." You set it in the session environment yourself.
 
 Same rules either way: session environment only, never written to a file, never echoed, never in the report; show the last four characters to prove it is set. If a key is ever exposed in a screenshot, a shared terminal or a pasted log, tell the user to rotate it immediately.
 

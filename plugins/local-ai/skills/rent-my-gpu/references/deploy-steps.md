@@ -12,11 +12,9 @@ The runbook. One build: a single Secure Cloud pod with the inference server on l
 
 ## 1. Credential handling
 
-One credential.
+One credential, created at **https://console.runpod.io/user/settings** → API Keys, read/write scope. Give the user that exact URL as a link, not just the click path. Verified 6 August 2026.
 
-```bash
-export RUNPOD_API_KEY='...'
-```
+Ask them to paste the key in chat, then set `RUNPOD_API_KEY` in the session environment yourself. **Never show the user an `export` line or any shell command; they are non-technical.**
 
 Rules:
 
