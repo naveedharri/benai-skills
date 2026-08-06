@@ -73,6 +73,10 @@ One pod is better anyway: `localhost` beats any private network, because the end
 | `--gpuCount` / `--gpuType` | Count and model |
 | `--imageName` / `--name` | Container image and pod name |
 
+**Image rule, learned on a billed GPU on 6 August 2026: the image is `vllm/vllm-openai:latest`, never a base image plus `pip install vllm`.** A PyTorch base with vLLM and Open WebUI pip-installed at boot burned ~30 billed minutes before the first token, and the user killed the run. The prebuilt image carries the whole inference stack; the only install left is Open WebUI, minutes not tens of minutes. Set `HF_HUB_ENABLE_HF_TRANSFER=1` with `pip install hf_transfer` before the model download, or a 63 GB model downloads single-stream for half an hour.
+
+**Order rule: the volume is created first, and it is where a bad region fails.** Volume creation validates the datacenter; fail there before anything bills. The region offered must already be volume-capable (`model-picker.md` section 1, Q1).
+
 The build:
 
 ```bash
@@ -81,7 +85,7 @@ runpodctl network-volume list      # or create one in that same datacenter first
 
 runpodctl pod create \
   --name <NAME> \
-  --imageName <VLLM_IMAGE> \
+  --imageName vllm/vllm-openai:latest \
   --secureCloud SECURE \
   --datacenter <REGION> \
   --gpuType '<GPU>' --gpuCount <N> \
@@ -109,8 +113,11 @@ vllm serve <MODEL> \
   --host 127.0.0.1 --port 8000 \
   --download-dir /runpod-volume/models \
   --disable-log-requests \
-  --gpu-memory-utilization 0.92
+  --gpu-memory-utilization 0.92 \
+  --enable-auto-tool-choice --tool-call-parser <PARSER>
 ```
+
+**The tool-call flags are not optional with Open WebUI in front.** Open WebUI sends `tool_choice: "auto"`, and without them vLLM rejects every chat with `"auto" tool choice requires --enable-auto-tool-choice and --tool-call-parser to be set` — the model lists fine and every reply fails. Hit live on 6 August 2026. Parser by family: `hermes` for Qwen, `deepseek_v4` for DeepSeek, check the vLLM recipe for others.
 
 - `--host 127.0.0.1` binds to loopback. **Never `0.0.0.0` on this build.**
 - `--disable-log-requests` keeps prompts out of the server log. Row 4 of the data flow table depends on this.
@@ -147,7 +154,21 @@ Image `ghcr.io/open-webui/open-webui:main`, or install into the pod directly. En
 
 The last three matter for row 10 of the data flow table. Set them or you cannot claim telemetry is off.
 
-### 2d. Confirm the boundary
+### 2c-bis. Time expectations and progress
+
+Real numbers from a real run, 6 August 2026. Say the estimate **at the gate, before the yes**, and repeat it when the pod is created. Billing runs through all of it.
+
+| Phase | Qwen3.6-27B (~20 GB) | gpt-oss-120b (63 GB) |
+|---|---|---|
+| Pod boot + image pull | 3–8 min | 3–8 min |
+| Open WebUI install | 2–4 min | 2–4 min |
+| Model download (with hf_transfer) | 2–5 min | 8–15 min |
+| vLLM load into VRAM | 1–3 min | 3–6 min |
+| **Chat URL live, total** | **~10–15 min** | **~20–30 min** |
+
+Without the prebuilt image or without hf_transfer, double everything; that is the run that gets killed by an impatient user, and reasonably so.
+
+**The no-silence rule:** during any wait, report a real checkpoint at least every 3 minutes — image pull done, download at N%, weights loading. Ten silent minutes reads as "it lost its way" even when everything is fine, and it is the single thing users abandoned a run over.
 
 Before handing over, prove the endpoint is not reachable from outside:
 

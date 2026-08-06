@@ -55,11 +55,13 @@ Header: `Region`
 
 **Ask this. Never pick a region for the user.** It is the whole point of this build, and the right answer depends on a contract you cannot see.
 
-Offer the four most useful, with "Other" catching the rest of section 3:
+**Offer only regions that can hold a network volume AND have the chosen GPU in stock — check both live before asking.** Learned the hard way on 6 August 2026: `EU-NL-1` does not support network volumes at all, and the run that offered it anyway had to re-ask after a failed create. Volume-capable datacenters that day: `EU-CZ-1, EU-FR-1, EU-RO-1, EUR-IS-1, EUR-IS-3, EUR-NO-1, EUR-NO-2` in Europe, plus `CA-MTL-3/4`, `US-CA-2, US-IL-1, US-MD-1, US-MO-2, US-NC-1, US-NE-1, US-TX-3`, `AP-IN-2, AP-JP-1`. Re-fetch the list each run; a failed `network-volume create` enumerates it if no cleaner query is available. Then check GPU stock per candidate DC and drop any showing none.
+
+Typical EU options to offer, when they pass both checks:
 
 - **EU, France (`EU-FR-1`)** — for French or EU customers. Pairs with an EU-focused story.
-- **EU, Netherlands (`EU-NL-1`)** — the general EU default, good connectivity.
-- **EU, Sweden (`EU-SE-1`)** — Nordic, and typically the greenest power.
+- **EU, Czech Republic (`EU-CZ-1`)** or **Romania (`EU-RO-1`)** — the EU alternates.
+- **EU, Iceland / Norway (`EUR-IS-*`, `EUR-NO-*`)** — EEA, typically the greenest power.
 - **US** — if the customer is American, the CLOUD Act is not a threat to them and this is the low-latency choice.
 
 Say the one thing that matters: **pinning a region shrinks the GPU pool.** Multi-GPU configurations in a single region are the most likely to hit capacity limits.

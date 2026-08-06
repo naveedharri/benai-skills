@@ -84,6 +84,26 @@ This is structural, not a bug. Tell the user once: **the chat URL changes if the
 
 Also confirm 8080 is still in the pod's exposed HTTP ports. A recreated pod does not inherit that unless it was in the template, and the proxy cannot route to an undeclared port even when the container is listening.
 
+## 6a. Model lists, every reply fails with a tool-choice error
+
+`"auto" tool choice requires --enable-auto-tool-choice and --tool-call-parser to be set`, shown in the chat itself. Hit live on 6 August 2026.
+
+Open WebUI sends `tool_choice: "auto"` on normal chats. vLLM without the flags accepts the model list call and rejects every generation, so the deploy looks perfect until the first message. Restart vLLM with `--enable-auto-tool-choice --tool-call-parser hermes` (Qwen family; see the vLLM recipe for others). The flags are already in the standard command in `deploy-steps.md` 2b; a build missing them was not built from that file.
+
+## 6b. The volume refuses the region
+
+`Data center "X" not found or does not support network volumes.` Seen live with `EU-NL-1` on 6 August 2026: a region can exist for pods and still not hold volumes. The error message enumerates the valid list; re-offer the region question from that list. Prevention is in `model-picker.md` section 1, Q1: never offer a region without checking volume capability first.
+
+## 6c. Setup is taking forever
+
+The three causes, in order of likelihood, all from a real run:
+
+1. **Wrong base image.** A PyTorch base pip-installing vLLM adds 10 to 20 billed minutes. The image is `vllm/vllm-openai:latest`, full stop.
+2. **No hf_transfer.** Single-stream downloads run at tens of MB/s; a 63 GB model takes half an hour. `HF_HUB_ENABLE_HF_TRANSFER=1`.
+3. **The model is just big.** 63 GB has a floor of ~20 minutes end to end however good the setup. If the user wanted "quick", they wanted the 27B default.
+
+While it runs: checkpoint to the user every 3 minutes. A user who hears nothing for 10 minutes kills a healthy deploy.
+
 ## 7. 429 on the OVH endpoint
 
 The rate limit, not an outage. The anonymous tier allows **2 requests per minute, per IP, per model**, which real use exhausts almost immediately; that is the signal to create an API key, not to retry harder. With a key the limit is 400 requests per minute per Public Cloud project per model.

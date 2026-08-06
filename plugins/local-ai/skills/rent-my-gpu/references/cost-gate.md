@@ -88,7 +88,9 @@ Here is what I am about to create, and what it costs.
   Interface      Open WebUI on the same pod, no extra provider
   Storage        Network volume 100GB in EU-FR-1, bills even when nothing runs
 
-  Billing starts the moment the GPU starts, not when you first chat.
+  Ready in      ~10-15 minutes for a 27B model, ~20-30 for a 120B  <- say the real one
+  Billing starts the moment the GPU starts, not when you first chat,
+  and it runs through the whole setup above.
 
   To stop it later, or now:
     /rent-my-gpu teardown
