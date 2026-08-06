@@ -1,16 +1,19 @@
 # Troubleshooting
 
-Go here before improvising. These six account for nearly every broken run.
+Go here before improvising. Sections 1 through 6 are Route B, the pod; they account for nearly every broken run there. Sections 7 through 9 are Route A, the OVH endpoint.
 
 Every one of them presents as "it deployed and it does not work", with no useful error. That is the point: the failures in this stack are silent.
 
 ## Contents
-1. Empty model dropdown
-2. vLLM is still loading
-3. Open WebUI hangs on load
-4. Chat history vanished after a restart
-5. Inference endpoint reachable from outside
-6. Chat URL stopped working
+1. Empty model dropdown (Route B)
+2. vLLM is still loading (Route B)
+3. Open WebUI hangs on load (Route B)
+4. Chat history vanished after a restart (Route B)
+5. Inference endpoint reachable from outside (Route B)
+6. Chat URL stopped working (Route B)
+7. 429 on the OVH endpoint (Route A)
+8. Empty reply with finish_reason length (Route A)
+9. 403 or model not found on the OVH endpoint (Route A)
 
 ## 1. Empty model dropdown, no error
 
@@ -80,3 +83,22 @@ Get the current pod ID and give them the new URL. Nothing internal breaks, becau
 This is structural, not a bug. Tell the user once: **the chat URL changes if the pod is ever recreated.** If they need a stable address, that is a custom domain in front of it, which is outside this skill.
 
 Also confirm 8080 is still in the pod's exposed HTTP ports. A recreated pod does not inherit that unless it was in the template, and the proxy cannot route to an undeclared port even when the container is listening.
+
+## 7. 429 on the OVH endpoint
+
+The rate limit, not an outage. The anonymous tier allows **2 requests per minute, per IP, per model**, which real use exhausts almost immediately; that is the signal to create an API key, not to retry harder. With a key the limit is 400 requests per minute per Public Cloud project per model.
+
+An app wired to the anonymous endpoint will look broken the moment two people use it. Check whether `OPENAI_API_KEY` was actually set in the app before blaming OVH.
+
+## 8. Empty reply with `finish_reason: length`
+
+Not an outage, a token budget problem, and it looks exactly like a broken model.
+
+The gpt-oss models spend completion tokens on a `reasoning` field before writing the answer. Verified 6 August 2026: with `max_tokens: 16`, the whole budget went to reasoning, `content` came back empty, and `finish_reason` was `length`.
+
+Raise `max_tokens` well past the reasoning overhead, hundreds not tens, and retry. When judging whether the endpoint works, check `finish_reason` before concluding anything from an empty `content`.
+
+## 9. 403, or model not found, on the OVH endpoint
+
+- **403** is the key: wrong, expired, or revoked. OVH returns 403 here, not 401. Keys carry a validity period the user set at creation; an integration that worked last month and returns 403 today most likely outlived its key.
+- **Model not found** is the ID: the catalog matches verbatim, so `gpt-oss-120b`, not `openai/gpt-oss-120b`. Re-read the live catalog (`ovh-endpoints.md` section 2) rather than trusting what the ID used to be; models leave the catalog without notice, and a model that left is a Route B conversation.

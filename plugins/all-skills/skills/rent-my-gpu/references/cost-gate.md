@@ -1,10 +1,32 @@
 # Cost and Residency Gate
 
-Run this in full before provisioning anything. It is the analogue of `allow-team`'s safety gate, and it guards two things: the user's bank account, and the claim they are about to make to their own customer about where data lives.
+Run this before money can move. It is the analogue of `allow-team`'s safety gate, and it guards two things: the user's bank account, and the claim they are about to make to their own customer about where data lives.
 
 This gate can refuse. Do not provision past a refusal.
 
-## Residency checks
+Section 0 is the whole gate for Route A. Everything from "Residency checks" down is Route B, run in full before provisioning.
+
+## 0. The Route A gate
+
+Route A provisions nothing and bills nothing at idle, so there is no blocking confirmation. The gate is one honest statement, made after the model is picked and before wiring:
+
+```
+What this costs.
+
+  Model      <MODEL_ID> on OVHcloud AI Endpoints, Gravelines, France
+  Price      $<IN> per 1M input tokens, $<OUT> per 1M output   <- read from the catalog today
+  Anchor     a heavy month (50M in, 10M out) is about $<X>
+  Idle       zero. Nothing exists that bills while nobody is using it
+  Billing    per token, to your OVH Public Cloud project
+```
+
+Every number from today's catalog call, never from a table. Then the residency statement in one line: the processor is OVH Groupe SAS, a French company, the service runs in Gravelines, and OVH's documentation states data is not stored or shared during or after model use. Multi-tenant; `trust-boundary.md` section 7 has the full wording.
+
+**Team shape only:** add one line for the VPS. `Interface: Open WebUI on an OVH VPS, ~€5/mo, bills while idle, holds the chat history.` The VPS is a real billing resource, so the team shape gets what solo does not: a teardown entry in the report, and a confirmation before the user orders the VPS.
+
+One refusal at this gate: **the double requirement.** If the customer's contract needs both EU ownership and single tenancy, neither route qualifies. Name Hetzner, Verda or Scaleway and stop.
+
+## Residency checks (Route B)
 
 Run these four first, always. They are refusals, not warnings.
 

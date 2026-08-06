@@ -19,12 +19,15 @@ The static matrix in `model-picker.md` section 4 is a **fallback**, not the sour
 
 | # | Source | Auth | Answers |
 |---|---|---|---|
+| 0 | **OVH AI Endpoints catalog** | none | Route A's entire model list, with live per-token prices and context lengths built in. `ovh-endpoints.md` section 2 |
 | 1 | **Hugging Face Hub API** | none | What exists, what is trending, exact parameter counts |
 | 2 | **Artificial Analysis** | free key | Which is actually best, by index score |
 | 3 | **vLLM recipes** | none | Can it actually be served |
 | 4 | **RunPod** | user's key | Can it be rented in their region today |
 | 5 | OpenRouter | none | What a hosted equivalent costs, for the build-vs-buy line |
 | 6 | Ollama library | none | Is it a real local download or `:cloud` only |
+
+Source 0 is also the fork input: a model present in the OVH catalog can be had per-token on Route A; a model absent from it is a Route B build. Because the catalog carries its own prices, Route A never quotes from a static table at all.
 
 Steps 1, 3 and 4 need no extra credential and should always run. Step 2 needs a key the user may not have; degrade gracefully.
 

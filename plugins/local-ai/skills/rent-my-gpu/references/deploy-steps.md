@@ -177,6 +177,24 @@ Two traps:
 - **`OLLAMA_BASE_URL` must be an empty string**, not unset and not localhost. Left at default, Open WebUI blocks on a local Ollama that does not exist.
 - **No trailing slash, and never append `/chat/completions`.** Open WebUI adds the route.
 
+### Connecting the user's own apps to the pod
+
+The question always comes next: "can Goose or my desktop app use this like a local Ollama?" Yes, without changing the security posture. Verified 6 August 2026 against a real Open WebUI install.
+
+**The right answer for most apps: Open WebUI's own OpenAI-compatible passthrough.** It rides the already-exposed 8080 and its existing auth.
+
+| Setting | Value |
+|---|---|
+| Base URL | `https://<PODID>-8080.proxy.runpod.net/api` |
+| API key | generated in Open WebUI, Settings → Account → API Keys |
+| Endpoint it serves | `POST /api/chat/completions`, `GET /api/models` |
+
+Verified behaviour: no key and a bad key both return **401**, so the gate holds. The base is `/api`, **not `/v1`**; `/v1/...` paths on Open WebUI return the web app's HTML to any URL, which reads as a 200 in a probe but is the SPA fallback, not an API and not a leak. An app that hardcodes appending `/v1/chat/completions` cannot use this passthrough.
+
+**For `/v1`-hardcoded or Anthropic-only clients: an SSH port-forward to vLLM.** `ssh -L 8000:localhost:8000` makes the pod's loopback endpoint appear at `http://localhost:8000` on the user's machine, private end to end. vLLM serves both dialects there: OpenAI at `/v1`, and the Anthropic Messages API at `/v1/messages`, which is what lets Claude Code point `ANTHROPIC_BASE_URL` at the pod.
+
+**Never expose port 8000 to give an app a "real" URL.** That is refusal 1 in the cost gate, whatever the app is.
+
 ## 4. Prove it with a real reply
 
 Three checks. Only the third is proof.

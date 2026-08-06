@@ -2,6 +2,19 @@
 
 A first class entry point, not a footnote. `/rent-my-gpu teardown` runs this.
 
+## Route A first: there is nothing to tear down
+
+The endpoint route owns no resource that bills at idle. Nothing was provisioned, so nothing accrues. Teardown is two sentences:
+
+- **Stop using it and the billing stops.** Tokens already consumed appear on the OVH Public Cloud invoice; nothing else will.
+- **To be certain, revoke the API key** in the OVHcloud Manager, Public Cloud → AI Endpoints → API keys. The anonymous tier has no key to revoke and nothing to bill.
+
+**Team shape only:** the VPS bills monthly until the user deletes it in the OVHcloud Manager, and **the chat history dies with it**. Same rules as the pod: say what dies before deleting, offer Open WebUI's own conversation export first, and confirm the VPS is gone in the Manager rather than trusting the delete.
+
+Say that, confirm what the user wanted removed is gone, and stop. Everything below is Route B.
+
+## Route B: the pod
+
 Order matters: stop the expensive thing first, then the cheap thing, then the storage. Verify each one is gone rather than trusting the delete call to have worked.
 
 ## Contents

@@ -597,7 +597,7 @@
         },
         "rent-my-gpu": {
           "displayName": "Rent My GPU",
-          "summary": "Rents one single-tenant RunPod GPU, serves an open model on vLLM bound to loopback, and hands back a private Open WebUI chat URL"
+          "summary": "Runs an open model in the cloud two ways, priced side by side: OVHcloud AI Endpoints per token in the EU, or one single-tenant RunPod pod behind Open WebUI"
         }
       }
     },
@@ -1256,7 +1256,7 @@
         },
         "rent-my-gpu": {
           "displayName": "Rent My GPU",
-          "summary": "Rents one single-tenant RunPod GPU, serves an open model on vLLM bound to loopback, and hands back a private Open WebUI chat URL"
+          "summary": "Runs an open model in the cloud two ways, priced side by side: OVHcloud AI Endpoints per token in the EU, or one single-tenant RunPod pod behind Open WebUI"
         }
       }
     }

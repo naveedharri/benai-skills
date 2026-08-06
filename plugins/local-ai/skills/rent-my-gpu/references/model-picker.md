@@ -1,23 +1,37 @@
 # Model Picker
 
-The four questions, the exact option text, the region list, and the fallback model matrix.
+The fork question, the four Route B questions, the exact option text, the region list, and the fallback model matrix.
 
-**Model options should be built live from `model-sources.md`.** The matrix in section 4 is what to use when that fails.
+**Model options should be built live.** Route A models come from the OVH catalog (`ovh-endpoints.md` section 2, carries live prices). Route B models come from `model-sources.md`; the matrix in section 3 is what to use when that fails.
 
-Prices are RunPod **Secure Cloud** rates verified 5 August 2026. Community Cloud is cheaper and is always refused here; see section 5. Re-check before quoting, since GPU pricing moves monthly.
+Prices are RunPod **Secure Cloud** rates verified 5 August 2026. Community Cloud is cheaper and is always refused here; see section 5. Re-check before quoting, since GPU pricing moves monthly. Route A prices are never quoted from a table at all; the catalog carries them.
 
 ## Contents
-1. The four questions
+0. The fork question
+1. The four questions (Route B)
 2. The region list
 3. The model matrix (fallback only)
 4. How the answers resolve
 5. What to refuse
 
-## 1. The four questions
+## 0. The fork question
+
+One `AskUserQuestion`, after the inversion statement in SKILL.md has been made. The jurisdiction detail stays a statement, not a question; this question is about usage shape and what "private" means, which only the user knows.
+
+Skip it entirely when the user's own words already route them: "pay per use" or spiky usage is Route A; "one URL for my team", a model missing from the OVH catalog, or a single-tenancy requirement is Route B.
+
+Header: `Which build`
+
+- **EU endpoint, pay per token (Route A)** — spiky or light usage, messages on and off through the day. French processor, data not stored. A heavy month is single-digit dollars. Solo, or a team URL via one shared Open WebUI on a small OVH VPS (~€5/mo).
+- **US single-tenant pod, always on (Route B)** — heavy sustained use, a model only vLLM can serve, or a single-tenancy requirement. Inference server unreachable from any network. Hundreds to thousands of dollars a month, billing whether used or not.
+- **Both EU-owned and single-tenant, contractually** — this skill refuses rather than fudges: that build exists at Hetzner (up to 96 GB VRAM, monthly), Verda or Scaleway (hourly H100s), and is not automated here yet.
+- **Not sure** — show the two builds side by side with today's real numbers for the model they want, then re-ask.
+
+Fill the cost anchors in the first two options with real numbers read today: the OVH catalog price for the nearest model, and the RunPod rate for the pod that would serve it.
+
+## 1. The four questions (Route B)
 
 One `AskUserQuestion`, not four rounds.
-
-There is no routing question. The jurisdiction statement in SKILL.md is made once as a statement, not asked, because a blocking question there is friction for the majority who only need residency.
 
 ### Q1. Where should it run?
 Header: `Region`
@@ -112,7 +126,8 @@ Always: a Secure Cloud Pod, single-pod build, vLLM on `127.0.0.1:8000`. Q1 sets 
 ## 5. What to refuse
 
 - **Community Cloud.** Third-party hosts, and RunPod's attestations do not cover that boundary. Not for business data at any price.
-- **Serverless.** This skill does not build it. Even region-pinned, the ephemeral fleet and the control-plane hop make the data flow paragraph unwriteable. If the user wants pay-per-use, say that is a different tool.
+- **RunPod Serverless.** This skill does not build it. Even region-pinned, the ephemeral fleet and the control-plane hop make the data flow paragraph unwriteable. If the user wants pay-per-use, that is Route A, which has a writeable one.
+- **"Both EU-owned and single-tenant" on either route.** Route A is EU-owned and multi-tenant; Route B is single-tenant and US-owned. Name Hetzner, Verda or Scaleway and stop, rather than presenting either route as satisfying a requirement it does not.
 - **Any model that does not fit the GPUs the user agreed to pay for.** State the footprint, offer the nearest fit. A model that fails to load still bills.
 - **Claiming residency RunPod has not promised.** The DPA commits to "reasonable efforts" and a "geographically proximate" server, not a guarantee. See `trust-boundary.md` section 3, gap 1. Never tell a user their data is contractually pinned to a region without a written commitment.
 - **Quoting a footprint from the fallback matrix.** It does not carry one, deliberately. Compute it live from `model-sources.md` section 3, or record it as unverified. Never infer a footprint from a parameter count without checking the dtype, because packed 4-bit reads as `U8` and naive arithmetic overstates it by roughly double.

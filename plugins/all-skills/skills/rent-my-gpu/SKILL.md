@@ -1,25 +1,91 @@
 ---
 name: rent-my-gpu
-description: Rents one single-tenant GPU pod on RunPod in a region the user picks, serves an open model on vLLM bound to loopback, puts Open WebUI in front of it and proves a real reply, so the user gets a private chat URL for a model their own machine cannot run. Use when the user says "rent a GPU", "run a big model in the cloud", "my machine cannot run this model", "deploy an open model", "host Qwen or DeepSeek or GLM myself", "put Open WebUI online", "give my team a private ChatGPT", "private AI for my business", "GDPR compliant LLM hosting", "RunPod", or "cloud GPU". The inference endpoint is not reachable from any network; the only exposed port is the chat login. Needs a RunPod API key. Asks four questions, never picks a region itself, states what compliance covers, and always shows hourly and monthly cost before spending anything. Requires Claude Code with shell and internet access; refuses to run in a sandbox.
+description: Runs an open model in the cloud two ways, and makes the user choose between them with real numbers. Route A is OVHcloud AI Endpoints, an EU-owned per-token API with zero idle cost, for spiky usage and EU jurisdiction. Route B rents one single-tenant RunPod GPU pod in a region the user picks, serving the model on vLLM bound to loopback behind Open WebUI as the only exposed door, for sustained use, models the endpoint does not carry, or single tenancy. Use when the user says "rent a GPU", "run a big model in the cloud", "my machine cannot run this model", "deploy an open model", "host Qwen or DeepSeek or GLM myself", "put Open WebUI online", "give my team a private ChatGPT", "private AI for my business", "GDPR compliant LLM hosting", "data must stay in the EU", "EU AI API", "pay per token", "OVHcloud", "AI Endpoints", "RunPod", or "cloud GPU". Asks which build fits, never picks a region for the user, and always shows cost before money moves. Requires shell and internet access; refuses to run in a sandbox.
 ---
 
 # Rent My GPU
 
-The cloud counterpart to `scan-my-machine`. That skill tells someone what their laptop can run. This one rents what it cannot, and hands back a URL they can chat in.
+The cloud counterpart to `scan-my-machine`. That skill tells someone what their laptop can run. This one runs what it cannot, and it carries two builds because "run a big model in the cloud" has two honest answers depending on usage shape and what "private" means:
 
-The user gives one credential and answers four questions. Everything after that is yours: provision, serve, wire, verify, report. They should not have to open a dashboard, paste a URL, or copy an endpoint ID.
+- **Route A, the EU endpoint.** OVHcloud AI Endpoints: a per-token OpenAI-compatible API run by a French company in Gravelines, France. Cents per million tokens, zero idle cost solo. Two shapes: solo, where each user's own app points at the endpoint, and team, where one shared Open WebUI runs on a small OVH VPS for about €5 a month. Multi-tenant either way.
+- **Route B, the private pod.** One RunPod Secure Cloud pod in a region the user picks, vLLM bound to loopback, Open WebUI as the only exposed port. Single-tenant, any model with a vLLM recipe, one shared URL for a team. Bills every hour it exists, used or not.
 
-Two things are never automatic. The **spend**, in `references/cost-gate.md`. And the **region**, which the user chooses and you never default.
+The order is: questions first, then two named recommendations with prices computed from the answers, then the user picks a provider and everything after is yours: token, wire, prove, report. Beyond creating their own credential they should not have to open a dashboard, paste a URL, or copy an endpoint ID.
 
-## Before you start
+Two things are never automatic. The **spend**, in `references/cost-gate.md`. And on Route B the **region**, which the user chooses and you never default.
 
-Run the check in `references/environment-check.md`. It is deliberately short: **nothing here runs on the user's machine**, so do not scan their hardware and do not report on it. The check asks only whether the shell will outlive the session, whether RunPod is reachable, and whether Node is present.
+## 1. Before you start
+
+Run the check in `references/environment-check.md`. It is deliberately short: **nothing here runs on the user's machine**, so do not scan their hardware and do not report on it.
 
 If a local model would do the job, they should be in `local-ai-setup` instead. Say that in one line and move on.
 
-## What this skill builds
+## 2. The questions
 
-One Secure Cloud pod, in a region the user chooses, running both services:
+One `AskUserQuestion`, three questions, no provider named yet. Full option text in `references/model-picker.md` section 0.
+
+1. **How good does the model need to be.** Build the options live: the OVH catalog (`ovh-endpoints.md` section 2) for what Route A serves and at what price, `model-sources.md` for what Route B serves.
+2. **Who will use it.** Solo, or a team on one shared URL.
+3. **Usage rhythm.** Spiky and on-and-off, or heavy and sustained. This decides the whole cost story, which is why it is asked before any price is shown.
+
+If the user already said any of this, pass it through instead of re-asking. Region and storage are **not** asked here; they only exist for one route and come after the pick.
+
+## 3. The recommendation
+
+Read live prices from both providers first: the OVH catalog price for the chosen model or nearest fit, and the RunPod Secure rate for the GPU that model needs. Then show **two named options side by side**, with links so the user can explore the companies, costs computed from their three answers, and the trust inversion stated plainly:
+
+> **OVHcloud AI Endpoints** — ovhcloud.com/en/public-cloud/ai-endpoints. French company, runs in Gravelines, France. Pay per token: for your usage, roughly $<X> a month<, plus about €5 a month for the shared team interface>. OVH states data is not stored. Multi-tenant.
+>
+> **RunPod** — runpod.io. US company, single-tenant GPU in a region you pick, inference server unreachable from any network. $<Y> per hour, about $<Z> a month always on, billing whether anyone chats or not.
+>
+> Neither is simply more private. OVH is EU-owned but shared; RunPod is single-tenant but US-owned, and the CLOUD Act follows the company, not the datacenter.
+
+Every number real and read today: the two options differ by two orders of magnitude and the user cannot choose without seeing that. Wait for the pick, and do not relitigate it afterwards.
+
+Three exits at this step:
+
+- **The model is not in the OVH catalog** (DeepSeek, GLM class): say so in one line; the recommendation collapses to RunPod alone.
+- **Their words already picked**: "pay per use" is Route A; a single-tenancy requirement is Route B. Skip the menu.
+- **The double requirement**, EU ownership and single tenancy at once: neither option qualifies. Name Hetzner, Verda or Scaleway and stop rather than fudge.
+
+## 4. The token
+
+Guide them to the credential for the provider they picked, and only that one:
+
+- **OVH**: OVHcloud Manager → Public Cloud → AI & Machine Learning → AI Endpoints → API keys. The keyless trial at 2 requests/min can prove the route before they create anything; raw curl only, since Open WebUI cannot use it. `ovh-endpoints.md` section 3.
+- **RunPod**: console → Settings → API Keys. `deploy-steps.md` section 1.
+
+Same rules either way: session environment only, never written to a file, never echoed, never in the report; show the last four characters to prove it is set. If a key is ever exposed in a screenshot, a shared terminal or a pasted log, tell the user to rotate it immediately.
+
+Then continue with the picked route below.
+
+## Route A: the EU endpoint
+
+The runbook is `references/ovh-endpoints.md`. The model and prices are already settled from steps 2 and 3; the token from step 4. Track progress:
+
+```
+Task Progress:
+- [ ] A1. Cost and residency statement
+- [ ] A2. Prove it with a real reply
+- [ ] A3. Wire the interface
+- [ ] A4. Render the report
+```
+
+### A1. Cost and residency statement
+Run the Route A gate in `cost-gate.md` section 0: today's per-token prices for the chosen model, one monthly anchor at their stated rhythm, and the idle line, zero solo or ~€5/mo with the team VPS. It is a statement, not a blocking confirmation, except the team shape, which confirms before the user orders the VPS.
+
+### A2. Prove it with a real reply
+`ovh-endpoints.md` section 4. Set `max_tokens` generously; the gpt-oss models spend budget on reasoning before answering, and an empty reply with `finish_reason: length` is a budget problem, not an outage. Capture the real prompt and reply verbatim.
+
+### A3. Wire the interface
+Solo: point the app the user already has at the endpoint, table in `ovh-endpoints.md` section 5. Team: one shared Open WebUI on a small OVH VPS, runbook in `ovh-team-interface.md`; the user creates the VPS in the Manager, you do everything after. The team shape needs the real API key, because Open WebUI cannot use the anonymous tier.
+
+### A4. Render the report
+Build it from `report-template.md`, Route A layout. It carries the endpoint, the model with today's prices, the real prompt and reply, the wiring per app, the rate-limit table, and the Route A trust section from `trust-boundary.md` section 7. No teardown card solo; the team shape gets a real one for the VPS.
+
+## Route B: the private pod
+
+What it builds:
 
 ```
 ┌─ RunPod Secure Cloud Pod, chosen region ──────────┐
@@ -34,44 +100,28 @@ One Secure Cloud pod, in a region the user chooses, running both services:
 
 **The inference endpoint never touches a network.** Not the public internet, not RunPod's private network. vLLM binds to loopback and Open WebUI reaches it over `localhost`, so there is no URL to leak, no port to forget to authenticate, no API key to get wrong. One door, and Open WebUI's own login is the lock.
 
-There is deliberately no serverless variant and no second host for the interface. One provider, one region, one volume, one teardown. Open WebUI is a FastAPI app that owns a disk at `/app/backend/data`, so it needs persistent storage and a process that stays up. It gets both from the pod, beside the model. If the user asks for it on Vercel, say in one sentence that Vercel functions are ephemeral and cannot hold that disk.
+There is deliberately no serverless variant and no second host for the interface. One provider, one region, one volume, one teardown. Open WebUI is a FastAPI app that owns a disk at `/app/backend/data`, so it needs persistent storage and a process that stays up. It gets both from the pod, beside the model. If the user asks for it on Vercel, say in one sentence that Vercel functions are ephemeral and cannot hold that disk. If the user asks for pay-per-use, that is Route A, not RunPod Serverless; the ephemeral fleet and control-plane hop make Serverless's data flow paragraph unwriteable.
 
-## Say this once, then continue
+A pod bills from creation until teardown, whether or not anyone is chatting. Say that at the gate, because it is the single most common surprise.
 
-Before asking anything, state it plainly and **do not turn it into a question**:
+The model, users and rhythm are settled from step 2; the key from step 4. If the user skipped straight to Route B without seeing the recommendation, state the jurisdiction once, as a statement, not a question:
 
-> RunPod is Runpod Inc., a US company. That is fine for saying **where** your data is processed, and they do that well: six EU regions, a signable DPA, SOC 2 Type 2. It cannot satisfy a requirement that names the **CLOUD Act, SecNumCloud, BSI C5, or EU ownership**, because no configuration changes who owns the company. If your requirement names one of those, stop me now and I will point you at OVHcloud, Scaleway, Outscale or Cloud Temple instead.
-
-That is informed consent in one paragraph. A blocking question here is friction for the ninety percent who just need residency. Read `trust-boundary.md` section 1 if the user picks it up.
-
-## Steps
+> RunPod is Runpod Inc., a US company. That is fine for saying **where** your data is processed, and they do that well: six EU regions, a signable DPA, SOC 2 Type 2. It cannot satisfy a requirement that names the **CLOUD Act, SecNumCloud, BSI C5, or EU ownership**, because no configuration changes who owns the company. If your requirement names one of those, Route A's processor is French, and for EU-owned single tenancy I will point you at Hetzner, Verda or Scaleway instead.
 
 Track progress:
 
 ```
 Task Progress:
-- [ ] 1. Environment check and the jurisdiction statement
-- [ ] 2. Get the RunPod API key
-- [ ] 3. Install the RunPod skills
-- [ ] 4. Ask the four questions
-- [ ] 5. Run the cost and residency gate, get a yes
-- [ ] 6. Build the pod
-- [ ] 7. Confirm the trust boundary
-- [ ] 8. Prove it with a real reply
-- [ ] 9. Render the handover report
+- [ ] B1. Install the RunPod skills
+- [ ] B2. Ask the two remaining questions: region and storage
+- [ ] B3. Run the cost and residency gate, get a yes
+- [ ] B4. Build the pod
+- [ ] B5. Confirm the trust boundary
+- [ ] B6. Prove it with a real reply
+- [ ] B7. Render the handover report
 ```
 
-### 1. Environment check and the jurisdiction statement
-Run `references/environment-check.md`. On pass, say one line about the providers and nothing about their machine. Then give the jurisdiction statement above.
-
-### 2. Get the RunPod API key
-From the RunPod console under Settings, API Keys.
-
-Set it in the session environment only. **Never write it to a file, never echo it, never put it in the report.** To show it is set, show the last four characters. `references/deploy-steps.md` section 1 has the rules.
-
-If the key ever appears in a screenshot, a shared terminal, or a pasted log, **tell the user to rotate it immediately**. A leaked RunPod key is someone else spending their money on GPUs.
-
-### 3. Install the RunPod skills
+### B1. Install the RunPod skills
 Do not reimplement RunPod's API. They ship official agent skills, better maintained than anything written here.
 
 ```bash
@@ -80,25 +130,21 @@ npx skills add runpod/runpod-plugins-official
 
 That gives a router plus `runpod-mcp`, `runpodctl`, `flash`, `companion-clis` and `runpod-usage`, all authenticating on `RUNPOD_API_KEY`. Prefer `runpod-mcp` for plain infrastructure CRUD when its tools are connected, and `runpodctl` for the terminal, SSH setup and file transfer.
 
-Install only what is missing, then confirm auth before provisioning: a key that fails at step 6 wastes a GPU that is already billing.
+Install only what is missing, then confirm auth before provisioning: a key that fails at the build wastes a GPU that is already billing.
 
 **Verify subcommands with `--help` before running them**, including the ones in this skill's references. The CLI moves.
 
-### 4. Ask the four questions
-One `AskUserQuestion`, not four rounds. Full option text in `references/model-picker.md` section 1.
+### B2. Ask the two remaining questions
+One `AskUserQuestion`. Full option text in `references/model-picker.md` section 1. Model, users and rhythm came from step 2; only the pod-specific answers are left.
 
-1. **Where should it run.** **Ask this. Never pick a region for the user.** The right answer depends on a customer contract you cannot see. Say that pinning a region shrinks the available GPU pool.
-2. **How good does the model need to be.** **Build these options live** from `references/model-sources.md`: Hugging Face for what exists and its real footprint, Artificial Analysis for the ranking, vLLM recipes for whether it can actually be served, and `runpodctl` for whether that GPU is rentable in their region today. Drop any option that fails availability rather than offering it and failing at provision. Fall back to the static matrix only when discovery is unavailable, and say which you used.
-3. **Who will use it.** Sets the signup policy and whether SQLite or Postgres.
-4. **How much history it holds.** Sets the network volume, which must also fit the model weights.
-
-If the user already said any of this earlier, pass it through instead of re-asking.
+1. **Where should it run.** **Ask this. Never pick a region for the user.** The right answer depends on a customer contract you cannot see. Say that pinning a region shrinks the available GPU pool, then confirm with `runpodctl` that the chosen model's GPU is actually rentable there today; if not, say so before the gate, not after.
+2. **How much history it holds.** Sets the network volume, which must also fit the model weights.
 
 **When they pick the region, show the coverage line** from `trust-boundary.md` section 5: SOC 2 Type 2, GDPR for EU regions, a signable DPA on Standard Contractual Clauses, an Article 27 EU representative, data subject rights, 72-hour breach notification, deletion on request. Every line is verified.
 
 Show it here and once more in the gate. **Nowhere else.** Repeating caveats at every step trains the user to skip them, which is how the one that matters gets missed.
 
-### 5. Run the cost and residency gate, get a yes
+### B3. Run the cost and residency gate, get a yes
 Go to `references/cost-gate.md` and run it in full. It runs four residency refusals first, then computes the hourly rate, the monthly projection and the teardown commands, then stops.
 
 It refuses a defaulted region, Community Cloud, and a volume in a different region than the pod. That last one slips through most often: the GPU holds a prompt for milliseconds, the volume holds every conversation forever.
@@ -107,24 +153,24 @@ State the honest contractual limit in the same message. RunPod's DPA commits to 
 
 One consolidated gate, and it is before the first dollar.
 
-### 6. Build the pod
+### B4. Build the pod
 Follow `references/deploy-steps.md` section 2.
 
 The critical flag is **`--host 127.0.0.1`** on vLLM. That single flag is what makes this build private. Expose **8080 only**. Never 8000.
 
 Print the teardown command as soon as each resource exists, before moving on.
 
-### 7. Confirm the trust boundary
+### B5. Confirm the trust boundary
 Do not skip this. Run the two checks in `deploy-steps.md` section 2d: the endpoint must answer on `127.0.0.1:8000` from inside the pod, and **must fail** from outside on the proxy URL.
 
 If the outside call returns anything at all, port 8000 was exposed and the build is wrong. Fix it before writing the report. Never write "not reachable" into the data flow table without having run this.
 
-### 8. Prove it with a real reply
+### B6. Prove it with a real reply
 Send one real prompt through the whole chain and show the reply. Do not report success on an HTTP 200, and do not report success on the model list endpoint alone: both can pass while generation fails.
 
 If anything fails, go to `references/troubleshooting.md` before improvising.
 
-### 9. Render the handover report
+### B7. Render the handover report
 Deliver the result as a rendered HTML page, not chat text. Build it from `references/report-template.md`. It carries the chat URL, the real prompt and reply, the running cost, the teardown commands and the admin account instructions.
 
 It also carries the **ten-row data flow table** and the **reviewer paragraph** from `references/trust-boundary.md` sections 4 and 6, with the user's real region in every cell. Row 9, control-plane metadata, stays "unconfirmed" until RunPod answers in writing. **Never fill a cell with an assumption**; "unconfirmed" is a legitimate value a reviewer respects, and an invented one destroys the document the first time it is checked.
@@ -133,16 +179,17 @@ Keep the chat summary to three lines and the file path. The page carries the det
 
 ## Teardown
 
-Treat `/rent-my-gpu teardown` as a first class entry point. Follow `references/teardown.md`. It lists every billing resource in the order that stops the money soonest, and verifies each is gone rather than trusting the delete call.
+Treat `/rent-my-gpu teardown` as a first class entry point. Follow `references/teardown.md`. On Route B it lists every billing resource in the order that stops the money soonest, and verifies each is gone rather than trusting the delete call. On Route A there is nothing that bills at idle; teardown is revoking the key.
 
-Money keeps running until teardown. That makes it part of the skill, not an afterthought.
+Money keeps running until teardown on Route B. That makes it part of the skill, not an afterthought.
 
 ## Human checkpoints
-- **Before provisioning anything** (step 5): the cost and residency gate, with hourly and monthly figures. Wait for an explicit yes.
+- **At the fork**: the user picks the route, with the cost anchors visible. Never pick for them unless their own words already did.
+- **Before provisioning anything** on Route B (step B3): the cost and residency gate, with hourly and monthly figures. Wait for an explicit yes.
 - **Before deleting anything** in teardown: list what will be destroyed and what data dies with it, then wait.
 
 Never delete a RunPod resource the user did not ask you to remove, even if it looks orphaned.
 
 ## Self-improvement
 
-If a CLI flag in `references/` turns out to be wrong, fix the reference file in the same session and say you did. RunPod ships fast and these files will drift.
+If a CLI flag or endpoint in `references/` turns out to be wrong, fix the reference file in the same session and say you did. Both providers ship fast and these files will drift.

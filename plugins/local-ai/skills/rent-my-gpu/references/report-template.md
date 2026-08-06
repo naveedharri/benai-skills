@@ -191,7 +191,19 @@ Always label both columns with a `row head`. Add `hot` to the row that applies t
 
 This report is a live door key, even without a password in it. End it with a `c12` card saying the tunnel is for a session and not a deployment, carrying the stop command again.
 
-**rent-my-gpu** — `rented-YYYY-MM-DD.html`
+**rent-my-gpu, Route A** — `endpoint-YYYY-MM-DD.html`
+1. `c12` recommended card (`ok`): the base URL in `kpi grad`, the model ID as a chip, then the real prompt sent and the real reply received underneath.
+2. `c4` × 3 number tiles: price per 1M input tokens, price per 1M output tokens, and the monthly anchor at a stated volume, all read from the catalog today with the date in the tile's `tiny` line.
+3. `c12` card: wiring, one `row` per app from `ovh-endpoints.md` section 5, with the exact base URL and where the key goes.
+4. `c6` card: the rate limit table, anonymous against keyed. `c6` card: how billing stops, meaning stop using it, and how to revoke the key in the OVHcloud Manager.
+5. `c12` card: the five-row Route A data flow table from `trust-boundary.md` section 7, row 5 left "unconfirmed" unless OVH has answered in writing. Then the Route A reviewer paragraph in a `<pre>` so it can be copied verbatim.
+6. `c12` card: what this route will not do. No shared team URL, no single tenancy, no Anthropic dialect, and models leave the catalog without notice.
+
+Never put the API key on this page, including truncated. There is no teardown card, because nothing bills at idle; card 4 carries that sentence explicitly.
+
+**Team shape**: the `ok` card carries the shared Open WebUI URL instead of the raw base URL, add the first-login admin checklist from the Route B layout, and card 4 becomes a real teardown card: delete the VPS in the Manager, chat history dies with it, ~€5/mo until then.
+
+**rent-my-gpu, Route B** — `rented-YYYY-MM-DD.html`
 1. `c12` recommended card (`ok`): the Open WebUI chat URL in `kpi grad` at full width, then the real prompt sent and the real reply received underneath it.
 2. `c4` × 3: the model with its index score and licence as chips. The GPU, count and region. The cost, as hourly in `kpi` with the monthly projection as `kpi-l`.
 3. `c12` card: first login, as a numbered checklist. The first account to register becomes admin, so they must create theirs before sharing the URL. Signup is already off.

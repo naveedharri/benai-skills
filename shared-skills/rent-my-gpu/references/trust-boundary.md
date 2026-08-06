@@ -1,28 +1,33 @@
 # Trust Boundary
 
-What to tell a security reviewer, and what RunPod's own documents actually say. Verified against RunPod's legal pages on 5 August 2026.
+What to tell a security reviewer, and what the providers' own documents actually say. RunPod verified against its legal pages on 5 August 2026; OVH AI Endpoints verified against its documentation on 6 August 2026.
 
 This file exists because "it runs on our own server" is not a claim anyone accepts on its own. The reviewer wants named parties, named regions, and a contract. Give them this.
 
+Sections 1 through 6 are Route B, the RunPod pod. Section 7 is Route A, the OVH endpoint.
+
 ## Contents
-1. The two tests
+1. The three tests
 2. What RunPod's documents actually say
 3. The three gaps to disclose
-4. The data flow table
-5. Generating the paragraph
+4. The data flow table (Route B)
+5. The coverage line (Route B)
+6. Generating the paragraph (Route B)
+7. Route A: the OVH endpoint
 
-## 1. The two tests
+## 1. The three tests
 
-Establish which one the customer is applying before recommending anything. They are different requirements and RunPod passes one of them.
+Establish which one the customer is applying before recommending anything. They are different requirements, and each route passes a different two of the three. This table is the fork in SKILL.md, stated for a reviewer.
 
-| Test | The question | RunPod |
-|---|---|---|
-| **A. Data residency** | "Is our data processed and stored in region X?" | **Passes, with caveats.** Six EU regions, public DPA, SOC 2 Type 2, Article 27 representative |
-| **B. Jurisdictional immunity** | "Can a non-EU authority compel disclosure?" | **Fails.** Runpod Inc. is US-incorporated. No architecture changes this |
+| Test | The question | Route B, RunPod pod | Route A, OVH endpoint |
+|---|---|---|---|
+| **A. Data residency** | "Is our data processed and stored in region X?" | **Passes, with caveats.** Six EU regions, public DPA, SOC 2 Type 2, Article 27 representative | **Passes.** Gravelines, France |
+| **B. Jurisdictional immunity** | "Can a non-EU authority compel disclosure?" | **Fails.** Runpod Inc. is US-incorporated. No architecture changes this | **Passes.** OVH Groupe SAS is French |
+| **C. Tenancy** | "Does a shared multi-tenant service process our plaintext?" | **Passes.** Single-tenant GPU, inference on loopback | **Fails.** Shared service by design |
 
-Most buyers mean A. Only regulated or sovereignty-conscious buyers mean B.
+Most buyers mean A, and both routes serve them; the fork is then usage shape, not compliance. Only regulated or sovereignty-conscious buyers mean B, which is Route A's argument. Buyers who mean C need Route B.
 
-**If the customer's requirement names the CLOUD Act, SecNumCloud, BSI C5, or EU ownership, RunPod is the wrong provider.** Say so and point at OVHcloud, Scaleway, Outscale or Cloud Temple. Do not try to engineer around a corporate-ownership requirement.
+**A requirement that names both B and C at once, or names SecNumCloud, BSI C5 or Cloud Temple-grade sovereignty with single tenancy, is satisfied by neither route.** Say so and point at Hetzner, Verda, Scaleway or Outscale for EU-owned single-tenant machines. Do not try to engineer around a corporate-ownership requirement.
 
 ## 2. What RunPod's documents actually say
 
@@ -67,7 +72,7 @@ Reasonable efforts and geographically proximate is **not** a residency guarantee
 
 **Gap 3: control-plane and metadata residency is unaddressed.** Neither the privacy policy nor the compliance page states whether management metadata, logs or telemetry stay in the chosen region. Ask directly. Until answered, do not claim that nothing leaves the region.
 
-## 4. The data flow table
+## 4. The data flow table (Route B)
 
 Fill this in with the real region and put it in the report. Ten rows, because a reviewer who gets three feels managed rather than informed.
 
@@ -88,7 +93,7 @@ Rows 5 and 6 are the ones people misplace. The GPU holds a prompt for millisecon
 
 Row 9 must say "unconfirmed" until RunPod answers in writing. Never write a region into a cell you have not verified.
 
-## 5. The coverage line, for the user
+## 5. The coverage line, for the user (Route B)
 
 Say what **is** covered, at the two moments it helps, and nowhere else. Do not recite caveats at every step: the gaps belong in the reviewer paragraph in section 6, which is where a reviewer looks for them.
 
@@ -113,7 +118,7 @@ Two rules:
 - **State only what you verified.** Every bullet above is from RunPod's own DPA, compliance page or privacy policy. If a future check contradicts one, remove the bullet rather than softening it.
 - **Do not attach the gaps to this list.** Section 3 exists, the reviewer paragraph carries it, and the report has a place for it. Repeating caveats at every step trains the user to skip them, which is how the important one gets missed.
 
-## 6. Generating the paragraph
+## 6. Generating the paragraph (Route B)
 
 The report should carry a paragraph the customer can paste into their own documentation. Build it from facts, with no adjectives:
 
@@ -123,3 +128,49 @@ Two rules for that paragraph:
 
 - **Never fill a placeholder with an assumption.** "Unconfirmed" is a legitimate value and a reviewer respects it. An invented one destroys the document's credibility the moment it is checked.
 - **Keep the last two sentences.** They are the weakest parts of the story, and a paragraph that omits its own weaknesses is the kind a reviewer stops trusting.
+
+## 7. Route A: the OVH endpoint
+
+Verified against OVH's AI Endpoints documentation on 6 August 2026.
+
+**What OVH's documents actually say**
+
+- The service runs in **Gravelines, France**.
+- On retention, their exact wording: **"Data is not stored or shared during or after model use."** Quote it as their claim, with the date read, not as your own measurement.
+- The processor is **OVH Groupe SAS**, a French company. This is what passes the jurisdiction test the RunPod route fails.
+- The service is governed by the OVHcloud AI Endpoints Conditions and the Public Cloud Special Conditions. Certifications are claimed at the OVHcloud company level; **do not attribute a specific certification to AI Endpoints itself without reading it on OVH's compliance pages that day**.
+
+**The coverage line, shown once at the Route A gate**
+
+> **What you get on this setup**
+>
+> - Processor is **OVH Groupe SAS, a French company**, outside US CLOUD Act jurisdiction
+> - Runs in **Gravelines, France**
+> - OVH states **data is not stored or shared during or after model use**
+> - **Nothing bills at idle**, and there is no infrastructure to leak, patch or tear down
+> - OpenAI-compatible API, keys scoped to your own Public Cloud project with validity periods you set
+
+**The two gaps to disclose**
+
+1. **Multi-tenant by design.** Prompts are processed by a shared service. The retention statement is OVH's own claim, contractual rather than architectural; there is no loopback binding to point at. A customer whose requirement is single tenancy is a Route B customer.
+2. **Logging and telemetry residency is not itemised.** The documentation states data is not stored; it does not enumerate what request metadata exists or where it lives. Mirror the Route B honesty: "unconfirmed" in that cell until OVH answers in writing.
+
+**The data flow table (Route A).** Five rows, same rule: never fill a cell with an assumption.
+
+| # | What | Where it lives | Notes |
+|---|---|---|---|
+| 1 | Prompt in transit | User's machine to Gravelines | TLS |
+| 2 | Prompt in processing | Gravelines, shared service | Multi-tenant. The honest cell |
+| 3 | Prompt and reply at rest | Nowhere, per OVH | "Not stored or shared during or after model use", read 6 Aug 2026 |
+| 4 | Chat history | The user's own apps, on their machines | This route has no server-side history at all |
+| 5 | Request metadata | **Unconfirmed** | Ask OVH. Do not claim |
+
+Row 4 is the quiet advantage nobody notices: with no hosted interface there is no server-side conversation store to place, size, or delete. History lives wherever the user's own app keeps it.
+
+**Team shape:** row 4 changes and must not be handed over unedited. History at rest moves to the Open WebUI volume on the OVH VPS; name its OVH location in the cell. Add a row for TLS terminating at Caddy on that VPS. Still one company, OVH Groupe SAS, which is why the paragraph survives the change.
+
+**The reviewer paragraph (Route A)**
+
+> Inference runs on OVHcloud AI Endpoints, a managed multi-tenant inference API operated by OVH Groupe SAS, France, hosted in Gravelines, France. OVHcloud's documentation states that data is not stored or shared during or after model use (read `<DATE>`). Access is authenticated by API keys scoped to our own OVHcloud Public Cloud project. No conversation history is stored server-side by the service; history resides in our own client applications. The processor is a French company and the service is governed by the OVHcloud AI Endpoints Conditions and Public Cloud Special Conditions. Request metadata residency is `<CONFIRMED: .../unconfirmed>`.
+
+Same two rules as the Route B paragraph: no assumption in a placeholder, and keep the last sentence.

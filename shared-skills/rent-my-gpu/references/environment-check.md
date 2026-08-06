@@ -15,6 +15,7 @@ So the check asks three things, and nothing else:
 ```bash
 echo "container: $([ -f /.dockerenv ] && echo yes || grep -qaE 'docker|containerd|lxc|kubepods' /proc/1/cgroup 2>/dev/null && echo yes || echo no)"
 echo "runpod:    $(curl -s -o /dev/null -w '%{http_code}' --max-time 8 https://api.runpod.ai/ 2>/dev/null || echo unreachable)"
+echo "ovh:       $(curl -s -o /dev/null -w '%{http_code}' --max-time 8 https://oai.endpoints.kepler.ai.cloud.ovh.net/v1/models 2>/dev/null || echo unreachable)"
 echo "npx:       $(command -v npx >/dev/null && echo present || echo missing)"
 echo "curl:      $(command -v curl >/dev/null && echo present || echo missing)"
 echo "jq:        $(command -v jq >/dev/null && echo present || echo 'missing, will install')"
@@ -32,12 +33,15 @@ Fail only on these:
 | Signal | Meaning |
 |---|---|
 | No Bash tool | Cannot run anything. Hard fail |
-| `container: yes` | A disposable environment. Do not spend money from here |
-| `runpod: unreachable` | No route to the provider. Provisioning would half-complete |
-| `npx: missing` | Cannot install the provider CLI. Node is required |
+| `container: yes` | A disposable environment. Do not spend money or handle keys from here |
+| `runpod: unreachable` | No route to the provider. Fails Route B; Route A can still proceed |
+| `ovh: unreachable` | No route to the provider. Fails Route A; Route B can still proceed |
+| `npx: missing` | Cannot install the provider CLI. Node is required for Route B only |
 | `curl: missing` | Cannot verify any endpoint |
 
-`jq` and `runpodctl` missing are expected on a first run; install them at step 3.
+One unreachable provider fails only its own route: say which route is closed and continue if the user's route is open. Both unreachable means no network worth trusting; stop.
+
+`jq` and `runpodctl` missing are expected on a first run; install them when the chosen route needs them.
 
 A non-200 status from the provider probe is **not** a failure. An unauthenticated probe can legitimately return 401 or 404. Only the literal word `unreachable` fails.
 
@@ -61,6 +65,6 @@ In every failure case, say plainly that nothing was created and nothing was char
 
 One line, about the providers and nothing else:
 
-> RunPod reachable, tools present. Nothing runs on your machine here, so your hardware does not matter.
+> Both providers reachable, tools present. Nothing runs on your machine here, so your hardware does not matter.
 
 Then move on. Do not enumerate what you found.
