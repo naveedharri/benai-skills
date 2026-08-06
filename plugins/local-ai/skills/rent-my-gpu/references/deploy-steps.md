@@ -1,36 +1,33 @@
 # Deploy Steps
 
-The runbook. Two builds, chosen by question 1 in `model-picker.md`.
+The runbook. One build: a single Secure Cloud pod with the inference server on loopback.
 
 **Verify every CLI flag with `--help` before running it.** Flags below were correct on 5 August 2026, not necessarily today. If one is gone, ask the provider's own agent skill, then fix this file.
 
 ## Contents
 1. Credential handling
-2. Build A, the privacy build
-3. Build B, the cost build
-4. Which URL goes where
-5. Prove it with a real reply
+2. Build the pod
+3. Which URL goes where
+4. Prove it with a real reply
 
 ## 1. Credential handling
 
-Build A needs only a RunPod API key. Build B also needs a Railway token.
+One credential.
 
 ```bash
 export RUNPOD_API_KEY='...'
-export RAILWAY_API_TOKEN='...'   # Build B only
 ```
 
 Rules:
 
-- **Never write a key to a file**, never echo one, never put one in the report. To show a key is set, show the last four characters.
-- `runpodctl doctor` offers to persist the RunPod key to its own config. That is the user's choice; ask.
-- **Railway token scope**: an account-level token can create projects, a project-scoped one cannot, and the failure reads like a bad token.
+- **Never write the key to a file**, never echo it, never put it in the report. To show it is set, show the last four characters.
+- `runpodctl doctor` offers to persist the key to its own config. That is the user's choice; ask.
+- **If the key is ever exposed** in a screenshot, a shared terminal or a pasted log, tell the user to rotate it immediately.
 
 Verify before spending:
 
 ```bash
 runpodctl doctor      # or the runpod skill's own auth check
-railway whoami        # Build B only
 ```
 
 Install the provider skills rather than reimplementing their APIs:
@@ -41,7 +38,7 @@ npx skills add runpod/runpod-plugins-official
 
 Router plus `runpod-mcp`, `runpodctl`, `flash`, `companion-clis`, `runpod-usage`, all authenticating on `RUNPOD_API_KEY`.
 
-## 2. Build A, the privacy build
+## 2. Build the pod
 
 One Secure Cloud Pod in the user's chosen region, running both services. The inference server never touches a network.
 
@@ -98,7 +95,7 @@ runpodctl pod create \
 Three things about that command:
 
 - **`--ports '8080/http'` and nothing else.** Port 8000 is deliberately absent. If you add it, the build stops being private and step 7 will catch you.
-- **`--datacenter` takes the user's Q2 answer verbatim.** Run `runpodctl datacenter list` first and fail loudly if their region is not in the output, rather than silently falling back.
+- **`--datacenter` takes the user's region answer verbatim.** Run `runpodctl datacenter list` first and fail loudly if their region is not in the output, rather than silently falling back.
 - **The network volume must already exist in the same datacenter.** Attaching it also pins the pod to that datacenter, which is a useful second lock on the region.
 
 **Known issue:** runpodctl has had a reported bug creating pods with a network volume ([runpodctl#172](https://github.com/runpod/runpodctl/issues/172)). If `--networkVolumeId` fails, fall back to the REST API or the `runpod-mcp` skill rather than dropping the volume. A pod without the volume loses all chat history on restart and breaks the residency story.
@@ -166,35 +163,21 @@ curl -s --max-time 8 https://<PODID>-8000.proxy.runpod.net/v1/models
 
 The second command **must fail**. If it returns anything, port 8000 was exposed and the build is wrong. Fix it before writing the report, and never write "not reachable" into the data flow table without having run this.
 
-## 3. Build B, the cost build
-
-Serverless plus Open WebUI on Railway. Cheaper, more convenient, not a privacy story.
-
-Create a vLLM serverless endpoint. The URL is `https://api.runpod.ai/v2/<ENDPOINT_ID>/openai/v1`, authenticated with the RunPod API key, stable across restarts.
-
-Deploy Open WebUI on Railway from `ghcr.io/open-webui/open-webui:main` with a volume at `/app/backend/data`. **The volume is not optional**: it holds the SQLite database, accounts, uploaded documents and embeddings, and without it every deploy wipes them.
-
-Railway's CLI is not fully non-interactive and has open issues about it. Prefer `railway api` GraphQL, then `railway service source --image`, `railway variables --set`, `railway up -y`. If a command opens a browser or blocks on a TTY, fall back to GraphQL rather than asking the user to click.
-
-Set the same variables as 2c, with `OPENAI_API_BASE_URL` pointing at the serverless URL and `OPENAI_API_KEY` set to the RunPod key.
-
-## 4. Which URL goes where
+## 3. Which URL goes where
 
 Getting this wrong produces an **empty model dropdown with no error**, the most common failure in this skill.
 
-| Build | `OPENAI_API_BASE_URL` |
+| | `OPENAI_API_BASE_URL` |
 |---|---|
-| A, single pod | `http://127.0.0.1:8000/v1` |
-| B, serverless | `https://api.runpod.ai/v2/<ENDPOINT_ID>/openai/v1` |
-| Pod with public port, not used here | `https://<PODID>-8000.proxy.runpod.net/v1` |
+| **This build** | `http://127.0.0.1:8000/v1` |
+| Pod with a public port, deliberately not used | `https://<PODID>-8000.proxy.runpod.net/v1` |
 
-Three traps:
+Two traps:
 
-- **Serverless ends `/openai/v1`. Everything else ends `/v1`.** The serverless worker mounts the OpenAI routes under an extra segment.
 - **`OLLAMA_BASE_URL` must be an empty string**, not unset and not localhost. Left at default, Open WebUI blocks on a local Ollama that does not exist.
 - **No trailing slash, and never append `/chat/completions`.** Open WebUI adds the route.
 
-## 5. Prove it with a real reply
+## 4. Prove it with a real reply
 
 Three checks. Only the third is proof.
 
@@ -213,6 +196,5 @@ curl -s -o /dev/null -w '%{http_code}\n' "https://<PODID>-8080.proxy.runpod.net/
 ```
 
 - **Check 1 passing does not mean generation works.** The model list can serve while the weights fail to load.
-- On Build B, check 2 pays the cold start. Warn first, then allow minutes.
 - **Capture the real prompt and real reply verbatim** for the report. Never paraphrase model output, never invent it.
 - The user still creates the admin account themselves on first visit, because the first account to register becomes admin and it must be theirs.

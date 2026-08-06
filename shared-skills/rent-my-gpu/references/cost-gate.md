@@ -4,15 +4,15 @@ Run this in full before provisioning anything. It is the analogue of `allow-team
 
 This gate can refuse. Do not provision past a refusal.
 
-## Residency checks, privacy path only
+## Residency checks
 
-Run these four first when question 1 was privacy. They are refusals, not warnings.
+Run these four first, always. They are refusals, not warnings.
 
 | # | Check | Fails when |
 |---|---|---|
 | R1 | Region was **chosen by the user**, not defaulted | You picked one for them |
-| R2 | Cloud is **Secure**, not Community | Community is selected on the privacy path |
-| R3 | Shape is a **Pod**, not Serverless | Serverless is selected on the privacy path |
+| R2 | Cloud is **Secure**, not Community | Community is selected |
+| R3 | Shape is a **Pod**, not Serverless | Serverless is selected |
 | R4 | Network volume is in the **same region** as the pod | The volume region differs. Chat history would sit elsewhere |
 
 R4 is the one that slips through. The GPU holds a prompt for milliseconds; the volume holds every conversation forever. A pod in `EU-FR-1` with a volume elsewhere is not an EU residency story.
@@ -43,10 +43,10 @@ Run all six. Record each result for the report, so the decision is auditable lat
 |---|---|---|---|
 | 1 | Rate is current | Ask the RunPod skills for the live rate for the chosen GPU and count | You are quoting a table older than today and cannot confirm it |
 | 2 | Monthly projection computed | hourly × 24 × 30.42 | You have not computed it |
-| 3 | Credentials authenticate | A read-only call on each provider | Either key fails. Never provision on an unverified key |
+| 3 | Credential authenticates | A read-only RunPod call | The key fails. Never provision on an unverified key |
 | 4 | Quota and balance | RunPod account balance and any spend limit | Balance will not cover one day at the quoted rate |
 | 5 | Teardown known | The exact delete commands for every resource about to exist | You cannot state them yet |
-| 6 | Auth posture decided | Build A: vLLM on loopback, 8080 the only exposed port. Build B: the RunPod key | A pod with port 8000 exposed, on either build |
+| 6 | Auth posture decided | vLLM on loopback, 8080 the only exposed port | Port 8000 exposed |
 
 Check 5 matters more than it looks. If you cannot say how to stop the billing, you are not ready to start it.
 
@@ -74,15 +74,14 @@ Here is what I am about to create, and what it costs.
 Shall I go ahead?
 ```
 
-Use Secure Cloud rates on the privacy path: H100 $2.89, H200 $4.39, B200 $5.89, A100 PCIe $1.39, L40S $0.99. A 4×H200 frontier build is **$17.56/hr, about $421 a day and $12,825 a month**. Community rates belong to the cost path only.
+Use Secure Cloud rates : H100 $2.89, H200 $4.39, B200 $5.89, A100 PCIe $1.39, L40S $0.99. A 4×H200 frontier build is **$17.56/hr, about $421 a day and $12,825 a month**. Community Cloud is refused here, so its cheaper rates never apply.
 
 Rules for this message:
 
 - **Give the daily figure as well as the monthly.** At high hourly rates the monthly number reads as abstract and the daily one lands.
 - **Say that storage bills while idle.** RunPod volumes do. Users assume stopping the GPU stops everything.
 - **Say that billing starts at provision, not at first use.** For a Pod this is the gap people get wrong: the model download and load time is billed.
-- For Serverless, replace the "if left on" line with the per-second reality and a worked example: "billed per second of generation only. Roughly $0.03 per short reply at this rate, plus a cold start of 30s to a few minutes after idle."
-- **Never include either API key.**
+- **Never include the API key.**
 
 Then wait. An explicit yes. Not silence, not "sounds good, but".
 
@@ -90,12 +89,11 @@ Then wait. An explicit yes. Not silence, not "sounds good, but".
 
 Refuse, say why in one sentence, fix the cause, re-run the gate.
 
-1. **A Pod on the cost path.** They asked for pay-per-use and a Pod is not that. Re-ask with the conflict named.
-2. **Port 8000 exposed on Build A.** The whole build rests on the inference server being unreachable. A pod proxy URL is public and unauthenticated, so anyone who finds `https://<podid>-8000.proxy.runpod.net/v1` spends the user's money and reads their prompts. Expose 8080 only. This is not a warning, it is a refusal.
-3. **Either credential unverified.** Provisioning a GPU and then failing to deploy the interface leaves a billing resource with no purpose.
-4. **Balance will not cover a day.** A GPU that dies mid-setup on an empty balance leaves a half-built stack and a confused user.
-5. **The user has not seen the monthly projection.** Non-negotiable, including when they are impatient.
-6. **The chosen model does not fit the chosen GPUs.** Check the footprint against total VRAM in `model-picker.md` before provisioning, not after. A model that fails to load still bills.
+1. **Port 8000 exposed.** The whole build rests on the inference server being unreachable. A pod proxy URL is public and unauthenticated, so anyone who finds `https://<podid>-8000.proxy.runpod.net/v1` spends the user's money and reads their prompts. Expose 8080 only. This is not a warning, it is a refusal.
+2. **Credential unverified.** Provisioning a GPU on a key that then fails leaves a billing resource with no purpose.
+3. **Balance will not cover a day.** A GPU that dies mid-setup on an empty balance leaves a half-built stack and a confused user.
+4. **The user has not seen the monthly projection.** Non-negotiable, including when they are impatient.
+5. **The chosen model does not fit the chosen GPUs.** Check the footprint against total VRAM in `model-picker.md` before provisioning, not after. A model that fails to load still bills.
 
 ## 4. After the yes
 
@@ -104,7 +102,6 @@ The moment each resource exists, print its teardown command. Do not batch this t
 ```
 Created: RunPod pod       <POD_ID>       stop with: runpodctl pod delete <POD_ID>
 Created: network volume   <VOLUME_ID>    stop with: <exact command>
-Created: Railway project  <PROJECT_ID>   stop with: <exact command>   # Build B only
 ```
 
 Carry every one of them into the report. Also set a plain expectation in one line: nothing here turns itself off, and nothing warns them at a threshold unless they set a spend limit in the RunPod console themselves.

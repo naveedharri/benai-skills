@@ -193,14 +193,14 @@ This report is a live door key, even without a password in it. End it with a `c1
 
 **rent-my-gpu** — `rented-YYYY-MM-DD.html`
 1. `c12` recommended card (`ok`): the Open WebUI chat URL in `kpi grad` at full width, then the real prompt sent and the real reply received underneath it.
-2. `c4` × 3: the model with its index score and licence as chips. The GPU, count and shape (Serverless or Pod). The cost, as hourly in `kpi` with the monthly projection as `kpi-l`.
+2. `c4` × 3: the model with its index score and licence as chips. The GPU, count and region. The cost, as hourly in `kpi` with the monthly projection as `kpi-l`.
 3. `c12` card: first login, as a numbered checklist. The first account to register becomes admin, so they must create theirs before sharing the URL. Signup is already off.
 4. `c12` card (`ok` border removed): teardown, with the exact commands in a `<pre>`, one per resource, labelled with what data dies with each.
 5. `c12` card: the cost and residency gate result as a `row` table, one line per check, so the decision to spend is auditable later.
 6. **Privacy path only** — `c12` card: the ten-row data flow table from `trust-boundary.md` section 4, with the real region in every cell and row 9 left as "unconfirmed" unless RunPod has answered in writing. Then a `c12` card carrying the reviewer paragraph from section 6, in a `<pre>` so it can be copied verbatim into the customer's own documentation.
-7. `c12` card: what this setup will not do. Cold start on Serverless, or the pod URL changing on recreate, whichever applies. Name the one that applies, not both.
+7. `c12` card: what this setup will not do. The chat URL changes if the pod is ever recreated, and the interface goes down with the pod.
 
-Never put either API key on this page, including truncated. The RunPod key is readable by anyone with access to the Railway project, and that sentence belongs on the page instead.
+Never put the API key on this page, including truncated. If the key has been exposed anywhere, the page should say to rotate it instead.
 
 This report is a running meter. End it with a `c12` card carrying the teardown command again, and the plain line that nothing here turns itself off.
 

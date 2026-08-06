@@ -6,11 +6,11 @@ Every one of them presents as "it deployed and it does not work", with no useful
 
 ## Contents
 1. Empty model dropdown
-2. Cold start looks like a timeout
+2. vLLM is still loading
 3. Open WebUI hangs on load
-4. Chat history vanished after a redeploy
-5. Pod endpoint answers for strangers
-6. Pod URL stopped working
+4. Chat history vanished after a restart
+5. Inference endpoint reachable from outside
+6. Chat URL stopped working
 
 ## 1. Empty model dropdown, no error
 
@@ -20,64 +20,63 @@ Almost always the base URL. Check in this order:
 
 | Check | Correct |
 |---|---|
-| Serverless path | ends `/openai/v1`, with the `openai` segment |
-| Pod path | ends `/v1`, no `openai` segment |
+| Base URL | `http://127.0.0.1:8000/v1`, loopback, ends `/v1` |
 | Trailing slash | none |
 | Route appended | none. No `/chat/completions`. Open WebUI adds it |
-| `OPENAI_API_KEY` | the RunPod key for Serverless, the `--api-key` value for a Pod |
+| `OPENAI_API_KEY` | any non-empty string, or the vLLM `--api-key` value if you set one |
 
-Confirm from outside Open WebUI before touching Railway again:
+Confirm from inside the pod, before touching Open WebUI's config:
 
 ```bash
 curl -s "$OPENAI_API_BASE_URL/models" -H "Authorization: Bearer $OPENAI_API_KEY" | jq '.data[].id'
 ```
 
-If that returns model IDs, the endpoint is fine and the problem is the Railway variable. If it returns 401, the key is wrong. If it returns 404, the path is wrong.
+If that returns model IDs, vLLM is fine and the problem is Open WebUI's variable. If it returns 401, the key is wrong. If it returns 404, the path is wrong. If it refuses to connect, vLLM is not up: see section 2.
 
-After correcting a variable, Railway needs a redeploy for it to take effect. A variable changed in the dashboard without a redeploy is the second-order version of this same bug.
+After correcting a variable, Open WebUI must be restarted for it to take effect. A variable changed without a restart is the second-order version of this same bug.
 
-## 2. Cold start looks like a timeout
+## 2. vLLM is still loading
 
-On Serverless, the first request after idle loads the whole model. That is 30 seconds to several minutes depending on size. `curl` gives up long before the worker is ready, and it reads as a dead endpoint.
+Not a failure. A large model takes minutes to load into VRAM, and every check will fail until it finishes.
 
-- Raise the curl timeout well past the model's load time before concluding anything.
-- Watch the worker state in RunPod rather than guessing from the client side. A worker in an initialising state is working, not broken.
-- If the user finds this intolerable, the fixes are: raise idle timeout so workers stay warm between messages, raise min workers above 0 which costs like a Pod, or move to a Pod. Say the cost of each.
-- **A 149 GB model on Serverless will always feel broken.** That is why `model-picker.md` flags the frontier tier as a poor Serverless fit. If you are here with DeepSeek on Serverless, the configuration is wrong, not the deployment.
+- Watch the vLLM log rather than polling the endpoint blind. It prints progress and then a line saying it is serving.
+- A 149 GB model on four GPUs is the slow case. Allow minutes, not seconds.
+- The pod bills throughout the load. Say that once, so the wait is not a surprise on the invoice.
 
 ## 3. Open WebUI hangs on load, spinner forever
 
-`OLLAMA_BASE_URL` was left at its default. Open WebUI tries to reach a local Ollama that does not exist on Railway and blocks on it.
+`OLLAMA_BASE_URL` was left at its default. Open WebUI tries to reach an Ollama that is not installed on the pod and blocks on it.
 
-Set it to an empty string. Not unset, not `localhost`, not removed: an explicit empty value. Then redeploy.
+Set it to an empty string. Not unset, not `localhost`, not removed: an explicit empty value. Then restart Open WebUI.
 
-## 4. Chat history and accounts vanished after a redeploy
+## 4. Chat history and accounts vanished after a restart
 
 The volume was not mounted at `/app/backend/data`, or was mounted at the wrong path.
 
-Everything Open WebUI persists lives there: the SQLite database with accounts, chats and settings, uploaded RAG documents, vector embeddings, cached models. Without the volume, each deploy starts from an empty disk and the user has to create the admin account again, which is usually how they notice.
+Everything Open WebUI persists lives there: the SQLite database with accounts, chats and settings, uploaded RAG documents, vector embeddings, cached models. Without the volume, each restart starts from an empty disk and the user has to create the admin account again, which is usually how they notice.
 
-Check the mount path exactly. `/app/backend/data`, not `/app/data` and not `/data`. Fix the mount and redeploy. **The lost data does not come back**; say that rather than implying it might.
+Check the mount path exactly. `/app/backend/data`, not `/app/data` and not `/data`. Fix the mount and restart. **The lost data does not come back**; say that rather than implying it might.
 
-## 5. The pod endpoint is answering for people who are not the user
+## 5. The inference endpoint is reachable from outside
 
-vLLM was started without `--api-key`. The pod proxy URL is public, and unauthenticated inference on a rented GPU is exactly as bad as it sounds: strangers spend the money and see nothing stopping them.
+Step 7's second check returned something instead of failing. Either port 8000 was exposed on the pod, or vLLM was started on `0.0.0.0` instead of `127.0.0.1`.
 
-The cost gate is supposed to refuse this configuration. If you are reading this, it got past the gate.
+This is the one failure that breaks the whole premise of the build: an unauthenticated inference endpoint on a rented GPU means strangers spend the money and read the prompts.
 
-1. Destroy or restart the pod now. Do not leave it up while you think about it.
-2. Restart vLLM with `--api-key` set to a fresh random value.
-3. Set the same value as `OPENAI_API_KEY` on Railway and redeploy.
-4. Tell the user plainly that the endpoint was reachable without authentication, for how long, and that RunPod usage for that window is worth checking.
+1. Stop vLLM now. Do not leave it up while you think about it.
+2. Restart it with `--host 127.0.0.1`.
+3. Remove 8000 from the pod's exposed ports. If it was in `--ports` at creation, the pod must be recreated.
+4. Re-run step 7 and confirm the outside call fails.
+5. Tell the user plainly that the endpoint was reachable, for roughly how long, and that RunPod usage for that window is worth checking.
 
 Do not soften this. It is a real exposure with a real bill attached.
 
-## 6. The pod URL worked yesterday and does not today
+## 6. The chat URL worked yesterday and does not today
 
-The pod was recreated, so the pod ID changed, so `https://<PODID>-8000.proxy.runpod.net/v1` changed with it. Railway is still pointing at the old one.
+The pod was recreated, so the pod ID changed, and the chat URL is `https://<PODID>-8080.proxy.runpod.net`. Anyone with the old link gets nothing.
 
-Get the current pod ID, update `OPENAI_API_BASE_URL`, redeploy Railway.
+Get the current pod ID and give them the new URL. Nothing internal breaks, because Open WebUI reaches vLLM over `localhost` and that never changes.
 
-This is structural, not a bug, and it is the main argument for Serverless in this stack: its URL is stable across restarts. If the user recreates pods often, move them to Serverless rather than teaching them to re-paste a URL.
+This is structural, not a bug. Tell the user once: **the chat URL changes if the pod is ever recreated.** If they need a stable address, that is a custom domain in front of it, which is outside this skill.
 
-Also confirm port 8000 is still declared in the pod's exposed HTTP ports. A recreated pod does not inherit that unless it was in the template, and the proxy cannot route to an undeclared port even when the container is listening on it.
+Also confirm 8080 is still in the pod's exposed HTTP ports. A recreated pod does not inherit that unless it was in the template, and the proxy cannot route to an undeclared port even when the container is listening.

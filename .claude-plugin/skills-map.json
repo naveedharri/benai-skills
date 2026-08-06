@@ -597,7 +597,7 @@
         },
         "rent-my-gpu": {
           "displayName": "Rent My GPU",
-          "summary": "Rents a RunPod GPU, serves an open model on vLLM, deploys Open WebUI to Railway and wires them into one private chat URL"
+          "summary": "Rents one single-tenant RunPod GPU, serves an open model on vLLM bound to loopback, and hands back a private Open WebUI chat URL"
         }
       }
     },
@@ -1256,7 +1256,7 @@
         },
         "rent-my-gpu": {
           "displayName": "Rent My GPU",
-          "summary": "Rents a RunPod GPU, serves an open model on vLLM, deploys Open WebUI to Railway and wires them into one private chat URL"
+          "summary": "Rents one single-tenant RunPod GPU, serves an open model on vLLM bound to loopback, and hands back a private Open WebUI chat URL"
         }
       }
     }
