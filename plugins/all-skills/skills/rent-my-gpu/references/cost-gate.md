@@ -68,7 +68,7 @@ Run all six. Record each result for the report, so the decision is auditable lat
 | 3 | Credential authenticates | A read-only RunPod call | The key fails. Never provision on an unverified key |
 | 4 | Quota and balance | RunPod account balance and any spend limit | Balance will not cover one day at the quoted rate |
 | 5 | Teardown known | The exact delete commands for every resource about to exist | You cannot state them yet |
-| 6 | Auth posture decided | vLLM on loopback, 8080 the only exposed port | Port 8000 exposed |
+| 6 | Auth posture decided | Both doors locked: Open WebUI login on 8080, a generated `--api-key` on vLLM's 8000 | vLLM would be reachable without a key |
 
 Check 5 matters more than it looks. If you cannot say how to stop the billing, you are not ready to start it.
 
@@ -82,7 +82,9 @@ Here is what I am about to create, and what it costs.
   Model          gpt-oss-120b  (63 GB at native MXFP4)
   GPU            1 x H100 80GB, Runpod SECURE cloud
   Region         EU-FR-1, France          <- your choice
-  Shape          Pod, always on. vLLM on loopback, only the chat login exposed
+  Shape          Pod, always on. Two doors, both locked: the chat behind its
+                 login, and an API URL behind a generated key, which is what
+                 lets Claude Code and other apps use this GPU directly
   Rate           $2.89 per hour
   If left on     ~$69 per day, ~$2,110 per month
   Interface      Open WebUI on the same pod, no extra provider
@@ -105,7 +107,7 @@ Rules for this message:
 - **Give the daily figure as well as the monthly.** At high hourly rates the monthly number reads as abstract and the daily one lands.
 - **Say that storage bills while idle.** RunPod volumes do. Users assume stopping the GPU stops everything.
 - **Say that billing starts at provision, not at first use.** For a Pod this is the gap people get wrong: the model download and load time is billed.
-- **Never include the API key.**
+- **Never include the RunPod account key.** The vLLM door key does not exist yet at this point; it is generated during the build and handed over only in the report.
 
 Then wait. An explicit yes. Not silence, not "sounds good, but".
 
@@ -113,7 +115,7 @@ Then wait. An explicit yes. Not silence, not "sounds good, but".
 
 Refuse, say why in one sentence, fix the cause, re-run the gate.
 
-1. **Port 8000 exposed.** The whole build rests on the inference server being unreachable. A pod proxy URL is public and unauthenticated, so anyone who finds `https://<podid>-8000.proxy.runpod.net/v1` spends the user's money and reads their prompts. Expose 8080 only. This is not a warning, it is a refusal.
+1. **vLLM reachable without a key.** Port 8000 is public through the proxy, and a pod proxy URL is discoverable, so a vLLM started without `--api-key` means anyone who finds `https://<podid>-8000.proxy.runpod.net/v1` spends the user's money and reads their prompts. The key is mandatory, and the no-key probe in `deploy-steps.md` 2c-bis must return 401 before handover. This is not a warning, it is a refusal.
 2. **Credential unverified.** Provisioning a GPU on a key that then fails leaves a billing resource with no purpose.
 3. **Balance will not cover a day.** A GPU that dies mid-setup on an empty balance leaves a half-built stack and a confused user.
 4. **The user has not seen the monthly projection.** Non-negotiable, including when they are impatient.

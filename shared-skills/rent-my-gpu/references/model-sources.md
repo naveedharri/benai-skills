@@ -57,6 +57,21 @@ Tags worth reading: `vllm` means a vLLM path exists, `mxfp4` / `8-bit` / `4-bit`
 
 The full OpenAPI spec is at `https://huggingface.co/.well-known/openapi.json`, with a Markdown version at `openapi.md` if you need to read it in context.
 
+**Do not pipe these responses through `jq`.** Verified 10 August 2026: model card metadata contains raw control characters, and `jq` aborts with `Invalid string: control characters from U+0000 through U+001F must be escaped`. That looks exactly like a missing model when you are looping over candidates, and it wrongly reported five existing models as missing. **RunPod's API has the same problem**, returning raw newlines inside string fields such as a pod's entrypoint.
+
+Check existence with the HTTP status, and parse with Python, stripping control characters first:
+
+```bash
+CODE=$(curl -s -o /tmp/m.json -w '%{http_code}' "https://huggingface.co/api/models/$M")
+python3 -c "
+import json,re,sys
+d=json.loads(re.sub(r'[\x00-\x1f]',' ',open('/tmp/m.json').read()))
+s=d.get('safetensors') or {}
+print(s.get('total'), s.get('parameters'))"
+```
+
+A model that exists returns 200; treat anything else as absent rather than inferring absence from a parse error.
+
 ## 3. Computing the real footprint
 
 `safetensors.parameters` gives element counts per dtype. Multiply and sum:

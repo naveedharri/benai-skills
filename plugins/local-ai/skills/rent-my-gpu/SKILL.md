@@ -1,6 +1,6 @@
 ---
 name: rent-my-gpu
-description: Runs an open model in the cloud two ways, and makes the user choose between them with real numbers. Route A is OVHcloud AI Endpoints, an EU-owned per-token API with zero idle cost, for spiky usage and EU jurisdiction. Route B rents one single-tenant RunPod GPU pod in a region the user picks, serving the model on vLLM bound to loopback behind Open WebUI as the only exposed door, for sustained use, models the endpoint does not carry, or single tenancy. Use when the user says "rent a GPU", "run a big model in the cloud", "my machine cannot run this model", "deploy an open model", "host Qwen or DeepSeek or GLM myself", "put Open WebUI online", "give my team a private ChatGPT", "private AI for my business", "GDPR compliant LLM hosting", "data must stay in the EU", "EU AI API", "pay per token", "OVHcloud", "AI Endpoints", "RunPod", or "cloud GPU". Asks which build fits, never picks a region for the user, and always shows cost before money moves. Requires shell and internet access; refuses to run in a sandbox.
+description: Runs an open model in the cloud two ways, and makes the user choose with real numbers. Route A is OVHcloud AI Endpoints, an EU-owned per-token API with zero idle cost, for spiky usage and EU jurisdiction. Route B rents one single-tenant RunPod GPU pod in a region the user picks, serving the model on vLLM behind a generated API key, with Open WebUI behind its own login and a URL Claude Code can use directly, for sustained use, unlisted models, or single tenancy. Use when the user says "rent a GPU", "run a big model in the cloud", "my machine cannot run this model", "deploy an open model", "host Qwen or DeepSeek or GLM myself", "put Open WebUI online", "give my team a private ChatGPT", "private AI for my business", "GDPR compliant LLM hosting", "data must stay in the EU", "EU AI API", "pay per token", "OVHcloud", "AI Endpoints", "RunPod", or "cloud GPU". Asks which build fits, never picks a region, and always shows cost before spending. Requires shell and internet access; refuses to run in a sandbox.
 ---
 
 # Rent My GPU
@@ -8,7 +8,7 @@ description: Runs an open model in the cloud two ways, and makes the user choose
 The cloud counterpart to `scan-my-machine`. That skill tells someone what their laptop can run. This one runs what it cannot, and it carries two builds because "run a big model in the cloud" has two honest answers depending on usage shape and what "private" means:
 
 - **Route A, the EU endpoint.** OVHcloud AI Endpoints: a per-token OpenAI-compatible API run by a French company in Gravelines, France. Cents per million tokens, zero idle cost solo. Two shapes: solo, where each user's own app points at the endpoint, and team, where one shared Open WebUI runs on a small OVH VPS for about €5 a month. Multi-tenant either way.
-- **Route B, the private pod.** One RunPod Secure Cloud pod in a region the user picks, vLLM bound to loopback, Open WebUI as the only exposed port. Single-tenant, any model with a vLLM recipe, one shared URL for a team. Bills every hour it exists, used or not.
+- **Route B, the private pod.** One RunPod Secure Cloud pod in a region the user picks, two locked doors: Open WebUI behind its login for the team, vLLM's API behind a generated key for Claude Code and other apps. Single-tenant, any model with a vLLM recipe, one shared URL for a team. Bills every hour it exists, used or not.
 
 The order is: questions first, then two named recommendations with prices computed from the answers, then the user picks a provider and everything after is yours: token, wire, prove, report. Beyond creating their own credential they should not have to open a dashboard, paste a URL, or copy an endpoint ID.
 
@@ -36,7 +36,7 @@ Read live prices from both providers first: the OVH catalog price for the chosen
 
 > **OVHcloud AI Endpoints** — https://www.ovhcloud.com/en/public-cloud/ai-endpoints/ · model catalog: https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/. French company, runs in Gravelines, France. Pay per token: for your usage, roughly $<X> a month<, plus about €5 a month for the shared team interface>. OVH states data is not stored. Multi-tenant.
 >
-> **RunPod** — https://runpod.io. US company, single-tenant GPU in a region you pick, inference server unreachable from any network. $<Y> per hour, about $<Z> a month always on, billing whether anyone chats or not.
+> **RunPod** — https://runpod.io. US company, single-tenant GPU in a region you pick, every door locked with its own key, including an API URL Claude Code can use directly. $<Y> per hour, about $<Z> a month always on, billing whether anyone chats or not.
 >
 > Neither is simply more private. OVH is EU-owned but shared; RunPod is single-tenant but US-owned, and the CLOUD Act follows the company, not the datacenter.
 
@@ -91,16 +91,16 @@ What it builds:
 
 ```
 ┌─ RunPod Secure Cloud Pod, chosen region ──────────┐
-│   vLLM        127.0.0.1:8000    loopback only     │
+│   vLLM        0.0.0.0:8000    exposed, Bearer key │
 │                    ↑ localhost                    │
-│   Open WebUI  0.0.0.0:8080      exposed via HTTPS │
+│   Open WebUI  0.0.0.0:8080    exposed, own login  │
 │   Network volume, same region                     │
-└──────────────────────┬────────────────────────────┘
-                       │ HTTPS, port 8080 only
-                    users
+└──────────┬───────────────────────┬────────────────┘
+    HTTPS 8080, login       HTTPS 8000, API key
+   people in a browser     Claude Code and apps
 ```
 
-**The inference endpoint never touches a network.** Not the public internet, not RunPod's private network. vLLM binds to loopback and Open WebUI reaches it over `localhost`, so there is no URL to leak, no port to forget to authenticate, no API key to get wrong. One door, and Open WebUI's own login is the lock.
+**Two doors, both locked.** The chat sits behind Open WebUI's own login with signup off. The inference API sits behind a key generated on the pod, and that second door is the point: it gives the user a real URL that Claude Code and any OpenAI-dialect app can use directly, with a paste-and-run block in the report. Nothing on the pod answers an unauthenticated request, and the no-key probe proving that is a mandatory step, not a suggestion.
 
 There is deliberately no serverless variant and no second host for the interface. One provider, one region, one volume, one teardown. Open WebUI is a FastAPI app that owns a disk at `/app/backend/data`, so it needs persistent storage and a process that stays up. It gets both from the pod, beside the model. If the user asks for it on Vercel, say in one sentence that Vercel functions are ephemeral and cannot hold that disk. If the user asks for pay-per-use, that is Route A, not RunPod Serverless; the ephemeral fleet and control-plane hop make Serverless's data flow paragraph unwriteable.
 
@@ -158,22 +158,40 @@ One consolidated gate, and it is before the first dollar.
 ### B4. Build the pod
 Follow `references/deploy-steps.md` section 2.
 
-The critical flag is **`--host 127.0.0.1`** on vLLM. That single flag is what makes this build private. Expose **8080 only**. Never 8000.
+The critical flag is **`--api-key`** on vLLM. Port 8000 is public through the proxy, so a vLLM without a key is refusal 1 in the cost gate. Expose **8080 and 8000, nothing else**, and never start vLLM on this pod without the key.
+
+**Three rules that decide whether the pod ever starts.** All three were learned on billed GPUs and each one presents as a pod that hangs with no error:
+
+1. **Validate every vLLM flag and the tool-call parser name against the vLLM source before creating the pod.** The commands are in `troubleshooting.md` section 0. An unknown argument makes vLLM exit during argparse, before it opens a port or writes anything reachable. `--disable-log-requests` is the one that has already cost an hour: it no longer exists.
+2. **Do not override the container entrypoint.** Pass vLLM's arguments with `--docker-args` and let the image start normally. No `apt-get`, no `pip install`, no venv before the server is up. Install Open WebUI afterwards, on the running pod.
+3. **Verify CLI flag names with `--help` first.** runpodctl 2.8.1 uses `--image`, `--cloud-type`, `--data-center-ids`, `--gpu-id`, `--container-disk-in-gb`, `--docker-args`. Older camelCase forms fail. There is no `--volumePath`; volumes mount at `/workspace`.
+
+**Judge readiness by the port code, never by `runtime` or SSH.** 404 no route, 502 live pod with nothing listening, 401 serving with the key enforced, 200 serving. `runtime: null` and SSH `container not found` are both non-diagnostic on an inference image, and treating them as failure signals sends you chasing the wrong problem.
 
 Print the teardown command as soon as each resource exists, before moving on.
 
-### B5. Confirm the trust boundary
-Do not skip this. Run the two checks in `deploy-steps.md` section 2d: the endpoint must answer on `127.0.0.1:8000` from inside the pod, and **must fail** from outside on the proxy URL.
+**Report a real checkpoint at least every 3 minutes while waiting.** Silence during a paid wait is the thing users abandon runs over, and it is indistinguishable from a stuck run.
 
-If the outside call returns anything at all, port 8000 was exposed and the build is wrong. Fix it before writing the report. Never write "not reachable" into the data flow table without having run this.
+### B5. Confirm the trust boundary
+Do not skip this. Run the three probes in `deploy-steps.md` 2c-bis: with the key from inside the pod it answers, without the key from outside it returns **401**, with the key from outside it returns **200**.
+
+If the no-key probe returns 200, the key is not enforced and the build is wrong; if it refuses to connect, the API door is missing and Claude Code cannot reach the pod. Fix either before writing the report. Never fill the data flow table without having run this.
 
 ### B6. Prove it with a real reply
-Send one real prompt through the whole chain and show the reply. Do not report success on an HTTP 200, and do not report success on the model list endpoint alone: both can pass while generation fails.
+Three generations, because the report makes three different promises and each one must have happened:
+
+1. **The chat door.** A real prompt through Open WebUI's chain, with the reply shown.
+2. **The Anthropic door.** A real prompt to `/v1/messages` on the public URL with the key.
+3. **Claude Code itself.** Run the CLI against the pod with `env -i` so the operator's own credentials cannot produce a false pass. The exact command is in `report-template.md`, Route B card 4.
+
+Do not report success on an HTTP 200, and do not report success on the model list endpoint alone: both can pass while generation fails. Capture every prompt and reply verbatim; never paraphrase or invent model output.
 
 If anything fails, go to `references/troubleshooting.md` before improvising.
 
 ### B7. Render the handover report
-Deliver the result as a rendered HTML page, not chat text. Build it from `references/report-template.md`. It carries the chat URL, the real prompt and reply, the running cost, the teardown commands and the admin account instructions.
+Deliver the result as a rendered HTML page, not chat text. Build it from `references/report-template.md`. It carries the chat URL, the real prompt and reply, the running cost, the teardown commands, the admin account instructions, and the **Claude Code launch block with every value filled in**. A user who wants this in Claude Code pastes that block from the page and is running; they never assemble it themselves.
+
+**Copy that block from `deploy-steps.md` section 3, never from memory.** The pod is an LLM gateway in Claude Code's own terms and has a documented variable set (https://code.claude.com/docs/en/llm-gateway-connect); writing it from recall reintroduces `ANTHROPIC_SMALL_FAST_MODEL`, which is deprecated, and omits the alias and beta-suppression variables a one-model pod needs.
 
 It also carries the **ten-row data flow table** and the **reviewer paragraph** from `references/trust-boundary.md` sections 4 and 6, with the user's real region in every cell. Row 9, control-plane metadata, stays "unconfirmed" until RunPod answers in writing. **Never fill a cell with an assumption**; "unconfirmed" is a legitimate value a reviewer respects, and an invented one destroys the document the first time it is checked.
 

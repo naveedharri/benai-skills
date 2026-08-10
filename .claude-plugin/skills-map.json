@@ -597,7 +597,7 @@
         },
         "rent-my-gpu": {
           "displayName": "Rent My GPU",
-          "summary": "Runs an open model in the cloud two ways, priced side by side: OVHcloud AI Endpoints per token in the EU, or one single-tenant RunPod pod behind Open WebUI"
+          "summary": "Runs an open model in the cloud two ways, priced side by side: OVHcloud AI Endpoints per token in the EU, or one single-tenant RunPod pod serving Open WebUI plus a keyed API URL Claude Code can use"
         }
       }
     },
@@ -1256,7 +1256,7 @@
         },
         "rent-my-gpu": {
           "displayName": "Rent My GPU",
-          "summary": "Runs an open model in the cloud two ways, priced side by side: OVHcloud AI Endpoints per token in the EU, or one single-tenant RunPod pod behind Open WebUI"
+          "summary": "Runs an open model in the cloud two ways, priced side by side: OVHcloud AI Endpoints per token in the EU, or one single-tenant RunPod pod serving Open WebUI plus a keyed API URL Claude Code can use"
         }
       }
     }

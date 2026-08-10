@@ -93,6 +93,25 @@ All six EU regions support Global Networking, and all are Secure Cloud capable:
 
 Plus US, Canada, and Asia-Pacific regions across 31+ locations globally.
 
+**Do not infer the country from the region ID.** Observed 10 August 2026: a pod created with `--data-center-ids EUR-IS-1` came back reporting `machine.location: "IE"`. In ISO 3166 `IS` is Iceland and `IE` is Ireland, so the ID and the reported location disagree about which country the machine is in. It was not resolved during that run.
+
+This matters more than it looks, because the region is the entire deliverable of Route B. Rules:
+
+- **Write into the data flow table what the provider reports, plus what you asked for, and mark the country unconfirmed** if they disagree. "Requested `EUR-IS-1`, provider reports location `IE`, country unconfirmed" is an honest cell. "Iceland" would be an invented one.
+- Ask RunPod in writing which country a given datacenter ID is in before a customer relies on it. This belongs with gap 3 in `trust-boundary.md`: a second thing the provider has not put in writing.
+- `--country-code` on `pod create` is the flag that expresses a country requirement directly, rather than inferring one from a datacenter ID. Prefer it when the requirement is genuinely national.
+
+### Stock is the binding constraint, not price
+
+Read live 10 August 2026, and the reason a build fails at creation rather than at the gate. `runpodctl datacenter list` returns a `gpuAvailability` array per datacenter with a `stockStatus` of `High`, `Medium`, `Low` or empty. Empty means none.
+
+That day, **every 48 GB Ada card was empty in every datacenter**, and `RTX PRO 6000 Blackwell Server Edition` existed in only three: `EU-RO-1`, `EUR-IS-1`, `US-NC-2`, all three at `Low`.
+
+Two behaviours to plan around:
+
+- **`Low` is not `no`, and creation is worth retrying.** `EU-RO-1` refused five times with HTTP 500 `create pod: This machine does not have the resources to deploy your pod`. `EUR-IS-1` refused twice and succeeded on the third identical call. Retry a few times with a short sleep before moving region.
+- **The volume pins the region, so a failed create is expensive to recover from.** A volume already created in region X forces the pod into region X. When capacity in X turns out to be zero, the volume has to be deleted and recreated elsewhere. So **check GPU stock in the candidate region before creating the volume**, not after. Section 1 Q1 already says to offer only regions passing both checks; this is why.
+
 **Whatever the user picks, write it into every cell of the data flow table in `trust-boundary.md` section 4.** That table is the deliverable, and a region chosen but not documented is a region that will be questioned later.
 
 ## 3. The model matrix, fallback only
@@ -124,7 +143,7 @@ Notes that change decisions:
 
 ## 4. How the answers resolve
 
-Always: a Secure Cloud Pod, single-pod build, vLLM on `127.0.0.1:8000`. Q1 sets the region, Q2 the model, Q3 the signup policy and database, Q4 the volume.
+Always: a Secure Cloud Pod, single-pod build, vLLM on 8000 behind a mandatory `--api-key`, Open WebUI on 8080 behind its login. Q1 sets the region, Q2 the model, Q3 the signup policy and database, Q4 the volume.
 
 
 ## 5. What to refuse

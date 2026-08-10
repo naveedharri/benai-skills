@@ -23,7 +23,7 @@ Establish which one the customer is applying before recommending anything. They 
 |---|---|---|---|
 | **A. Data residency** | "Is our data processed and stored in region X?" | **Passes, with caveats.** Six EU regions, public DPA, SOC 2 Type 2, Article 27 representative | **Passes.** Gravelines, France |
 | **B. Jurisdictional immunity** | "Can a non-EU authority compel disclosure?" | **Fails.** Runpod Inc. is US-incorporated. No architecture changes this | **Passes.** OVH Groupe SAS is French |
-| **C. Tenancy** | "Does a shared multi-tenant service process our plaintext?" | **Passes.** Single-tenant GPU, inference on loopback | **Fails.** Shared service by design |
+| **C. Tenancy** | "Does a shared multi-tenant service process our plaintext?" | **Passes.** Single-tenant GPU; every exposed service requires authentication | **Fails.** Shared service by design |
 
 Most buyers mean A, and both routes serve them; the fork is then usage shape, not compliance. Only regulated or sovereignty-conscious buyers mean B, which is Route A's argument. Buyers who mean C need Route B.
 
@@ -78,7 +78,7 @@ Fill this in with the real region and put it in the report. Ten rows, because a 
 
 | # | What | Where it lives | Notes |
 |---|---|---|---|
-| 1 | Prompt in transit | Browser to RunPod HTTPS proxy | TLS. Proxy path is RunPod infrastructure |
+| 1 | Prompt in transit | Browser or API client to RunPod HTTPS proxy | TLS. Both doors, 8080 and 8000, ride RunPod proxy infrastructure, where TLS terminates |
 | 2 | Prompt in GPU VRAM | `<REGION>` | Milliseconds. The obvious one |
 | 3 | KV cache | `<REGION>`, GPU VRAM | Can spill to host RAM |
 | 4 | vLLM logs | `<REGION>`, pod disk | **Disable request-content logging** |
@@ -111,7 +111,7 @@ Show this when the user picks a region, and again in the gate confirmation. Ever
 > - **Secure Cloud** runs in T3/T4 datacenters on single-tenant hosts
 > - **HIPAA** available, with a BAA
 >
-> Your inference server is bound to loopback, so it is not reachable from any network. Chat history, uploaded documents and model weights all sit on a volume in the region you chose.
+> Your GPU is yours alone, and both of its doors are locked: the chat behind its own login, the API behind a key generated on your pod. Nothing on it answers an unauthenticated request. Chat history, uploaded documents and model weights all sit on a volume in the region you chose.
 
 Two rules:
 
@@ -122,7 +122,7 @@ Two rules:
 
 The report should carry a paragraph the customer can paste into their own documentation. Build it from facts, with no adjectives:
 
-> Inference runs on a single-tenant NVIDIA GPU server in Runpod Secure Cloud, region `<REGION>`. The inference server binds to loopback only and is not reachable from any network. The only externally reachable service is the chat interface, protected by its own authentication. Chat history, uploaded documents and model weights are stored on a network volume in the same region. The processor is Runpod Inc., United States, which holds SOC 2 Type 2 and provides a Data Processing Agreement using Standard Contractual Clauses, Module Two, governed by Irish law, with Prighter Group as Article 27 EU representative. Subprocessors are disclosed under NDA. Runpod's DPA commits to reasonable efforts to allocate servers in a geographically proximate location rather than guaranteeing residency; `<WRITTEN COMMITMENT OBTAINED: yes/no>`. Control-plane metadata residency is `<CONFIRMED: .../unconfirmed>`.
+> Inference runs on a single-tenant NVIDIA GPU server in Runpod Secure Cloud, region `<REGION>`. Two services are externally reachable, both over TLS through Runpod's HTTPS proxy and both requiring authentication: the chat interface, protected by its own login with signup disabled, and the inference API, protected by a Bearer API key generated on the server; unauthenticated requests to either receive HTTP 401. Chat history, uploaded documents and model weights are stored on a network volume in the same region. The processor is Runpod Inc., United States, which holds SOC 2 Type 2 and provides a Data Processing Agreement using Standard Contractual Clauses, Module Two, governed by Irish law, with Prighter Group as Article 27 EU representative. Subprocessors are disclosed under NDA. Runpod's DPA commits to reasonable efforts to allocate servers in a geographically proximate location rather than guaranteeing residency; `<WRITTEN COMMITMENT OBTAINED: yes/no>`. Control-plane metadata residency is `<CONFIRMED: .../unconfirmed>`.
 
 Two rules for that paragraph:
 

@@ -25,7 +25,7 @@ One base URL for every model:
 https://oai.endpoints.kepler.ai.cloud.ovh.net/v1
 ```
 
-OpenAI dialect only: `/v1/models`, `/v1/chat/completions`, `Authorization: Bearer`. There is no Anthropic-compatible surface, so an Anthropic-only client (Claude Code pointed at a custom base) cannot use this route.
+OpenAI dialect only: `/v1/models`, `/v1/chat/completions`, `Authorization: Bearer`. There is no Anthropic-compatible surface, so an Anthropic-only client (Claude Code pointed at a custom base) cannot use this route; Route B's pod serves the Anthropic dialect on its keyed public URL.
 
 The base already ends in `/v1`, so clients that append `/chat/completions` themselves work unmodified. This is the opposite of the pod route's Open WebUI passthrough, which uses `/api`.
 
@@ -106,6 +106,6 @@ Open WebUI's model dropdown fills from the catalog automatically, which means it
 ## 7. What to refuse
 
 - **A model not in today's catalog.** Offer Route B rather than a substitute the user did not ask for.
-- **An Anthropic-only client.** The dialect does not exist here. Route B's vLLM speaks `/v1/messages` over an SSH tunnel; say that in one line.
+- **An Anthropic-only client.** The dialect does not exist here. Route B's vLLM speaks `/v1/messages` on the pod's keyed public URL, and its report carries a paste-and-run Claude Code block; say that in one line.
 - **Claiming single tenancy.** This is a shared service. The residency and retention story is strong and the tenancy story does not exist; `trust-boundary.md` section 7 has the wording.
 - **Quoting a stale price.** The catalog call costs nothing and returns the live number. There is no excuse for a dated one.

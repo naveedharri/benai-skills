@@ -204,15 +204,56 @@ Never put the API key on this page, including truncated. There is no teardown ca
 **Team shape**: the `ok` card carries the shared Open WebUI URL instead of the raw base URL, add the first-login admin checklist from the Route B layout, and card 4 becomes a real teardown card: delete the VPS in the Manager, chat history dies with it, ~€5/mo until then.
 
 **rent-my-gpu, Route B** — `rented-YYYY-MM-DD.html`
+
+**This report is the handover for the whole pod, not a Claude Code cheatsheet.** The pod has two doors and the page documents both, in this order of prominence:
+
+- **The chat door, 8080.** Open WebUI behind its own login. This is what the user and their team actually open in a browser, so it leads the page.
+- **The API door, 8000.** vLLM behind the generated key. This is what Claude Code and other apps use, and it gets its own clearly labelled section further down.
+
+A reader who only wants to chat should never have to read the Claude Code section, and a reader who only wants Claude Code should find one block that works. Do not collapse the report into either half. If the build genuinely has only one door, say which one is missing and why, in its own card, rather than quietly shipping a thinner page.
+
 1. `c12` recommended card (`ok`): the Open WebUI chat URL in `kpi grad` at full width, then the real prompt sent and the real reply received underneath it.
 2. `c4` × 3: the model with its index score and licence as chips. The GPU, count and region. The cost, as hourly in `kpi` with the monthly projection as `kpi-l`.
 3. `c12` card: first login, as a numbered checklist. The first account to register becomes admin, so they must create theirs before sharing the URL. Signup is already off.
-4. `c12` card (`ok` border removed): teardown, with the exact commands in a `<pre>`, one per resource, labelled with what data dies with each.
-5. `c12` card: the cost and residency gate result as a `row` table, one line per check, so the decision to spend is auditable later.
-6. **Privacy path only** — `c12` card: the ten-row data flow table from `trust-boundary.md` section 4, with the real region in every cell and row 9 left as "unconfirmed" unless RunPod has answered in writing. Then a `c12` card carrying the reviewer paragraph from section 6, in a `<pre>` so it can be copied verbatim into the customer's own documentation.
-7. `c12` card: what this setup will not do. The chat URL changes if the pod is ever recreated, and the interface goes down with the pod.
+4. `c12` card, titled "Use it from Claude Code": the full launch block in a `<pre>` with every value real, so it pastes and runs with nothing to look up. Copy the variable set from `deploy-steps.md` section 3 verbatim — it is verified against Claude Code's LLM-gateway docs and **`ANTHROPIC_SMALL_FAST_MODEL` is deprecated**, so a block carrying it was written from memory rather than from the file:
+   ```
+   export ANTHROPIC_BASE_URL="https://<PODID>-8000.proxy.runpod.net"
+   export ANTHROPIC_AUTH_TOKEN="<the real vLLM key>"
+   export ANTHROPIC_MODEL="<the real model ID>"
+   export ANTHROPIC_DEFAULT_OPUS_MODEL="<the real model ID>"
+   export ANTHROPIC_DEFAULT_SONNET_MODEL="<the real model ID>"
+   export ANTHROPIC_DEFAULT_HAIKU_MODEL="<the real model ID>"
+   export CLAUDE_CODE_SUBAGENT_MODEL="<the real model ID>"
+   export CLAUDE_CODE_MAX_OUTPUT_TOKENS=<computed from the served context>
+   export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
+   export CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1
+   claude
+   ```
+   Under the `<pre>`, four `li` lines: it must be `ANTHROPIC_AUTH_TOKEN`, not `ANTHROPIC_API_KEY`; every alias points at the one served model because the pod serves exactly one; OpenAI-dialect apps use the same URL plus `/v1` with the same key; the URL and key die if the pod is recreated, so a new pod means a new report. Then a `sub` line offering the same values as a `~/.claude/settings.json` `env` block, which survives closing the terminal — the JSON form is in `deploy-steps.md` section 3, and it must be the user-level file, never a project's committed `.claude/settings.json`.
 
-Never put the API key on this page, including truncated. If the key has been exposed anywhere, the page should say to rotate it instead.
+   **Set `--served-model-name` on vLLM and use that short name here.** The user is pasting this into a config file; `qwen3-4b` beats `Qwen/Qwen3-Coder-30B-A3B-Instruct-FP8` in five places.
+
+   **Do not print this card until Claude Code itself has answered through this URL.** Not the model list, not a raw `/v1/messages` curl alone: run the CLI. One command proves the whole chain, including the variables:
+
+   ```bash
+   env -i HOME="$HOME" PATH="$PATH" \
+     ANTHROPIC_BASE_URL="https://<PODID>-8000.proxy.runpod.net" \
+     ANTHROPIC_AUTH_TOKEN="<VLLM_API_KEY>" \
+     ANTHROPIC_MODEL="<SHORT_NAME>" \
+     ANTHROPIC_DEFAULT_HAIKU_MODEL="<SHORT_NAME>" \
+     CLAUDE_CODE_MAX_OUTPUT_TOKENS=32000 \
+     CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1 \
+     CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1 \
+     claude -p "Reply with exactly: pod-works"
+   ```
+
+   `env -i` matters: it stops the operator's own Claude Code credentials leaking into the test and giving a false pass. Verified working this way on 10 August 2026 against a 128k pod, which returned `pod-works`. Put that real prompt and reply on the page.
+5. `c12` card (`ok` border removed): teardown, with the exact commands in a `<pre>`, one per resource, labelled with what data dies with each.
+6. `c12` card: the cost and residency gate result as a `row` table, one line per check, so the decision to spend is auditable later.
+7. **Privacy path only** — `c12` card: the ten-row data flow table from `trust-boundary.md` section 4, with the real region in every cell and row 9 left as "unconfirmed" unless RunPod has answered in writing. Then a `c12` card carrying the reviewer paragraph from section 6, in a `<pre>` so it can be copied verbatim into the customer's own documentation.
+8. `c12` card: what this setup will not do. Both URLs change if the pod is ever recreated, and the interface goes down with the pod.
+
+Two keys, two rules. The **RunPod account key** never appears on this page, including truncated; if it has been exposed anywhere, the page says to rotate it instead. The **vLLM door key** does appear, in the Claude Code card, because handing it over is that card's whole job; the card therefore also says, in its `tiny` line, that this file now works like a password and to rotate the key (restart vLLM with a fresh one) if the page is ever shared.
 
 This report is a running meter. End it with a `c12` card carrying the teardown command again, and the plain line that nothing here turns itself off.
 

@@ -57,7 +57,25 @@ Then, in this order:
 1. **The Pod.** The hourly rate stops here. Do this first even if a later step might fail.
 2. **The network volume.** Only after the pod is gone, or the delete is refused as in-use. Ask first: this is where all the chat history lives.
 
-Discover the exact delete commands from the provider skills or `--help`. Do not hardcode them from memory here; that is how teardown silently fails.
+Verify with `--help` before running, since the CLI moves. These forms were verified on runpodctl 2.8.1 on 10 August 2026:
+
+```bash
+runpodctl pod delete <POD_ID>                  # aliases: rm, remove
+runpodctl network-volume delete <VOLUME_ID>    # alias: nv
+```
+
+The REST equivalents were also verified working the same day, and return **HTTP 204** with an empty body on success:
+
+```bash
+curl -X DELETE https://rest.runpod.io/v1/pods/<POD_ID> \
+  -H "Authorization: Bearer $RUNPOD_API_KEY"
+curl -X DELETE https://rest.runpod.io/v1/networkvolumes/<VOLUME_ID> \
+  -H "Authorization: Bearer $RUNPOD_API_KEY"
+```
+
+**204 with an empty body is success, not a failure to report.** Do not treat the empty response as an error and retry blindly. Confirm with the list check in section 3 instead.
+
+**`currentSpendPerHr` on the account lags behind a delete.** On 10 August 2026 it still reported the old rate immediately after a pod was destroyed and verified absent from `pod list`. The resource list is authoritative; the spend figure catches up. Never tell the user a delete failed on the strength of the spend number alone.
 
 ## 3. Verify, do not assume
 
@@ -78,7 +96,7 @@ End by stating the account is clear, and name what remains if anything does. If 
 Say this before deleting, not after.
 
 - **The network volume**: everything at `/app/backend/data` plus the model cache. Chat history, user accounts, settings, uploaded RAG documents, vector embeddings, and the weights. There is no copy anywhere else, and re-downloading the model is billed pod time.
-- **The Pod**: nothing beyond the volume, if one was attached. If it was not, everything written inside the container was already lost on the first restart.
+- **The Pod**: nothing beyond the volume, if one was attached. If it was not, everything written inside the container was already lost on the first restart. Both URLs die with it, chat and API, so any machine running the report's Claude Code block loses its connection; a rebuild issues a new pod ID and a new key, meaning a new report.
 
 If the user has chat history worth keeping, Open WebUI can export conversations from its own settings before teardown. Offer that once, then proceed.
 

@@ -1,7 +1,7 @@
 {
   "name": "local-ai",
   "description": "From nothing to a working AI setup you own. Scans the machine for models that fit, installs and wires up the right app with consent at every download, shares it over a private URL, and rents a cloud GPU when a model is too big. Needs shell access.",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "author": {
     "name": "BenAI"
   },
