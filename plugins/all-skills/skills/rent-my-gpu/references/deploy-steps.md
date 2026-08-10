@@ -14,12 +14,13 @@ The runbook. One build: a single Secure Cloud pod with two locked doors. Open We
 
 One credential, created at **https://console.runpod.io/user/settings** → API Keys, read/write scope. Give the user that exact URL as a link, not just the click path. Verified 6 August 2026.
 
-Ask them to paste the key in chat, then set `RUNPOD_API_KEY` in the session environment yourself. **Never show the user an `export` line or any shell command; they are non-technical.**
+Ask them to paste the key in chat, then put it straight into each `runpodctl` call that needs it. **Never show the user an `export` line or any shell command; they are non-technical.**
 
 Rules:
 
 - **Never write the key to a file**, never put it in the report. Echoing it is fine: shell state does not persist between commands, so the key has to stay readable to be reused in the ones that follow. It lands in the transcript, so tell the user to rotate it if that is ever shared.
 - `runpodctl doctor` offers to persist the key to its own config. That is the user's choice; ask.
+- **If the key has dropped out of context**, ask the user to paste it again. A deploy is long enough to be summarised. Never reconstruct it from memory: every call 401s and it reads as a broken pod rather than a bad key.
 - **If the key is ever exposed** in a screenshot, a shared terminal or a pasted log, tell the user to rotate it immediately.
 
 Verify before spending:

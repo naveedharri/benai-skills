@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Expert automation plugins that turn Claude into a specialist for your team. Install by department to get skills for marketing, sales, operations, creative, and product workflows.",
-    "version": "1.14.1"
+    "version": "1.14.2"
   },
   "plugins": [
     {
@@ -59,7 +59,7 @@
       "displayName": "All Skills",
       "source": "./plugins/all-skills",
       "description": "Every BenAI skill in one install. All 113 skills across marketing, sales, SEO, ads, design, YouTube, creative, operations, second-brain OS, Marketing OS, and general productivity. Add this one plugin to get the complete library.",
-      "version": "1.10.1",
+      "version": "1.10.2",
       "author": {
         "name": "BenAI"
       },
@@ -433,7 +433,7 @@
       "displayName": "Local AI",
       "source": "./plugins/local-ai",
       "description": "From nothing to a working AI setup you own. Scans the machine for models that fit, installs and wires up the right app with consent at every download, shares it over a private URL, and rents a cloud GPU when a model is too big. Needs shell access.",
-      "version": "1.5.1",
+      "version": "1.5.2",
       "author": {
         "name": "BenAI"
       },

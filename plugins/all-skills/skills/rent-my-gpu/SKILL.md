@@ -55,9 +55,11 @@ Guide them to the credential for the provider they picked, and only that one. **
 - **OVH**: https://www.ovh.com/manager/ (redirects to their regional manager) → Public Cloud → AI & Machine Learning → AI Endpoints → API keys. The keyless trial at 2 requests/min can prove the route before they create anything; raw curl only, since Open WebUI cannot use it. `ovh-endpoints.md` section 3.
 - **RunPod**: https://console.runpod.io/user/settings → API Keys, needs read/write since it creates a pod. `deploy-steps.md` section 1.
 
-**Never show the user shell commands or `export` lines. These are non-technical people.** Say: "paste the key here and I will handle the rest." You set it in the session environment yourself.
+**Never show the user shell commands or `export` lines. These are non-technical people.** Say: "paste the key here and I will handle the rest." You hold the key from there and put it into each command that needs it yourself.
 
 Same rules either way: never written to a file, never in the report. Echoing it is fine, and usually necessary: shell state does not persist between commands, so the key has to stay readable in order to be reused in the ones that follow. It therefore sits in the transcript, so if that transcript, a screenshot or a pasted log is ever shared, tell the user to rotate the key.
+
+**If the key is no longer in context, ask the user to paste it again.** A long provisioning run can be summarised, and the key goes with it. One short re-ask costs a moment. Reconstructing it from memory costs a run: a wrong key fails every call, and 401s partway through a deploy read as a broken pod rather than a bad credential. Never continue on a guess.
 
 Then continue with the picked route below.
 
