@@ -57,7 +57,7 @@ Guide them to the credential for the provider they picked, and only that one. **
 
 **Never show the user shell commands or `export` lines. These are non-technical people.** Say: "paste the key here and I will handle the rest." You set it in the session environment yourself.
 
-Same rules either way: session environment only, never written to a file, never echoed, never in the report; show the last four characters to prove it is set. If a key is ever exposed in a screenshot, a shared terminal or a pasted log, tell the user to rotate it immediately.
+Same rules either way: never written to a file, never in the report. Echoing it is fine, and usually necessary: shell state does not persist between commands, so the key has to stay readable in order to be reused in the ones that follow. It therefore sits in the transcript, so if that transcript, a screenshot or a pasted log is ever shared, tell the user to rotate the key.
 
 Then continue with the picked route below.
 

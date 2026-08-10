@@ -65,7 +65,7 @@ Two tiers, both verified:
 - **The key comes from the OVHcloud Manager**: https://www.ovh.com/manager/ (redirects to their regional manager, verified 6 August 2026) → Public Cloud → AI & Machine Learning → AI Endpoints → API keys. Keys are scoped to a Public Cloud project and carry a validity period the user sets. The user creates it themselves; never ask them to paste it into anything but the session environment. **Give the URL as a link, not just the click path.**
 - A wrong or expired key returns **403**, not 401.
 - Ask them to paste the key in chat and set it in the session environment yourself. **Never show the user an `export` line or any shell command; they are non-technical.**
-- Same handling rules as every credential in this plugin: never write it to a file, never echo it, never put it in the report. Show the last four characters to prove it is set.
+- Same handling rules as every credential in this plugin: never write it to a file, never put it in the report. Echoing it is fine, since shell state does not persist between commands and the key has to stay reusable. It lands in the transcript, so tell the user to rotate it if that is ever shared.
 
 **On tooling:** unlike Route B, this route installs nothing. OVH ships no official agent skills, and its official MCP server (labs.ovhcloud.com/en/mcp-server) was still Labs-status with unspecified coverage on 6 August 2026. That is fine: the whole route is two curl calls against a public endpoint, and key creation stays with the user in the Manager. Revisit the MCP server when it leaves Labs, for usage and billing reads in the report.
 

@@ -18,7 +18,7 @@ Ask them to paste the key in chat, then set `RUNPOD_API_KEY` in the session envi
 
 Rules:
 
-- **Never write the key to a file**, never echo it, never put it in the report. To show it is set, show the last four characters.
+- **Never write the key to a file**, never put it in the report. Echoing it is fine: shell state does not persist between commands, so the key has to stay readable to be reused in the ones that follow. It lands in the transcript, so tell the user to rotate it if that is ever shared.
 - `runpodctl doctor` offers to persist the key to its own config. That is the user's choice; ask.
 - **If the key is ever exposed** in a screenshot, a shared terminal or a pasted log, tell the user to rotate it immediately.
 
