@@ -182,6 +182,15 @@ Always label both columns with a `row head`. Add `hot` to the row that applies t
 1. `c12` recommended card (`ok`): the URL, big, plus the real prompt sent and the real reply received.
 2. `c4` × 3: how to restart it, what is installed, what it cannot do.
 3. `c12` card: the pre-empted confusions from `handover.md`, as a checklist.
+4. **local-ai-setup only, when step 6b ran and the CLI test passed.** `c12` card titled "Use it from Claude Code". The chat window is what this page is about, so this card sits below the confusions, not at the top.
+
+   The full launch block in a `<pre>`, every value real, so it pastes and runs with nothing to look up. Copy the variable set from `claude-code-wiring.md` section 4 verbatim, with the model ID exactly as `ollama list` prints it including the tag after the colon. Under the `<pre>`, four `li` lines: the two `OLLAMA_` variables the server must be running with and that the server has to be restarted to pick them up; it must be `ANTHROPIC_AUTH_TOKEN` and not `ANTHROPIC_API_KEY`, with any non empty value; every alias points at the one installed model; and unlike a rented pod nothing here expires, so the block keeps working as long as Ollama is running.
+
+   Then the real `claude -p` prompt and the real reply underneath, as sent and as received. If the reply carried stray system prompt text, print that too rather than tidying it: it is the honest picture of a small model driving an agent. A `sub` line offers the `~/.claude/settings.json` `env` form from section 5, carrying its warning that this makes the local model the default for every project on the machine.
+
+   Close the card with a `tiny` line naming the way back to the hosted model, from section 7. A user who cannot find that concludes Claude Code is broken.
+
+   Never print this card on the strength of the endpoint returning 200. Ollama answers 200 while feeding the model a truncated prompt, and the session then invents tool results with exit code 0. The card goes on the page only after `claude -p` returned the sentinel and the server log carried no `truncating input prompt` line.
 
 **allow-team** — `share-YYYY-MM-DD.html`
 1. `c12` recommended card (`ok`): the public URL in `kpi grad` at full width, and the two verification codes as a `row` table labelled sign in page and api without a session, with the required value beside each.
@@ -191,7 +200,7 @@ Always label both columns with a `row head`. Add `hot` to the row that applies t
 
 This report is a live door key, even without a password in it. End it with a `c12` card saying the tunnel is for a session and not a deployment, carrying the stop command again.
 
-**rent-my-gpu** — `rented-YYYY-MM-DD.html`
+**rented-server-setup** — `rented-YYYY-MM-DD.html`
 1. `c12` recommended card (`ok`): the Open WebUI chat URL in `kpi grad` at full width, then the real prompt sent and the real reply received underneath it.
 2. `c4` × 3: the model with its index score and licence as chips. The GPU, count and region. The cost, as hourly in `kpi` with the monthly projection as `kpi-l`.
 3. `c12` card: first login, as a numbered checklist. The first account to register becomes admin, so they must create theirs before sharing the URL. Signup is already off.

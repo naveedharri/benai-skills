@@ -1,6 +1,6 @@
 # Teardown
 
-A first class entry point, not a footnote. `/rent-my-gpu teardown` runs this.
+A first class entry point, not a footnote. `/rented-server-setup teardown` runs this.
 
 ## Route A first: there is nothing to tear down
 

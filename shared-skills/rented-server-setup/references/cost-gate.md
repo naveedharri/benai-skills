@@ -95,7 +95,7 @@ Here is what I am about to create, and what it costs.
   and it runs through the whole setup above.
 
   To stop it later, or now:
-    /rent-my-gpu teardown
+    /rented-server-setup teardown
 
 Shall I go ahead?
 ```

@@ -1,9 +1,9 @@
 ---
-name: rent-my-gpu
+name: rented-server-setup
 description: Runs an open model in the cloud two ways, and makes the user choose with real numbers. Route A is OVHcloud AI Endpoints, an EU-owned per-token API with zero idle cost, for spiky usage and EU jurisdiction. Route B rents one single-tenant RunPod GPU pod in a region the user picks, serving the model on vLLM behind a generated API key, with Open WebUI behind its own login and a URL Claude Code can use directly, for sustained use, unlisted models, or single tenancy. Use when the user says "rent a GPU", "run a big model in the cloud", "my machine cannot run this model", "deploy an open model", "host Qwen or DeepSeek or GLM myself", "put Open WebUI online", "give my team a private ChatGPT", "private AI for my business", "GDPR compliant LLM hosting", "data must stay in the EU", "EU AI API", "pay per token", "OVHcloud", "AI Endpoints", "RunPod", or "cloud GPU". Asks which build fits, never picks a region, and always shows cost before spending. Requires shell and internet access; refuses to run in a sandbox.
 ---
 
-# Rent My GPU
+# Rented Server Setup
 
 The cloud counterpart to `scan-my-machine`. That skill tells someone what their laptop can run. This one runs what it cannot, and it carries two builds because "run a big model in the cloud" has two honest answers depending on usage shape and what "private" means:
 
@@ -201,7 +201,7 @@ Keep the chat summary to three lines and the file path. The page carries the det
 
 ## Teardown
 
-Treat `/rent-my-gpu teardown` as a first class entry point. Follow `references/teardown.md`. On Route B it lists every billing resource in the order that stops the money soonest, and verifies each is gone rather than trusting the delete call. On Route A there is nothing that bills at idle; teardown is revoking the key.
+Treat `/rented-server-setup teardown` as a first class entry point. Follow `references/teardown.md`. On Route B it lists every billing resource in the order that stops the money soonest, and verifies each is gone rather than trusting the delete call. On Route A there is nothing that bills at idle; teardown is revoking the key.
 
 Money keeps running until teardown on Route B. That makes it part of the skill, not an afterthought.
 

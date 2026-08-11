@@ -191,7 +191,7 @@ Always label both columns with a `row head`. Add `hot` to the row that applies t
 
 This report is a live door key, even without a password in it. End it with a `c12` card saying the tunnel is for a session and not a deployment, carrying the stop command again.
 
-**rent-my-gpu, Route A** — `endpoint-YYYY-MM-DD.html`
+**rented-server-setup, Route A** — `endpoint-YYYY-MM-DD.html`
 1. `c12` recommended card (`ok`): the base URL in `kpi grad`, the model ID as a chip, then the real prompt sent and the real reply received underneath.
 2. `c4` × 3 number tiles: price per 1M input tokens, price per 1M output tokens, and the monthly anchor at a stated volume, all read from the catalog today with the date in the tile's `tiny` line.
 3. `c12` card: wiring, one `row` per app from `ovh-endpoints.md` section 5, with the exact base URL and where the key goes.
@@ -203,7 +203,7 @@ Never put the API key on this page, including truncated. There is no teardown ca
 
 **Team shape**: the `ok` card carries the shared Open WebUI URL instead of the raw base URL, add the first-login admin checklist from the Route B layout, and card 4 becomes a real teardown card: delete the VPS in the Manager, chat history dies with it, ~€5/mo until then.
 
-**rent-my-gpu, Route B** — `rented-YYYY-MM-DD.html`
+**rented-server-setup, Route B** — `rented-YYYY-MM-DD.html`
 
 **This report is the handover for the whole pod, not a Claude Code cheatsheet.** The pod has two doors and the page documents both, in this order of prominence:
 

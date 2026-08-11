@@ -595,8 +595,8 @@
           "displayName": "Marketing OS Research",
           "summary": "Answer an open question the OS already wrote down, fact-check every hard claim with a verdict, then write the research file and promote that question to a finding"
         },
-        "rent-my-gpu": {
-          "displayName": "Rent My GPU",
+        "rented-server-setup": {
+          "displayName": "Rented Server Setup",
           "summary": "Runs an open model in the cloud two ways, priced side by side: OVHcloud AI Endpoints per token in the EU, or one single-tenant RunPod pod serving Open WebUI plus a keyed API URL Claude Code can use"
         }
       }
@@ -1254,8 +1254,8 @@
           "displayName": "Allow Team",
           "summary": "Puts a running Open WebUI or Odysseus on a password protected ngrok URL so a teammate can use it without installing anything"
         },
-        "rent-my-gpu": {
-          "displayName": "Rent My GPU",
+        "rented-server-setup": {
+          "displayName": "Rented Server Setup",
           "summary": "Runs an open model in the cloud two ways, priced side by side: OVHcloud AI Endpoints per token in the EU, or one single-tenant RunPod pod serving Open WebUI plus a keyed API URL Claude Code can use"
         }
       }

@@ -27,6 +27,8 @@ Pick the one or two that apply and state them before the user hits them. Each of
 | LM Studio as the backend | Its server must be started in the Developer tab each time, or the connection will refuse. |
 | Open WebUI | It is a web app, so it needs the server running. A refused connection means the server stopped, not that it broke. |
 | Any local setup at all | Memory is shared. A long conversation or a big pasted document can exhaust it and cause a crash on a model that worked fine before. Start a new chat to clear it. |
+| Claude Code wired to the local model, from step 6b | The model name in the status line is how they tell which one they are talking to. If it reads the Ollama tag, the session is local. Give them the way back to the hosted model in the same breath, from `claude-code-wiring.md` section 7. |
+| Claude Code wired to the local model, and Ollama restarted since | The context variables are read at startup, so a server restarted without them puts the session back to a 4,096 token window. It will not error. It will answer confidently and wrongly. Restart it with the variables set. |
 
 ## 3. What not to say
 
