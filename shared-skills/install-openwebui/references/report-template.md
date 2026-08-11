@@ -184,13 +184,37 @@ Always label both columns with a `row head`. Add `hot` to the row that applies t
 3. `c12` card: the pre-empted confusions from `handover.md`, as a checklist.
 4. **local-ai-setup only, when step 6b ran and the CLI test passed.** `c12` card titled "Use it from Claude Code". The chat window is what this page is about, so this card sits below the confusions, not at the top.
 
-   The full launch block in a `<pre>`, every value real, so it pastes and runs with nothing to look up. Copy the variable set from `claude-code-wiring.md` section 4 verbatim, with the model ID exactly as `ollama list` prints it including the tag after the colon. Under the `<pre>`, four `li` lines: the two `OLLAMA_` variables the server must be running with and that the server has to be restarted to pick them up; it must be `ANTHROPIC_AUTH_TOKEN` and not `ANTHROPIC_API_KEY`, with any non empty value; every alias points at the one installed model; and unlike a rented pod nothing here expires, so the block keeps working as long as Ollama is running.
+   **One `<pre>`, carrying the model this run actually installed**, with the tag exactly as `ollama list` prints it. The user pastes the whole block, in this order, into one terminal and lands in Claude Code:
 
-   Then the real `claude -p` prompt and the real reply underneath, as sent and as received. If the reply carried stray system prompt text, print that too rather than tidying it: it is the honest picture of a small model driving an agent. A `sub` line offers the `~/.claude/settings.json` `env` form from section 5, carrying its warning that this makes the local model the default for every project on the machine.
+   ```
+   OLLAMA_CONTEXT_LENGTH=32768 OLLAMA_NUM_PARALLEL=1 ollama serve > /tmp/ollama.log 2>&1 &
+   sleep 5
+   ollama launch claude --model qwen3:8b
+   ```
 
-   Close the card with a `tiny` line naming the way back to the hosted model, from section 7. A user who cannot find that concludes Claude Code is broken.
+   Verified working in exactly this order on 11 August 2026: `n_ctx = 32768`, zero truncation, Claude Code running in the foreground. Every part of the first two lines is load-bearing, so do not tidy them away:
 
-   Never print this card on the strength of the endpoint returning 200. Ollama answers 200 while feeding the model a truncated prompt, and the session then invents tool results with exit code 0. The card goes on the page only after `claude -p` returned the sentinel and the server log carried no `truncating input prompt` line.
+   - **The `&`.** Without it `ollama serve` holds the terminal and the third line never runs. The server belongs in the background; Claude Code is the foreground process, which is the whole point.
+   - **The redirect.** Without it the server's log interleaves with Claude Code's interface. It also gives a log path, which is the only way to check for silent truncation later.
+   - **The `sleep 5`.** The server needs a second or two to bind, and `ollama launch` run too early exits with `could not connect to ollama server`.
+   - **`OLLAMA_CONTEXT_LENGTH` sized from the table** in `claude-code-wiring.md` section 3, against this machine's memory. Not a copied 32768 unless that is what the machine takes.
+
+   Do not add a `brew services` line, a login item, or anything that makes Ollama permanent. The user asked for a command, not a service.
+
+   Resist pasting the export block here too. `ollama launch claude` does the wiring, so a card carrying seven `export` lines was written from the old shape of this skill rather than from `claude-code-wiring.md` section 2. The manual block belongs on the page only when `launch` was genuinely unavailable, and then it replaces the last line rather than joining it.
+
+   Under the `<pre>`, four `li` lines:
+
+   - **If the first line says the address is already in use, stop and read.** Another Ollama is already running, the context setting was silently ignored, and `launch` will connect to that old server with its default window. This is the trap the whole card exists to avoid, so it goes first.
+   - Run the block again in a new terminal any time. Nothing here expires, unlike a rented pod.
+   - The model name in Claude Code's status line is how to tell a local session from a hosted one.
+   - Quitting Claude Code leaves the server running. `pkill -f "ollama serve"` stops it, and closing the terminal does not.
+
+   Then the real prompt and the real reply underneath, as sent and as received. If the reply carried stray system prompt text, print that too rather than tidying it: it is the honest picture of a small model driving an agent.
+
+   Close the card with a `tiny` line saying the undo is closing the session, because `ollama launch` does not modify `~/.claude/settings.json`. A user who cannot find the way back concludes Claude Code is broken.
+
+   Never print this card on the strength of the endpoint returning 200. Ollama answers 200 while feeding the model a truncated prompt, and the session then invents tool results with exit code 0. The card goes on the page only after the headless launch returned the sentinel **and** the server log carried zero `truncating input prompt` lines. Both signals, per section 7.
 
 **allow-team** — `share-YYYY-MM-DD.html`
 1. `c12` recommended card (`ok`): the public URL in `kpi grad` at full width, and the two verification codes as a `row` table labelled sign in page and api without a session, with the required value beside each.
