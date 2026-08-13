@@ -68,7 +68,7 @@ if (process.env.MCP_VIDIQ_KEY) {
 if (process.env.MCP_APIFY_KEY) {
   servers.apify = {
     type: "http",
-    url: process.env.MCP_APIFY_URL || "https://mcp.apify.com/?tools=apidojo/twitter-scraper-lite,apidojo/tweet-scraper,automation-lab/youtube-scraper",
+    url: process.env.MCP_APIFY_URL || "https://mcp.apify.com/?tools=apidojo/twitter-scraper-lite,apidojo/tweet-scraper,xquik/x-tweet-scraper,xquik/x-follower-scraper,automation-lab/youtube-scraper",
     headers: { Authorization: `Bearer ${process.env.MCP_APIFY_KEY}` },
   };
 }

@@ -1,7 +1,7 @@
 {
   "name": "benai-marketing",
-  "description": "The BenAI marketing OS as skills: research, copywriting in Ben's voice, design systems, carousels, thumbnails, video editing, and analytics. competitor-radar and analytics-dashboard are schedule-ready.",
-  "version": "1.5.2",
+  "description": "The BenAI marketing OS as skills: research, public X collection, copywriting in Ben's voice, design systems, carousels, thumbnails, video editing, and analytics. competitor-radar and analytics-dashboard are schedule-ready.",
+  "version": "1.6.0",
   "author": {
     "name": "BenAI"
   },

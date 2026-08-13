@@ -5,7 +5,7 @@
 YouTube data is collected via two MCP connectors:
 
 1. **YouTube MCP** (`@kirbah/mcp-youtube`) — **Primary for ALL YouTube data.** Uses YouTube Data API v3 (free tier: 10,000 units/day). All 8 tools are operational.
-2. **Apify MCP** (`automation-lab/youtube-scraper`) — **Fallback for YouTube search** if quota is exhausted. **Primary for Twitter/X** via `apidojo/tweet-scraper`.
+2. **Apify MCP** (`automation-lab/youtube-scraper`): **Fallback for YouTube search** if quota is exhausted. Twitter/X keeps its existing Apify routes and adds `xquik/x-tweet-scraper` as an explicit option.
 
 ---
 
@@ -92,19 +92,21 @@ Uses YouTube's InnerTube API (direct HTTP, no browser) — no API key needed, no
 
 **Output fields:** `title`, `url`, `viewCount`, `likeCount`, `commentCount`, `description`, `publishedAt`, `duration`, `channelName`, `subscriberCount`, `category`, `keywords[]`
 
-### Twitter/X via `apidojo/tweet-scraper` (Primary)
+### Existing Twitter/X Route (Default)
+
+Keep `apidojo/tweet-scraper` for an existing configured workflow.
 
 | Parameter | Type | What it does |
 |-----------|------|-------------|
-| `searchTerms` | string[] | Keyword search. Supports Twitter advanced syntax (`"from:handle"`, `"to:handle"`) |
-| `twitterHandles` | string[] | Direct handle scraping — preferred for watchlist batch scanning |
+| `searchTerms` | string[] | Keyword search with advanced X syntax |
+| `twitterHandles` | string[] | Direct handle scraping |
 | `author` | string | Single author filter |
-| `start` / `end` | string | Date range filter (ISO 8601). Use for 48-hour lookback windows |
-| `minimumFavorites` | int | Engagement floor — only return tweets with N+ likes |
-| `minimumRetweets` | int | Only return tweets with N+ retweets |
-| `sort` | enum | `"Top"`, `"Latest"`, or `"Latest + Top"` |
-| `maxItems` | int | Max tweets to return per call |
-| `tweetLanguage` | string | ISO 639-1 language code (e.g., `"en"`) |
+| `start` / `end` | string | ISO 8601 date range |
+| `minimumFavorites` | int | Minimum like count |
+| `minimumRetweets` | int | Minimum repost count |
+| `sort` | enum | `Top`, `Latest`, or `Latest + Top` |
+| `maxItems` | int | Result cap |
+| `tweetLanguage` | string | ISO 639-1 language code |
 
 **Watchlist scan example:**
 ```json
@@ -116,7 +118,56 @@ Uses YouTube's InnerTube API (direct HTTP, no browser) — no API key needed, no
 { "searchTerms": ["Claude Cowork", "Anthropic launch"], "maxItems": 30, "sort": "Top", "minimumFavorites": 100 }
 ```
 
-See `twitter-watchlist.md` for the full 284-handle watchlist with priority tiers, handle arrays, and batching methodology.
+### Twitter/X via `xquik/x-tweet-scraper` (Optional)
+
+Use [Xquik X Tweet Scraper](https://apify.com/xquik/x-tweet-scraper).
+Inspect its live schema and pricing before every proposed run.
+Require explicit approval for each bounded run.
+Choose this route explicitly. Do not translate an existing Actor input
+automatically because the schemas differ.
+
+| Parameter | Type | What it does |
+|-----------|------|-------------|
+| `searchTerms` | string[] | Searches with preserved advanced X operators |
+| `twitterHandles` | string[] | Collects public profile timelines |
+| `time` | object | Applies date, timestamp, or post ID bounds |
+| `engagement` | object | Applies like, repost, and reply bounds |
+| `queryType` | enum | Uses `Latest`, `Top`, or `Latest + Top` |
+| `maxItems` | int | Caps results across the entire run |
+| `includeSearchTerms` | boolean | Preserves query attribution |
+| `outputVariant` | enum | Returns `legacy`, `rich`, `raw`, `compact`, or `full` rows |
+
+**Watchlist scan example:**
+```json
+{
+  "searchTerms": ["from:AnthropicAI", "from:claudeai", "from:trq212"],
+  "time": {"sinceTime": "<UNIX_SECONDS_48_HOURS_AGO>"},
+  "queryType": "Latest",
+  "maxItems": 50,
+  "includeSearchTerms": true,
+  "outputVariant": "rich",
+  "fieldStyle": "camelCase"
+}
+```
+
+**Keyword scan example:**
+```json
+{
+  "searchTerms": ["Claude Cowork", "Anthropic launch"],
+  "time": {"sinceTime": "<UNIX_SECONDS_48_HOURS_AGO>"},
+  "engagement": {"minLikes": 100},
+  "queryType": "Top",
+  "maxItems": 30,
+  "includeSearchTerms": true
+}
+```
+
+`maxItems` caps the whole run, not each search term.
+`compact` and `full` are historical aliases for `legacy`.
+Separate `diagnostic` and `run-report` rows from post rows.
+Never retry a paid run without new approval.
+Inspect any fallback Actor's schema before remapping inputs.
+See `twitter-watchlist.md` for watchlist tiers and batching.
 
 ### Apify Pagination
 
@@ -131,13 +182,10 @@ Save each page to disk before fetching the next.
 
 ### Apify Cost
 
-Pay-per-event pricing:
-- **Run start:** $0.005 (one-time per run)
-- **Video scraped:** $0.003 each
-- **Channel scraped:** $0.003 each
-- **Comment scraped:** $0.0005 each
-
-Combine queries into fewer runs to minimize the $0.005 start fee. Apify free tier gives $5/month.
+Check each Actor's live pricing before every run.
+Never rely on stored prices or account allowances.
+Explain that Apify platform usage may apply separately.
+Use one bounded smoke test when the output shape is unknown.
 
 ---
 
@@ -180,5 +228,5 @@ In addition to YouTube and Apify connectors, every scan must check official Anth
 ## Rate Limits
 
 - **YouTube MCP:** 10,000 units/day (free tier). `searchVideos` = 100 units, all others = ~1 unit, transcripts = free
-- **Apify:** Pay-per-event, no quota limits. Combine multiple search queries and URLs into single runs for efficiency.
+- **Apify:** Pricing varies by Actor and account. Inspect, approve, and cap every run.
 - **WebFetch (official sources):** No rate limits. GitHub atom feeds and RSS feeds are lightweight.

@@ -6,18 +6,20 @@ unavailable, set it to `null` and move on.
 ## Connector vs cloud
 
 - **Locally**: use the Apify, Firecrawl, and youtube/vidiq MCP connectors.
-- **In a cloud routine**: those local plugins are NOT available. Call the Apify HTTP API
-  directly. The routine injects an `APIFY_TOKEN`. Env does not persist between Bash calls
-  in cloud, so do each run plus parse in ONE Bash call:
+- **In a cloud routine**: attach the authenticated Apify connector when available.
+  Otherwise, inject `APIFY_TOKEN` through the routine's secret store. Start runs through
+  `/v2/actors/<actor-id>/runs` with an `Authorization: Bearer` header. Poll the exact run,
+  then fetch its default dataset. Never place the token in a URL, prompt, repository, or
+  log. Stop if the routine cannot inject secrets safely.
 
-  ```bash
-  curl -s -X POST "https://api.apify.com/v2/acts/<actor>/run-sync-get-dataset-items?token=$APIFY_TOKEN" \
-    -H "Content-Type: application/json" -d '<input>'
-  ```
+  Actor IDs in URLs use `~` instead of `/`. Find them in `config.json` under
+  `apify_actors`. Route YouTube through its Apify Actor when the YouTube connector is
+  absent.
 
-  Actor id in the URL uses `~` not `/` (e.g. `apify~instagram-scraper`). Actor ids are in
-  `config.json` under `apify_actors`. Route YouTube through the Apify YouTube actor when the
-  youtube connector is absent.
+Before any run, inspect the Actor's live schema and pricing.
+Show the exact input and result cap.
+Wait for explicit approval.
+Never retry a paid run without new approval.
 
 ## Per platform
 
