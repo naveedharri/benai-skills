@@ -270,6 +270,43 @@ Personal library for swipe files, prompts, frameworks, templates, and reference 
 - **Obsidian Bases** — native database views, no plugins needed
 - **Defuddle** — web content extraction (`defuddle parse <url> --md`)
 
+### Vault OS — Baalda (2 skills)
+| Skill | Command | Purpose |
+|-------|---------|---------|
+| baalda-setup | `/baalda-setup` | Bootstrap the second-brain structure inside a Baalda vault + onboarding |
+| baalda-optimizer | `/baalda-optimizer` | 9-framework vault audit, checkpoint-aware, doc_id-safe |
+
+The Baalda counterpart to the Obsidian plugin: the same second-brain idea on a different host app, so
+both skills are Baalda-native forks of `os-setup` / `os-optimizer`.
+
+**Deliberately just those two.** The Obsidian plugin also carries `os-mcp` (deploy a Relay MCP server
+to Railway) and `team-os` (install a Relay fork) because neither capability exists in Obsidian. In
+Baalda both are product features with their own UI — **Vault settings → MCP** mints a token and hands
+over the exact `claude mcp add` command, **Members** and **Access** are point-and-click — and
+importing is a button plus the syntax cleanup that `baalda-optimizer` already audits. A skill for any
+of those would only narrate the app. The invariants below carry that knowledge instead, and every
+skill added here later must respect them.
+
+**What every skill in this plugin must respect** (these are app invariants, not preferences):
+
+- **`.context/` is off-limits.** `<vault>/.context/` holds Baalda's SQLite index, the CRDT update
+  log and the doc-id map. Never read, write, walk, index or commit it. Same for `attachments/`,
+  which the app syncs on its own.
+- **A note's identity is its `doc_id`, not its path.** Content edits from any tool are safe and
+  merge live (the watcher picks them up in ~150ms). But an external `mv`/`rm` on a *synced* note
+  reads as delete-then-create: the note gets a new `doc_id` and loses its history, backlinks and
+  sharing. Moves, renames and deletes go through the app or the MCP `move_note` / `move_folder` /
+  `delete_note` tools. `test -f .context/config.json` is how you detect a synced vault.
+- **Markdown Baalda actually renders:** frontmatter, `[[wikilinks]]`, `#tags`, `- [ ]` tasks,
+  tables, fenced code, `![alt](path)` images (PDFs render inline), small inline HTML. Obsidian-only
+  syntax (`![[embeds]]`, `> [!callout]`, `==highlight==`, `%%comment%%`) renders as literal text.
+- **Safety nets exist — use them.** Vault checkpoints (**Vault settings → Versioning**, owner/admin,
+  max 5) capture every note plus the folder tree; per-note history reverts one file. Offer a
+  checkpoint before any bulk apply.
+- **Permissions are real and inherited.** Vault-level **Shared / Read-only / Private**, overridable
+  per folder or note, flowing down; a Read-only lock caps admins too. An MCP token mirrors the
+  person who minted it — it can never exceed what that human can see.
+
 ## n8n Skill
 
 ### Configuration

@@ -1,0 +1,39 @@
+<!--
+One finding card. The skill renders one of these per finding (capped at
+top-25 per framework) and concatenates into the section's {{FINDINGS_HTML}}.
+
+Substitute:
+
+  {{SEVERITY_CLASS}}    fail | warn | info  (drives left border color)
+  {{SEVERITY_LABEL}}    FAIL | WARN | INFO  (uppercase pill text)
+  {{CHECK_ID}}          F1.2 | F2.4 | F3.1 | …
+  {{CHECK_NAME}}        "Specificity heuristic" | "Dead wikilinks" | …
+  {{PATH}}              ./Projects/foo/CLAUDE.md
+  {{LINE}}              :42  (or empty string if line not applicable)
+  {{EXCERPT}}           the matched line or surrounding context (HTML-escape it!)
+  {{REASONING}}         1-2 sentences explaining why THIS specific case
+                        violates the framework rule given THIS file's content.
+                        Mandatory — every finding has reasoning.
+                        (HTML-escape it!)
+  {{ACTION}}            the remediation text (HTML-escape it!)
+  {{STATUS_PILL}}       Three-state pill, computed from finding.fixable & finding.fixed:
+                          fixable:false                 → <span class="pill flag">FLAG-ONLY</span>
+                          fixable:true && fixed:false   → <span class="pill fixable">FIXABLE · NOT APPLIED</span>
+                          fixable:true && fixed:true    → <span class="pill fixed">FIXED THIS RUN</span>
+  {{CITATION}}          "anthropic-claude-md.md → Specificity beats vagueness"
+
+NOTE on HTML escaping: when substituting EXCERPT, REASONING, and ACTION,
+escape `<`, `>`, `&`, `"` so user content doesn't break the HTML.
+-->
+<div class="finding {{SEVERITY_CLASS}}">
+  <div class="top">
+    <span class="pill {{SEVERITY_CLASS}}">{{SEVERITY_LABEL}}</span>
+    {{STATUS_PILL}}
+    <span class="check-id">{{CHECK_ID}} · {{CHECK_NAME}}</span>
+  </div>
+  <div class="path">{{PATH}}{{LINE}}</div>
+  <div class="excerpt">{{EXCERPT}}</div>
+  <div class="reasoning"><strong>Why flagged:</strong> {{REASONING}}</div>
+  <div class="action"><strong>Action:</strong> {{ACTION}}</div>
+  <div class="citation">{{CITATION}}</div>
+</div>

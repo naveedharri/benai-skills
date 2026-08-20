@@ -137,6 +137,19 @@ Ten folders (Context, Channels, Content, Campaigns, Intelligence, Analytics, Res
 
 ---
 
+### Vault OS — Baalda (2 skills)
+| Skill | Command | Purpose |
+|-------|---------|---------|
+| Baalda Setup | `/baalda-setup` | Bootstrap the second-brain structure inside a Baalda vault |
+| Baalda Optimizer | `/baalda-optimizer` | 9-framework vault audit — checkpoints first, keeps note identity |
+
+The second-brain OS for [Baalda](https://baalda.com), where notes are plain `.md` files on disk that
+teammates edit together in real time and an AI edits directly. Sharing, real-time collaboration and
+the MCP endpoint are product features with their own UI, so these two skills cover what the app can't
+decide for you: how the vault is structured, and keeping it clean as it grows.
+
+---
+
 ### n8n Automation
 
 Build, test, and deploy n8n workflows via REST API with incremental testing. Includes node references for 40+ common nodes, JavaScript/Python Code node patterns, expression syntax, and credential management. Also includes the **n8n Blueprint Generator** (`/n8n-prd-generator`) for converting discovery call transcripts into n8n automation blueprints.
