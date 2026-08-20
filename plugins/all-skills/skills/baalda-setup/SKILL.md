@@ -3,7 +3,7 @@ name: baalda-setup
 description: Bootstrap a second-brain structure inside a Baalda vault and run personalized onboarding. Creates all directories, system files, per-folder routing indexes and starter context, then interviews the user to personalize everything. Two modes — Solopreneurs/Professionals (default), Business/Teams. Use when the user says "set up my Baalda vault", "set up my second brain", "bootstrap", "initialize", "onboarding", or runs /baalda-setup.
 ---
 
-# Baalda — Vault OS Setup + Onboarding
+# Baalda OS — Setup + Onboarding
 
 USE WHEN the user runs `/baalda-setup` or asks to set up their Baalda vault, bootstrap the second brain, initialize the system, or turn a folder of notes into an AI-operated OS.
 

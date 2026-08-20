@@ -137,7 +137,7 @@ Ten folders (Context, Channels, Content, Campaigns, Intelligence, Analytics, Res
 
 ---
 
-### Vault OS — Baalda (2 skills)
+### Baalda OS (2 skills)
 | Skill | Command | Purpose |
 |-------|---------|---------|
 | Baalda Setup | `/baalda-setup` | Bootstrap the second-brain structure inside a Baalda vault |

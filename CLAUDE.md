@@ -270,7 +270,7 @@ Personal library for swipe files, prompts, frameworks, templates, and reference 
 - **Obsidian Bases** — native database views, no plugins needed
 - **Defuddle** — web content extraction (`defuddle parse <url> --md`)
 
-### Vault OS — Baalda (2 skills)
+### Baalda OS (2 skills)
 | Skill | Command | Purpose |
 |-------|---------|---------|
 | baalda-setup | `/baalda-setup` | Bootstrap the second-brain structure inside a Baalda vault + onboarding |
