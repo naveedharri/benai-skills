@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Expert automation plugins that turn Claude into a specialist for your team. Install by department to get skills for marketing, sales, operations, creative, and product workflows.",
-    "version": "1.16.1"
+    "version": "1.18.0"
   },
   "plugins": [
     {
@@ -58,8 +58,8 @@
       "name": "all-skills",
       "displayName": "All Skills",
       "source": "./plugins/all-skills",
-      "description": "Every BenAI skill in one install. All 115 skills across marketing, sales, SEO, ads, design, YouTube, creative, operations, second-brain OS, Baalda OS, Marketing OS, and general productivity. Add this one plugin to get the complete library.",
-      "version": "1.12.1",
+      "description": "Every BenAI skill in one install. All 116 skills across marketing, sales, SEO, ads, design, YouTube, creative, operations, second-brain OS, Baalda OS, Marketing OS, and general productivity. Add this one plugin to get the complete library.",
+      "version": "1.14.0",
       "author": {
         "name": "BenAI"
       },
@@ -405,8 +405,8 @@
     {
       "name": "meta",
       "source": "./plugins/meta",
-      "description": "General-purpose AI productivity toolkit: browser automation, audio transcription, deep research, decision frameworks, fact-checking, file organization, prompt engineering, MCP server building, and more. 14 community skills in one install.",
-      "version": "1.3.0",
+      "description": "General-purpose AI productivity toolkit: browser automation, audio transcription, deep research, decision frameworks, fact-checking, file organization, prompt engineering, MCP server building, and more. 17 community skills in one install.",
+      "version": "1.5.0",
       "author": {
         "name": "Community"
       },

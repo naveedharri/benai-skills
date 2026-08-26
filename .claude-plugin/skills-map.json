@@ -606,6 +606,18 @@
         "baalda-optimizer": {
           "displayName": "Baalda Optimizer",
           "summary": "9-framework audit and optimizer for a Baalda vault — takes a checkpoint first, never touches .context/, routes moves and deletes through the app or MCP so notes keep their doc_id"
+        },
+        "interview-me": {
+          "displayName": "Interview Me",
+          "summary": "Interview you one question at a time before a big or fuzzy task, then write the brief and execute it"
+        },
+        "rule-rewriter": {
+          "displayName": "Rule Rewriter",
+          "summary": "Audit a CLAUDE.md or skill file for rules written for older models and rewrite them into judgment plus the reason for the Claude 5 generation"
+        },
+        "eli5": {
+          "displayName": "ELI5",
+          "summary": "Explain any topic like I'm 5: a dead-simple HTML picture explainer with big visuals and few words. Official Anthropic community skill, /eli5 [topic]"
         }
       }
     },
@@ -1131,6 +1143,18 @@
         "prompt-master": {
           "displayName": "Prompt Master",
           "summary": "Generate optimized prompts for any AI tool — LLMs, image AI, video AI, coding agents"
+        },
+        "interview-me": {
+          "displayName": "Interview Me",
+          "summary": "Interview you one question at a time before a big or fuzzy task, then write the brief and execute it"
+        },
+        "rule-rewriter": {
+          "displayName": "Rule Rewriter",
+          "summary": "Audit a CLAUDE.md or skill file for rules written for older models and rewrite them into judgment plus the reason for the Claude 5 generation"
+        },
+        "eli5": {
+          "displayName": "ELI5",
+          "summary": "Explain any topic like I'm 5: a dead-simple HTML picture explainer with big visuals and few words. Official Anthropic community skill, /eli5 [topic]"
         }
       }
     },
