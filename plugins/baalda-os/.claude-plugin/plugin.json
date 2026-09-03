@@ -1,7 +1,7 @@
 {
   "name": "baalda-os",
   "description": "Turn a Baalda vault into an AI-operated second brain. Four skills: /setup bootstraps the OS structure and runs onboarding, /optimizer runs a 10-framework audit (including F10 Claude 5 rule rewriting) that checkpoints first and keeps every note's doc_id intact, /operator builds and schedules the recurring agent that keeps the vault current, and /baalda-guide answers any question about Baalda's features, file formats, sync, sharing and AI in plain language. Setup, optimizer and operator are Baalda-native forks of the Obsidian plugin's os-setup, os-optimizer and os-operator.",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "author": {
     "name": "BenAI"
   },

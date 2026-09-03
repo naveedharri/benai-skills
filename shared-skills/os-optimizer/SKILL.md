@@ -1,11 +1,11 @@
 ---
 name: os-optimizer
-description: "Framework-driven audit and optimizer for any markdown vault. Applies 9 frameworks (F1 Anthropic CLAUDE.md, F2 Karpathy Wiki, F3 Caveman, F4 Chroma Context Rot, F5 Anthropic Memory, F6 Progressive Disclosure, G7 Hygiene, F8 Reflection / Anthropic Dreams, F9 Architecture & Discoverability). F9 walks the actual co-worker-Claude discovery chain (root CLAUDE.md → routing → folder Plot.md → file), audits routing-table truthfulness against folder reality, generates/refreshes per-folder Plot.md indexes, detects navigation orphans, proposes architectural reorganizations grounded in the user's Context/. Every finding ships a concrete fix — nothing is flag-only, nothing is fix-later; user picks apply-now (walk per item) or save-to-plan per finding. Creates visible per-stage tasks via TaskCreate so the user watches the run unfold. TRIGGERS: os optimizer, optimize vault, vault audit, second brain audit, clean up vault, framework audit, discoverability check, architecture audit, reorg vault. Run from vault root."
+description: "Framework-driven audit and optimizer for any markdown vault. Applies 10 frameworks (F1 Anthropic CLAUDE.md, F2 Karpathy Wiki, F3 Caveman, F4 Chroma Context Rot, F5 Anthropic Memory, F6 Progressive Disclosure, G7 Hygiene, F10 Claude 5 Rule Rewriting, F8 Reflection / Anthropic Dreams, F9 Architecture & Discoverability). F9 walks the actual co-worker-Claude discovery chain (root CLAUDE.md → routing → folder Plot.md → file), audits routing-table truthfulness against folder reality, generates/refreshes per-folder Plot.md indexes, detects navigation orphans, proposes architectural reorganizations grounded in the user's Context/. Every finding ships a concrete fix — nothing is flag-only, nothing is fix-later; user picks apply-now (walk per item) or save-to-plan per finding. Creates visible per-stage tasks via TaskCreate so the user watches the run unfold. F10 rewrites rules written for older Claude models into judgment plus the reason, sorting every instruction line into retired / bare prohibition / one-sided / aggressive / obvious / keep-as-hard-rule / keep-as-gotcha, and proposes the documented Claude Fable 5.1 vault guardrails where they are missing. TRIGGERS: os optimizer, optimize vault, vault audit, second brain audit, clean up vault, framework audit, discoverability check, architecture audit, reorg vault, rewrite my rules, audit my CLAUDE.md, my rules feel too strict. Run from vault root."
 ---
 
 # Vault Optimizer
 
-Apply 9 frameworks to every markdown file in the vault. For each framework, read its pass-implementation file, run every check, log findings, walk the user through fixes per item, apply (or save to a plan). Save one comprehensive HTML report grouped by framework. **Do not inline the HTML in chat — only the saved path and a one-paragraph summary.**
+Apply 10 frameworks to every markdown file in the vault. For each framework, read its pass-implementation file, run every check, log findings, walk the user through fixes per item, apply (or save to a plan). Save one comprehensive HTML report grouped by framework. **Do not inline the HTML in chat — only the saved path and a one-paragraph summary.**
 
 ## Operating philosophy — read carefully, this is what makes this skill different
 
@@ -28,6 +28,7 @@ Apply 9 frameworks to every markdown file in the vault. For each framework, read
 | F5 | Anthropic Memory | `references/anthropic-managed-memory.md` | `references/passes-anthropic-memory.md` | every `.md` |
 | F6 | Progressive Disclosure | `references/progressive-disclosure.md` | `references/passes-progressive-disclosure.md` | every `SKILL.md` |
 | G7 | General Hygiene | (project rules + practitioner notes) | `references/passes-general-hygiene.md` | every `.md` |
+| F10 | Claude 5 Rule Rewriting | `references/claude-5-rules.md` | `references/passes-claude-5-rules.md` | every `CLAUDE.md`, `.claude/rules/`, and every `SKILL.md` |
 | F8 | Reflection (Anthropic Dreams) | `references/anthropic-dreams.md` | `references/passes-reflection.md` | every folder where `layer == "curated"` in the Step 1.5 registry; reads the session-layer folders as evidence |
 | F9 | Architecture & Discoverability | `references/anthropic-architecture.md` | `references/passes-architecture.md` | whole vault — root CLAUDE.md, routing, every folder's `Plot.md`, the navigation chain end-to-end |
 
@@ -38,7 +39,7 @@ When running a check, **read the pass-implementation file** and follow its regex
 1. **Verify the cwd looks like a vault** — light check (Step 0)
 2. **Create the visible task list** — TaskCreate one task per stage + framework (Step 0.5)
 3. **Discover & classify every `.md` file** — only technical skips (Step 1)
-4. **Iterate frameworks F1 → F9**, applying each framework's lens with agent judgment; F8 = cross-vault synthesis, F9 = whole-vault structural reasoning + discoverability walk (Step 2)
+4. **Iterate frameworks F1 → F10**, applying each framework's lens with agent judgment; F10 = rule quality on the instruction layer, F8 = cross-vault synthesis, F9 = whole-vault structural reasoning + discoverability walk (Step 2)
 5. **Aggregate findings + write the architectural read paragraph** (Steps 3 and 3.5)
 6. **Walk every finding through apply-now / save-to-plan** — no skip option for fixes; every finding becomes an applied edit, a saved migration step, or an explicit per-item user decline (Step 4)
 7. **Apply approved fixes** (Step 5)
@@ -62,7 +63,7 @@ If none are true → stop:
 
 Otherwise tell the user one line:
 
-> Auditing your vault against 9 frameworks. First I'll discover your structure (Step 1.5) — I won't assume folder names. Then I walk every fix with you. You'll see each stage as a task.
+> Auditing your vault against 10 frameworks. First I'll discover your structure (Step 1.5) — I won't assume folder names. Then I walk every fix with you. You'll see each stage as a task.
 
 Proceed into Step 0.5.
 
@@ -84,6 +85,7 @@ Create one task per stage + one task per framework, in order. Use TaskCreate wit
 [ ] F5 Anthropic Memory — file size, naming, indexes
 [ ] F6 Progressive Disclosure — SKILL.md layering
 [ ] G7 General Hygiene — em dashes, frontmatter, H1 rules
+[ ] F10 Claude 5 Rules — retired, bare prohibitions, one-sided, aggressive
 [ ] F8 Reflection — cluster + judge cross-file synthesis
 [ ] F9 Architecture — routing truth, Plot.md presence, discoverability walk
 [ ] Aggregate findings + architectural read (Steps 3 / 3.5)
@@ -198,6 +200,7 @@ Build the classification map:
 - F5 Anthropic Memory → {N} files (every `.md`)
 - F6 Progressive Disclosure → {n} skills
 - G7 General Hygiene → {N} files
+- F10 Claude 5 Rules → {n} instruction files (CLAUDE.md + .claude/rules + SKILL.md)
 - F8 Reflection → {n} files in discovered curated-layer roles + {n} files in discovered session-layer roles ({window} window) for cross-vault synthesis
 - F9 Architecture → routing table ({n} entries), {n} folders for index presence + freshness against the discovered convention, full navigation graph for discoverability, vault-specific orientation built from the discovered identity-layer
 
@@ -326,22 +329,22 @@ The summary frames *what the user has* first. F9.0 findings about gaps appear la
 
 ---
 
-## Step 2 — Iterate frameworks F1 → F9 with judgment
+## Step 2 — Iterate frameworks F1 → F10 with judgment
 
 **This is not a regex pass.** For each framework, read its pass-implementation file, then apply every check it defines to the files in that framework's scope. Triggers in the pass files surface candidates; the agent reads context and judges each candidate before producing a finding. Every finding includes `reasoning` specific to the case.
 
 Why: a regex match on `\bjust\b` flags "just run X" (where "just" is doing real work — contrasting with running multiple) the same as "It's just a quick check" (where it's filler). Only an agent reading the line in context can tell which is which. The same applies to "be careful" (sometimes a closing reminder, sometimes a vague platitude), `IMPORTANT:` (sometimes earned, sometimes inflation), `voice.md` + `brand.md` (sometimes overlapping, sometimes intentionally separated), and most other framework signals.
 
-### 2.1 — For each framework F1, F2, F3, F4, F5, F6, G7, F8, F9 (in this order)
+### 2.1 — For each framework F1, F2, F3, F4, F5, F6, G7, F10, F8, F9 (in this order)
 
-F8 runs second-to-last (cross-file synthesis). F9 runs **last** because it consumes the structural picture F1–G7 produced and operates on the largest blast radius (whole-vault structural reasoning, Plot.md generation, reorg proposals). Running them last keeps fix application ordered smallest-to-largest in Step 5.
+F10 runs after G7: it is file-local like F1–G7 and shares their targets, so it belongs with them rather than with the whole-vault passes. F8 runs second-to-last (cross-file synthesis). F9 runs **last** because it consumes the structural picture F1–G7 produced and operates on the largest blast radius (whole-vault structural reasoning, Plot.md generation, reorg proposals). Running them last keeps fix application ordered smallest-to-largest in Step 5.
 
 **Update the TaskCreate task** for the current framework to `in_progress` before starting it; `completed` when its findings are logged. Mid-framework sub-updates allowed for long runs (F2, F8, F9).
 
 For each framework:
 
 1. **Read the pass-implementation file** for that framework (e.g., `references/passes-anthropic-claude-md.md` for F1). Cache it for the duration of the framework run.
-2. **Determine the file scope** from the table at the top of this SKILL.md (e.g., F1 = every CLAUDE.md; F6 = every SKILL.md; F4/F5/G7 = every `.md`).
+2. **Determine the file scope** from the table at the top of this SKILL.md (e.g., F1 = every CLAUDE.md; F6 = every SKILL.md; F4/F5/G7 = every `.md`; F10 = every CLAUDE.md, `.claude/rules/` file and SKILL.md).
 3. **For each check in the pass file**:
    - Apply the **trigger heuristic** (regex / metric / structural pattern) to surface candidates fast. Some checks have no trigger — the file itself is the candidate.
    - For each candidate, **read the surrounding 5–15 lines** with the `Read` tool, then apply the **agent-judgment criteria** the pass file lists. Read other files (linked targets, sibling clusters, the file's index) when judgment requires it.
@@ -401,13 +404,13 @@ For each framework F1–F8, count: total findings, severity breakdown (fail/warn
 ### Score formula (framework-weighted)
 
 ```
-For each framework F1..G7:
+For each framework F1..G7 and F10:
   deduction = (fail_count × 5) + (warn_count × 1)
   capped_deduction = min(deduction, 25)
-score = max(0, 100 - sum(capped_deduction for F1..G7))
+score = max(0, 100 - sum(capped_deduction for F1..G7, F10))
 ```
 
-**F8 and F9 do not affect the score.** F8 surfaces synthesis opportunities; F9 surfaces structural/discoverability changes. Both are optimization opportunities, not lint failures — counting them would conflate "vault hygiene" with "vault could be reorganized." Track F8 in an "Insights surfaced / applied" tile and F9 in an "Architecture changes / proposed / applied / saved-to-plan" tile.
+**F10 does affect the score** — its findings are lint-like rule defects, same as F1–G7. **F8 and F9 do not affect the score.** F8 surfaces synthesis opportunities; F9 surfaces structural/discoverability changes. Both are optimization opportunities, not lint failures — counting them would conflate "vault hygiene" with "vault could be reorganized." Track F8 in an "Insights surfaced / applied" tile and F9 in an "Architecture changes / proposed / applied / saved-to-plan" tile.
 
 | Score | Interpretation |
 |---|---|
@@ -419,7 +422,7 @@ score = max(0, 100 - sum(capped_deduction for F1..G7))
 After scoring, **do not render a long markdown summary in chat**. Emit one short block:
 
 ```
-✅ All 9 frameworks applied.
+✅ All 10 frameworks applied.
 
 | Framework | Files | Checks | Findings | Fail | Warn | Fixes proposed |
 |---|---:|---:|---:|---:|---:|---:|
@@ -430,6 +433,7 @@ After scoring, **do not render a long markdown summary in chat**. Emit one short
 | F5 Anthropic Memory | … | … | … | … | … | … |
 | F6 Progressive Disclosure | … | … | … | … | … | … |
 | G7 Hygiene | … | … | … | … | … | … |
+| F10 Claude 5 Rules | … | … | … | … | … | … |
 | F8 Reflection | … | … | … | … | … | … |
 | F9 Architecture | … | … | … | … | … | … |
 | **TOTAL** | … | … | … | … | … | … |

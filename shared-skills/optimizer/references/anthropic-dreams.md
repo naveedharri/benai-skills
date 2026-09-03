@@ -17,7 +17,7 @@ and produces a curated output: duplicates merged, stale entries replaced with th
 
 ## Why this is a fixable framework, not a flag-only one
 
-The user runs `/baalda-optimizer` to *optimize* the vault. Every F8 finding therefore ships with a concrete fix proposal (merge target, replacement text, new file path, promotion destination). The user approves per-item via `AskUserQuestion`; nothing is bulk-applied because each contradiction/merge/promotion needs human judgment about which note wins and how to phrase the result.
+The user runs `/optimizer` to *optimize* the vault. Every F8 finding therefore ships with a concrete fix proposal (merge target, replacement text, new file path, promotion destination). The user approves per-item via `AskUserQuestion`; nothing is bulk-applied because each contradiction/merge/promotion needs human judgment about which note wins and how to phrase the result.
 
 ## What F8 catches that F1–G7 cannot
 

@@ -1,7 +1,7 @@
 {
   "name": "obsidian",
   "description": "Turn any folder into an AI-powered second brain. Includes /os-setup, /agentic-os-setup (command-center dashboard inside Obsidian OR standalone Next.js web app), /os-optimizer (10-framework audit, now including F10 Claude 5 rule rewriting), /os-operator, /os-mcp, and /team-os.",
-  "version": "3.11.0",
+  "version": "3.11.1",
   "author": {
     "name": "BenAI"
   }

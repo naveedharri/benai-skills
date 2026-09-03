@@ -8,7 +8,7 @@
       "skills": {
         "research": {
           "displayName": "Research",
-          "summary": "Deep, internet-enabled research on any topic — gathers the raw material that feeds the LinkedIn and newsletter skills"
+          "summary": "Deep, internet-enabled research on any topic \u2014 gathers the raw material that feeds the LinkedIn and newsletter skills"
         },
         "linkedin": {
           "displayName": "LinkedIn",
@@ -32,7 +32,7 @@
         },
         "market-intelligence-report": {
           "displayName": "Market Intelligence Report",
-          "summary": "Produce a Market Intelligence Report — YouTube competitive research, channel analysis, content-gap discovery, idea generation, and AI trend scouting — rendered as a BenAI-branded instant-ui HTML dashboard"
+          "summary": "Produce a Market Intelligence Report \u2014 YouTube competitive research, channel analysis, content-gap discovery, idea generation, and AI trend scouting \u2014 rendered as a BenAI-branded instant-ui HTML dashboard"
         },
         "customer-intelligence-report": {
           "displayName": "Customer Intelligence Report",
@@ -48,7 +48,7 @@
         },
         "voice-profile-builder": {
           "displayName": "Voice Profile Builder",
-          "summary": "Build a personal tone-of-voice skill ({name}-voice) for anyone from their real writing/speaking corpus — references, deterministic linter, and rubric judge"
+          "summary": "Build a personal tone-of-voice skill ({name}-voice) for anyone from their real writing/speaking corpus \u2014 references, deterministic linter, and rubric judge"
         },
         "bens-voice": {
           "displayName": "Ben's Voice",
@@ -64,7 +64,7 @@
         },
         "design-system-creator": {
           "displayName": "Design System Creator",
-          "summary": "Produce a complete Claude-Design-compatible design system folder for any brand — build from scratch or extract from an existing business's shipped assets"
+          "summary": "Produce a complete Claude-Design-compatible design system folder for any brand \u2014 build from scratch or extract from an existing business's shipped assets"
         },
         "carousel-builder": {
           "displayName": "Carousel Builder",
@@ -113,7 +113,7 @@
       "skills": {
         "ads": {
           "displayName": "Ads Suite",
-          "summary": "Comprehensive paid advertising audit and optimization — routes to the right ads sub-skill"
+          "summary": "Comprehensive paid advertising audit and optimization \u2014 routes to the right ads sub-skill"
         },
         "ads-audit": {
           "displayName": "Ads Audit",
@@ -121,23 +121,23 @@
         },
         "ads-budget": {
           "displayName": "Ads Budget",
-          "summary": "Budget allocation and bidding strategy — 70/20/10 rule, 3x Kill Rule, scaling assessment"
+          "summary": "Budget allocation and bidding strategy \u2014 70/20/10 rule, 3x Kill Rule, scaling assessment"
         },
         "ads-competitor": {
           "displayName": "Ads Competitor",
-          "summary": "Competitive ad intelligence — Ad Libraries, keyword gaps, spend estimation, messaging analysis"
+          "summary": "Competitive ad intelligence \u2014 Ad Libraries, keyword gaps, spend estimation, messaging analysis"
         },
         "ads-creative": {
           "displayName": "Ads Creative",
-          "summary": "Cross-platform creative audit — brand context setup, fatigue detection, format diversity, ad creative generation via infographic-v2"
+          "summary": "Cross-platform creative audit \u2014 brand context setup, fatigue detection, format diversity, ad creative generation via infographic-v2"
         },
         "ads-google": {
           "displayName": "Ads Google",
-          "summary": "Google Ads deep analysis — 74 checks across Search, PMax, Display, YouTube, Demand Gen"
+          "summary": "Google Ads deep analysis \u2014 74 checks across Search, PMax, Display, YouTube, Demand Gen"
         },
         "ads-landing": {
           "displayName": "Ads Landing",
-          "summary": "Landing page optimization for ad campaigns — message match, speed, mobile, forms, trust signals",
+          "summary": "Landing page optimization for ad campaigns \u2014 message match, speed, mobile, forms, trust signals",
           "scripts": [
             "analyze_landing.py",
             "capture_screenshot.py",
@@ -147,15 +147,15 @@
         },
         "ads-linkedin": {
           "displayName": "Ads LinkedIn",
-          "summary": "LinkedIn Ads for B2B — 25 checks including Thought Leader Ads, ABM, lead gen forms, predictive audiences"
+          "summary": "LinkedIn Ads for B2B \u2014 25 checks including Thought Leader Ads, ABM, lead gen forms, predictive audiences"
         },
         "ads-meta": {
           "displayName": "Ads Meta",
-          "summary": "Meta/Facebook/Instagram Ads — 46 checks covering Pixel/CAPI, creative, structure, audience, Advantage+"
+          "summary": "Meta/Facebook/Instagram Ads \u2014 46 checks covering Pixel/CAPI, creative, structure, audience, Advantage+"
         },
         "ads-microsoft": {
           "displayName": "Ads Microsoft",
-          "summary": "Microsoft/Bing Ads — 20 checks with Google import validation, Copilot integration"
+          "summary": "Microsoft/Bing Ads \u2014 20 checks with Google import validation, Copilot integration"
         },
         "ads-plan": {
           "displayName": "Ads Plan",
@@ -163,15 +163,15 @@
         },
         "ads-tiktok": {
           "displayName": "Ads TikTok",
-          "summary": "TikTok Ads — 25 checks with creative-first strategy, safe zones, Smart+, TikTok Shop"
+          "summary": "TikTok Ads \u2014 25 checks with creative-first strategy, safe zones, Smart+, TikTok Shop"
         },
         "ads-youtube": {
           "displayName": "Ads YouTube",
-          "summary": "YouTube Ads — skippable, non-skippable, bumper, Shorts, Demand Gen analysis"
+          "summary": "YouTube Ads \u2014 skippable, non-skippable, bumper, Shorts, Demand Gen analysis"
         },
         "agent-browser": {
           "displayName": "Agent Browser",
-          "summary": "Browser automation CLI for AI agents — navigate, fill forms, click, screenshot, scrape"
+          "summary": "Browser automation CLI for AI agents \u2014 navigate, fill forms, click, screenshot, scrape"
         },
         "agent-builder": {
           "displayName": "Agent Builder",
@@ -179,11 +179,11 @@
         },
         "agentic-os-obsidian": {
           "displayName": "Agentic OS Obsidian",
-          "summary": "Set up an agentic OS inside an Obsidian vault — command-center dashboard + 5 auto-installed plugins, Home/per-profile/Vault Overview pages, button bar wired to Claude prompts"
+          "summary": "Set up an agentic OS inside an Obsidian vault \u2014 command-center dashboard + 5 auto-installed plugins, Home/per-profile/Vault Overview pages, button bar wired to Claude prompts"
         },
         "agentic-os-setup": {
           "displayName": "Agentic OS Setup",
-          "summary": "Set up an agentic OS — either inside an Obsidian vault (bundled command-center dashboard + 5 auto-installed plugins) OR as a standalone Next.js web dashboard with live MCP integrations and optional Railway deploy. Asks one routing question first."
+          "summary": "Set up an agentic OS \u2014 either inside an Obsidian vault (bundled command-center dashboard + 5 auto-installed plugins) OR as a standalone Next.js web dashboard with live MCP integrations and optional Railway deploy. Asks one routing question first."
         },
         "agentic-os-standalone": {
           "displayName": "Agentic OS Standalone",
@@ -199,7 +199,7 @@
         },
         "brutalist-ui": {
           "displayName": "Brutalist UI",
-          "summary": "Raw mechanical interfaces — Swiss typography, extreme scale contrast, CRT terminal aesthetics (BETA)"
+          "summary": "Raw mechanical interfaces \u2014 Swiss typography, extreme scale contrast, CRT terminal aesthetics (BETA)"
         },
         "case-study": {
           "displayName": "Case Study",
@@ -207,11 +207,11 @@
         },
         "cloud-os-builder": {
           "displayName": "Cloud OS Builder",
-          "summary": "Set up a cloud-synced second brain in Google Drive, OneDrive, iCloud, or Dropbox — asks where, surfaces provider gotchas, then creates and syncs the folder. Same structure as the Skill and Local OS tiers."
+          "summary": "Set up a cloud-synced second brain in Google Drive, OneDrive, iCloud, or Dropbox \u2014 asks where, surfaces provider gotchas, then creates and syncs the folder. Same structure as the Skill and Local OS tiers."
         },
         "course-creator": {
           "displayName": "Course Creator",
-          "summary": "Interactive 7-phase course creation — from idea or YouTube video to launch-ready package with curriculum, scripts, sales page, emails, and launch plan"
+          "summary": "Interactive 7-phase course creation \u2014 from idea or YouTube video to launch-ready package with curriculum, scripts, sales page, emails, and launch plan"
         },
         "crm-prospect-mining": {
           "displayName": "CRM Prospect Mining",
@@ -243,7 +243,7 @@
         },
         "file-organizer": {
           "displayName": "File Organizer",
-          "summary": "Intelligently organize files and folders — duplicates, cleanup, structure suggestions"
+          "summary": "Intelligently organize files and folders \u2014 duplicates, cleanup, structure suggestions"
         },
         "find-skills": {
           "displayName": "Find Skills",
@@ -299,7 +299,7 @@
         },
         "local-os-builder": {
           "displayName": "Local OS Builder",
-          "summary": "Set up a Local OS — bootstrap a local Obsidian vault as a second brain with full directory structure, system files, memory, hooks, and personalized onboarding. Two modes (Solopreneur/Professional, Business/Team). The Local OS tier of the AIOS family."
+          "summary": "Set up a Local OS \u2014 bootstrap a local Obsidian vault as a second brain with full directory structure, system files, memory, hooks, and personalized onboarding. Two modes (Solopreneur/Professional, Business/Team). The Local OS tier of the AIOS family."
         },
         "mcp-builder": {
           "displayName": "MCP Builder",
@@ -307,7 +307,7 @@
         },
         "minimalist-ui": {
           "displayName": "Minimalist UI",
-          "summary": "Clean editorial-style interfaces — warm monochrome palette, typographic contrast, flat bento grids"
+          "summary": "Clean editorial-style interfaces \u2014 warm monochrome palette, typographic contrast, flat bento grids"
         },
         "n8n": {
           "displayName": "n8n Automation",
@@ -327,15 +327,15 @@
         },
         "os-mcp": {
           "displayName": "OS MCP",
-          "summary": "Deploy the Relay MCP server to your own Railway account — bundled source, guided token setup, one command to deploy"
+          "summary": "Deploy the Relay MCP server to your own Railway account \u2014 bundled source, guided token setup, one command to deploy"
         },
         "os-operator": {
           "displayName": "OS Operator",
-          "summary": "Set up scheduled tasks that operate your second brain on a recurring cadence (stub — full scheduling lands later)"
+          "summary": "Set up scheduled tasks that operate your second brain on a recurring cadence (stub \u2014 full scheduling lands later)"
         },
         "os-optimizer": {
           "displayName": "OS Optimizer",
-          "summary": "Multi-pass second brain audit and optimizer — 22 passes across size/tokens, wiki lint, skills, and hygiene"
+          "summary": "Multi-pass second brain audit and optimizer \u2014 22 passes across size/tokens, wiki lint, skills, and hygiene"
         },
         "os-setup": {
           "displayName": "OS Setup",
@@ -343,7 +343,7 @@
         },
         "output-enforcement": {
           "displayName": "Output Enforcement",
-          "summary": "Force complete full-fidelity code outputs — anti-truncation, banned placeholder patterns"
+          "summary": "Force complete full-fidelity code outputs \u2014 anti-truncation, banned placeholder patterns"
         },
         "pipeline-review": {
           "displayName": "Pipeline Review",
@@ -363,7 +363,7 @@
         },
         "prompt-master": {
           "displayName": "Prompt Master",
-          "summary": "Generate optimized prompts for any AI tool — LLMs, image AI, video AI, coding agents"
+          "summary": "Generate optimized prompts for any AI tool \u2014 LLMs, image AI, video AI, coding agents"
         },
         "redesign": {
           "displayName": "Redesign",
@@ -371,7 +371,7 @@
         },
         "refresh": {
           "displayName": "Refresh",
-          "summary": "Start a clean Claude session with only the context the next task needs — captures the goal, points to the right files, and outputs a self-contained prompt to paste into a fresh chat"
+          "summary": "Start a clean Claude session with only the context the next task needs \u2014 captures the goal, points to the right files, and outputs a self-contained prompt to paste into a fresh chat"
         },
         "sales-rep-analyzer": {
           "displayName": "Sales Rep Analyzer",
@@ -413,7 +413,7 @@
         },
         "seo-images": {
           "displayName": "SEO Images",
-          "summary": "Image optimization analysis — alt text, file size, formats, lazy loading, CLS",
+          "summary": "Image optimization analysis \u2014 alt text, file size, formats, lazy loading, CLS",
           "scripts": [
             "fetch_page.py",
             "parse_html.py",
@@ -422,7 +422,7 @@
         },
         "seo-optimize": {
           "displayName": "SEO Optimize",
-          "summary": "GSC data-driven optimization — striking distance, low-CTR, cannibalization, content gaps"
+          "summary": "GSC data-driven optimization \u2014 striking distance, low-CTR, cannibalization, content gaps"
         },
         "seo-optimizing": {
           "displayName": "SEO Optimizing",
@@ -469,7 +469,7 @@
         },
         "skill-os-builder": {
           "displayName": "Skill OS Builder",
-          "summary": "Stand up a self-contained second brain that lives entirely inside one Claude skill — short SKILL.md router + context files, no vault, cloud, or MCP server. The easiest of the three OS tiers."
+          "summary": "Stand up a self-contained second brain that lives entirely inside one Claude skill \u2014 short SKILL.md router + context files, no vault, cloud, or MCP server. The easiest of the three OS tiers."
         },
         "soft-ui": {
           "displayName": "Soft UI",
@@ -481,11 +481,11 @@
         },
         "taste": {
           "displayName": "Design Taste",
-          "summary": "Premium frontend design system — configurable dials for variance/motion/density, anti-slop rules, React/Next.js/Tailwind/Framer Motion"
+          "summary": "Premium frontend design system \u2014 configurable dials for variance/motion/density, anti-slop rules, React/Next.js/Tailwind/Framer Motion"
         },
         "team-os": {
           "displayName": "Team OS",
-          "summary": "Install the BenAI Relay fork in an Obsidian vault as the foundation for a shared Team OS — RBAC + access controls, bundled production build"
+          "summary": "Install the BenAI Relay fork in an Obsidian vault as the foundation for a shared Team OS \u2014 RBAC + access controls, bundled production build"
         },
         "title-generation": {
           "displayName": "Title Generation",
@@ -493,7 +493,7 @@
         },
         "video": {
           "displayName": "Video Editing",
-          "summary": "Video editing with FFmpeg and Remotion — stitching, transitions, captions"
+          "summary": "Video editing with FFmpeg and Remotion \u2014 stitching, transitions, captions"
         },
         "web-artifacts-builder": {
           "displayName": "Web Artifacts Builder",
@@ -601,11 +601,15 @@
         },
         "setup": {
           "displayName": "Baalda Setup",
-          "summary": "Bootstrap the second-brain structure inside a Baalda vault — mode selection, folders, per-folder routing indexes, and personalized onboarding"
+          "summary": "Bootstrap the second-brain structure inside a Baalda vault \u2014 mode selection, folders, per-folder routing indexes, and personalized onboarding"
         },
         "optimizer": {
           "displayName": "Baalda Optimizer",
-          "summary": "9-framework audit and optimizer for a Baalda vault — takes a checkpoint first, never touches .context/, routes moves and deletes through the app or MCP so notes keep their doc_id"
+          "summary": "10-framework audit and optimizer for a Baalda vault, including F10 Claude 5 rule rewriting. Takes a checkpoint first, never touches .context/, routes moves and deletes through the app or MCP so notes keep their doc_id"
+        },
+        "operator": {
+          "displayName": "Baalda Operator",
+          "summary": "Build and schedule the recurring agent that keeps a Baalda vault current. Reads the vault first, asks only the gaps, writes the operator prompt and wires the schedule. Never moves or deletes a synced note"
         },
         "interview-me": {
           "displayName": "Interview Me",
@@ -621,7 +625,7 @@
         },
         "baalda-guide": {
           "displayName": "Baalda Guide",
-          "summary": "Answer any question about Baalda in plain, non-technical language — features, supported file formats, sync, sharing and permissions, AI/MCP, pricing, platforms, self-hosting"
+          "summary": "Answer any question about Baalda in plain, non-technical language \u2014 features, supported file formats, sync, sharing and permissions, AI/MCP, pricing, platforms, self-hosting"
         }
       }
     },
@@ -682,7 +686,7 @@
         },
         "course-creator": {
           "displayName": "Course Creator",
-          "summary": "Interactive 7-phase course creation — from idea or YouTube video to launch-ready package with curriculum, scripts, sales page, emails, and launch plan"
+          "summary": "Interactive 7-phase course creation \u2014 from idea or YouTube video to launch-ready package with curriculum, scripts, sales page, emails, and launch plan"
         }
       }
     },
@@ -726,7 +730,7 @@
       "skills": {
         "video": {
           "displayName": "Video Editing",
-          "summary": "Video editing with FFmpeg and Remotion — stitching, transitions, captions"
+          "summary": "Video editing with FFmpeg and Remotion \u2014 stitching, transitions, captions"
         },
         "excalidraw": {
           "displayName": "Excalidraw",
@@ -846,7 +850,7 @@
         },
         "seo-images": {
           "displayName": "SEO Images",
-          "summary": "Image optimization analysis — alt text, file size, formats, lazy loading, CLS",
+          "summary": "Image optimization analysis \u2014 alt text, file size, formats, lazy loading, CLS",
           "scripts": [
             "fetch_page.py",
             "parse_html.py",
@@ -884,7 +888,7 @@
         },
         "seo-optimize": {
           "displayName": "SEO Optimize",
-          "summary": "GSC data-driven optimization — striking distance, low-CTR, cannibalization, content gaps"
+          "summary": "GSC data-driven optimization \u2014 striking distance, low-CTR, cannibalization, content gaps"
         },
         "seo-audit": {
           "displayName": "SEO Audit",
@@ -908,31 +912,31 @@
       "skills": {
         "ads": {
           "displayName": "Ads Suite",
-          "summary": "Comprehensive paid advertising audit and optimization — routes to the right ads sub-skill"
+          "summary": "Comprehensive paid advertising audit and optimization \u2014 routes to the right ads sub-skill"
         },
         "ads-google": {
           "displayName": "Ads Google",
-          "summary": "Google Ads deep analysis — 74 checks across Search, PMax, Display, YouTube, Demand Gen"
+          "summary": "Google Ads deep analysis \u2014 74 checks across Search, PMax, Display, YouTube, Demand Gen"
         },
         "ads-meta": {
           "displayName": "Ads Meta",
-          "summary": "Meta/Facebook/Instagram Ads — 46 checks covering Pixel/CAPI, creative, structure, audience, Advantage+"
+          "summary": "Meta/Facebook/Instagram Ads \u2014 46 checks covering Pixel/CAPI, creative, structure, audience, Advantage+"
         },
         "ads-linkedin": {
           "displayName": "Ads LinkedIn",
-          "summary": "LinkedIn Ads for B2B — 25 checks including Thought Leader Ads, ABM, lead gen forms, predictive audiences"
+          "summary": "LinkedIn Ads for B2B \u2014 25 checks including Thought Leader Ads, ABM, lead gen forms, predictive audiences"
         },
         "ads-tiktok": {
           "displayName": "Ads TikTok",
-          "summary": "TikTok Ads — 25 checks with creative-first strategy, safe zones, Smart+, TikTok Shop"
+          "summary": "TikTok Ads \u2014 25 checks with creative-first strategy, safe zones, Smart+, TikTok Shop"
         },
         "ads-youtube": {
           "displayName": "Ads YouTube",
-          "summary": "YouTube Ads — skippable, non-skippable, bumper, Shorts, Demand Gen analysis"
+          "summary": "YouTube Ads \u2014 skippable, non-skippable, bumper, Shorts, Demand Gen analysis"
         },
         "ads-microsoft": {
           "displayName": "Ads Microsoft",
-          "summary": "Microsoft/Bing Ads — 20 checks with Google import validation, Copilot integration"
+          "summary": "Microsoft/Bing Ads \u2014 20 checks with Google import validation, Copilot integration"
         },
         "ads-audit": {
           "displayName": "Ads Audit",
@@ -940,15 +944,15 @@
         },
         "ads-budget": {
           "displayName": "Ads Budget",
-          "summary": "Budget allocation and bidding strategy — 70/20/10 rule, 3x Kill Rule, scaling assessment"
+          "summary": "Budget allocation and bidding strategy \u2014 70/20/10 rule, 3x Kill Rule, scaling assessment"
         },
         "ads-creative": {
           "displayName": "Ads Creative",
-          "summary": "Cross-platform creative audit — brand context setup, fatigue detection, format diversity, ad creative generation via infographic-v2"
+          "summary": "Cross-platform creative audit \u2014 brand context setup, fatigue detection, format diversity, ad creative generation via infographic-v2"
         },
         "ads-landing": {
           "displayName": "Ads Landing",
-          "summary": "Landing page optimization for ad campaigns — message match, speed, mobile, forms, trust signals",
+          "summary": "Landing page optimization for ad campaigns \u2014 message match, speed, mobile, forms, trust signals",
           "scripts": [
             "analyze_landing.py",
             "capture_screenshot.py",
@@ -962,7 +966,7 @@
         },
         "ads-competitor": {
           "displayName": "Ads Competitor",
-          "summary": "Competitive ad intelligence — Ad Libraries, keyword gaps, spend estimation, messaging analysis"
+          "summary": "Competitive ad intelligence \u2014 Ad Libraries, keyword gaps, spend estimation, messaging analysis"
         },
         "infographic-v2": {
           "displayName": "Infographic v2",
@@ -974,7 +978,7 @@
       "skills": {
         "taste": {
           "displayName": "Design Taste",
-          "summary": "Premium frontend design system — configurable dials for variance/motion/density, anti-slop rules, React/Next.js/Tailwind/Framer Motion"
+          "summary": "Premium frontend design system \u2014 configurable dials for variance/motion/density, anti-slop rules, React/Next.js/Tailwind/Framer Motion"
         },
         "redesign": {
           "displayName": "Redesign",
@@ -986,11 +990,11 @@
         },
         "minimalist-ui": {
           "displayName": "Minimalist UI",
-          "summary": "Clean editorial-style interfaces — warm monochrome palette, typographic contrast, flat bento grids"
+          "summary": "Clean editorial-style interfaces \u2014 warm monochrome palette, typographic contrast, flat bento grids"
         },
         "brutalist-ui": {
           "displayName": "Brutalist UI",
-          "summary": "Raw mechanical interfaces — Swiss typography, extreme scale contrast, CRT terminal aesthetics (BETA)"
+          "summary": "Raw mechanical interfaces \u2014 Swiss typography, extreme scale contrast, CRT terminal aesthetics (BETA)"
         },
         "stitch": {
           "displayName": "Stitch Design",
@@ -998,7 +1002,7 @@
         },
         "output-enforcement": {
           "displayName": "Output Enforcement",
-          "summary": "Force complete full-fidelity code outputs — anti-truncation, banned placeholder patterns"
+          "summary": "Force complete full-fidelity code outputs \u2014 anti-truncation, banned placeholder patterns"
         }
       }
     },
@@ -1022,23 +1026,23 @@
         },
         "agentic-os-setup": {
           "displayName": "Agentic OS Setup",
-          "summary": "Set up an agentic OS — either inside an Obsidian vault (bundled command-center dashboard + 5 auto-installed plugins) OR as a standalone Next.js web dashboard with live MCP integrations and optional Railway deploy. Asks one routing question first."
+          "summary": "Set up an agentic OS \u2014 either inside an Obsidian vault (bundled command-center dashboard + 5 auto-installed plugins) OR as a standalone Next.js web dashboard with live MCP integrations and optional Railway deploy. Asks one routing question first."
         },
         "os-optimizer": {
           "displayName": "OS Optimizer",
-          "summary": "Multi-pass second brain audit and optimizer — 22 passes across size/tokens, wiki lint, skills, and hygiene"
+          "summary": "Multi-pass second brain audit and optimizer \u2014 22 passes across size/tokens, wiki lint, skills, and hygiene"
         },
         "os-operator": {
           "displayName": "OS Operator",
-          "summary": "Set up scheduled tasks that operate your second brain on a recurring cadence (stub — full scheduling lands later)"
+          "summary": "Set up scheduled tasks that operate your second brain on a recurring cadence (stub \u2014 full scheduling lands later)"
         },
         "os-mcp": {
           "displayName": "OS MCP",
-          "summary": "Deploy the Relay MCP server to your own Railway account — bundled source, guided token setup, one command to deploy"
+          "summary": "Deploy the Relay MCP server to your own Railway account \u2014 bundled source, guided token setup, one command to deploy"
         },
         "team-os": {
           "displayName": "Team OS",
-          "summary": "Install the BenAI Relay fork in an Obsidian vault as the foundation for a shared Team OS — RBAC + access controls, bundled production build"
+          "summary": "Install the BenAI Relay fork in an Obsidian vault as the foundation for a shared Team OS \u2014 RBAC + access controls, bundled production build"
         }
       }
     },
@@ -1046,15 +1050,19 @@
       "skills": {
         "setup": {
           "displayName": "Baalda Setup",
-          "summary": "Bootstrap the second-brain structure inside a Baalda vault — mode selection, folders, per-folder routing indexes, and personalized onboarding"
+          "summary": "Bootstrap the second-brain structure inside a Baalda vault \u2014 mode selection, folders, per-folder routing indexes, and personalized onboarding"
         },
         "optimizer": {
           "displayName": "Baalda Optimizer",
-          "summary": "9-framework audit and optimizer for a Baalda vault — takes a checkpoint first, never touches .context/, routes moves and deletes through the app or MCP so notes keep their doc_id"
+          "summary": "10-framework audit and optimizer for a Baalda vault, including F10 Claude 5 rule rewriting. Takes a checkpoint first, never touches .context/, routes moves and deletes through the app or MCP so notes keep their doc_id"
+        },
+        "operator": {
+          "displayName": "Baalda Operator",
+          "summary": "Build and schedule the recurring agent that keeps a Baalda vault current. Reads the vault first, asks only the gaps, writes the operator prompt and wires the schedule. Never moves or deletes a synced note"
         },
         "baalda-guide": {
           "displayName": "Baalda Guide",
-          "summary": "Answer any question about Baalda in plain, non-technical language — features, supported file formats, sync, sharing and permissions, AI/MCP, pricing, platforms, self-hosting"
+          "summary": "Answer any question about Baalda in plain, non-technical language \u2014 features, supported file formats, sync, sharing and permissions, AI/MCP, pricing, platforms, self-hosting"
         }
       }
     },
@@ -1062,7 +1070,7 @@
       "skills": {
         "agentic-os-obsidian": {
           "displayName": "Agentic OS Obsidian",
-          "summary": "Set up an agentic OS inside an Obsidian vault — command-center dashboard + 5 auto-installed plugins, Home/per-profile/Vault Overview pages, button bar wired to Claude prompts"
+          "summary": "Set up an agentic OS inside an Obsidian vault \u2014 command-center dashboard + 5 auto-installed plugins, Home/per-profile/Vault Overview pages, button bar wired to Claude prompts"
         },
         "agentic-os-standalone": {
           "displayName": "Agentic OS Standalone",
@@ -1070,7 +1078,7 @@
         },
         "os-mcp": {
           "displayName": "OS MCP",
-          "summary": "Deploy the Relay MCP server to your own Railway account — bundled source, guided token setup, one command to deploy"
+          "summary": "Deploy the Relay MCP server to your own Railway account \u2014 bundled source, guided token setup, one command to deploy"
         },
         "web-artifacts-builder": {
           "displayName": "Web Artifacts Builder",
@@ -1082,15 +1090,15 @@
       "skills": {
         "skill-os-builder": {
           "displayName": "Skill OS Builder",
-          "summary": "Stand up a self-contained second brain that lives entirely inside one Claude skill — short SKILL.md router + context files, no vault, cloud, or MCP server. The easiest of the three OS tiers."
+          "summary": "Stand up a self-contained second brain that lives entirely inside one Claude skill \u2014 short SKILL.md router + context files, no vault, cloud, or MCP server. The easiest of the three OS tiers."
         },
         "cloud-os-builder": {
           "displayName": "Cloud OS Builder",
-          "summary": "Set up a cloud-synced second brain in Google Drive, OneDrive, iCloud, or Dropbox — asks where, surfaces provider gotchas, then creates and syncs the folder. Same structure as the Skill and Local OS tiers."
+          "summary": "Set up a cloud-synced second brain in Google Drive, OneDrive, iCloud, or Dropbox \u2014 asks where, surfaces provider gotchas, then creates and syncs the folder. Same structure as the Skill and Local OS tiers."
         },
         "local-os-builder": {
           "displayName": "Local OS Builder",
-          "summary": "Set up a Local OS — bootstrap a local Obsidian vault as a second brain with full directory structure, system files, memory, hooks, and personalized onboarding. Two modes (Solopreneur/Professional, Business/Team). The Local OS tier of the AIOS family."
+          "summary": "Set up a Local OS \u2014 bootstrap a local Obsidian vault as a second brain with full directory structure, system files, memory, hooks, and personalized onboarding. Two modes (Solopreneur/Professional, Business/Team). The Local OS tier of the AIOS family."
         }
       }
     },
@@ -1098,11 +1106,11 @@
       "skills": {
         "refresh": {
           "displayName": "Refresh",
-          "summary": "Start a clean Claude session with only the context the next task needs — captures the goal, points to the right files, and outputs a self-contained prompt to paste into a fresh chat"
+          "summary": "Start a clean Claude session with only the context the next task needs \u2014 captures the goal, points to the right files, and outputs a self-contained prompt to paste into a fresh chat"
         },
         "agent-browser": {
           "displayName": "Agent Browser",
-          "summary": "Browser automation CLI for AI agents — navigate, fill forms, click, screenshot, scrape"
+          "summary": "Browser automation CLI for AI agents \u2014 navigate, fill forms, click, screenshot, scrape"
         },
         "audio-transcriber": {
           "displayName": "Audio Transcriber",
@@ -1122,7 +1130,7 @@
         },
         "file-organizer": {
           "displayName": "File Organizer",
-          "summary": "Intelligently organize files and folders — duplicates, cleanup, structure suggestions"
+          "summary": "Intelligently organize files and folders \u2014 duplicates, cleanup, structure suggestions"
         },
         "find-skills": {
           "displayName": "Find Skills",
@@ -1150,7 +1158,7 @@
         },
         "prompt-master": {
           "displayName": "Prompt Master",
-          "summary": "Generate optimized prompts for any AI tool — LLMs, image AI, video AI, coding agents"
+          "summary": "Generate optimized prompts for any AI tool \u2014 LLMs, image AI, video AI, coding agents"
         },
         "interview-me": {
           "displayName": "Interview Me",
