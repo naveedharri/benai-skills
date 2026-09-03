@@ -618,6 +618,10 @@
         "eli5": {
           "displayName": "ELI5",
           "summary": "Explain any topic like I'm 5: a dead-simple HTML picture explainer with big visuals and few words. Official Anthropic community skill, /eli5 [topic]"
+        },
+        "baalda-guide": {
+          "displayName": "Baalda Guide",
+          "summary": "Answer any question about Baalda in plain, non-technical language — features, supported file formats, sync, sharing and permissions, AI/MCP, pricing, platforms, self-hosting"
         }
       }
     },
@@ -1047,6 +1051,10 @@
         "baalda-optimizer": {
           "displayName": "Baalda Optimizer",
           "summary": "9-framework audit and optimizer for a Baalda vault — takes a checkpoint first, never touches .context/, routes moves and deletes through the app or MCP so notes keep their doc_id"
+        },
+        "baalda-guide": {
+          "displayName": "Baalda Guide",
+          "summary": "Answer any question about Baalda in plain, non-technical language — features, supported file formats, sync, sharing and permissions, AI/MCP, pricing, platforms, self-hosting"
         }
       }
     },

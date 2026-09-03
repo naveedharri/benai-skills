@@ -270,14 +270,16 @@ Personal library for swipe files, prompts, frameworks, templates, and reference 
 - **Obsidian Bases** — native database views, no plugins needed
 - **Defuddle** — web content extraction (`defuddle parse <url> --md`)
 
-### Baalda OS (2 skills)
+### Baalda OS (3 skills)
 | Skill | Command | Purpose |
 |-------|---------|---------|
 | baalda-setup | `/baalda-setup` | Bootstrap the second-brain structure inside a Baalda vault + onboarding |
 | baalda-optimizer | `/baalda-optimizer` | 9-framework vault audit, checkpoint-aware, doc_id-safe |
+| baalda-guide | `/baalda-guide` | Plain-language answers about Baalda: features, file formats, sync, sharing, AI/MCP, pricing, self-hosting |
 
 The Baalda counterpart to the Obsidian plugin: the same second-brain idea on a different host app, so
-both skills are Baalda-native forks of `os-setup` / `os-optimizer`.
+setup and optimizer are Baalda-native forks of `os-setup` / `os-optimizer`. `baalda-guide` is the
+product explainer: it answers from bundled reference files first, then the Baalda repo docs and website.
 
 **Deliberately just those two.** The Obsidian plugin also carries `os-mcp` (deploy a Relay MCP server
 to Railway) and `team-os` (install a Relay fork) because neither capability exists in Obsidian. In

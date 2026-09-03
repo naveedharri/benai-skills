@@ -137,16 +137,18 @@ Ten folders (Context, Channels, Content, Campaigns, Intelligence, Analytics, Res
 
 ---
 
-### Baalda OS (2 skills)
+### Baalda OS (3 skills)
 | Skill | Command | Purpose |
 |-------|---------|---------|
 | Baalda Setup | `/baalda-setup` | Bootstrap the second-brain structure inside a Baalda vault |
 | Baalda Optimizer | `/baalda-optimizer` | 9-framework vault audit — checkpoints first, keeps note identity |
+| Baalda Guide | `/baalda-guide` | Plain-language answers about Baalda — features, file formats, sync, sharing, AI/MCP, pricing |
 
 The second-brain OS for [Baalda](https://baalda.com), where notes are plain `.md` files on disk that
 teammates edit together in real time and an AI edits directly. Sharing, real-time collaboration and
-the MCP endpoint are product features with their own UI, so these two skills cover what the app can't
-decide for you: how the vault is structured, and keeping it clean as it grows.
+the MCP endpoint are product features with their own UI, so setup and optimizer cover what the app can't
+decide for you: how the vault is structured, and keeping it clean as it grows. The guide answers
+"does Baalda do X?" questions for non-technical teammates from checked reference notes.
 
 ---
 
