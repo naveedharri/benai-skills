@@ -1,22 +1,6 @@
 ---
 name: linkedin-writer
-description: >
-  Repurpose YouTube videos, blog articles, guides, or raw insights into high-performing LinkedIn posts
-  that match Ben's exact tone of voice and writing style. This is a STEP-BY-STEP, interactive process —
-  never output a complete LinkedIn post immediately. Each step requires suggestions, user decision,
-  then progression to the next step.
-
-  USE THIS SKILL WHEN:
-  - User shares a YouTube link and wants a LinkedIn post
-  - User shares a blog article URL and wants a LinkedIn post
-  - User provides an insight, idea, or document and wants a LinkedIn post
-  - User mentions "LinkedIn post", "repurpose for LinkedIn", "turn this into a LinkedIn post"
-  - User says "LinkedIn content", "write a post", "create a post"
-  - User pastes a transcript and wants LinkedIn content
-  - User asks to create social content from a video, article, or idea
-
-  TRIGGERS: "LinkedIn post", "LinkedIn content", "repurpose", "write a post", "post about",
-  "turn this into a post", "create a LinkedIn post", "LinkedIn from YouTube", "LinkedIn from blog"
+description: ">\n  Repurpose YouTube videos, blog articles, guides, or raw insights into high-performing LinkedIn posts\n  that match Ben's exact tone of voice and writing style. This is a STEP-BY-STEP, interactive process \u2014\n  never output a complete LinkedIn post immediately. Each step requires suggestions, user decision,\n  then progression to the next step.\n\n  USE THIS SKILL WHEN:\n  - User shares a YouTube link and wants a LinkedIn post\n  - User provides an insight, idea, or document and wants a LinkedIn post\n  - User mentions \"LinkedIn post\", \"repurpose for LinkedIn\", \"turn this into a LinkedIn post\"\n  - User asks to create social content from a video, article, or idea\n\n  TRIGGERS: \"LinkedIn post\", \"LinkedIn content\", \"repurpose\", \"write a post\", \"post about\",\n  \"turn this into a post\", \"create a LinkedIn post\", \"LinkedIn from YouTube\", \"LinkedIn from blog"
 ---
 
 # LinkedIn Writer
