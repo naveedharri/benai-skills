@@ -1,11 +1,11 @@
 ---
-name: baalda-setup
-description: Bootstrap a second-brain structure inside a Baalda vault and run personalized onboarding. Creates all directories, system files, per-folder routing indexes and starter context, then interviews the user to personalize everything. Two modes — Solopreneurs/Professionals (default), Business/Teams. Use when the user says "set up my Baalda vault", "set up my second brain", "bootstrap", "initialize", "onboarding", or runs /baalda-setup.
+name: setup
+description: Bootstrap a second-brain structure inside a Baalda vault and run personalized onboarding. Creates all directories, system files, per-folder routing indexes and starter context, then interviews the user to personalize everything. Two modes — Solopreneurs/Professionals (default), Business/Teams. Use when the user says "set up my Baalda vault", "set up my second brain", "bootstrap", "initialize", "onboarding", or runs /setup.
 ---
 
 # Baalda OS — Setup + Onboarding
 
-USE WHEN the user runs `/baalda-setup` or asks to set up their Baalda vault, bootstrap the second brain, initialize the system, or turn a folder of notes into an AI-operated OS.
+USE WHEN the user runs `/setup` or asks to set up their Baalda vault, bootstrap the second brain, initialize the system, or turn a folder of notes into an AI-operated OS.
 
 Baalda notes are plain `.md` files on disk, so everything this skill builds is just files and
 folders — no plugins to install, no import step. The moment you write them, the app indexes them,
@@ -102,7 +102,7 @@ If the Read tool can't open a `references/...` path directly (some harnesses mou
 
 ```bash
 # Find the references directory; cache the result for the rest of Phase A.
-find / -type d -path '*/baalda-setup/references' 2>/dev/null | head -1
+find / -type d -path '*/setup/references' 2>/dev/null | head -1
 ```
 
 Use that absolute path as the prefix for every reference read in Phase A and Phase B. Don't retry path resolution per-file — do it once and reuse.
@@ -264,7 +264,7 @@ Then proceed to Phase B.
 
 Everything after Phase B (the corpus merge and the build steps) is identical either way.
 
-The widget path uses Cowork's rich-HTML widget tool — **not** AskUserQuestion — to render a real form with stacked categories, free-text textareas, and proper styling (matches the look of `/baalda-optimizer`'s "Audit run details" form).
+The widget path uses Cowork's rich-HTML widget tool — **not** AskUserQuestion — to render a real form with stacked categories, free-text textareas, and proper styling (matches the look of `/optimizer`'s "Audit run details" form).
 
 It's a guided brain dump across **12 categories** of the user's life and business, batched into **3 rich-HTML forms** (4 categories per form). Bullet points inside each category are **inspiration prompts** — riff on whatever lands.
 

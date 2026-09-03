@@ -55,3 +55,5 @@ Grounded in Anthropic's published guidance:
 - Preserve the file's voice and formatting conventions.
 - When unsure which bucket a line belongs to, put it in the review table with a question mark and let the user decide. Do not guess on safety-relevant lines.
 - This skill changes rule quality, not file structure. For a CLAUDE.md that is too long, route sections into folder-level instruction files instead (see the companion optimization framework).
+
+- Inside a vault, this audit also runs as framework **F10** of `/os-optimizer` and `/optimizer`, alongside the other nine. Use this standalone skill for a single file outside a vault, or when you want the rule rewrite without the full audit. The vault frameworks are the ones that also propose the documented Claude Fable 5.1 guardrails (F10.6).

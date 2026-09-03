@@ -599,11 +599,11 @@
           "displayName": "Rented Server Setup",
           "summary": "Runs an open model in the cloud two ways, priced side by side: OVHcloud AI Endpoints per token in the EU, or one single-tenant RunPod pod serving Open WebUI plus a keyed API URL Claude Code can use"
         },
-        "baalda-setup": {
+        "setup": {
           "displayName": "Baalda Setup",
           "summary": "Bootstrap the second-brain structure inside a Baalda vault — mode selection, folders, per-folder routing indexes, and personalized onboarding"
         },
-        "baalda-optimizer": {
+        "optimizer": {
           "displayName": "Baalda Optimizer",
           "summary": "9-framework audit and optimizer for a Baalda vault — takes a checkpoint first, never touches .context/, routes moves and deletes through the app or MCP so notes keep their doc_id"
         },
@@ -1044,11 +1044,11 @@
     },
     "baalda-os": {
       "skills": {
-        "baalda-setup": {
+        "setup": {
           "displayName": "Baalda Setup",
           "summary": "Bootstrap the second-brain structure inside a Baalda vault — mode selection, folders, per-folder routing indexes, and personalized onboarding"
         },
-        "baalda-optimizer": {
+        "optimizer": {
           "displayName": "Baalda Optimizer",
           "summary": "9-framework audit and optimizer for a Baalda vault — takes a checkpoint first, never touches .context/, routes moves and deletes through the app or MCP so notes keep their doc_id"
         },

@@ -1,7 +1,7 @@
 {
   "name": "meta",
   "description": "General-purpose AI productivity toolkit: browser automation, audio transcription, deep research, decision frameworks, fact-checking, file organization, prompt engineering, MCP server building, and more. 17 community skills in one install.",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "author": {
     "name": "Community"
   }

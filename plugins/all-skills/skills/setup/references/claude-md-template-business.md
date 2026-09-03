@@ -46,8 +46,8 @@ For specifics, read that folder's `CLAUDE.md`.
 
 ## Commands
 
-- `/baalda-setup` — Interactive onboarding to personalize this vault
-- `/baalda-optimizer` — Audit and clean up this vault (checkpoint first)
+- `/setup` — Interactive onboarding to personalize this vault
+- `/optimizer` — Audit and clean up this vault (checkpoint first)
 
 ## Document Voice
 
