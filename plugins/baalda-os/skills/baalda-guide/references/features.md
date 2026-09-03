@@ -151,11 +151,18 @@ collaborative apps (Notion, Confluence) keep your data in their database. Baalda
   Set the server URL in the app's settings. No plan limits, and Google sign-in / billing are
   optional switches.
 - **Managed server** at `https://api.baalda.com` (the default in the app). Same code as the
-  self-hosted server. Free tier caps exist only here (currently 3 vaults per user and 10 members
-  per vault by default in code; the paid plan lifts them). The server code carries a Pro plan
-  priced per vault, not per person (about $10/month or $97/year in code), but the website
-  currently lists the Team plan as "early access, talk to us". The website wins: point people to
-  baalda.com/pricing and do not quote the code's numbers as an offer.
+  self-hosted server. It is live and self-serve today: a team can sign up, sync and collaborate
+  right away on the free tier, and upgrade from inside the app when they hit a cap.
+  - **Free tier**: up to 3 vaults per user and 10 members per vault (members plus pending invites).
+  - **Pro**: $10 per vault per month, or $97 per vault per year. Priced per vault, not per
+    person. Unlocks unlimited members, notes, devices and AI edits; a Pro vault does not count
+    toward the owner's free vaults. Two subscriptions exist today: monthly and yearly.
+  - **How to buy**: Vault Settings → Billing → Upgrade to Pro (owners and admins). Checkout opens
+    in the browser; the app flips to Pro as soon as payment lands. "Manage subscription" opens the
+    billing portal for invoices, plan changes and cancellation.
+  - The public pricing page (baalda.com/pricing) may still describe the Team plan as early access
+    or "talk to us". The app is ahead of the page: tell people they can upgrade in-app now, and
+    to use the pricing page as the contact route if they want to talk first.
 
 ## Licensing
 

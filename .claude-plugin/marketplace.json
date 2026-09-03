@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Expert automation plugins that turn Claude into a specialist for your team. Install by department to get skills for marketing, sales, operations, creative, and product workflows.",
-    "version": "1.20.0"
+    "version": "1.20.1"
   },
   "plugins": [
     {
@@ -59,7 +59,7 @@
       "displayName": "All Skills",
       "source": "./plugins/all-skills",
       "description": "Every BenAI skill in one install. All 117 skills across marketing, sales, SEO, ads, design, YouTube, creative, operations, second-brain OS, Baalda OS, Marketing OS, and general productivity. Add this one plugin to get the complete library.",
-      "version": "1.16.0",
+      "version": "1.16.1",
       "author": {
         "name": "BenAI"
       },
@@ -347,7 +347,7 @@
       "displayName": "Baalda OS",
       "source": "./plugins/baalda-os",
       "description": "Turn a Baalda vault into an AI-operated second brain. Three skills: /baalda-setup bootstraps the OS structure and runs onboarding, /baalda-optimizer runs a 9-framework audit that checkpoints first and keeps every note's doc_id intact, and /baalda-guide answers any question about Baalda's features, file formats, sync, sharing and AI in plain language. Setup and optimizer are Baalda-native forks of the Obsidian plugin's os-setup and os-optimizer.",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "author": {
         "name": "BenAI"
       },

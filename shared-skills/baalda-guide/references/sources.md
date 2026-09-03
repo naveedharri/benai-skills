@@ -35,8 +35,9 @@ Otherwise fetch the same paths from GitHub:
 
 ## 3. The website (pricing, downloads, positioning)
 
-Pricing and plans change outside the repo. For anything about price, plans, or "which plan do
-I need", fetch the live page rather than quoting a number from memory.
+For price and plans, trust `references/features.md` ("Hosting options"), which mirrors the
+server's billing code and the app's Upgrade to Pro dialog. The public pricing page may still say
+the Team plan is in early access; the in-app purchase is live.
 
 | Page | URL |
 |---|---|
@@ -61,6 +62,7 @@ Do a targeted read of one file, never a sweep. Good entry points:
 | Image/PDF preview kinds | `app/apps/desktop/src/lib/preview.ts` |
 | Drag-drop / paste attachment behaviour | `app/apps/desktop/src/lib/attachments.ts` |
 | Server limits and free-tier caps | `app/apps/server/src/config.ts`, `app/apps/server/.env.example` |
+| Paid plan prices and checkout | `app/apps/server/src/http/routes/billing.ts`, `app/apps/desktop/src/components/UpgradeDialog.tsx` |
 | Attachment size limit | `app/apps/server/src/http/routes/blobs.ts` |
 | Permission rules | `app/apps/server/src/permissions/resolver.ts` |
 | MCP tools list | `app/apps/server/src/mcp/` |
@@ -75,6 +77,9 @@ Do a targeted read of one file, never a sweep. Good entry points:
 - `docs/specs/REQUIREMENTS.md` lists graph view, semantic search and version history as
   deferred. All three shipped.
 - `CHANGELOG.md` at the repo root is abandoned; use `docs/RELEASE_NOTES.md`.
+- baalda.com/pricing describes the Team plan as "early access, talk to us". The managed Pro plan is
+  live and self-serve in the app (Vault Settings → Billing); see `features.md`. Code:
+  `app/apps/server/src/http/routes/billing.ts` (plans) and `config.ts` (free caps).
 
 ## Recency check
 

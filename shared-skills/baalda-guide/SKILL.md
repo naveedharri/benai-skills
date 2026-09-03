@@ -19,8 +19,9 @@ Word documents will work. Give them a correct, short, plain answer.
    - the product docs in the repo (`docs/`, `README.md`), assumed up to date; read only the one
      or two files the routing table names. If you are not inside the repository, fetch the same
      paths from `https://raw.githubusercontent.com/naveedharri/baalda/main/`;
-   - the website for anything about price, plans or downloads (fetch the live page; never quote
-     a price from memory);
+   - the website for downloads and positioning. For price and plans, `features.md` ("Hosting
+     options") is the source: the managed Pro plan is live and self-serve in the app, and the
+     public pricing page can lag behind it;
    - a single targeted code file only when the docs are silent on a precise behaviour.
    Never sweep the whole repository for a question; it is slow and the docs already answer it.
 
@@ -87,8 +88,10 @@ That is about 110 words. It names every format asked about, says what does not w
   note text; it is not end-to-end encrypted. See `faq.md`.
 - "Does it sync my images?" Only through the note (the `attachments/` folder). An image copied
   into a sub-folder stays local. See `file-formats.md`.
-- "How much does it cost?" Fetch baalda.com/pricing. Free for local and self-hosted; the managed
-  Team plan is the paid part.
+- "How much does it cost? Can my team start now?" Yes, now. Free locally and self-hosted with no
+  limits; the managed service is free up to 3 vaults per user and 10 members per vault, then Pro
+  at $10 per vault per month or $97 per year, bought in-app under Vault Settings → Billing. Do not
+  say "early access" or "contact us for pricing"; that wording on the website is out of date.
 - "Is there a mobile / web app?" No. iOS is planned; public links open read-only in a browser.
 - "Does it have AI built in?" It has an AI *connection point* (MCP) and works with any local
   agent; it ships no model and no chat panel.

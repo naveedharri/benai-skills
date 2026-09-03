@@ -9,9 +9,17 @@ notes too. Think "Obsidian, but multiplayer and AI-friendly".
 
 ## Is it free?
 The desktop app and the server are open source (Apache 2.0). Using it on your own computer is
-free forever, and you can run your own server for free. Baalda also offers a managed backend
-(hosted by them) so you do not have to run a server; that is the paid Team plan. Send people to
-baalda.com/pricing for current prices rather than quoting numbers.
+free forever, and you can run your own server for free with no limits. The managed backend
+(hosted by Baalda, the app's default) also starts free: 3 vaults per user and 10 members per
+vault. Past that, upgrade a vault to Pro from inside the app.
+
+## What does the paid plan cost, and can my team start today?
+Yes, today. Sign up in the app, turn on sync, invite the team. The free tier already covers a
+team of up to 10 in one vault. When you need more members or more vaults, go to Vault Settings →
+Billing → Upgrade to Pro: $10 per vault per month or $97 per vault per year, priced per vault,
+not per person, with unlimited members. Only the vault owner or an admin pays; everyone else just
+needs a free account. baalda.com/pricing is the place to ask questions or talk to the team, but
+nobody has to wait for a call to get started.
 
 ## Do I need an account?
 No. You can open a folder and start writing with no account and no internet. An account is only
