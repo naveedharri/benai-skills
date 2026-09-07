@@ -30,5 +30,8 @@
     "eslint-config-next": "16.2.1",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "overrides": {
+    "fast-uri": "3.1.3"
   }
 }
