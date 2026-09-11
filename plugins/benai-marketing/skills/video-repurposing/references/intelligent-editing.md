@@ -11,7 +11,7 @@ metadata:
 
 Act as a smart video editor: analyze content, ask clarifying questions, make suggestions, and ensure quality output.
 
-This file provides the detailed implementation for Phases 2-5 of the main workflow defined in SKILL.md. **Phase 2 (Intake) is mandatory** - never skip the clarification questions.
+This file provides the detailed implementation for Phases 2-5 of the main workflow defined in SKILL.md. **Phase 2 (Intake) is mandatory** — never skip the clarification questions.
 
 ---
 
@@ -42,7 +42,7 @@ See [video-analysis.md](video-analysis.md) for commands.
 
 **Word-level timestamps required:**
 
-**Primary method - Remotion API (recommended, GPU accelerated):**
+**Primary method — Remotion API (recommended, GPU accelerated):**
 ```ts
 import { transcribe } from '@remotion/install-whisper-cpp';
 
@@ -58,7 +58,7 @@ const { transcription } = await transcribe({
 
 See [transcription.md](transcription.md) for full setup script.
 
-**Fallback - CLI (if Node API has issues):**
+**Fallback — CLI (if Node API has issues):**
 ```bash
 whisper-cpp/main -m model.bin -f audio.wav -ojf -ml 1 -of output
 ```
@@ -314,7 +314,7 @@ function findSentences(captions: Caption[]): Sentence[] {
 ### NEVER Cut At
 - Mid-word (obvious audio glitch)
 - Mid-sentence (incomplete thought)
-- During emphasis ("the KEY thing is..." CUT)
+- During emphasis ("the KEY thing is—" CUT)
 - Inhale/breath sounds
 - Filler words ("um", "so", "like")
 
@@ -339,25 +339,25 @@ Each clip must be a **completely standalone thought** - the subject must be expl
 
 ### Opening Clip (CRITICAL)
 
-The first clip is the hook: it determines whether the viewer keeps watching.
+The first clip is the hook — it determines whether the viewer keeps watching.
 
 **Requirements:**
-- Must start with a strong, complete concept: a bold statement, insight, or compelling question
+- Must start with a strong, complete concept — a bold statement, insight, or compelling question
 - Must have an explicit subject (never a pronoun or reference)
-- Must grab attention immediately: no warm-up, no filler
+- Must grab attention immediately — no warm-up, no filler
 - Review the FULL transcript and deliberately select the strongest possible opening
-- Never settle for "good enough": the opening is the most important clip in the video
+- Never settle for "good enough" — the opening is the most important clip in the video
 
 **Good openers:** "The huge opportunity with AI...", "90% of businesses haven't implemented...", "Building a business is hard..."
 **Bad openers:** "So basically what we're going to...", "It's really interesting because...", "Now the thing about this is..."
 
 ### Closing Clip (CRITICAL)
 
-The last clip must end the video naturally: a conclusion, not a hard stop.
+The last clip must end the video naturally — a conclusion, not a hard stop.
 
 **Requirements:**
 - Must be a complete thought that logically wraps up the point being made
-- Must flow naturally from the preceding content, never forced or abrupt
+- Must flow naturally from the preceding content — never forced or abrupt
 - Should leave the viewer with a takeaway, call-to-action, or sense of closure
 - Must make sense given the concept, idea, and point of the entire video
 - The video should feel like it reached its natural end, not like it was cut short
@@ -370,7 +370,7 @@ The last clip must end the video naturally: a conclusion, not a hard stop.
 The overall video must tell a coherent story:
 - Each clip should logically connect to the next
 - No jarring jumps between unrelated topics
-- The progression should feel natural, not like random fragments stitched together
+- The progression should feel natural — not like random fragments stitched together
 - If clips don't flow, reorder them or find better transition points in the transcript
 
 ### NEVER Repeat Content Between Teaser and Main Video

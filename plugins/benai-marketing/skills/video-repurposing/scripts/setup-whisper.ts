@@ -3,7 +3,7 @@
  * Copy into your Remotion project's scripts/ folder and run:
  *   npx ts-node scripts/setup-whisper.ts
  *
- * Uses Metal GPU on Mac, ~10x faster than Python whisper.
+ * Uses Metal GPU on Mac — ~10x faster than Python whisper.
  * Model is saved to .whisper/ (add it to .gitignore).
  */
 import {installWhisperCpp, downloadWhisperModel} from '@remotion/install-whisper-cpp';

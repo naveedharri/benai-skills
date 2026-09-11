@@ -117,6 +117,28 @@ Or copy from this repo's `.env.example` and fill in your keys.
 
 **Commands:** `/youtube` (skill overview)
 
+### YouTube Publishing (14 skills)
+| Skill | Command | Purpose |
+|-------|---------|---------|
+| youtube-ship | `/youtube-ship` | Runs the whole publishing chain for one video, in order, from a Ship Brief |
+| youtube-studio-setup | `/youtube-studio-setup` | Stage 1: Studio draft to saved Unlisted video (title, thumbnails, A/B test, wizard) |
+| benai-utm-creator | `/benai-utm-creator` | Stage 2: six UTM links, Bitly backhalfs, campaign code, Bitly import CSV |
+| youtube-link-setup | `/youtube-link-setup` | Stage 3: Bitly import, Kit lead-magnet page, n8n registration, link verification |
+| youtube-chapters-tags | `/youtube-chapters-tags` | Stage 4: chapters with accurate timestamps plus the tag string |
+| youtube-description | `/youtube-description` | Stage 5: description from template into Studio, Notion card to Ready to publish |
+| yt-ingestion | `/yt-ingestion` | Fetch a video's raw artifacts: file, transcript, word timings, thumbnail |
+| video-cutter | `/video-cutter` | Sentence-aligned clips at silence-midpoint boundaries |
+| yt-to-community | `/yt-to-community` | Circle community announcement draft in Ben's voice |
+| yt-to-course | `/yt-to-course` | Structured Circle course package with lesson clips |
+| linkedin-writer | `/linkedin-writer` | LinkedIn posts & carousels from content |
+| newsletter-writer | `/newsletter-writer` | Newsletter editions from content |
+| video-repurposing | `/video-repurposing` | Captioned platform-ready clips with FFmpeg and Remotion |
+| humanizer | `/humanizer` | Remove signs of AI-generated writing |
+
+**Agents:** `video-cutter-agent`, `yt-ingestion-agent`
+
+Everything after the edit: five publish-prep stages with four human checkpoints, then repurposing every published video. Uses Claude in Chrome for every YouTube Studio read and write. One-time operator setup lives in `youtube-ship/references/SETUP.md`.
+
 ### Marketing OS (8 skills)
 | Skill | Command | Purpose |
 |-------|---------|---------|

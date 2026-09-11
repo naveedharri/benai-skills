@@ -1,119 +1,144 @@
-# Ben Van Sprundel - Profile & Background
+# Ben Van Sprundel — Profile & Background
 
 ## Basic Information
 
 Name: Ben Van Sprundel
-Location: Brazil (originally from Europe)
+Email: admin@benai.co
+Location: Sao Paulo, Brazil (originally from Europe; visits family in Europe in summer)
+Company: BEN ERIK VAN S LTDA (operating as Ben AI)
+Domains: benai.co, benai.agency, benaios.com
 
-## How I Want to Be Perceived
+## How He Wants to Be Perceived
 
-A trusted, no-fluff expert who helps professionals and founders apply AI and SEO in ways that generate real business results. Someone who shares openly, builds in public, and leads with clarity - not hype.
+A trusted, no-fluff practitioner who helps existing businesses and professionals use AI better than 99% for real business purposes. Someone who shares openly, builds in public, and leads with clarity, not hype. The anti-guru. Practitioner authority, not influencer.
 
 ## Introduction Statement
 
-"Ben is a genuine smart guy who has founded businesses and is amazing at AI."
+"Ben is a practitioner who has founded businesses, run them, and is amazing at applying AI inside them. He teaches what he actually builds."
 
 ## Professional Skills & Strengths
 
 ### Design & Technical
 
-Expert in UX/UI design and website design
-Highly proficient in no-code and low-code automation tools
-Strong foundation in developer skills (self-taught)
-Deep understanding of Search and paid marketing
+- UX/UI and website design background
+- No-code and low-code automation tools (n8n, Make.com, Relevance AI as base; Claude Cowork is the current anchor tool)
+- Strong self-taught developer foundation
+- Deep understanding of search and paid marketing
 
 ### Business Acumen
 
-Excellent strategic thinking about business models
-Strong positioning and messaging expertise
-Considered an authority in the no-code/AI space
-Great at advising on what type of business/model fits specific people
+- Strategic thinker about business models
+- Strong positioning and messaging expertise
+- Considered an authority in the practical AI + automation space
+- Great at advising what type of business or model fits specific people
 
 ### Personal Attributes
 
-Hungry, ambitious, obsessive about my work
-High-performance mindset - work 7 days a week
-Lead by example (gym every morning, ice baths, saunas)
-Great listener, excellent with people
-Independent thinker, form my own opinions
-Extremely high agency
-Purpose-driven - everything must align with my mission
-Excellent at explaining complex topics simply (Feynman method)
+- Hungry, ambitious, obsessive about the work
+- High-performance mindset, works 7 days a week
+- Lead by example: gym every morning, ice baths and saunas 3-4x/week
+- Great listener, excellent with people
+- Independent thinker, forms his own opinions
+- Extremely high agency
+- Purpose-driven, everything aligns with the mission
+- Excellent at explaining complex topics simply (Feynman method)
 
-## What Sets Me Apart
+## What Sets Him Apart
 
-I speak from full experience across multiple AI business models:
+Ben speaks from full experience across multiple AI business models:
 
-Built custom AI solutions for clients
-Built and run an AI agency
-Built and run an AI product (SEO agent)
-Operate in AI education space (coaching, consulting, community)
-Deliver AI services (SEO services)
-Build completely in public on YouTube - people watch me build my business in real-time
+- Built custom AI solutions for clients
+- Built and runs the AIOS / Second Brain Operating System consulting offer (high-ticket)
+- Runs the BenAI Accelerator (low-ticket community)
+- Built and ran an AI product (SEO Agent, now sunsetting)
+- Operates in AI education across YouTube, community, and 1:1
+- Builds completely in public on YouTube, people watch him build the business in real-time
 
-## Professional Journey - Key Milestones
+## Professional Journey — Key Milestones
 
-Started as a physiotherapist
-Gap year to Costa Rica, then Colombia
-Started first business (PROFY) in ed-tech with Oskar
-Raised capital, accepted into Startup Chile (Y Combinator of South America)
-Went bankrupt after 5-year grind - very public about this
-Became CMO of NoCRM (25 employees)
-Started working with ChatGPT since launch (November 2022)
-Built language learning course system with ChatGPT (2023)
-Started cold outbound AI-SDR with Oskar
-Launched YouTube channel (June 2024) - immediate traction
-First retainer clients through YouTube
-Launched community (September 2024, relaunched December 2024)
-Partnered with Agniva (CTO) for SEO agent
-Now serving clients from small businesses to 1000+ employee enterprises
+- Started as a physiotherapist
+- Gap year to Costa Rica, then Colombia
+- Started first business (PROFY) in ed-tech with Oskar Johnston
+- Raised capital, accepted into Startup Chile ("Y Combinator of South America")
+- Went bankrupt after a 5-year grind — very public about this
+- Became CMO of NoCRM (~25 employees)
+- Started working with ChatGPT since launch (November 2022)
+- Built language learning course system with ChatGPT (2023)
+- Started cold outbound AI-SDR with Oskar
+- Launched YouTube channel (June 2024) — immediate traction
+- First retainer clients through YouTube
+- Launched community (September 2024, relaunched December 2024)
+- Partnered with Agniva (CTO) for SEO Agent (now sunsetting)
+- Launched AIOS / Second Brain Operating System consulting offer (2026)
+- Now serving clients from solo professionals to 1000+ employee enterprises
 
-## Current Achievements (July 2026)
+## Current Numbers (as of May 2026)
 
-200,000+ YouTube subscribers (~100 videos in ~2 years of weekly uploads)
-1,000+ community members (Ben AI Accelerator, 4.9 stars over 500+ reviews)
-30,000+ email list, daily newsletter
-Two businesses at $1M+ ARR each (AI education + AI agency), built in public
-Small team of high-agency people (tiny-team philosophy)
-Achieved moderate financial independence
-Quit alcohol completely (3+ years); daily exercise commitment
-Recently working from Madrid, Bali, and Tokyo while running the business
+- 130,000+ YouTube subscribers (target: 200K+)
+- ~950 community members at $97/month (target: 1,200+ by EOY)
+- 30,000+ email list on Kit (formerly ConvertKit)
+- ~$100K MRR across both business units (community + custom solutions)
+- Small core team of 6 + contractors
+- Achieved moderate financial independence
 
-For deeper personal texture (fears, habits, non-negotiables, biography beats like the Narcos cameo), see `06_Values_Beliefs_Stories.md` and the live source docs referenced there.
+## Current Team Context
 
-## Professional Goals
+- Oskar Johnston: Chief of Staff / runs Education business unit, operates Claude Cowork as AI Chief of Staff
+- Naveed Harri: CTO, runs 1:1 tech calls inside the Accelerator
+- Aryan Dua: Production pipeline + YouTube + AIOS delivery
+- Milan Kumar: Community management + retention
+- Owen Boesveld: Operates Custom Solutions pod
+- Jan: Thumbnails
+- Miguel: YouTube strategy
+- Spain Offsite April 2026 (Madrid, April 10-24) with core team
 
-Build consistent $100K MRR business
-Maintain self-determination and purpose alignment
-Live a healthy lifestyle
-Target: $2.5M in savings for complete financial independence
+## Current Achievements & Targets
+
+- Current: 0 → ~$100K MRR across both business units
+- Target: consistent $100K MRR
+- Target: $2.5M in savings for complete financial independence
 
 ## Core Beliefs & Values
 
-Purpose above all
-Ability to learn anything
-Dedication and discipline
-Obsession required for mastery
-Deliver value, give before taking
-Honesty, transparency, authenticity
-Solid business ethics
+- Purpose above all
+- Ability to learn anything
+- Dedication and discipline
+- Obsession required for mastery
+- Deliver value, give before taking
+- Honesty, transparency, authenticity
+- Solid business ethics
+
+## How Ben Actually Writes (1:1 Voice Cues)
+
+These are the cues that make writing sound like Ben, not a polished imitation:
+
+- No em dashes. Ever.
+- No sign-offs in DMs and short replies. In newsletters, the only sign-off is "Keep going,"
+- Loose punctuation. Occasional mid-sentence capitalization. Typos can slip.
+- Signature words: "frankly", "to be honest", "it depends" (sometimes in quotes), "nuanced question"
+- Reaction words: "very cool", "fantastic", "very impressed"
+- Sendoff to community members doing well: "Keep rocking, [Name]!"
+- Common phrases: "Domain Expertise + AI = unfair advantage", "99% will... Be the 1%", "It's not rocket science", "That's it.", "Here's the thing:"
+- Never corporate: no "circling back", "touching base", "leverage", "synergy", "ecosystem"
+- Never fake humility ("I'm just a..."), never performative gratitude
+- No long preambles. Answer first, context second.
 
 ## Inspiration
 
-Naval Ravikant - for his wisdom in business, lifestyle, and philosophy. First-principle thinking, pursuit of truth, and holistic view on life and business. Communicates powerful ideas in few words that can shift mindsets and change behavior.
+Naval Ravikant — for his wisdom in business, lifestyle, and philosophy. First-principle thinking, pursuit of truth, holistic view on life and business. Communicates powerful ideas in few words that can shift mindsets and change behavior.
 
 ## Personal Life
 
-Daily routine: Work out almost every day, gym every morning, ice baths and saunas 3-4x/week, dinner with friends most evenings.
-Sports background: Football as a kid, MMA, kickboxing, Jiu Jitsu, footvolley in Brazil.
-Hobbies: Beach, surfing, traveling (visits family in Europe during summer).
-Learning: Watch lots of YouTube, podcasts (Lex Fridman, Chris Williamson, Naval Ravikant).
-Work ethic: Work 7 days a week. View work-life balance on yearly basis - grind for a few years, then take time off.
+- Daily routine: workout almost every day, gym every morning, ice baths and saunas 3-4x/week, dinner with friends most evenings
+- Sports background: football as a kid, MMA, kickboxing, Jiu Jitsu, footvolley in Brazil
+- Hobbies: beach, surfing, traveling (Europe in summer)
+- Learning: lots of YouTube, podcasts (Lex Fridman, Chris Williamson, Naval Ravikant)
+- Work ethic: works 7 days a week. Views work-life balance on a yearly basis: grind for 2-3 years, then take time off.
 
-## Topics I Discuss
+## Topics He Discusses
 
 Sports, AI, technology, design, philosophy, history, personal development, business.
 
-## Topics I Avoid
+## Topics He Avoids
 
-Generally open, though don't talk much about personal life publicly.
+Generally open. Does not talk much about personal life publicly.

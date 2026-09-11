@@ -7,7 +7,7 @@ Use this document as the definitive guide for crafting LinkedIn post hooks. Each
 ## How to Use This Document
 
 1. **Identify the post type** — Is it educational, a personal story, something funny, a success share, or a visual post?
-2. **Pick a matching category** below (Carousel, Story, Viral, Creative, Image, Funny, or Success).
+2. **Pick a matching category** below (Carousel, Story, Viral, Creative, Image, Funny, Success, or System Build).
 3. **Choose a template** from that category that fits the topic and tone.
 4. **Apply the psychological trigger** described alongside the template to maximize engagement.
 5. **Adapt the template** — fill in the bracketed placeholders with specifics relevant to the post topic.
@@ -785,18 +785,91 @@ Since [Event/trend], [prominent figure/entity] has [undergone notable transforma
 
 ---
 
+## 8. System Build / "I Built X" Hook Templates
+
+Best for: showcasing AI systems, automation builds, tool demos, and SaaS prototypes. This is Ben's highest-performing hook format — his top 5 LinkedIn posts of 2025 all use this pattern.
+
+### 8.1 The Build Demo
+
+**Why it works:** "I built" signals hands-on credibility. Naming the specific tools makes it actionable. A short timeframe makes it feel achievable. The 👇 emoji promises a breakdown below.
+
+**Template:**
+```
+I built [specific system/tool] with [tech stack] in [short timeframe] 👇
+```
+
+**Real examples:**
+- "I built a 20+ AI agent Team that automates (almost) any workflow across my entire tech stack."
+- "I built an AI SaaS with Claude + n8n in under 2 hours 👇"
+- "I built an AI Linkedin Content System with n8n & Airtable in under 2 hours 👇"
+
+### 8.2 The System Reveal
+
+**Why it works:** "We automated" implies team credibility and a production-grade system. Naming the full tech stack appeals to builders who want to replicate it.
+
+**Template:**
+```
+We [automated/built/shipped] [entire business function] using [Tool 1], [Tool 2] & [Tool 3] 👇
+```
+
+**Real example:**
+- "We Automated Our Entire Sales Process & CRM Using Airtable, n8n & Claude AI 👇"
+
+### 8.3 The New Capability Unlock
+
+**Why it works:** "You can now" signals something newly possible. Naming a specific well-known tool (Claude, n8n) anchors the claim in a familiar ecosystem.
+
+**Template:**
+```
+You can now [do impressive thing] with [well-known tool] 👇
+```
+
+**Real example:**
+- "You can now scrape any social media with Claude MCP's 👇"
+
+### 8.4 Stat-Based Industry Challenge
+
+**Why it works:** A stark percentage creates a curiosity gap ("am I in the 97%?"). Contrasting the majority with a small elite group triggers aspiration and fear of missing out.
+
+**Template:**
+```
+[High percentage]% of [target group] still [common mistake or outdated behavior].
+The other [small percentage]% [do the smart/winning thing].
+```
+
+**Real examples:**
+- "97% of agencies still treat AI like a toy. The other 3% build real 'AI workforces'."
+- "95% of newsletter automations produce 'generic' content. Because they skip the hardest part → context engineering."
+
+### 8.5 The Best Path
+
+**Why it works:** "One of the best paths" feels authoritative without being absolute. Framing a journey (agency → SaaS) creates a narrative arc that pulls readers in.
+
+**Template:**
+```
+One of the best paths to [desirable end state]?
+[Unexpected starting point]. Here's why 👇
+```
+
+**Real example:**
+- "One of the best paths to a successful AI SaaS? Starting as an AI Automation Agency. Here's why 👇"
+
+---
+
 ## Quick Reference: Choosing the Right Hook
 
 | Post Goal | Recommended Categories |
 |---|---|
 | Teach something | Carousel, Viral |
 | Share a personal experience | Story |
-| Drive maximum engagement | Viral, Funny |
+| Drive maximum engagement | Viral, Funny, System Build |
 | Announce an achievement | Success |
 | Challenge conventional thinking | Creative, Viral |
 | Pair with a strong visual | Image |
 | Entertain your audience | Funny, Creative |
-| Build authority/credibility | Carousel, Story, Success |
+| Build authority/credibility | Carousel, Story, Success, System Build |
+| Showcase a system or automation | System Build |
+| Challenge an industry norm | System Build (8.4), Viral |
 
 ---
 

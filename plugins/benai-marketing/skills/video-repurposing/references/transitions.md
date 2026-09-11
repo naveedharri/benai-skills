@@ -394,17 +394,17 @@ const totalDuration = clip1 + clip2 + clip3 - t1Duration - t2Duration;
 
 **Problem:** When using `TransitionSeries`, the visual fade works but both audio tracks play simultaneously during the overlap, creating noise.
 
-**Solution:** Use the `volume` callback on `OffthreadVideo` to fade audio independently from the visual transition. The audio should stay loud until the very end, then drop with a cubic ease-out curve, creating a brief silence gap before the next clip fades in.
+**Solution:** Use the `volume` callback on `OffthreadVideo` to fade audio independently from the visual transition. The audio should stay loud until the very end, then drop with a cubic ease-out curve — creating a brief silence gap before the next clip fades in.
 
 ### Approved Audio Transition Pattern
 
-Uses **cosine curves** for natural-sounding fades: starts slow, accelerates through the middle, ends slow. No hard silence gap; the curves overlap naturally so one voice trails off as the other comes in.
+Uses **cosine curves** for natural-sounding fades — starts slow, accelerates through the middle, ends slow. No hard silence gap; the curves overlap naturally so one voice trails off as the other comes in.
 
 ```tsx
 // Audio timing constants (at 30fps)
 const TRANSITION_FRAMES = 30;     // 1s visual crossfade
-const AUDIO_FADEOUT_FRAMES = 45;  // 1.5s, gradual cosine fade-out
-const AUDIO_FADEIN_FRAMES = 36;   // 1.2s, gradual cosine fade-in
+const AUDIO_FADEOUT_FRAMES = 45;  // 1.5s — gradual cosine fade-out
+const AUDIO_FADEIN_FRAMES = 36;   // 1.2s — gradual cosine fade-in
 
 // Volume callback for each clip
 const createVolumeFn = (
@@ -473,17 +473,17 @@ const createVolumeFn = (
 
 ### How It Works
 
-1. **Outgoing clip:** Audio fades with a cosine curve over 1.5s: starts slow, accelerates, ends slow
-2. **Incoming clip:** Audio fades in with a cosine curve over 1.2s: voice rises gradually
-3. **No hard silence gap** - the cosine curves overlap naturally, one voice trails off as the other comes in
+1. **Outgoing clip:** Audio fades with a cosine curve over 1.5s — starts slow, accelerates, ends slow
+2. **Incoming clip:** Audio fades in with a cosine curve over 1.2s — voice rises gradually
+3. **No hard silence gap** — the cosine curves overlap naturally, one voice trails off as the other comes in
 4. **Premount:** Each clip starts loading 2s before it's needed so video is decoded and ready
 
 **Key points:**
 - First clip has no fade-in, last clip has no fade-out
-- Cosine curves are critical: linear and cubic fades sound unnatural (too abrupt or drops too early)
+- Cosine curves are critical — linear and cubic fades sound unnatural (too abrupt or drops too early)
 - `(1 + cos(progress * π)) / 2` for fade-out (1→0), `(1 - cos(progress * π)) / 2` for fade-in (0→1)
 - The `volume` prop accepts a callback `(frame) => number` for per-frame control
-- Visual crossfade is 1s (30 frames); 0.4s is too fast and feels jarring
+- Visual crossfade is 1s (30 frames) — 0.4s is too fast and feels jarring
 
 **For FFmpeg:** Use `acrossfade` filter alongside `xfade` (see FFmpeg section above).
 
@@ -498,7 +498,7 @@ const createVolumeFn = (
 - Use `fadeblack` for dramatic scene changes
 - Keep transitions consistent throughout a video
 - Total output duration = sum of clips - sum of transition durations
-- **Always handle audio during transitions** - visual-only fades create overlapping audio noise
+- **Always handle audio during transitions** — visual-only fades create overlapping audio noise
 
 ---
 

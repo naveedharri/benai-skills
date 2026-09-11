@@ -162,7 +162,7 @@ const CAPTION_PILL = {
   backdropFilter: 'blur(12px) saturate(140%)', // frosted blur replaces the drop shadow
 };
 
-// Audio transition settings: cosine curves for natural-sounding fades
+// Audio transition settings — cosine curves for natural-sounding fades
 const AUDIO_FADEOUT_FRAMES = 45;  // 1.5s gradual cosine fade-out
 const AUDIO_FADEIN_FRAMES = 36;   // 1.2s gradual cosine fade-in
 

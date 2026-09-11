@@ -43,11 +43,11 @@ async function transcribeVideo(videoName: string): Promise<void> {
   const captionsPath = path.join(process.cwd(), 'public', `${baseName}.captions.json`);
 
   if (!existsSync(videoPath)) {
-    console.log(`Skipping ${videoName} - not found in public/`);
+    console.log(`Skipping ${videoName} — not found in public/`);
     return;
   }
   if (existsSync(captionsPath)) {
-    console.log(`Skipping ${baseName} - already transcribed`);
+    console.log(`Skipping ${baseName} — already transcribed`);
     return;
   }
 
@@ -84,7 +84,7 @@ async function transcribeVideo(videoName: string): Promise<void> {
 
 async function main() {
   if (!VIDEOS.length) {
-    console.log('Nothing to transcribe: every video in public/ already has a captions file.');
+    console.log('Nothing to transcribe — every video in public/ already has a captions file.');
     return;
   }
   for (const video of VIDEOS) {

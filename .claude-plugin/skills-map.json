@@ -108,7 +108,9 @@
         "icebreaker-writer",
         "lead-qualifier",
         "lead-researcher",
-        "linkedin-scraper"
+        "linkedin-scraper",
+        "video-cutter-agent",
+        "yt-ingestion-agent"
       ],
       "skills": {
         "ads": {
@@ -626,6 +628,46 @@
         "baalda-guide": {
           "displayName": "Baalda Guide",
           "summary": "Answer any question about Baalda in plain, non-technical language \u2014 features, supported file formats, sync, sharing and permissions, AI/MCP, pricing, platforms, self-hosting"
+        },
+        "youtube-ship": {
+          "displayName": "YouTube Ship",
+          "summary": "Runs the whole publishing chain for one video in order: Studio wizard, UTM links, Bitly import, chapters and tags, description"
+        },
+        "youtube-studio-setup": {
+          "displayName": "YouTube Studio Setup",
+          "summary": "Stage 1: Studio draft to saved Unlisted video with title, thumbnails, A/B test, monetization, end screen"
+        },
+        "benai-utm-creator": {
+          "displayName": "Ben AI UTM Creator",
+          "summary": "Stage 2: six UTM tracking links, Bitly backhalfs, five-letter campaign code, Bitly import CSV from one video title"
+        },
+        "youtube-link-setup": {
+          "displayName": "YouTube Link Setup",
+          "summary": "Stage 3: import UTM links into Bitly, build the Kit lead-magnet page, register in n8n, verify every short link"
+        },
+        "youtube-chapters-tags": {
+          "displayName": "YouTube Chapters and Tags",
+          "summary": "Stage 4: chapters with accurate timestamps and a tag string from the transcript via Claude in Chrome"
+        },
+        "youtube-description": {
+          "displayName": "YouTube Description",
+          "summary": "Stage 5: assemble the description from the template, write it into Studio, move the Notion card to Ready to publish"
+        },
+        "yt-ingestion": {
+          "displayName": "YT Ingestion",
+          "summary": "Fetch a video's raw artifacts: file, transcript, word-level timestamps, thumbnail, metadata"
+        },
+        "video-cutter": {
+          "displayName": "Video Cutter",
+          "summary": "Cut any video into sentence-aligned clips at silence-midpoint boundaries"
+        },
+        "yt-to-community": {
+          "displayName": "YT to Community",
+          "summary": "Turn a YouTube video into a Circle community announcement draft in Ben's voice, thumbnail attached"
+        },
+        "yt-to-course": {
+          "displayName": "YT to Course",
+          "summary": "Turn a YouTube video into a structured Circle course package with sentence-aligned lesson clips"
         }
       }
     },
@@ -803,6 +845,70 @@
         "market-intelligence-report": {
           "displayName": "Market Intelligence Report",
           "summary": "YouTube + Twitter/X + official-source competitive intelligence, rendered as a BenAI-branded instant-ui HTML dashboard"
+        }
+      }
+    },
+    "youtube-publishing": {
+      "agents": [
+        "video-cutter-agent",
+        "yt-ingestion-agent"
+      ],
+      "skills": {
+        "youtube-ship": {
+          "displayName": "YouTube Ship",
+          "summary": "Runs the whole publishing chain for one video in order: Studio wizard, UTM links, Bitly import, chapters and tags, description"
+        },
+        "youtube-studio-setup": {
+          "displayName": "YouTube Studio Setup",
+          "summary": "Stage 1: Studio draft to saved Unlisted video with title, thumbnails, A/B test, monetization, end screen"
+        },
+        "benai-utm-creator": {
+          "displayName": "Ben AI UTM Creator",
+          "summary": "Stage 2: six UTM tracking links, Bitly backhalfs, five-letter campaign code, Bitly import CSV from one video title"
+        },
+        "youtube-link-setup": {
+          "displayName": "YouTube Link Setup",
+          "summary": "Stage 3: import UTM links into Bitly, build the Kit lead-magnet page, register in n8n, verify every short link"
+        },
+        "youtube-chapters-tags": {
+          "displayName": "YouTube Chapters and Tags",
+          "summary": "Stage 4: chapters with accurate timestamps and a tag string from the transcript via Claude in Chrome"
+        },
+        "youtube-description": {
+          "displayName": "YouTube Description",
+          "summary": "Stage 5: assemble the description from the template, write it into Studio, move the Notion card to Ready to publish"
+        },
+        "yt-ingestion": {
+          "displayName": "YT Ingestion",
+          "summary": "Fetch a video's raw artifacts: file, transcript, word-level timestamps, thumbnail, metadata"
+        },
+        "video-cutter": {
+          "displayName": "Video Cutter",
+          "summary": "Cut any video into sentence-aligned clips at silence-midpoint boundaries"
+        },
+        "yt-to-community": {
+          "displayName": "YT to Community",
+          "summary": "Turn a YouTube video into a Circle community announcement draft in Ben's voice, thumbnail attached"
+        },
+        "yt-to-course": {
+          "displayName": "YT to Course",
+          "summary": "Turn a YouTube video into a structured Circle course package with sentence-aligned lesson clips"
+        },
+        "linkedin-writer": {
+          "displayName": "LinkedIn Writer",
+          "summary": "Create LinkedIn posts and carousels from existing content"
+        },
+        "newsletter-writer": {
+          "displayName": "Newsletter Writer",
+          "summary": "Iterative, step-by-step daily-email writing in Ben's voice from his Values & Beliefs doc, Stories doc, a YouTube video, or any insight"
+        },
+        "video-repurposing": {
+          "displayName": "Video Repurposing",
+          "summary": "Turn long-form video into platform-ready clips with word-level captions using FFmpeg and Remotion"
+        },
+        "humanizer": {
+          "displayName": "Humanizer",
+          "summary": "Remove AI writing patterns to make text sound natural and human-written"
         }
       }
     },

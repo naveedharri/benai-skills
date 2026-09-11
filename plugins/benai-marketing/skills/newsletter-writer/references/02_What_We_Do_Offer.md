@@ -1,56 +1,153 @@
-# What We Do, Offer Overview (current era, mid-2026)
+# What Ben AI Does — Full Offer Overview
 
-Use THESE facts in CTAs and PS pitches. Never invent features or numbers.
+## Mission Statement
 
-## The Ben AI Accelerator (core offer)
+We help existing businesses and professionals use AI better than 99% for real business purposes. Practical adoption. Real systems. Real results.
 
-**Price:** $127/month (raised from $97 in July 2026; existing members grandfathered at $97 forever). Planned steps: $167 (Aug 2026), $197 (Sep 2026). Welcome-sequence deadline offer: 50% off first month ($47 first month, Deadline Funnel).
+## Core Value Proposition
 
-**Community:** 1,000+ members ("hundreds of business operators" is the preferred phrasing), 4.9 stars across 500+ reviews. Members include entrepreneurs implementing AI in their businesses, agency owners selling AI systems, and professionals/department leaders.
+**"Use AI better than 99% for real business purposes."**
 
-**What's inside (the canonical bullet pool, pick 4–6 per email, don't dump all):**
-- A 1-on-1 kickoff/onboarding call: an expert audits where you are, what you want to achieve, and points you at the workflow with the fastest impact
-- 50+ hours of courses: full beginner-to-advanced Claude course, Second Brain / AI OS setup course, n8n, Make.com, Relevance AI, Claude Cowork
-- 100+ battle-tested Claude Skills and n8n workflows the team runs daily across marketing, ops, sales, and recruiting (plug-and-play, constantly updated)
-- Unlimited 1-on-1 tech help / AI consulting calls to get unstuck fast
-- 2 weekly live Q&A calls with Ben and the team (these have evolved into masterminds where members share what they've built)
-- Complete AI business playbook: 4 client-acquisition playbooks, pricing/packaging, real templates, proposals, decks
-- Job board where business owners inside hire agency builders
+Not "start an AI business." Not "build an AI agency in 90 days." Not theory. Practical AI adoption that puts you ahead of nearly everyone else in your industry. We teach the first 20% of AI skills that deliver 80% of the value.
 
-**Standard benefit phrasings (reuse verbatim-ish):**
-- "How to build your first AI workflow this week, without writing a single line of code"
-- "Build a business that runs on systems instead of running on you"
-- "Why your years of industry experience are the unfair advantage you've been overlooking"
-- "Never get stuck on something our experts can solve in 20 minutes"
-- "Master the most lucrative skill of the coming decade"
+## Key Differentiator
 
-## High-ticket: AI Operator (launching; currently case-study phase)
+Unlike generic AI courses, AI hype merchants, or theory-heavy content, we share actionable, battle-tested systems from real client work and real internal use. Practitioner, not guru. Anti-hype, anti-perfectionism, anti-tutorial-industrial-complex.
 
-30-day done-with-you implementation partnership. 10 case-study spots. Qualification: $200K–$5M annual revenue, proven offer, repetitive processes, ~5 hours/week of implementation time, willing to be documented as a case study. Entry: free application call (Calendly), explicitly "not a sales call"; unqualified applicants still leave with a practical roadmap. Deliverables: business audit, first workflows built together, second brain setup, AI roadmap.
+---
 
-There is also a standing high-ticket consulting Calendly that can appear as a secondary CTA in some emails.
+## The Two Main Offers
 
-## Credibility stack (for social proof lines)
+Ben AI runs two flagship offers. Every newsletter P.S. points to exactly ONE of them based on who the angle is written for.
 
-- Two businesses at $1M+ ARR each (AI education + AI agency), built in public
-- 200,000+ YouTube subscribers, ~100 videos, ~2 years of weekly uploads
-- 30,000+ email list
-- Member results to cite (first names + context only):
-  - **Masai**, law-firm-niche AI agency, ~$30K/month flat subscription, no law background, 12 months in
-  - **Bridget**, built a Second Brain for a 50-year-old non-technical health coach; client + intern now use Claude Code daily
-  - **Mark**, aesthetic medicine clinic; patient scheduling, reminders, inventory apps, Kylie Jenner chatbot that got his doctor using AI daily
-  - **Jesse**, real estate developer, Oregon; full second brain with daily automated routine across Gmail/Slack/meetings
-  - **Ivan**, finance dashboard for a 400-person pharma company in Madrid; now positioned as internal AI lead
-  - **Lorenzo**, enterprise AI consultant; client told him to slow down, realized he was undercharging
-  - **Kevin**, SaaS AE; live sales dashboard in Claude with quota tracking and pipeline visibility
-  - **Giovanny**, built her website with Manus, ran team training kickoff
-  - **Shreeram**, "Loop Engineering" community post (Doer + Critic agent loops)
-  - **Jonas, Andrew**, earlier-era success stories
+### Offer 1 — BenAI Accelerator ($97/month or $797/year)
 
-## The customer journey
+The low-ticket flagship. The core membership product. Where the YouTube audience converts.
 
-YouTube video → lead magnet (freebie) → welcome sequence (7 days, 50% off deadline) → daily newsletter → Accelerator ($127/mo) → high-ticket AI Operator / consulting
+**Who it's for:**
+- Solo professionals, consultants, freelancers, expert solopreneurs
+- Mid-career professionals (CMOs, VPs, Heads of Ops, department leaders) wanting to upskill themselves
+- Business owners and operators in the early stages of embedding AI
 
-## This is NOT
+**What's inside:**
+- 3 Platform Mastery Courses: n8n, Make.com, Relevance AI
+- Real build walkthroughs (actual workflow automations and AI agent cases)
+- Technical and business training (how to build, scope, price, deliver)
+- 100+ ready-to-use templates (sales, content, operations — all battle-tested)
+- Claude Cowork content (the current anchor tool, most active surface area)
+- Integration guides: WhatsApp, Slack, Meta, and more
+- Weekly Q&As with Ben (strategy, positioning, business advice)
+- FREE 1-on-1 tech calls — 25-minute sessions with Naveed Harri (CTO) for debugging, architecture, implementation
+- Complete AI agency and business setup templates (NDAs, proposals, pitch decks, pricing models, PRD, SOW templates)
+- Go-to-market playbooks (LinkedIn, cold calling, cold email, YouTube strategy, niche selection)
+- Active builder community: ~950 members, peer feedback, accountability
+- Annual option at $797 (saves ~$367 vs monthly)
 
-Generic AI hype, another course pile, theory without implementation, or a get-rich-quick promise. The anti-guru positioning is load-bearing: never overclaim.
+**The customer journey for this offer:**
+YouTube → Free resources (templates) → $97/month Accelerator → AI-powered operating system inside their existing business or role
+
+**When to point the newsletter P.S. at the Accelerator:**
+- Reader is a solo professional, consultant, freelancer, or expert solopreneur
+- Reader is a mid-career professional wanting to upskill themselves first
+- Angle is about personal productivity, skill-building, individual workflows
+- Reader has not yet built their first AI-powered system
+
+**How to write the Accelerator CTA in a P.S.:**
+Short. Soft. Sounds like Ben mentioning "where I am" rather than pitching. Examples of the tone:
+- "P.S. If you want to go deeper on this, we have 100+ templates and weekly Q&As inside the BenAI Accelerator. $97/month or $797/year if you want the annual. Link in the footer."
+- "P.S. The full playbook for this lives inside the Accelerator, along with weekly Q&As and 1:1 tech calls with Naveed. $97/month."
+
+Never hard-sell. Never list every feature. Mention it the way you'd mention "my gym".
+
+---
+
+### Offer 2 — AIOS / Second Brain Operating System (benaios.com)
+
+The high-ticket flagship. The institutional AI consulting offer. Where companies (not individuals) come to install AI infrastructure across their team.
+
+**Core promise:**
+"Become an AI-first company with your Second Brain Operating System." Individual AI is a seat. Institutional AI is a system. Your team has ChatGPT. Your company has nothing.
+
+**Who it's for:**
+- 10-100 person company, $2M+ revenue
+- Already aware of Claude Cowork (watched the video, using it, or exploring it)
+- Has a specific department or function they want to start with (GTM, marketing, ops)
+- Has at least one technical or AI-curious person on the team (the future "Operator" / champion)
+- NOT for: someone who needs to be educated on what AI is, or wants a single automation built
+
+**What gets installed (14 days, three phases):**
+
+Phase 1 — Discovery (Days 1-4):
+- Live screen-share sessions, watching how the business actually runs
+- Operational map grounded in observation, not docs
+- Two proof automations scoped and confirmed
+- Shape of the Second Brain agreed
+
+Phase 2 — Brain Setup (Days 5-10):
+- Centralized context layer (customer history, products, SOPs, brand voice, team profiles, commercial rules, templates)
+- Mastermind database (voice, templates, rules)
+- Connector layer wired into the existing stack (CRM, email, calendar, comms)
+- Role-based access control configured
+
+Phase 3 — Proof + Handoff (Days 11-14):
+- Two end-to-end automations shipped on real data
+- Team workshop and walkthrough
+- Internal Operator trained on extension patterns
+- System fully owned by the client's team on day one of handoff
+
+**Three deliverables in plain terms:**
+1. A working Second Brain (centralized context layer every AI interaction reads from)
+2. Two proof automations running on top of it (scheduled, autonomous, hitting real systems)
+3. A trained internal Operator who keeps the Brain alive after we leave
+
+**What they DON'T get:**
+- Ongoing coaching or enablement
+- Slack babysitting post-delivery
+- Multiple skills built for them
+- Training on Claude Cowork basics
+- Guarantees on adoption (that's their responsibility)
+
+**The customer journey for this offer:**
+YouTube → benaios.com → Calendly call (no email gauntlet) → 14-day install → Owned by them
+
+**When to point the newsletter P.S. at AIOS:**
+- The angle is about team-wide AI, scattered tools, institutional knowledge, scaling AI across a department
+- Reader is clearly a business owner, founder, or executive of a 10-100 person company
+- The piece is making the case that individual AI seats aren't enough, you need a system
+- The pain point being addressed is "the productivity gain is stuck at the seat" or "my company has nothing"
+
+**How to write the AIOS CTA in a P.S.:**
+- "P.S. If you're running a team and feel like your company has ChatGPT but no shared brain, that's what we install. 14 days, owned by your team. benaios.com."
+- "P.S. Building this across a whole team is what we do at benaios.com. 14-day install, two proof automations on top, your internal Operator trained to extend it. Straight to a real call, no funnel."
+
+Never hard-sell. Make it sound like "this is where we do that work" not "buy this now".
+
+---
+
+## Acquisition Channels
+
+- **YouTube (primary):** youtube.com/@benai, 130K+ subscribers, 2-3 videos/week target, anchor tool is Claude Cowork
+- **Newsletter:** 30K+ subscribers on Kit, 1 edition/week, repurposed from YouTube only (no standalone editorial)
+- **LinkedIn:** repurposed only (3-4 posts/week)
+
+## This Is NOT
+
+- Generic AI hype or ChatGPT tips
+- Theory without implementation
+- "Start an AI business in 90 days" (retired positioning)
+- "$10K/month AI agency" promises (retired positioning)
+- Expensive enterprise consulting that takes 6 months to ship anything
+- Another course you'll never finish
+
+## This IS
+
+- A complete ecosystem for becoming AI-first inside your existing business or role
+- Proven systems from practitioners doing the work
+- Technical skills + business strategy in one place
+- A community of builders (Accelerator) and an install service (AIOS) running on the same operating philosophy
+
+## The Bottom Line
+
+For $97/month, you get a community + courses + templates + weekly Q&As + 1:1 tech calls that turn your existing role or business into one that runs on AI.
+
+For an AIOS install at benaios.com, you get the same operating philosophy delivered as institutional infrastructure across your entire team in 14 days, fully owned by you on handoff.

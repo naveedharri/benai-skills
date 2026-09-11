@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Expert automation plugins that turn Claude into a specialist for your team. Install by department to get skills for marketing, sales, operations, creative, and product workflows.",
-    "version": "1.22.1"
+    "version": "1.23.0"
   },
   "plugins": [
     {
@@ -14,7 +14,7 @@
       "displayName": "BenAI Marketing",
       "source": "./plugins/benai-marketing",
       "description": "The BenAI marketing OS as skills: research, copywriting in Ben's voice, design systems, carousels, thumbnails, video editing, and analytics. competitor-radar and analytics-dashboard are schedule-ready.",
-      "version": "1.5.2",
+      "version": "1.5.3",
       "author": {
         "name": "BenAI"
       },
@@ -58,8 +58,8 @@
       "name": "all-skills",
       "displayName": "All Skills",
       "source": "./plugins/all-skills",
-      "description": "Every BenAI skill in one install. All 117 skills across marketing, sales, SEO, ads, design, YouTube, creative, operations, second-brain OS, Baalda OS, Marketing OS, and general productivity. Add this one plugin to get the complete library.",
-      "version": "1.20.1",
+      "description": "Every BenAI skill in one install. All 130 skills across marketing, sales, SEO, ads, design, YouTube, creative, operations, second-brain OS, Baalda OS, Marketing OS, and general productivity. Add this one plugin to get the complete library.",
+      "version": "1.21.0",
       "author": {
         "name": "BenAI"
       },
@@ -104,7 +104,7 @@
       "name": "marketing",
       "source": "./plugins/marketing",
       "description": "Rank higher and grow organic traffic with programmatic SEO, technical audits, and Search Console optimization. Create email sequences that convert, build compelling case studies, and generate professional infographics. Repurpose YouTube content into LinkedIn posts, newsletters, GIFs, and visual diagrams.",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "author": {
         "name": "BenAI"
       },
@@ -205,6 +205,29 @@
         "title",
         "excalidraw",
         "content"
+      ]
+    },
+    {
+      "name": "youtube-publishing",
+      "displayName": "YouTube Publishing",
+      "source": "./plugins/youtube-publishing",
+      "description": "The Ben AI YouTube pipeline after the edit: Studio wizard to Unlisted, UTM links, Bitly import, chapters and tags, description, then repurposing into LinkedIn, newsletter, Circle post or course, and clips.",
+      "version": "4.0.0",
+      "author": {
+        "name": "BenAI"
+      },
+      "keywords": [
+        "youtube",
+        "publishing",
+        "utm",
+        "bitly",
+        "chapters",
+        "tags",
+        "repurposing",
+        "linkedin",
+        "newsletter",
+        "circle",
+        "clips"
       ]
     },
     {
@@ -408,7 +431,7 @@
       "name": "meta",
       "source": "./plugins/meta",
       "description": "General-purpose AI productivity toolkit: browser automation, audio transcription, deep research, decision frameworks, fact-checking, file organization, prompt engineering, MCP server building, and more. 17 community skills in one install.",
-      "version": "1.6.1",
+      "version": "1.6.2",
       "author": {
         "name": "Community"
       },
