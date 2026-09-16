@@ -11,6 +11,7 @@ concurrency:
 
 jobs:
   mirror:
+    if: github.repository == 'naveedharri/benai-skills'
     runs-on: ubuntu-latest
     steps:
       - name: Clone source as a bare mirror
