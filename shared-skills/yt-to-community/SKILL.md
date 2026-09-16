@@ -17,6 +17,7 @@ description: |
   or just a bare YouTube URL with minimal context like "post this".
 
   Do NOT skip this step to jump straight to yt-to-course.
+disable-model-invocation: true
 ---
 
 # YouTube to Community Announcement Post

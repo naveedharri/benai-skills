@@ -6,6 +6,7 @@ description: >
   optimization, and conversion rate potential. Use when user says "landing
   page", "post-click experience", "landing page audit", "conversion rate",
   or "landing page optimization".
+disable-model-invocation: true
 ---
 
 # Landing Page Quality for Ad Campaigns

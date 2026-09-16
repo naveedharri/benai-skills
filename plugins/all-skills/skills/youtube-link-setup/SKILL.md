@@ -1,6 +1,7 @@
 ---
 name: youtube-link-setup
 description: "Stage 3 of the Ben AI publishing chain. Makes a video's tracking links real before the video is published: imports the UTM links into Bitly on the c.benai.co domain, builds and publishes the Kit landing page when there is a lead magnet, registers it in the n8n form, and verifies every short link resolves to the right destination. Works with or without a Bitly API token; without one it walks the browser bulk-upload path, which needs no terminal. Use when someone says \"upload the links to Bitly\", \"import the UTMs\", \"make the Bitly links\", \"set up the lead magnet\", \"create the landing page\", \"test the links\", or has just run benai-utm-creator."
+disable-model-invocation: true
 ---
 
 # YouTube Link Setup

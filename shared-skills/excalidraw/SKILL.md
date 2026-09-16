@@ -1,6 +1,7 @@
 ---
 name: excalidraw
 description: Create visual presentations, slide decks, and explanatory diagrams in Excalidraw. Use when user asks to create a presentation, slide deck, visual explainer, pitch deck, comparison diagram, process flow, or any multi-slide visual content. Supports two output modes — generating .excalidraw JSON files OR injecting slides directly into excalidraw.com via Chrome browser automation (clipboard JS injection + paste). Combines presentation design expertise with Excalidraw technical implementation.
+disable-model-invocation: true
 ---
 
 # Excalidraw Presentation Designer

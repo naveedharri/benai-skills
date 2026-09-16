@@ -1,6 +1,7 @@
 ---
 name: linkedin-writer-vault
 description: "Vault-aware LinkedIn writer. Same step-by-step LinkedIn post process as linkedin-writer, but ICP, voice, and offer context come from the vault's Context/ folder instead of being bundled inside the skill. Update one file in the vault and every skill pointing to it inherits the change. TRIGGERS: LinkedIn post, LinkedIn content, repurpose, repurpose for LinkedIn, turn this into a LinkedIn post, write a post, create a post, post about, LinkedIn from YouTube, LinkedIn from blog, LinkedIn from transcript. REQUIREMENT: run from the user's vault working directory so Context/icp.md, Context/brand.md, Context/services.md, and Context/operator.md resolve."
+disable-model-invocation: true
 ---
 
 # LinkedIn Writer (Vault Edition)

@@ -1,6 +1,7 @@
 ---
 name: video
 description: Edit, process, and render videos using FFmpeg and Remotion. Handles stitching, transitions, captions, teasers, and transcription. USE THIS SKILL WHEN user mentions video, clip, footage, mp4, mov, avi, mkv, or any video format, wants to combine, stitch, merge, or join video files, asks about transitions, fades, crossfades, or effects between clips, needs captions, subtitles, or TikTok-style word highlighting, wants a teaser, trailer, or highlight reel from longer video, mentions FFmpeg, ffprobe, Remotion, or related errors, asks about video transcription or whisper speech-to-text, asks about video duration, resolution, fps, or trimming, has .mp4, .mov, .captions.json files or video folders, or asks about thumbnails, overlays, title cards, or graphics for video.
+disable-model-invocation: true
 ---
 
 # Video Editing Skill

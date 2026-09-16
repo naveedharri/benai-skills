@@ -1,6 +1,7 @@
 ---
 name: yt-ingestion
 description: Fetch a YouTube video's raw artifacts (video file, transcript, word-level timestamps, thumbnail, metadata) without committing to a downstream workflow. Use when the user wants just the ingestion output for debugging, scratch work, or feeding into another tool. Triggers on phrases like "get me the transcript", "download this video", "fetch artifacts for", "ingest this YouTube URL".
+disable-model-invocation: true
 ---
 
 # yt-ingestion: standalone artifact fetcher

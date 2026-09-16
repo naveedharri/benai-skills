@@ -12,6 +12,7 @@ description: >
   builds on the previous by adding one element at a time, locking
   background/composition across the entire sequence). Saves per-video to
   Projects/youtube/{video-slug}/visuals/.
+disable-model-invocation: true
 ---
 
 # Generate Visual

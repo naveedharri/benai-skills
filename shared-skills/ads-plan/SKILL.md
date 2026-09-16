@@ -6,6 +6,7 @@ description: >
   creative strategy, and phased implementation roadmap. Use when user says
   "ad plan", "ad strategy", "campaign planning", "media plan", "PPC strategy",
   or "advertising plan".
+disable-model-invocation: true
 ---
 
 # Strategic Paid Advertising Plan

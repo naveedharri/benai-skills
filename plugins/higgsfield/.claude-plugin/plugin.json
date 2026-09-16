@@ -1,7 +1,7 @@
 {
   "name": "higgsfield",
   "description": "Generate on-brand YouTube thumbnails and in-video visuals (slides) using Higgsfield via reference images. Includes youtube-thumbnail-generate (creative ideation across variants, locked Ben face) and generate-visual (single slides or progressive-disclosure sequences for tutorial videos).",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "author": {
     "name": "BenAI"
   }

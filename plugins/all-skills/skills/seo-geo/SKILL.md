@@ -1,6 +1,7 @@
 ---
 name: seo-geo
 description: Optimize content for AI Overviews, ChatGPT web search, Perplexity, and other AI-powered search experiences. GEO analysis including brand mention signals, AI crawler accessibility, llms.txt compliance, passage-level citability scoring, and platform-specific optimization. Use when user says "AI Overviews", "GEO", "AI search", "LLM optimization", "Perplexity", "AI citations", "ChatGPT search", "AI visibility", or "llms.txt".
+disable-model-invocation: true
 ---
 
 # AI Search / GEO Optimization (February 2026)

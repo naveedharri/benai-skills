@@ -1,7 +1,7 @@
 {
   "name": "youtube-publishing",
   "description": "The Ben AI YouTube pipeline after the edit: Studio wizard to Unlisted, UTM links, Bitly import, chapters and tags, description, then repurposing into LinkedIn, newsletter, Circle post or course, and clips.",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "author": {
     "name": "BenAI"
   },

@@ -1,6 +1,7 @@
 ---
 name: seo-technical
 description: Technical SEO audit across 9 categories — crawlability, indexability, security, URL structure, mobile, Core Web Vitals, structured data, JavaScript rendering, and IndexNow. Use when user says "technical SEO", "crawl issues", "robots.txt", "Core Web Vitals", "site speed", "security headers", "indexability", "JS rendering", or "mobile SEO".
+disable-model-invocation: true
 ---
 
 # Technical SEO Audit

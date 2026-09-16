@@ -1,6 +1,7 @@
 ---
 name: agentic-os-setup
 description: Set up an agentic OS — either inside an Obsidian vault (bundled command-center dashboard, 5 auto-installed plugins, button bar wired to Claude prompts) OR as a standalone Next.js web dashboard with live MCP integrations (Circle, Fireflies, YouTube/VidIQ, Unipile LinkedIn DMs, Apify Twitter, Reddit), Anthropic Agent SDK refreshes, and optional Railway deploy. Use when the user says "set up agentic OS", "install command center", "bootstrap a personal AI dashboard", "build a vault dashboard", "spin up an MCP-powered dashboard", "deploy an AI ops dashboard", "give me my own version of the dashboard", "set up my second brain dashboard", or asks to personalize a dashboard previously created with this skill. Skill asks one routing question first — Obsidian or standalone — then runs the matching full flow.
+disable-model-invocation: true
 allowed-tools: Bash, Read, Write, Edit, AskUserQuestion
 ---
 

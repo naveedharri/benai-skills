@@ -13,6 +13,7 @@ description: >
 
   TRIGGERS: "video ideas", "content ideas", "what to film", "YouTube ideation",
   "brainstorm topics", "content calendar", "next video", "what should I film"
+disable-model-invocation: true
 ---
 
 # YouTube Ideation

@@ -1,6 +1,7 @@
 ---
 name: interview-me
 description: Interview the user one question at a time before starting a big or fuzzy task, then write the brief and execute it. Use when the user says "interview me", "brief me", "help me brief this", "I don't know where to start", or hands over a large task with obvious gaps in the request. Based on the interview pattern Anthropic recommends in the Claude Fable 5 field guide.
+disable-model-invocation: true
 ---
 
 # Interview Me

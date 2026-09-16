@@ -1,6 +1,7 @@
 ---
 name: seo-hreflang
 description: Hreflang and international SEO audit, validation, and generation. Detects common mistakes, validates language/region codes, and generates correct hreflang implementations for HTML, HTTP headers, and XML sitemaps. Use when user says "hreflang", "i18n SEO", "international SEO", "multi-language", "multi-region", "language tags", or "hreflang validation".
+disable-model-invocation: true
 ---
 
 # Hreflang & International SEO

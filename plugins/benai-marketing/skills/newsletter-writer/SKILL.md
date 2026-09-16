@@ -1,6 +1,7 @@
 ---
 name: newsletter-writer
 description: Write newsletters for Ben Van Sprundel from any source — YouTube videos, article URLs, or raw ideas/insights. Use this skill EVERY TIME the user says they want to write a newsletter, create a newsletter, draft a newsletter, turn something into a newsletter, repurpose content for a newsletter, write an email issue, or any variation of newsletter writing. Also trigger when the user shares a YouTube URL or article URL alongside any mention of email or newsletter content. This is a STEP-BY-STEP, interactive process — never output a complete newsletter immediately.
+disable-model-invocation: true
 ---
 
 # Ben's Newsletter Writer

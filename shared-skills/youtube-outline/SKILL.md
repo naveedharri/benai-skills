@@ -13,6 +13,7 @@ description: >
 
   TRIGGERS: "video outline", "outline", "structure the video", "plan the sections",
   "video structure", "outline this", "section flow"
+disable-model-invocation: true
 ---
 
 # YouTube Video Outline

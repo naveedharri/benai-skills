@@ -4,6 +4,7 @@ description: |
   Systematic fact verification and misinformation identification using evidence-based analysis.
   Use when: verifying claims, checking facts, identifying misinformation, evaluating source credibility,
   or when user asks to "fact check", "verify", "is this true", or mentions claims that need validation.
+disable-model-invocation: true
 license: MIT
 metadata:
   author: awesome-llm-apps

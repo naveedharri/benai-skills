@@ -1,7 +1,7 @@
 {
   "name": "managed-agents",
   "description": "Create and run Anthropic Managed Agents from Claude Code. Walks through the lifecycle via the REST API: agent, environment, vault, MCP OAuth credentials, session, first message. Generic builder, no preset template.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": {
     "name": "BenAI"
   }

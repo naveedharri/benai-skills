@@ -1,6 +1,7 @@
 ---
 name: skill-os-builder
 description: Stand up a self-contained second-brain "OS" that lives entirely inside a Claude skill — a short SKILL.md router plus context files, no vault, cloud, or MCP server. Use when the user says "set up a skill OS", "build my second brain as a skill", "skill OS", or wants the simplest portable AI OS.
+disable-model-invocation: true
 ---
 
 # Skill OS Builder

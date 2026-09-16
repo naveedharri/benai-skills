@@ -1,6 +1,7 @@
 ---
 name: prompt-master
 description: The one skill for prompting the Claude 5 models the way Anthropic says to. Starts by interviewing the user one question at a time, then writes a new prompt, rewrites an old one, or audits a whole CLAUDE.md, skill or project-instruction file, applying the rules from Anthropic's Opus 5 guide, Fable 5 guide, best practices page and context engineering post. Strips retired instructions, rebuilds the ask as a Full Job Brief (job, why, guardrails, done-means), swaps bare rules for reasons, caps scope, length and report-back, and adds Anthropic's audit line on long runs. Use when the user says "prompt master", "write me a prompt", "fix this prompt", "upgrade my prompt for Claude 5", "audit my CLAUDE.md", "rewrite my rules", "my skill feels too strict", "brief this for me", "help me brief this", "I don't know where to start", or pastes any prompt and asks why Claude over-does or under-does the task.
+disable-model-invocation: true
 ---
 
 # Prompt Master

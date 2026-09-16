@@ -1,6 +1,7 @@
 ---
 name: seo-page
 description: Deep single-page SEO analysis covering on-page elements, content quality, technical meta tags, schema, images, and performance. Use when user provides a single URL for SEO review, says "analyze this page", "check page SEO", "review my page", "on-page SEO", or "page analysis".
+disable-model-invocation: true
 ---
 
 # Single Page SEO Analysis

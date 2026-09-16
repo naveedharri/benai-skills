@@ -1,6 +1,7 @@
 ---
 name: agentic-os-standalone
 description: Set up an agentic OS as a standalone Next.js web dashboard — wired to the Claude Agent SDK plus up to 7 live MCP integrations (Circle community, Fireflies meetings, YouTube/VidIQ, Unipile LinkedIn DMs, Apify Twitter/X, Reddit), per-profile views, a button-bar of actions, snapshot-style data refreshes, and an optional Railway deploy with HTTP basic auth and a persistent volume. A real web app — runs locally or live. Use when the user says "set up a standalone agentic OS", "build an MCP-powered web dashboard", "spin up my AI ops dashboard", "deploy an AI dashboard to Railway", "give me a web version of the dashboard", or asks to personalize a web dashboard previously created with this skill.
+disable-model-invocation: true
 allowed-tools: Bash, Read, Write, Edit, AskUserQuestion
 ---
 

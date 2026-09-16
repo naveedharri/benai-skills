@@ -1,6 +1,7 @@
 ---
 name: baalda-guide
 description: Answer any question about Baalda (the team second-brain app at baalda.com) in plain, non-technical language — what it is, what it can and cannot do, which file formats it supports (Markdown, images, PDF, DOCX, XLSX, code files), how sync, offline, sharing, permissions, version history, AI/MCP, pricing, platforms and self-hosting work. Use this whenever someone asks "does Baalda…", "can Baalda…", "how does Baalda…", compares it with Obsidian/Notion/Logseq, or asks what happens to a file type in a vault, even if they do not say the word Baalda but are clearly asking about this product's features.
+disable-model-invocation: true
 ---
 
 # Baalda guide

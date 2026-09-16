@@ -6,6 +6,7 @@ description: >
   import validation, unique Microsoft features, and cost advantage assessment.
   Use when user says "Microsoft Ads", "Bing Ads", "Bing PPC", "Copilot ads",
   or "Microsoft campaign".
+disable-model-invocation: true
 ---
 
 # Microsoft Ads Deep Analysis

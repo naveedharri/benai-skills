@@ -1,6 +1,7 @@
 ---
 name: benai-skill-creator-skill
 description: Turn a task you just finished into a small, reliable, single-purpose skill by reverse-engineering the process from the conversation you already had. Also improves or audits an existing skill. Use this AFTER you have done a piece of knowledge work in a chat (research, a draft, an analysis, a prep doc) and want to lock the process in as a skill. Triggers include "build a skill from this", "turn this into a skill", "make a skill out of what we just did", "skill-ify this", "build a skill", "improve this skill", "audit my skill", "why does my skill suck", "make my skill smaller", or when the user finishes a repeatable task and wants to reuse it. Built for knowledge workers, not just engineers. For skills you have NOT done yet (only an idea), hand off to process-interviewer instead.
+disable-model-invocation: true
 ---
 
 # BenAI Skill Creator

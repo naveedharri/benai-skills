@@ -1,6 +1,7 @@
 ---
 name: title-generation
 description: Generate optimized YouTube video titles using proven formulas and click-through patterns. USE THIS SKILL WHEN user says "YouTube title", "video title", "title ideas", "help me name my video", wants to optimize a video title for clicks, or mentions "CTR", "click-through", "thumbnail text", "YouTube SEO".
+disable-model-invocation: true
 ---
 
 # YouTube Title Generator

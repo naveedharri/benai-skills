@@ -1,6 +1,7 @@
 ---
 name: setup
 description: Bootstrap a second-brain structure inside a Baalda vault and run personalized onboarding. Creates all directories, system files, per-folder routing indexes and starter context, then interviews the user to personalize everything. Two modes — Solopreneurs/Professionals (default), Business/Teams. Use when the user says "set up my Baalda vault", "set up my second brain", "bootstrap", "initialize", "onboarding", or runs /setup.
+disable-model-invocation: true
 ---
 
 # Baalda OS — Setup + Onboarding

@@ -14,6 +14,7 @@ description: >
   TRIGGERS: "video visuals", "YouTube excalidraw", "video diagrams",
   "on-screen graphics", "excalidraw for video", "video slides",
   "presentation for video"
+disable-model-invocation: true
 ---
 
 # YouTube Excalidraw

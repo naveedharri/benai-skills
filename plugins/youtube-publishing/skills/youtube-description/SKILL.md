@@ -1,6 +1,7 @@
 ---
 name: youtube-description
 description: Stage 5 and the last stage of the Ben AI publishing chain. Assembles the video description from the canonical template using the video's five-letter code, its chapters, and its referenced-video links, writes the description and the tag string into the YouTube Studio draft through Claude in Chrome, and moves the Notion card to Ready to publish. Leaves the video Unlisted for a person to publish. Use when someone says "write the description", "put the description in", "load the description and tags", "finish the publish prep", "assemble the description", or has chapters and live Bitly links and wants them in Studio.
+disable-model-invocation: true
 ---
 
 # YouTube Description

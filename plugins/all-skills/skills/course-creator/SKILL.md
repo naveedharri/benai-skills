@@ -11,6 +11,7 @@ description: |
   - User needs help with course pricing, course marketing, course emails, or course launch
   - User mentions online course, cohort course, challenge course, 30-day challenge
   - User needs student onboarding, course assessments, or learning design
+disable-model-invocation: true
 ---
 
 # Course Creator

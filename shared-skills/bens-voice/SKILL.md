@@ -1,6 +1,7 @@
 ---
 name: bens-voice
 description: Draft or judge content in Ben van Sprundel's voice. Use EVERY TIME output is written as Ben or scored against his tone - Circle community replies, LinkedIn posts, newsletters, Slack messages, YouTube scripts, DMs, emails. Triggers include "reply as Ben", "draft in Ben's voice", "Ben voice engine", "judge this draft", "does this sound like Ben". Includes a deterministic red-flag linter plus an LLM rubric judge; every draft must pass before it ships.
+disable-model-invocation: true
 ---
 
 # bens-voice: the Ben Voice Engine

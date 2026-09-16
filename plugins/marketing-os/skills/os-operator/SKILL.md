@@ -1,6 +1,7 @@
 ---
 name: os-operator
 description: Build and schedule a personalized Operator prompt that runs the user's second brain on a recurring cadence. The skill is invoked from inside the vault folder locally — it reads `Context/` and `CLAUDE.md` first to infer org, team, brand voice, and paths, then asks ONLY the gaps it can't determine (cadence, connectors, DM recipient, budgets, signature). Fills `references/operator-prompt-template.md`, writes the rendered prompt locally, then invokes the `schedule` skill to wire up the recurring trigger automatically. Template is a generic version of a battle-tested vault Operator spec — cadence awareness, freshness, daily-as-state, idle-timeout protection, principles, hard rules, failure handling, report schema. Use when the user says "set up the operator", "build my operator prompt", "operate my second brain", "schedule my OS", "os operator", "vault operator", or runs /os-operator.
+disable-model-invocation: true
 ---
 
 # OS Operator

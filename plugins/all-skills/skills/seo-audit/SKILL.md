@@ -1,6 +1,7 @@
 ---
 name: seo-audit
 description: When the user wants to run an SEO audit, site audit, technical SEO check, or SEO analysis on a website. Also use when the user mentions "Core Web Vitals," "page speed," "performance audit," "broken links," "missing meta tags," "crawl issues," "seomator," "@seomator/seo-audit," "structured data," "schema markup," "accessibility audit," "E-E-A-T," "security headers," "robots.txt," or "sitemap audit." For creating SEO pages at scale, see programmatic-seo. For optimizing content, see seo-optimizing.
+disable-model-invocation: true
 ---
 
 # SEO Audit Skill

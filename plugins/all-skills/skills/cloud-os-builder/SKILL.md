@@ -1,6 +1,7 @@
 ---
 name: cloud-os-builder
 description: "Set up a Cloud OS — your second brain hosted either in a synced cloud folder (Google Drive, OneDrive, iCloud, Dropbox) or as a Notion workspace. Asks where to host it, then takes the matching route: for a folder it builds the Local OS structure (root CLAUDE.md + Context + Projects/Intelligence/Daily/Resources/Skills, Obsidian-free) and gives provider-specific sync steps; for Notion it builds pages + databases via the connector. Runs the same personalized onboarding either way. Two modes — Solopreneurs/Professionals (default), Business/Teams. The Cloud OS tier of the AIOS family. Use when the user says \"set up a cloud OS\", \"host my second brain on Google Drive/Dropbox/iCloud/OneDrive/Notion\", or runs /cloud-os-builder."
+disable-model-invocation: true
 ---
 
 # Cloud OS — Host Selection + Setup + Onboarding

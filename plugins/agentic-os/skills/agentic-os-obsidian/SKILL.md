@@ -1,6 +1,7 @@
 ---
 name: agentic-os-obsidian
 description: Set up an agentic OS inside an Obsidian vault — a configurable command-center dashboard with 5 auto-installed, bundled plugins (Dataview, CustomJS, Shell-commands, Terminal, Homepage), Home + per-profile + Vault Overview pages, KPI cards, sparklines, heatmap, task rollup, and a button bar wired to user-defined Claude prompts. Markdown-native, no servers. Use when the user says "set up agentic OS in Obsidian", "install command center in my vault", "build a vault dashboard", "give me my own version of the dashboard inside Obsidian", "set up my second brain dashboard", or asks to personalize a vault dashboard previously created with this skill.
+disable-model-invocation: true
 allowed-tools: Bash, Read, Write, Edit, AskUserQuestion
 ---
 

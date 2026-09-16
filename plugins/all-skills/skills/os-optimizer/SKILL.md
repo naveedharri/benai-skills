@@ -1,6 +1,7 @@
 ---
 name: os-optimizer
 description: "Framework-driven audit and optimizer for any markdown vault. Applies 10 frameworks covering CLAUDE.md quality, wiki structure, compression, context rot, memory, progressive disclosure, hygiene, cross-file synthesis, architecture and discoverability, plus F10 Claude 5 rule rewriting. F9 walks the real discovery chain (root CLAUDE.md, routing, folder index, file) and audits routing tables against folder reality. F10 rewrites rules written for older Claude models into judgment plus the reason, and proposes the documented Claude Fable 5.1 vault guardrails where they are missing. Every finding ships a concrete fix; the user picks apply-now or save-to-plan per finding. TRIGGERS: os optimizer, optimize vault, vault audit, second brain audit, clean up vault, framework audit, discoverability check, architecture audit, reorg vault, rewrite my rules, audit my CLAUDE.md, my rules feel too strict. Run from vault root."
+disable-model-invocation: true
 ---
 
 # Vault Optimizer

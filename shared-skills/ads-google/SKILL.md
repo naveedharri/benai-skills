@@ -6,6 +6,7 @@ description: >
   wasted spend, account structure, keywords, ads, and settings. Use when user
   says "Google Ads", "Google PPC", "search ads", "PMax", "Performance Max",
   or "Google campaign".
+disable-model-invocation: true
 ---
 
 # Google Ads Deep Analysis

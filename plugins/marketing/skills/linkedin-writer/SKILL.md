@@ -17,6 +17,7 @@ description: >
 
   TRIGGERS: "LinkedIn post", "LinkedIn content", "repurpose", "write a post", "post about",
   "turn this into a post", "create a LinkedIn post", "LinkedIn from YouTube", "LinkedIn from blog"
+disable-model-invocation: true
 ---
 
 # LinkedIn Writer

@@ -1,6 +1,7 @@
 ---
 name: marketing-os-research
 description: "Answer an open question the Marketing OS already wrote down, then promote it to a finding. Takes its queue from the OS itself: files with status open-question in Intelligence/research/, open questions and untested beliefs in Analytics/what-works.md, and ideas with no established pain. Fans out one agent per stream in a single batch across papers, forums, the web and creators, with an effort floor, distinct sources and full-text reads, fact-checks every hard claim with a verifier prompted to refute rather than confirm, then writes Intelligence/research/topic-slug.md and updates the question file in place with a dated status change. Routes findings about our own performance to Analytics, and graduates recurring customer language to the segment files. Always closes by rendering the report. Use when the user says 'research this', 'deep dive on', or runs /marketing-os-research.\\\"\ndisable-model-invocation: true\nargument-hint: \\\"[a topic, or an open-question file to close, or nothing to be shown the queue]"
+disable-model-invocation: true
 ---
 
 # Marketing OS Research

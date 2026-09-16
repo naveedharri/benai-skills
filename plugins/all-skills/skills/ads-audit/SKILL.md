@@ -6,6 +6,7 @@ description: >
   accounts. Generates health score per platform and aggregate score. Use when
   user says "audit", "full ad check", "analyze my ads", "account health check",
   or "PPC audit".
+disable-model-invocation: true
 ---
 
 # Full Multi-Platform Ads Audit

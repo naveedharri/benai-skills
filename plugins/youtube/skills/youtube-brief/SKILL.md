@@ -16,6 +16,7 @@ description: >
   TRIGGERS: "video brief", "YouTube brief", "plan a video", "video planning",
   "brief this video", "flesh out this idea", "video concept", "plan the next video",
   "video idea", "create a brief"
+disable-model-invocation: true
 ---
 
 # YouTube Video Brief

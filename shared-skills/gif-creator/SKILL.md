@@ -1,6 +1,7 @@
 ---
 name: gif-creator
 description: Create animated GIF and static PNG infographics for LinkedIn posts following Ben AI's exact brand guidelines. Use this skill whenever the user wants to visualize a process, workflow, or step-by-step concept for LinkedIn — including phrases like "make a visual", "create a GIF", "infographic for LinkedIn", "visualize this workflow", "diagram for LinkedIn", "animated post", "process visual", or any request to turn a LinkedIn post or concept into a visual format. Always use this skill in combination with linkedin-post when the user wants both a written post and a visual.
+disable-model-invocation: true
 ---
 
 # LinkedIn Visual Animation

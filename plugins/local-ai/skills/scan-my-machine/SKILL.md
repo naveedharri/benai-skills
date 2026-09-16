@@ -1,6 +1,7 @@
 ---
 name: scan-my-machine
 description: Scans the user's actual hardware and tells them exactly which local AI models they can run, by name, with expected speed. Use when the user asks "what models can my computer run", "can I run a local LLM", "how much VRAM do I have", "which model should I download", "is my Mac good enough for local AI", "scan my machine", or shares hardware specs and asks what fits. Reads real memory and GPU rather than asking the user to know their own specs. Never installs anything. Requires Claude Code with shell access on the user's own machine; refuses to run in a sandbox.
+disable-model-invocation: true
 ---
 
 # Scan My Machine

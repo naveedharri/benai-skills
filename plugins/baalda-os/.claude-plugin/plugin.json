@@ -1,7 +1,7 @@
 {
   "name": "baalda-os",
   "description": "Turn a Baalda vault into an AI-operated second brain. Four skills: /setup bootstraps the structure and runs onboarding, /optimizer runs a 10-framework audit including Claude 5 rule rewriting, /operator builds and schedules the agent that keeps the vault current, and /baalda-guide answers any question about Baalda in plain language. Setup, optimizer and operator keep every note's doc_id intact.",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "author": {
     "name": "BenAI"
   },

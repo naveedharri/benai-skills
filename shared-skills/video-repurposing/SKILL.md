@@ -1,6 +1,7 @@
 ---
 name: video-repurposing
 description: Turn long-form video into platform-ready clips - LinkedIn posts, TikTok/Reels, teasers, highlight reels - with word-level captions, using FFmpeg and Remotion. USE THIS SKILL WHEN the user wants to repurpose a YouTube video or any long video into social clips, mentions video, clip, footage, mp4, mov, or any video format, wants to cut, stitch, combine, or edit video files, needs captions, subtitles, or TikTok-style word highlighting, wants a teaser, trailer, or highlight reel, asks about video transcription or whisper, mentions FFmpeg, ffprobe, or Remotion errors, or has .mp4/.captions.json files or video folders. Runs a mandatory intake, proposes an edit plan with exact timestamps, previews in Remotion Studio, and renders only on approval.
+disable-model-invocation: true
 ---
 
 # Video Repurposing

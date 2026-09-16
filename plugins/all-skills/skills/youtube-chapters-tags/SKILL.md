@@ -1,6 +1,7 @@
 ---
 name: youtube-chapters-tags
 description: Stage 4 of the Ben AI publishing chain. Generates chapters with accurate timestamps and a tag string for a Ben van Sprundel video. Pulls the timestamped transcript out of YouTube through Claude in Chrome, finds where each topic actually starts, names chapters to Ben's measured style, flags every outbound video reference that needs a description link, and builds the tag list from the pattern measured across Ben's last 15 published videos. Needs the video to be Unlisted first, because a Studio draft has no caption track. Use when someone says "prepare the chapters", "do the tags", "chapter this video", "what tags should I use", "review the chapters", or shares a video URL and asks for chapters or tags.
+disable-model-invocation: true
 ---
 
 # YouTube Chapters and Tags

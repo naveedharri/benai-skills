@@ -1,6 +1,7 @@
 ---
 name: lead-research-assistant
 description: B2B lead generation and research assistant. Use when asked to find leads, build a prospect list, research companies, find LinkedIn contacts, do lead generation, create an ICP, B2B prospecting, company research, LinkedIn scraping, find decision-makers, build a sales list, lead scoring, or export leads to CSV.
+disable-model-invocation: true
 ---
 
 # Lead Research Assistant

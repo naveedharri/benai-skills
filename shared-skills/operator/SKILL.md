@@ -1,6 +1,7 @@
 ---
 name: operator
 description: "Build and schedule a personalized Operator prompt that runs a Baalda vault as a second brain on a recurring cadence. Run it from inside the vault: it reads Context/ and CLAUDE.md first to infer org, team, brand voice and paths, then asks only the gaps (cadence, connectors, DM recipient, budgets, signature), writes the rendered prompt locally, and invokes the schedule skill to wire the recurring trigger. Baalda-aware: routes every note move or rename through the app or the Baalda MCP so notes keep their doc_id, and never touches .context/. Use when the user says \"set up the operator\", \"build my operator prompt\", \"operate my Baalda vault\", \"schedule my OS\", \"vault operator\", or runs /operator."
+disable-model-invocation: true
 ---
 
 # Baalda Operator

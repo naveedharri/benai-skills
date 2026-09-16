@@ -6,6 +6,7 @@ description: >
   creative-first strategy, safe zone compliance, and Smart+ campaigns. Use
   when user says "TikTok Ads", "TikTok marketing", "TikTok Shop", "Spark Ads",
   "Smart+", or "TikTok campaign".
+disable-model-invocation: true
 ---
 
 # TikTok Ads Deep Analysis

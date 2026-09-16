@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Expert automation plugins that turn Claude into a specialist for your team. Install by department to get skills for marketing, sales, operations, creative, and product workflows.",
-    "version": "1.23.1"
+    "version": "1.23.2"
   },
   "plugins": [
     {
@@ -14,7 +14,7 @@
       "displayName": "BenAI Marketing",
       "source": "./plugins/benai-marketing",
       "description": "The BenAI marketing OS as skills: research, copywriting in Ben's voice, design systems, carousels, thumbnails, video editing, and analytics. competitor-radar and analytics-dashboard are schedule-ready.",
-      "version": "1.5.4",
+      "version": "1.5.5",
       "author": {
         "name": "BenAI"
       },
@@ -59,7 +59,7 @@
       "displayName": "All Skills",
       "source": "./plugins/all-skills",
       "description": "Every BenAI skill in one install. All 130 skills across marketing, sales, SEO, ads, design, YouTube, creative, operations, second-brain OS, Baalda OS, Marketing OS, and general productivity. Add this one plugin to get the complete library.",
-      "version": "1.21.1",
+      "version": "1.21.2",
       "author": {
         "name": "BenAI"
       },
@@ -104,7 +104,7 @@
       "name": "marketing",
       "source": "./plugins/marketing",
       "description": "Rank higher and grow organic traffic with programmatic SEO, technical audits, and Search Console optimization. Create email sequences that convert, build compelling case studies, and generate professional infographics. Repurpose YouTube content into LinkedIn posts, newsletters, GIFs, and visual diagrams.",
-      "version": "1.0.3",
+      "version": "1.0.4",
       "author": {
         "name": "BenAI"
       },
@@ -126,7 +126,7 @@
       "name": "managed-agents",
       "source": "./plugins/managed-agents",
       "description": "Create and run Anthropic Managed Agents from Claude Code. Walks through the lifecycle via the REST API: agent, environment, vault, MCP OAuth credentials, session, first message. Generic builder, no preset template.",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "author": {
         "name": "BenAI"
       },
@@ -145,7 +145,7 @@
       "name": "operations",
       "source": "./plugins/operations",
       "description": "Build, test, and deploy n8n workflows through incremental REST API automation. Convert discovery call transcripts into implementation-ready automation blueprints.",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": {
         "name": "BenAI"
       },
@@ -160,7 +160,7 @@
       "name": "creative",
       "source": "./plugins/creative",
       "description": "Edit and render videos with FFmpeg and Remotion, from stitching and transitions to captions and teasers. Design presentations in Excalidraw and generate AI-powered infographics.",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": {
         "name": "BenAI"
       },
@@ -176,7 +176,7 @@
       "name": "product",
       "source": "./plugins/product",
       "description": "Design presentations, pitch decks, and process diagrams collaboratively in Excalidraw. Turn discovery call transcripts into structured automation blueprints your team can implement.",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": {
         "name": "BenAI"
       },
@@ -191,7 +191,7 @@
       "name": "youtube",
       "source": "./plugins/youtube",
       "description": "Plan, brief, and prepare YouTube videos from idea to filming-ready. Create video briefs, generate topic ideas, optimize titles and thumbnails, build structured outlines, write scripts, and design on-screen excalidraw visuals.",
-      "version": "1.1.8",
+      "version": "1.1.9",
       "author": {
         "name": "BenAI"
       },
@@ -212,7 +212,7 @@
       "displayName": "YouTube Publishing",
       "source": "./plugins/youtube-publishing",
       "description": "The Ben AI YouTube pipeline after the edit: Studio wizard to Unlisted, UTM links, Bitly import, chapters and tags, description, then repurposing into LinkedIn, newsletter, Circle post or course, and clips.",
-      "version": "4.0.1",
+      "version": "4.0.2",
       "author": {
         "name": "BenAI"
       },
@@ -234,7 +234,7 @@
       "name": "seo",
       "source": "./plugins/seo",
       "description": "Complete SEO toolkit via /seo command: full site audits with parallel subagents, technical SEO, E-E-A-T content quality, schema, sitemaps, image optimization, AI search/GEO, programmatic SEO, competitor pages, hreflang, and Search Console optimization.",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": {
         "name": "BenAI"
       },
@@ -256,7 +256,7 @@
       "name": "ads",
       "source": "./plugins/ads",
       "description": "Paid ads toolkit (14 skills + 6 audit subagents). Covers Google, Meta, LinkedIn, TikTok, YouTube, and Microsoft Ads. Includes audits, budget allocation (70/20/10), creative + brand context, landing pages, strategic planning, and competitive intel.",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "author": {
         "name": "BenAI"
       },
@@ -283,7 +283,7 @@
       "name": "design",
       "source": "./plugins/design",
       "description": "Premium frontend design skills that override default AI design biases. Includes a configurable design system with anti-slop rules for React/Next.js/Tailwind, aesthetic variants (soft, minimalist, brutalist), project redesign auditing, Google Stitch integration, and full-output enforcement.",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": {
         "name": "BenAI"
       },
@@ -306,7 +306,7 @@
       "name": "higgsfield",
       "source": "./plugins/higgsfield",
       "description": "Generate on-brand YouTube thumbnails and in-video visuals (slides) using Higgsfield via reference images. Includes youtube-thumbnail-generate (creative ideation across variants, locked Ben face) and generate-visual (single slides or progressive-disclosure sequences for tutorial videos).",
-      "version": "2.1.0",
+      "version": "2.1.1",
       "author": {
         "name": "BenAI"
       },
@@ -324,7 +324,7 @@
       "displayName": "Agentic OS",
       "source": "./plugins/agentic-os",
       "description": "Set up an agentic OS \u2014 inside an Obsidian vault (command-center dashboard + bundled plugins) or as a standalone Next.js web dashboard with live MCP integrations and optional Railway deploy. Includes /os-mcp to self-host the Relay MCP server.",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": {
         "name": "BenAI"
       },
@@ -344,7 +344,7 @@
       "name": "obsidian",
       "source": "./plugins/obsidian",
       "description": "Turn any folder into an AI-powered second brain. Includes /os-setup, /agentic-os-setup (command-center dashboard inside Obsidian OR standalone Next.js web app), /os-optimizer (10-framework audit, now including F10 Claude 5 rule rewriting), /os-operator, /os-mcp, and /team-os.",
-      "version": "3.11.2",
+      "version": "3.11.3",
       "author": {
         "name": "BenAI"
       },
@@ -370,7 +370,7 @@
       "displayName": "Baalda OS",
       "source": "./plugins/baalda-os",
       "description": "Turn a Baalda vault into an AI-operated second brain. Four skills: /setup bootstraps the structure and runs onboarding, /optimizer runs a 10-framework audit including Claude 5 rule rewriting, /operator builds and schedules the agent that keeps the vault current, and /baalda-guide answers any question about Baalda in plain language. Setup, optimizer and operator keep every note's doc_id intact.",
-      "version": "2.1.1",
+      "version": "2.1.2",
       "author": {
         "name": "BenAI"
       },
@@ -390,7 +390,7 @@
       "name": "autoresearch",
       "source": "./plugins/autoresearch",
       "description": "Autonomous optimization loop \u2014 iterates on prompts, skills, templates, or code overnight. Two evaluation modes: deterministic (eval.py with proxy heuristics) for mechanical checks, or AI judge (LLM rubric scoring) for creative/subjective quality. Uses 4-way agent separation for unbiased evaluation.",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": {
         "name": "BenAI"
       },
@@ -410,7 +410,7 @@
       "displayName": "AIOS",
       "source": "./plugins/aios",
       "description": "Set up an AI OS at the tier that fits \u2014 Skill OS (your entire second brain inside one Claude skill, zero infra) or Cloud OS (synced via Google Drive, OneDrive, iCloud, or Dropbox). Shares one folder structure with the Local OS (Obsidian) tier so you can graduate between them.",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "author": {
         "name": "BenAI"
       },
@@ -431,7 +431,7 @@
       "name": "meta",
       "source": "./plugins/meta",
       "description": "General-purpose AI productivity toolkit: browser automation, audio transcription, deep research, decision frameworks, fact-checking, file organization, prompt engineering, MCP server building, and more. 17 community skills in one install.",
-      "version": "1.6.2",
+      "version": "1.6.3",
       "author": {
         "name": "Community"
       },
@@ -454,7 +454,7 @@
       "displayName": "Marketing OS",
       "source": "./plugins/marketing-os",
       "description": "Set up and operate a Marketing OS: a markdown second brain that is the single source of truth every marketing skill reads, so the ICP, offer and voice live in one place. Four OS-native skills sit on top: newsletter, carousel, market intel and research.",
-      "version": "1.3.1",
+      "version": "1.3.2",
       "author": {
         "name": "BenAI"
       },
@@ -478,7 +478,7 @@
       "displayName": "Local AI",
       "source": "./plugins/local-ai",
       "description": "From nothing to a working AI setup you own. Scans the machine for models that fit, installs and wires up the right app with consent at every download, shares it over a private URL, and rents a cloud GPU when a model is too big. Needs shell access.",
-      "version": "1.6.2",
+      "version": "1.6.3",
       "author": {
         "name": "BenAI"
       },

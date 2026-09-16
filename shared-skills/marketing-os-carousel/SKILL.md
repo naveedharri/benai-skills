@@ -1,6 +1,7 @@
 ---
 name: marketing-os-carousel
 description: "Build an image-first social carousel from an asset already filed in the Marketing OS, export it as a PDF, and record it back as a real channel asset. Brand palette, typography, the logo pointer and the never-black-background rule all resolve from Context/brand/brand-kit.md. Source is a filed newsletter edition, published pillar asset, or pipeline brief, so it provably says what the parent said. Fans out parallel readers over the OS before planning, renders every slide with Higgsfield, QAs every slide with one agent each, prompted to reject rather than pass, composites the footer in code, assembles the PDF, then writes the repurposed-channel asset pointing at the PDF, updates the parent's repurpose tree, logs, and always closes by rendering a run report. Use when the user says 'build a carousel', 'turn this newsletter into a carousel', or runs /marketing-os-carousel.\\\"\ndisable-model-invocation: true\nargument-hint: \\\"[source, e.g. a broadcast slug, a published pillar slug, or 'latest newsletter']"
+disable-model-invocation: true
 ---
 
 # Marketing OS Carousel

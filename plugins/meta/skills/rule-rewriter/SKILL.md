@@ -1,6 +1,7 @@
 ---
 name: rule-rewriter
 description: Audit a CLAUDE.md or skill file for rules written for older Claude models and rewrite them for the Claude 5 generation. Finds one-sided rules, bare prohibitions, retired instructions, and aggressive language, then rewrites each into judgment plus the reason, or flags it for deletion. Use when the user says "rewrite my rules", "audit my CLAUDE.md", "fix my claude md", "rule rewriter", "my skills feel too strict", or after upgrading to a Claude 5 model.
+disable-model-invocation: true
 ---
 
 # Rule Rewriter

@@ -1,6 +1,7 @@
 ---
 name: seo-optimize
 description: GSC data-driven SEO optimization. Connects to Google Search Console (API, browser, or CSV), pulls search performance data, runs 8 analysis types (striking distance, low-CTR, declining pages, content gaps, cannibalization, quick wins, top performers at risk, device/geo gaps), prioritizes findings, and executes optimizations. Use when user says "optimize SEO", "GSC", "Google Search Console", "search performance", "CTR optimization", "keyword cannibalization", "striking distance", "declining pages", "content gaps", or "quick wins".
+disable-model-invocation: true
 ---
 
 # GSC Data-Driven SEO Optimization

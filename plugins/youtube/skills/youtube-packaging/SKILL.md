@@ -13,6 +13,7 @@ description: >
 
   TRIGGERS: "packaging", "title and thumbnail", "thumbnail", "CTR",
   "YouTube packaging", "package this video", "video packaging"
+disable-model-invocation: true
 ---
 
 # YouTube Packaging

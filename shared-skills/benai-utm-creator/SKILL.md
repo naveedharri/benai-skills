@@ -1,6 +1,7 @@
 ---
 name: benai-utm-creator
 description: Stage 2 of the Ben AI publishing chain. Turns one YouTube video title into all six Ben AI UTM tracking links, their Bitly backhalfs, a five-letter campaign code, and a Bitly-ready import CSV saved to Downloads. Needs nothing but the exact title, so it can run while YouTube is still processing the upload. Use whenever someone wants UTM links, tracking links, a campaign code, or Bitly short links for a video, or says "make UTMs for [title]", "create the tracking links", "UTM creator", "what is the code for this video", or "bitly links for [title]".
+disable-model-invocation: true
 ---
 
 # Ben AI UTM Creator

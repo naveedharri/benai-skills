@@ -1,6 +1,7 @@
 ---
 name: local-os-builder
 description: Set up a Local OS — bootstrap a local Obsidian vault as your second brain and run personalized onboarding. Creates all directories, system files, Obsidian config, memory system, hooks, and output styles, then interviews the user to personalize everything. Two modes — Solopreneurs/Professionals (default), Business/Teams. The Local OS tier of the AIOS family (alongside Skill OS and Cloud OS). Use when user says "set up a local OS", "set up my vault", "bootstrap", "initialize", "onboarding", or runs /local-os-builder.
+disable-model-invocation: true
 ---
 
 # Local OS — Setup + Onboarding

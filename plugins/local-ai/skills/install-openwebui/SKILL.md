@@ -1,6 +1,7 @@
 ---
 name: install-openwebui
 description: Installs and wires up Open WebUI end to end, so a non-technical user gets a working local AI chat in the browser instead of setup instructions. Use when the user says "install Open WebUI", "set up Open WebUI", "get Open WebUI running", "connect Open WebUI to Ollama", "Open WebUI shows no models", "localhost:8080 refused to connect", "does not support tools", or asks for help finishing a local AI setup. Installs Ollama if missing, pulls a model that fits, starts the server, connects them, and proves it works with a real reply. Requires Claude Code with shell access on the user's own machine; refuses to run in a sandbox.
+disable-model-invocation: true
 ---
 
 # Install Open WebUI

@@ -12,6 +12,7 @@ description: >
   Context/youtube-thumbnail-style.md if present. Real logos are never rendered.
   The thumbnail fills its frame edge-to-edge; the user composites the actual
   logo on top in post.
+disable-model-invocation: true
 ---
 
 # YouTube Thumbnail Generate

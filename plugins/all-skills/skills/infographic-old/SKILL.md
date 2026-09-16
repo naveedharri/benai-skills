@@ -1,6 +1,7 @@
 ---
 name: infographic-old
 description: "Basic infographic generator. Just tell me what you want and I'll make it."
+disable-model-invocation: true
 ---
 
 # Infographic Generator

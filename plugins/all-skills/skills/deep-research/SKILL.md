@@ -1,6 +1,7 @@
 ---
 name: deep-research
 description: This skill should be used when conducting comprehensive research on any topic using the OpenAI Deep Research API. It automates prompt enhancement through interactive clarifying questions, saves research parameters, and executes deep research with web search capabilities. Use when the user asks for in-depth analysis, investigation, research summaries, or topic exploration.
+disable-model-invocation: true
 ---
 
 # Deep Research Skill

@@ -13,6 +13,7 @@ description: >
 
   TRIGGERS: "script", "video script", "write the script", "talking points",
   "filming notes", "scripting", "teleprompter", "bullet points for filming"
+disable-model-invocation: true
 ---
 
 # YouTube Scripting

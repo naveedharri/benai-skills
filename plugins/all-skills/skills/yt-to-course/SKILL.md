@@ -2,6 +2,7 @@
 name: yt-to-course
 description: >
   Turn a YouTube video into a structured Circle course package: decides full course vs section addition (against course_structure.md), cuts sentence-aligned lessons via video-cutter, writes lesson content in Ben's voice, and outputs clips, lesson.md, description.txt, README, and manifest. STEP 2 of the YouTube pipeline: yt-to-community always runs first; invoke only after the community post is saved and the user confirms course material. TRIGGERS: "yes, course it", "turn this into a course", "yt to course", "video to course", "create lessons from this video", "add this to a course". NOT for community announcement posts (use yt-to-community).
+disable-model-invocation: true
 ---
 
 # YouTube to Course Material

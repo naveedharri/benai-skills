@@ -2,6 +2,7 @@
 name: infographic
 description: Generate professional infographics using Nano Banana MCP (Gemini AI image generation). Follows a guided flow — analyze content, suggest visualizable concepts, propose visualization approaches, then generate on-brand images. USE THIS SKILL WHEN user says "create infographic", "make a visual", "design an infographic", "generate infographic", wants to visualize a concept, framework, or data for social media, mentions "LinkedIn post", "visual content", "infographic series", asks to explain a concept visually or create a diagram-style image, mentions "visual metaphor", "iceberg diagram", "pyramid", "funnel visualization", wants to generate images with Gemini for informational content, or says "brand visuals", "social media graphics", "thought leadership visual".
   - User mentions "nano banana", "gemini image generation", "professional infographics"
+disable-model-invocation: true
 ---
 
 # Infographic Generation Skill

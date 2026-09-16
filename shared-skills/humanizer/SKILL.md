@@ -10,6 +10,7 @@ description: |
   parallelisms, and excessive conjunctive phrases.
 
   Credits: Original skill by @blader - https://github.com/blader/humanizer
+disable-model-invocation: true
 allowed-tools:
   - Read
   - Write

@@ -1,6 +1,7 @@
 ---
 name: infographic-v2
 description: Generate professional infographics using Nano Banana MCP (Gemini AI image generation). Follows a guided flow - analyze content, suggest visualizable concepts, propose visualization approaches, then generate on-brand images. USE THIS SKILL WHEN user says "create infographic v2", "make a visual v2", "infographic-v2". Modular architecture with lazy-loaded reference files for each phase.
+disable-model-invocation: true
 ---
 
 # Infographic Generator

@@ -1,6 +1,7 @@
 ---
 name: openrouter
 description: OpenRouter API - Unified access to 400+ AI models through one API
+disable-model-invocation: true
 ---
 
 # OpenRouter Skill

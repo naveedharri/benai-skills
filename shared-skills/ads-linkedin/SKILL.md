@@ -6,6 +6,7 @@ description: >
   bidding strategy. Includes Thought Leader Ads, ABM, and predictive audiences.
   Use when user says "LinkedIn Ads", "B2B ads", "sponsored content", "lead gen
   forms", "InMail", or "LinkedIn campaign".
+disable-model-invocation: true
 ---
 
 # LinkedIn Ads Deep Analysis

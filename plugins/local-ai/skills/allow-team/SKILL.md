@@ -1,6 +1,7 @@
 ---
 name: allow-team
 description: Puts a running Open WebUI or Odysseus on a shareable public URL through an ngrok tunnel, so a teammate can sign in and use the local models without installing anything. Use when the user says "share Open WebUI with my team", "share Odysseus with my team", "let my colleague use my local AI", "expose Open WebUI", "share localhost:8080", "share localhost:7860", "give someone access to my models", "set up an ngrok tunnel", "make my local AI reachable from another machine", or asks how to let someone else try their setup. Checks the harness's own login is on and enforced before it opens anything, installs ngrok if missing, then proves the URL works from outside. Requires Claude Code with shell access on the user's own machine; refuses to run in a sandbox.
+disable-model-invocation: true
 ---
 
 # Allow Team

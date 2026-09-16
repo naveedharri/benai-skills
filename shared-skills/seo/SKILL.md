@@ -1,6 +1,7 @@
 ---
 name: seo
 description: Comprehensive SEO toolkit — full site audits, single-page analysis, technical SEO (crawlability, Core Web Vitals), schema markup, E-E-A-T content quality, image optimization, sitemap analysis, GEO for AI Overviews/ChatGPT/Perplexity, programmatic SEO, competitor pages, hreflang, and GSC data-driven optimization. Use when user invokes /seo, wants a full website SEO audit, or asks about SEO capabilities.
+disable-model-invocation: true
 ---
 
 # SEO — Routing & Overview

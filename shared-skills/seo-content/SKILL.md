@@ -1,6 +1,7 @@
 ---
 name: seo-content
 description: Content quality and E-E-A-T analysis with AI citation readiness assessment. Use when user says "content quality", "E-E-A-T", "content analysis", "readability check", "thin content", "content audit", "AI citation", or "GEO content".
+disable-model-invocation: true
 ---
 
 # Content Quality & E-E-A-T Analysis

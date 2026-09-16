@@ -1,6 +1,7 @@
 ---
 name: seo-schema
 description: Detect, validate, and generate Schema.org structured data (JSON-LD preferred). Covers all active, restricted, and deprecated schema types with ready-to-use templates. Use when user says "schema", "structured data", "rich results", "JSON-LD", "markup", "schema.org", "add schema", or "generate JSON-LD".
+disable-model-invocation: true
 ---
 
 # Schema Markup Analysis & Generation

@@ -9,6 +9,7 @@ description: |
   "start a new chat with context", "hand off this session", outputs degrading, drifting off task.
   Three levels: lite (quick reset), full (default handoff), ultra (full briefing).
   NOT for: summarizing in place (that's /compact), or saving permanent notes.
+disable-model-invocation: true
 argument-hint: "lite | full | ultra"
 allowed-tools: Read, Glob, Grep, Write
 ---

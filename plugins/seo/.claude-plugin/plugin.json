@@ -1,7 +1,7 @@
 {
   "name": "seo",
   "description": "Complete SEO toolkit via /seo command: full site audits with parallel subagents, technical SEO, E-E-A-T content quality, schema, sitemaps, image optimization, AI search/GEO, programmatic SEO, competitor pages, hreflang, and Search Console optimization.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": {
     "name": "BenAI"
   }

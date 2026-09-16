@@ -1,6 +1,7 @@
 ---
 name: case-study
 description: Create a case study presentation (PPTX). Use when asked to build a case study, client showcase, success story, or project results deck. Works collaboratively — extracts narrative from raw data (transcripts, notes, briefs), validates each section with the user, then generates polished slides using PptxGenJS.
+disable-model-invocation: true
 ---
 
 # Case Study Presentation Creator

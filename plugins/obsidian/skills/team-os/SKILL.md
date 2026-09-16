@@ -1,6 +1,7 @@
 ---
 name: team-os
 description: Install the BenAI Relay fork in an Obsidian vault as the foundation for a shared Team OS — replaces the official Relay (`system3-relay`) plugin with the BenAI fork (`benai-relay-fork`) which ships custom RBAC + access controls for team-wide vault sharing. Bundled production build ships inside the skill — user just points to their Obsidian vault path. Use when the user wants to "set up team os", "install BenAI Relay", "swap relay for the fork", "replace the official relay plugin", or "use BenAI's relay in my vault".
+disable-model-invocation: true
 ---
 
 # Relay Swap — Install BenAI Relay Fork

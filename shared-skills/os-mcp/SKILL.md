@@ -1,6 +1,7 @@
 ---
 name: os-mcp
 description: Deploy a Relay MCP server to the user's own Railway account, giving Claude read/write access to their Obsidian vault via the Relay.md sync protocol. Bundled source ships inside the skill — no separate repo clone needed. The user only pastes a Railway account token; the relay vault and folders inside it are auto-discovered after they OAuth in. Use when the user wants to "set up the os MCP", "deploy relay MCP to railway", "self-host the obsidian MCP server", or "give Claude access to my Obsidian vault".
+disable-model-invocation: true
 ---
 
 # OS MCP — Railway Deploy

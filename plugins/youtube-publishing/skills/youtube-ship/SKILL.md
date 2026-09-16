@@ -1,6 +1,7 @@
 ---
 name: youtube-ship
 description: Runs the whole Ben AI YouTube publishing chain for one video, in the right order, and reports where the video already is before doing anything. Walks the Studio wizard to Unlisted first, then UTM links, Bitly import, chapters and tags, and the description. Collects every judgment call once in a Ship Brief up front so the mechanical work runs without stopping. Use whenever someone says "ship this video", "publish prep", "run the publishing process", "get this video ready", "youtube ship", "prep the video for tomorrow", or names a video in the Youtube tutorial Pipeline that has finished editing. Also use when only one stage is wanted, and route to that stage.
+disable-model-invocation: true
 ---
 
 # YouTube Ship

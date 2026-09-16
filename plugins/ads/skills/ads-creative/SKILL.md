@@ -7,6 +7,7 @@ description: >
   context and creates branding.md if missing. Uses infographic-v2 for generating
   ad creatives. Use when user says "creative audit", "ad creative", "creative
   fatigue", "ad copy", "ad design", or "creative review".
+disable-model-invocation: true
 ---
 
 # Cross-Platform Creative Quality Audit

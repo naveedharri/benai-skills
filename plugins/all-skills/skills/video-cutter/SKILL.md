@@ -1,6 +1,7 @@
 ---
 name: video-cutter
 description: Cut any video into sentence-aligned clips at silence-midpoint boundaries given approximate target timestamps. Works on YouTube downloads, Loom recordings, uploaded MP4s, recorded calls. Triggers on "cut this video at", "split into sections", "make clips from", "cut at boundaries".
+disable-model-invocation: true
 ---
 
 # video-cutter: standalone sentence-aware cutter

@@ -1,6 +1,7 @@
 ---
 name: seo-optimizing
 description: When the user wants to optimize SEO using real search data, analyze Google Search Console metrics, find striking-distance keywords, fix low-CTR pages, detect keyword cannibalization, identify declining pages, or build a data-driven SEO strategy. Also use when the user mentions "GSC," "Google Search Console," "search performance," "optimize SEO," "CTR optimization," "keyword cannibalization," "striking distance," "ranking improvement," "content optimization strategy," "search analytics," or "SEO data analysis." For technical audits, see seo-audit. For creating SEO pages at scale, see programmatic-seo.
+disable-model-invocation: true
 ---
 
 # SEO Optimizing Skill

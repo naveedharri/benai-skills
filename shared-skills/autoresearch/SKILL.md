@@ -1,6 +1,7 @@
 ---
 name: autoresearch
 description: Autonomous goal-directed iteration loop that continuously improves prompts, templates, configs, or code. Two evaluation modes — deterministic (eval.py with proxy heuristics) or AI judge (LLM rubric scoring). Uses four-way separation in both modes. Inspired by Karpathy's autoresearch.
+disable-model-invocation: true
 ---
 
 # AutoResearch — Autonomous Optimization Loop

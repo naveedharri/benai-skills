@@ -1,6 +1,7 @@
 ---
 name: optimizer
 description: "Framework-driven audit and optimizer for a Baalda vault. Applies 10 frameworks covering CLAUDE.md quality, wiki structure, compression, context rot, memory, progressive disclosure, hygiene, cross-file synthesis, architecture and discoverability, plus F10 Claude 5 rule rewriting. Every finding ships a concrete fix; the user picks apply-now or save-to-plan per finding. F10 rewrites rules written for older Claude models into judgment plus the reason, and proposes the documented Claude Fable 5.1 vault guardrails where they are missing. Baalda-aware: takes a vault checkpoint before applying, never touches .context/, and routes every move, rename or delete of a synced note through the app or the MCP tools so notes keep their doc_id. TRIGGERS: optimizer, rewrite my rules, audit my CLAUDE.md, my rules feel too strict, optimize my vault, vault audit, second brain audit, clean up my Baalda vault, framework audit, discoverability check, architecture audit, reorg vault. Run from the vault root."
+disable-model-invocation: true
 ---
 
 # Baalda Vault Optimizer

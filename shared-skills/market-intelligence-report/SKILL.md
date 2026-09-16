@@ -6,6 +6,7 @@ description: Produce a Market Intelligence Report — YouTube competitive resear
   "video ideas", "content ideas", "ideation", "daily scan", "morning scan", "what's new today", "scan for updates",
   "trend scout", "what's trending on twitter", "twitter scan", "X scan", "viral topics", "what's viral",
   "build a dashboard", or wants to understand the YouTube competitive landscape and come up with video concepts.
+disable-model-invocation: true
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Task, AskUserQuestion, Skill
 ---
 

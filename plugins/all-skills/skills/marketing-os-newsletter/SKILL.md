@@ -1,6 +1,7 @@
 ---
 name: marketing-os-newsletter
 description: "Write a newsletter edition from the Marketing OS, gated step by step, then file it as a real asset. Reads the ICP, voice register, offer and live price, measured patterns and swipe file from the OS, never from bundled copies. Sources from a pillar asset, the values doc, a community post or a raw idea. Fans out five parallel readers over the OS before the first gate, and verifies the draft with independent agents against the voice register and offer facts. Seven gates with options at each; the edition is written only after the angle, insight, outcome, outline, subject line and hook are confirmed. On approval it writes Channels/newsletter/broadcasts/YYYY-MM-DD-slug.md, appends the shipped subject line to the swipe file, updates the parent's repurpose tree, logs, and always closes by rendering the edition. Use when the user says 'write a newsletter', or runs /marketing-os-newsletter.\\\"\ndisable-model-invocation: true\nargument-hint: \\\"[source, e.g. a published video slug, 'values doc', or a raw idea]"
+disable-model-invocation: true
 ---
 
 # Marketing OS Newsletter

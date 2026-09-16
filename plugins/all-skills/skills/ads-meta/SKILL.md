@@ -6,6 +6,7 @@ description: >
   account structure, and audience targeting. Includes Advantage+ assessment.
   Use when user says "Meta Ads", "Facebook Ads", "Instagram Ads", "Advantage+",
   or "Meta campaign".
+disable-model-invocation: true
 ---
 
 # Meta Ads Deep Analysis

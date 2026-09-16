@@ -1,6 +1,7 @@
 ---
 name: title-ideation
 description: Generate a YouTube title shortlist for a new video using two parallel lenses, topic-based and pattern-based. Pulls the LAST 20 to 25 uploads from a locked comp set of competitor channels plus Ben's own channel (recent only, never all-time-popular), clusters them by subject and by structure, weights what is overperforming right now, then produces two labeled angle sets. Reasons about the video first, lets the fresh data reshape the angle, and never forces the topic into an irrelevant template. Uses reliable recent-upload pulls, not the unreliable vidiq_outliers endpoint. Use whenever Ben says "title ideation", "title angles", "title brainstorm", "give me title options", "what should I call this video", "title shortlist", or shares a rough video idea / transcript / reference videos and asks for titles.
+disable-model-invocation: true
 ---
 
 # Title Ideation, Two-Lens and Recent-Only

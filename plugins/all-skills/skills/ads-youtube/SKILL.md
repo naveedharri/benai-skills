@@ -6,6 +6,7 @@ description: >
   skippable, non-skippable, bumper, Shorts, and Demand Gen formats. Use when
   user says "YouTube Ads", "video ads", "pre-roll", "bumper ads", "YouTube
   campaign", or "Shorts ads".
+disable-model-invocation: true
 ---
 
 # YouTube Ads Analysis

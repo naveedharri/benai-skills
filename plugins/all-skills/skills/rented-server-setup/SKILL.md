@@ -1,6 +1,7 @@
 ---
 name: rented-server-setup
 description: Runs an open model in the cloud two ways, and makes the user choose with real numbers. Route A is OVHcloud AI Endpoints, an EU-owned per-token API with zero idle cost, for spiky usage and EU jurisdiction. Route B rents one single-tenant RunPod GPU pod in a region the user picks, serving the model on vLLM behind a generated API key, with Open WebUI behind its own login and a URL Claude Code can use directly, for sustained use, unlisted models, or single tenancy. Use when the user says "rent a GPU", "run a big model in the cloud", "my machine cannot run this model", "deploy an open model", "host Qwen or DeepSeek or GLM myself", "put Open WebUI online", "give my team a private ChatGPT", "private AI for my business", "GDPR compliant LLM hosting", "data must stay in the EU", "EU AI API", "pay per token", "OVHcloud", "AI Endpoints", "RunPod", or "cloud GPU". Asks which build fits, never picks a region, and always shows cost before spending. Requires shell and internet access; refuses to run in a sandbox.
+disable-model-invocation: true
 ---
 
 # Rented Server Setup

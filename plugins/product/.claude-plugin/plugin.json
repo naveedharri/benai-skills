@@ -1,7 +1,7 @@
 {
   "name": "product",
   "description": "Design presentations, pitch decks, and process diagrams collaboratively in Excalidraw. Turn discovery call transcripts into structured automation blueprints your team can implement.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": {
     "name": "BenAI"
   }

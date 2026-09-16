@@ -6,6 +6,7 @@ description: >
   readiness, and identifies campaigns to kill or scale. Uses 70/20/10 rule,
   3x Kill Rule, and 20% scaling rule. Use when user says "budget allocation",
   "bidding strategy", "ad spend", "ROAS target", "media budget", or "scaling".
+disable-model-invocation: true
 ---
 
 # Budget Allocation & Bidding Strategy

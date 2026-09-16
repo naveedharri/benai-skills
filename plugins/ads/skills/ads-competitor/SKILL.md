@@ -6,6 +6,7 @@ description: >
   targeting, estimated spend, and identifies competitive gaps and opportunities.
   Use when user says "competitor ads", "ad spy", "competitive analysis",
   "competitor PPC", or "ad intelligence".
+disable-model-invocation: true
 ---
 
 # Competitor Ad Intelligence

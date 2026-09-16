@@ -1,6 +1,7 @@
 ---
 name: seo-images
 description: Image optimization analysis for SEO and performance — checks alt text, file sizes, formats, responsive images, lazy loading, CLS prevention, fetchpriority, filenames, and CDN usage. Use when user says "image optimization", "alt text", "image SEO", "image audit", "optimize images", "lazy loading", "WebP", or "CLS images".
+disable-model-invocation: true
 ---
 
 # Image Optimization Analysis

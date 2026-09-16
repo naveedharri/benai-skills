@@ -1,6 +1,7 @@
 ---
 name: pick-my-harness
 description: Asks a few plain questions about the work, then names the one desktop app to run local AI models in, from LM Studio, Goose, Open WebUI, AnythingLLM, OpenWork or Odysseus. Use when the user asks "which app should I use for local AI", "LM Studio or Ollama", "what is the best local AI interface", "do I need Open WebUI", "Open WebUI or Odysseus", "which one supports MCP", "which supports skills", "pick a harness for me", or is comparing local AI desktop apps. Names one tool and states what it cannot do. Never installs anything. Requires Claude Code with shell access on the user's own machine; refuses to run in a sandbox.
+disable-model-invocation: true
 ---
 
 # Pick My Harness
