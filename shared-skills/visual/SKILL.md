@@ -1,6 +1,6 @@
 ---
 name: visual
-description: Generate on-brand visuals and infographics for LinkedIn posts and newsletters using Nano Banana MCP (Gemini AI image generation). Final step of the content pipeline. Follows a guided flow: analyze the content, suggest visualizable concepts, propose visualization approaches, then generate on-brand visuals. USE THIS SKILL WHEN user says "create a visual", "make a visual", "generate an infographic", or wants a graphic to go with a post or newsletter.
+description: "Generate on-brand visuals and infographics for LinkedIn posts and newsletters using Nano Banana MCP (Gemini AI image generation). Final step of the content pipeline. Follows a guided flow: analyze the content, suggest visualizable concepts, propose visualization approaches, then generate on-brand visuals. USE THIS SKILL WHEN user says \"create a visual\", \"make a visual\", \"generate an infographic\", or wants a graphic to go with a post or newsletter."
 disable-model-invocation: true
 ---
 

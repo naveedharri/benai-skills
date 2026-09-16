@@ -1,6 +1,6 @@
 ---
 name: youtube-studio-setup
-description: Stage 1 of the Ben AI publishing chain. Takes a freshly uploaded video from Studio draft to a saved Unlisted video: puts the title and both thumbnails in place, arms the title-and-thumbnail A/B test, then walks the whole Studio wizard (monetization on with mid-rolls, ad suitability rated, end screen set, checks read, visibility Unlisted). Runs FIRST, before chapters, because a draft has no caption track and Unlisted is the only state where YouTube generates one. Use when someone says "set up the video in Studio", "walk the publishing steps", "do the wizard", "get it to unlisted", "arm the A/B test", "set the end screen", "rate the ad suitability", or has just uploaded a video and wants it ready for the rest of the chain.
+description: "Stage 1 of the Ben AI publishing chain. Takes a freshly uploaded video from Studio draft to a saved Unlisted video: puts the title and both thumbnails in place, arms the title-and-thumbnail A/B test, then walks the whole Studio wizard (monetization on with mid-rolls, ad suitability rated, end screen set, checks read, visibility Unlisted). Runs FIRST, before chapters, because a draft has no caption track and Unlisted is the only state where YouTube generates one. Use when someone says \"set up the video in Studio\", \"walk the publishing steps\", \"do the wizard\", \"get it to unlisted\", \"arm the A/B test\", \"set the end screen\", \"rate the ad suitability\", or has just uploaded a video and wants it ready for the rest of the chain."
 ---
 
 # YouTube Studio Setup

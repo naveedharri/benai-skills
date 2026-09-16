@@ -1,12 +1,6 @@
 ---
 name: lead-intelligence
-description: Deep-research lead intelligence gathering for B2B qualified leads. This skill runs in two layers:
-  (1) General Lead Intelligence via web research using parallel sub-agents, and (2) LinkedIn Lead Intelligence
-  via Apify actors for profile and post scraping. Use this skill whenever the user says "research these leads",
-  "get intel on my leads", "lead intelligence", "lead enrichment", "enrich my leads", "deep research leads",
-  "find out about these companies", "LinkedIn scraping", "scrape LinkedIn profiles", or has a qualified lead
-  list and wants to gather intelligence before outreach. Also trigger when the user mentions Apify actors,
-  or wants to combine web + LinkedIn research on leads.
+description: "Deep-research lead intelligence gathering for B2B qualified leads. This skill runs in two layers: (1) General Lead Intelligence via web research using parallel sub-agents, and (2) LinkedIn Lead Intelligence via Apify actors for profile and post scraping. Use this skill whenever the user says \"research these leads\", \"get intel on my leads\", \"lead intelligence\", \"lead enrichment\", \"enrich my leads\", \"deep research leads\", \"find out about these companies\", \"LinkedIn scraping\", \"scrape LinkedIn profiles\", or has a qualified lead list and wants to gather intelligence before outreach. Also trigger when the user mentions Apify actors, or wants to combine web + LinkedIn research on leads."
 disable-model-invocation: true
 ---
 

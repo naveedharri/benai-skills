@@ -1,7 +1,6 @@
 ---
 name: win-loss-analysis
-description: Win/loss pattern analysis for B2B sales. Pulls deal data from ANY CRM (Attio, HubSpot, Salesforce, Pipedrive, etc.), enriches with emails, call transcripts (Fireflies/Gong), and web research, then analyzes won vs lost deal patterns to build an ideal prospect persona and strategy recommendations as a .docx report.
-  MANDATORY TRIGGERS: "win/loss analysis", "won vs lost", "deal analysis", "sales patterns", "pipeline analysis", "prospect persona", "ICP from deals", "why deals are lost", "deal patterns", "lost deal analysis", "winning persona", "deal forensics", "pipeline forensics", "sales retrospective", "analyze my pipeline", "what's working in sales", or any request about understanding close/win vs loss patterns, what makes deals close, or building an ICP from historical deal data.
+description: "Win/loss pattern analysis for B2B sales. Pulls deal data from ANY CRM (Attio, HubSpot, Salesforce, Pipedrive, etc.), enriches with emails, call transcripts (Fireflies/Gong), and web research, then analyzes won vs lost deal patterns to build an ideal prospect persona and strategy recommendations as a .docx report. MANDATORY TRIGGERS: \"win/loss analysis\", \"won vs lost\", \"deal analysis\", \"sales patterns\", \"pipeline analysis\", \"prospect persona\", \"ICP from deals\", \"why deals are lost\", \"deal patterns\", \"lost deal analysis\", \"winning persona\", \"deal forensics\", \"pipeline forensics\", \"sales retrospective\", \"analyze my pipeline\", \"what's working in sales\", or any request about understanding close/win vs loss patterns, what makes deals close, or building an ICP from historical deal data."
 disable-model-invocation: true
 ---
 

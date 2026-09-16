@@ -1,25 +1,6 @@
 ---
 name: lead-qualifier
-description: Use this sub-agent to qualify a batch of B2B leads against an ICP definition. Spawn one instance per batch of 10 leads. Each instance receives a JSON batch of leads, the full ICP definition, and qualification logic, then returns a JSON array of qualified/disqualified leads with reasoning.
-
-<example>
-Context: Orchestrator has 606 leads to qualify against an ICP
-user: "Qualify these leads against my ICP"
-assistant: "I'll spawn 61 lead-qualifier sub-agents, each handling 10 leads in parallel."
-<commentary>
-Large lead lists require parallel batch processing. Each sub-agent independently qualifies its batch.
-</commentary>
-</example>
-
-<example>
-Context: Orchestrator has 40 leads that need web research to verify qualification criteria
-user: "Some criteria need website verification"
-assistant: "I'll spawn 4 lead-qualifier sub-agents with web research instructions."
-<commentary>
-Sub-agents can use WebSearch to verify criteria not available in the data itself.
-</commentary>
-</example>
-
+description: "Use this sub-agent to qualify a batch of B2B leads against an ICP definition. Spawn one instance per batch of 10 leads. Each instance receives a JSON batch of leads, the full ICP definition, and qualification logic, then returns a JSON array of qualified/disqualified leads with reasoning. Example: Orchestrator has 606 leads to qualify against an ICP: I'll spawn 61 lead-qualifier sub-agents, each handling 10 leads in parallel. Orchestrator has 40 leads that need web research to verify qualification criteria: I'll spawn 4 lead-qualifier sub-agents with web research instructions."
 model: sonnet
 color: cyan
 tools: ["Read", "Write", "Bash", "WebSearch", "Grep"]

@@ -1,16 +1,6 @@
 ---
 name: icebreaker-writer
-description: Use this sub-agent to write hyper-personalized cold email icebreakers for a batch of B2B leads. Spawn one instance per batch of 5 leads. Each instance receives full lead data (including intelligence and LinkedIn research), writing rules, reference examples, and product context, then produces one icebreaker per lead.
-
-<example>
-Context: Orchestrator has 38 leads needing icebreakers after 2 test leads were approved
-user: "Write icebreakers for the remaining leads"
-assistant: "I'll spawn 8 icebreaker-writer sub-agents, each handling 5 leads in parallel."
-<commentary>
-Icebreaker writing benefits from focused attention per lead. 5 leads per sub-agent balances quality with speed.
-</commentary>
-</example>
-
+description: "Use this sub-agent to write hyper-personalized cold email icebreakers for a batch of B2B leads. Spawn one instance per batch of 5 leads. Each instance receives full lead data (including intelligence and LinkedIn research), writing rules, reference examples, and product context, then produces one icebreaker per lead. Example: Orchestrator has 38 leads needing icebreakers after 2 test leads were approved: I'll spawn 8 icebreaker-writer sub-agents, each handling 5 leads in parallel."
 model: sonnet
 color: magenta
 tools: ["Read", "Write", "Bash"]

@@ -1,11 +1,6 @@
 ---
 name: lead-qualification
-description: Qualify B2B leads against a user-defined Ideal Customer Profile (ICP). Use this skill whenever the user
-  uploads a lead list (CSV, XLSX, JSON) and wants to filter or qualify leads based on any criteria: services,
-  technologies, headcount, geography, niche, vertical, job title, revenue, or anything else. Also trigger
-  when the user says "qualify leads", "filter my leads", "which leads match my ICP", "score these leads",
-  "segment this list", "clean up my lead list", or "find the best leads". This skill handles lead lists of
-  any size by automatically batching work across parallel sub-agents.
+description: "Qualify B2B leads against a user-defined Ideal Customer Profile (ICP). Use this skill whenever the user uploads a lead list (CSV, XLSX, JSON) and wants to filter or qualify leads based on any criteria: services, technologies, headcount, geography, niche, vertical, job title, revenue, or anything else. Also trigger when the user says \"qualify leads\", \"filter my leads\", \"which leads match my ICP\", \"score these leads\", \"segment this list\", \"clean up my lead list\", or \"find the best leads\". This skill handles lead lists of any size by automatically batching work across parallel sub-agents."
 disable-model-invocation: true
 ---
 

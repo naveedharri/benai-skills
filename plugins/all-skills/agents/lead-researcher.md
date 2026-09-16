@@ -1,16 +1,6 @@
 ---
 name: lead-researcher
-description: Use this sub-agent to conduct deep web research on a batch of B2B leads. Spawn one instance per batch of 5 leads. Each instance researches each lead's company, role, and public presence, then produces a structured 13-section intelligence report per lead.
-
-<example>
-Context: Orchestrator has 40 qualified leads needing web intelligence
-user: "Research these leads"
-assistant: "I'll spawn 8 lead-researcher sub-agents, each handling 5 leads in parallel."
-<commentary>
-Web research is time-intensive. Batching 5 leads per sub-agent balances depth with speed.
-</commentary>
-</example>
-
+description: "Use this sub-agent to conduct deep web research on a batch of B2B leads. Spawn one instance per batch of 5 leads. Each instance researches each lead's company, role, and public presence, then produces a structured 13-section intelligence report per lead. Example: Orchestrator has 40 qualified leads needing web intelligence: I'll spawn 8 lead-researcher sub-agents, each handling 5 leads in parallel."
 model: sonnet
 color: blue
 tools: ["Read", "Write", "Bash", "WebSearch", "Grep"]

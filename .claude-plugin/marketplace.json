@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Expert automation plugins that turn Claude into a specialist for your team. Install by department to get skills for marketing, sales, operations, creative, and product workflows.",
-    "version": "1.23.0"
+    "version": "1.23.1"
   },
   "plugins": [
     {
@@ -14,7 +14,7 @@
       "displayName": "BenAI Marketing",
       "source": "./plugins/benai-marketing",
       "description": "The BenAI marketing OS as skills: research, copywriting in Ben's voice, design systems, carousels, thumbnails, video editing, and analytics. competitor-radar and analytics-dashboard are schedule-ready.",
-      "version": "1.5.3",
+      "version": "1.5.4",
       "author": {
         "name": "BenAI"
       },
@@ -39,7 +39,7 @@
       "displayName": "BenAI Sales",
       "source": "./plugins/benai-sales",
       "description": "The BenAI sales OS as skills: lead generation, qualification and research, CRM mining, LinkedIn engagers, email personalization, call prep, one-pagers, pipeline reviews, post-disco proposals, rep grading, win/loss analysis, and sales assets.",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "author": {
         "name": "BenAI",
         "url": "https://benai.co"
@@ -59,7 +59,7 @@
       "displayName": "All Skills",
       "source": "./plugins/all-skills",
       "description": "Every BenAI skill in one install. All 130 skills across marketing, sales, SEO, ads, design, YouTube, creative, operations, second-brain OS, Baalda OS, Marketing OS, and general productivity. Add this one plugin to get the complete library.",
-      "version": "1.21.0",
+      "version": "1.21.1",
       "author": {
         "name": "BenAI"
       },
@@ -84,7 +84,7 @@
       "displayName": "Content",
       "source": "./plugins/content",
       "description": "A modular content engine, one skill per job: /research a topic, turn it into a /linkedin post and a /newsletter in Ben's voice, then generate on-brand /visual graphics to match.",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "author": {
         "name": "BenAI"
       },
@@ -126,7 +126,7 @@
       "name": "managed-agents",
       "source": "./plugins/managed-agents",
       "description": "Create and run Anthropic Managed Agents from Claude Code. Walks through the lifecycle via the REST API: agent, environment, vault, MCP OAuth credentials, session, first message. Generic builder, no preset template.",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": {
         "name": "BenAI"
       },
@@ -212,7 +212,7 @@
       "displayName": "YouTube Publishing",
       "source": "./plugins/youtube-publishing",
       "description": "The Ben AI YouTube pipeline after the edit: Studio wizard to Unlisted, UTM links, Bitly import, chapters and tags, description, then repurposing into LinkedIn, newsletter, Circle post or course, and clips.",
-      "version": "4.0.0",
+      "version": "4.0.1",
       "author": {
         "name": "BenAI"
       },
@@ -410,7 +410,7 @@
       "displayName": "AIOS",
       "source": "./plugins/aios",
       "description": "Set up an AI OS at the tier that fits \u2014 Skill OS (your entire second brain inside one Claude skill, zero infra) or Cloud OS (synced via Google Drive, OneDrive, iCloud, or Dropbox). Shares one folder structure with the Local OS (Obsidian) tier so you can graduate between them.",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": {
         "name": "BenAI"
       },
@@ -478,7 +478,7 @@
       "displayName": "Local AI",
       "source": "./plugins/local-ai",
       "description": "From nothing to a working AI setup you own. Scans the machine for models that fit, installs and wires up the right app with consent at every download, shares it over a private URL, and rents a cloud GPU when a model is too big. Needs shell access.",
-      "version": "1.6.1",
+      "version": "1.6.2",
       "author": {
         "name": "BenAI"
       },
