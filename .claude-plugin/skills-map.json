@@ -1277,6 +1277,10 @@
         "eli5": {
           "displayName": "ELI5",
           "summary": "Explain any topic like I'm 5: a dead-simple HTML picture explainer with big visuals and few words. Official Anthropic community skill, /eli5 [topic]"
+        },
+        "ledger-tasks-yylo": {
+          "displayName": "YYLO Ledger Tasks",
+          "summary": "Retrieve YYLO Ledger records and manage tasks, dependencies, and search from Claude Code via the YYLO CLI"
         }
       }
     },
