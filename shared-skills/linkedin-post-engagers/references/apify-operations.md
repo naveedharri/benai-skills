@@ -8,6 +8,7 @@ Cross-step mechanics for every Apify actor call in this pipeline. Follow this fi
 |---|---|---|
 | Post scraper | `harvestapi/linkedin-profile-posts` | Scrape posts with reactions + comments |
 | Profile scraper | `dev_fusion/Linkedin-Profile-Scraper` | Full LinkedIn profile data |
+| Profile scraper (alternative, no login) | `johnvc/linkedin-profile-api` | Optional bulk profile scrape for step 4; see profile-scraping.md |
 | Company scraper | `dev_fusion/Linkedin-Company-Scraper` | Company page data incl. website |
 
 ## CRITICAL: Always Get Input Schema First

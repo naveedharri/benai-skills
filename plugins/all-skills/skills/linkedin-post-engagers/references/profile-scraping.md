@@ -60,6 +60,48 @@ Profile scraping complete.
 - Remaining leads: [Y]
 ```
 
+### Alternative profile Actor: `johnvc/linkedin-profile-api`
+
+Optional replacement for step 4 only. The default stays
+`dev_fusion/Linkedin-Profile-Scraper`. Steps 1, 2, and 5 are unchanged
+(this Actor does not return reactor lists or company-page websites).
+
+1. **Get actor info**: Call `call-actor` with `step: "info"` for
+   `johnvc/linkedin-profile-api` (schema first still applies).
+2. **Execute**: Call `call-actor` with `step: "call"`:
+
+```json
+{
+  "profileUrls": ["https://www.linkedin.com/in/handle1", "..."]
+}
+```
+
+Send ALL vanity `/in/` URLs in a single API call (up to 1000). Never split
+into multiple runs unless you exceed that cap.
+
+3. Follow the timeout/polling pattern, sample 2-3 items, then curl the dataset.
+
+#### Fields to merge
+
+| Merge field | johnvc Profile field |
+|---|---|
+| name | `name` |
+| headline | `headline` |
+| title | `currentTitle` |
+| company | `currentCompany` |
+| location | `location` |
+| company page URL (for step 5) | `experience[].url` |
+| profile URL | `publicUrl` |
+
+#### Differences to know
+
+- No email: the `email` field is always null.
+- LinkedIn hides many job titles and dates from signed-out visitors, so some
+  rows have a headline but no title.
+- Member-id URLs (`/in/ACwAA...`) return an `UnsupportedUrl` error row; use
+  vanity URLs. Drop error rows before merging.
+- No login or cookies.
+
 ## Step 5: Company Profile Scrape
 
 Extract unique company LinkedIn URLs from the enriched profiles, then scrape company pages to get website URLs and descriptions.
